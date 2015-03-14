@@ -1,0 +1,230 @@
+<php>
+if($logo['logo_site_title']){
+	$sitetitle = $logo['logo_site_title'];
+}else{
+	$sitetitle = $site_name;
+}
+if($logo['login_top_title']){
+	$sitesolgan = $logo['login_top_title'];
+} else {
+	$sitesolgan = $site_slogan;
+}
+$site['site_slogan'] = $sitetitle.$sitesolgan;
+</php>
+<include file="__THEME__/_header" />
+
+<script>
+function focuslogin(type){
+	if(type==1){
+		$('#email').hide();
+	}else{
+		$('#password').hide();
+	}
+}
+function blurlogin(type){
+	if(type==1){
+		if($('#account_input').val()==''){
+			$('#email').show();
+		}
+	}else{
+		if($('#pwd_input').val()==''){
+			$('#password').show();
+		}
+	}
+}
+function rememberlogin(){
+	if($('#login_remember').val()==1){
+		$('#login_remember').val(0)
+	}else{
+		$('#login_remember').val(1)
+	}
+}
+$(function() {
+var interval = 4000;
+var slide    =  setInterval(slideIt,interval);
+function slideIt() {
+  var obj = $('#ts_content .feed_list');
+  obj.last().hide().prev().hide();
+  obj.last().insertBefore(obj.first()).slideDown(1000);
+  obj.last().prev().fadeOut(500);	
+};
+
+$('#ts_content').mouseover(function() {
+	clearInterval(slide);//当鼠标移上去的时候停止下滑
+}).mouseout(function() {
+	slide = setInterval(slideIt,interval);//当鼠标移开的时候继续下滑
+});
+
+slideIt();
+
+});
+</script>
+<div id="body-b">
+<div class="logo-bg"><div class="logo"><a href=""><img src="<php>if($logo['logo']){</php>{$logo['logo']}<php>}elseif($site_logo){</php>{$site_logo}<php>}else{</php>__APP__/image/logo-b.png<php>}</php>" /></a><span><php>if($logo['login_top_title']){</php>{$logo['login_top_title']}<php>}else{</php>{$site_slogan}<php>}</php></span></div></div>
+<div class="login-c">
+    <div class="login-top">
+      <div class="wid">
+      <div class="login-bg">
+       <php>if($banner){</php>
+       <div class="flashNews" id="logobanner">
+            	<php>$i = 0;</php>
+            	<php>foreach($banner as $vo){
+            	$i++;
+            	</php>
+            			<div <php>if($i!=1){</php>style="display:none;"<php>}</php>>
+						            <p>
+                <a href="{$vo['bannerlink']}" target="_blank">
+                  <img src="{$vo['bannerurl']|getImageUrl}" />
+                </a>
+            </p>
+						</div>
+                <php>}</php>
+                <ul></ul> 
+          </div><php>}else{</php> 
+         <ul>
+           <li><a href=""><img src="__APP__/image/img1.jpg"/></a></li>
+           <li style="display:none;"><a href=""><img src="__APP__/image/img2.jpg" /></a></li>
+        </ul> 
+        <php>}</php>
+      </div>
+      <form id="ajax_login_form" method="POST" action="{:U('public/Passport/doLogin')}" autocomplete="off">
+      <div class="login-box">
+        <h4>欢迎来到<php>if($logo['logo_site_title']){</php>{$logo['logo_site_title']}<php>}else{</php>{$site_name}<php>}</php></h4>
+
+            <div id="js_login_input" style="display:none" class="error-box"></div>
+        <ul>
+           <li class="input">
+              <label id="email">帐号：</label>
+              <input type="text" id="account_input" onfocus="focuslogin(1)" onblur="blurlogin(1)" name="login_email" class="text"/>
+           </li>
+           <li class="input">
+              <label id="password">密码：</label>
+              <input type="password" id="pwd_input" onfocus="focuslogin(2)" onblur="blurlogin(2)" name="login_password" class="text" />
+           </li>
+           <li><a href="{:U('public/Passport/findPassword')}" class="right">忘记密码？</a><span class="left f3">
+           <input type="hidden" id="login_remember" name="login_remember" value="0" />
+           <input type="checkbox" class="checkbox" autocomplete="off" onclick="rememberlogin()"/>下次自动登录</span></li>
+           <li>
+            <input type="submit" value="登录" class="left btn-login" style="border:0px;" />
+            <php>if($register_type == 'open'){</php>
+            <a href="javascript:window.open('{:U('public/Register')}','_self')" class="right btn-reg">立即注册</a>
+            <php>}</php>
+           </li>
+        </ul>
+        <php>if(Addons::requireHooks('login_input_footer')):</php>
+        <div class="account-others">
+            {:Addons::hook('login_input_footer_title')}
+            <div class="login-ft">
+              {:Addons::hook('login_input_footer')}
+            </div>
+        </div>
+        <php>endif;</php>
+       </div>
+      </form>
+      <!--<div class="login-page">
+        <ul>
+           <li class="current"><a href=""></a></li>
+           <li><a href=""></a></li>
+           <li><a href=""></a></li>
+        </ul>
+      </div>-->
+     </div>
+    </div>
+    <div class="login-main clearfix">
+      <div class="login-r">
+          <div class="news mb20">
+              <h3>系统公告</h3>
+              <ul>
+              <volist name="announcement" id="pv">
+                 <li><i class="icon-notice left"></i><a target="_blank" href="{:U('public/Index/announcement','id='.$pv['id'])}">{$pv.title}</a></li>
+              </volist>
+              </ul>
+          </div> 
+          <div class="right-box clearfix">
+              <h3>{$user.user_title}</h3>
+              <ul>
+              <volist name="userlist" id="user">
+                 <li><a href="{$user.space_url}" class="face"><img src="{$user.avatar_middle}" width="50" height="50"/></a><a href="{$user.space_url}" class="face"><span>{$user.uname}</span></a></li>
+              </volist>
+              </ul>
+          </div>
+          <div class="hot-topic mb20">
+             {:W('TopicList',array('type'=>1, 'limit'=>10))}
+          </div>
+          <div class="mobi mb20">
+          {$logo['login_foot_content']|html_entity_decode}
+          </div>
+      </div>
+      <div class="login-l">
+      <php>if($logo['weiba_recommend_list']){</php>
+        <div class="weiba-box recommend-weiba clearfix">
+            <div class="weiba-pic-title">
+              <a href="{:U('weiba/Index/weibaList')}" class="right">更多</a><h3>微吧推荐</h3>
+            </div>
+               <ul>
+               <volist name="logo.weiba_recommend_list" id="vo">
+                  <li>
+                      <a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}" class="face"><img src="{$vo.logo}" width="100" height="100" /><span>{$vo.weiba_name}</span></a>
+                  </li>
+               </volist>
+               </ul>
+        </div>
+        <php>}</php>
+        <h3><php>if($feed['feed_title']){</php>{$feed.feed_title}<php>}else{</php>正在发生的<php>}</php></h3>
+        <div class="feed_lists" id="ts_content">
+        <volist name="loginlastfeed" id="vl">
+  <dl class="feed_list"  id ='feed{$vl.feed_id}' model-node='feed_list'>
+  <dt class="face">
+  <a href="{$vl['user_info']['space_url']}"><img src="{$vl['user_info']['avatar_small']}"  event-node="face_card" uid='{$vl['user_info']['uid']}'></a></dt>
+  <dd class="content">
+  <p class="hd">{$vl.title}
+  <volist name="vl['GroupData'][$vl['uid']]" id="v2">
+        <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
+    </volist>
+  </p>
+  <span class="contents">{$vl.body|format=true}</span>
+  <p class="info">
+  <span class="right">
+  </span>
+     <span>
+  <a class="date" href="{:U('public/Profile/feed',array('feed_id'=>$vl['feed_id'],'uid'=>$vl['uid']))}">{$vl.publish_time|friendlyDate}</a>
+  <span>{$vl['from']}</span>
+    </span>
+</p>
+  </dd>
+  </dl>
+        </volist>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="footer">
+   <div class="login-footer">
+      <div class="foot clearfix">
+         <volist name="navilist" id="nv">
+         <dl>
+            <dt><a href="{$nv.url}">{$nv['navi_name']}</a></dt>
+            <volist name="nv.child" id="cv">
+            <dd><a href="{$cv.url}" target="{$cv.target}">{$cv['navi_name']}</a></dd>
+            </volist>
+         </dl>
+         </volist>
+      </div>
+    <p>
+      <span class="right">Powered By <a href="http://www.thinksns.com" title="开源微博系统,开源微社区" target="_blank">ThinkSNS</a></span>
+      {$GLOBALS.ts.site.site_footer}
+    </p>
+  </div>
+</div>
+</div>
+<eq name='GLOBALS.ts.site.site_online_count' value='1'>
+    <script src="{:SITE_URL}/online_check.php?uid={$mid}&uname={$user.uname}&mod={:MODULE_NAME}&app={:APP_NAME}&act={:ACTION_NAME}&action=trace"></script>
+</eq>
+<script>
+new fSwitchPic( "logobanner" );
+</script>
+<script src="__THEME__/js/jquery.form.js" type="text/javascript"></script>
+<script src="__THEME__/js/module.weibo.js" type="text/javascript"></script>
+<script src="__APP__/login.js" type="text/javascript"></script>
+</body>
+</html>

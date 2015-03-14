@@ -1,0 +1,115 @@
+<include file="__THEME__/public_header" />
+
+<link href="__APP__/group.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+    
+<div id="page-wrap">
+	   <div id="main-wrap">
+           <div class="boxShadow"> 
+	   	   	<include file="_weiba_header" /> 
+
+	   	   	   <div class="mb10 clearfix">
+                <div id="col3" class="st-index-right">
+                    <div class="right-wrap">
+                        <div class="create mb20"><a href="" class="btn-group"></a></div>
+                        <div class="group-rank-list weiba-box1">
+                            <div class="weiba-pic-title"><h3>群组排行榜</h3></div>
+                            <div class="rank-cate">
+                               <span class="right">成员数</span>
+                               <span>群组名</span>
+                            </div>
+                        <div>
+                           <dl class="rank-lists">
+                              <dt>
+                                 <span class="right f9">9666</span>
+                                 <span class="num ico-num{$i}"></span>
+                                 <span class="name"><a href="{:U('weiba/Index/detail',array('weiba_id'=>$v1['weiba_id']))}" class="face"><img src="{$v1.logo}" width="30" height="30" /></a>
+                                 <a href="{:U('weiba/Index/detail',array('weiba_id'=>$v1['weiba_id']))}">{$v1.weiba_name}</a></span>
+                              </dt>
+                           </dl>
+                           <dl class="rank-lists">
+                              <dt>
+                                 <span class="right f9">9666</span>
+                                 <span class="num ico-num{$i}"></span>
+                                 <span class="name"><a href="{:U('weiba/Index/detail',array('weiba_id'=>$v1['weiba_id']))}" class="face"><img src="{$v1.logo}" width="30" height="30" /></a>
+                                 <a href="{:U('weiba/Index/detail',array('weiba_id'=>$v1['weiba_id']))}">{$v1.weiba_name}</a></span>
+                              </dt>
+                           </dl>
+                           <dl class="rank-lists">
+                              <dt>
+                                 <span class="right f9">9666</span>
+                                 <span class="num ico-num{$i}"></span>
+                                 <span class="name"><a href="{:U('weiba/Index/detail',array('weiba_id'=>$v1['weiba_id']))}" class="face"><img src="{$v1.logo}" width="30" height="30" /></a>
+                                 <a href="{:U('weiba/Index/detail',array('weiba_id'=>$v1['weiba_id']))}">{$v1.weiba_name}</a></span>
+                              </dt>
+                           </dl>
+                           <dl class="rank-lists">
+                              <dt>
+                                 <span class="right f9">9666</span>
+                                 <span class="num ico-num{$i}"></span>
+                                 <span class="name"><a href="{:U('weiba/Index/detail',array('weiba_id'=>$v1['weiba_id']))}" class="face"><img src="{$v1.logo}" width="30" height="30" /></a>
+                                 <a href="{:U('weiba/Index/detail',array('weiba_id'=>$v1['weiba_id']))}">{$v1.weiba_name}</a></span>
+                              </dt>
+                           </dl>
+                       </div>
+                      </div> 
+                    </div>
+                </div>
+                 <div id="col5" class="st-index-main">
+                    <div class="extend-foot">
+                        <div class="tab-menu">
+                            <ul>
+                                <li <eq name="type" value="">class="current"</eq>><span><a href="{:U('weiba/Index/myWeiba',,array('type'=>'myFollowing'))}">全部</a></span></li>
+                                <li <eq name="type" value="myPost">class="current"</eq>><span><a href="{:U('weiba/Index/myWeiba',array('type'=>'myPost'))}">我加入的群组</a></span></li>
+                                <li <eq name="type" value="myReply">class="current"</eq>><span><a href="{:U('weiba/Index/myWeiba',array('type'=>'myReply'))}">我管理的群组</a></span></li>
+                                <li <eq name="type" value="myFavorite">class="current"</eq>><span><a href="{:U('weiba/Index/myWeiba',array('type'=>'myFavorite'))}">我关注人的群组</a></span></li>
+                            </ul>
+                        </div>
+                        <div class="group-list my-group">
+                          <ul>
+                            <li>
+                              <dl>
+                                   <dt><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}"><img src="{$vo.logo}" width="100" height="100" /></a></dt>
+                                   <dd>
+                                   <div class="right"><a class="btn-cancel"><span>加入该群</span></a></div>
+                                   <a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}">{$vo.weiba_name}</a>
+                                   <p>成员：1859</p>
+                                   <p>创建：2011-06-10 17:58</p>
+                                   <p>类型：行业交流</p>
+                                  </dd>
+                              </dl>
+                            </li>
+                            <li>
+                              <dl>
+                                   <dt><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}"><img src="{$vo.logo}" width="100" height="100" /></a></dt>
+                                   <dd>
+                                   <div class="right"><a class="btn-att-white"><span><i class="ico-already"></i>已加入</span></a></div>
+                                   <a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}">{$vo.weiba_name}</a>
+                                   <p>成员：1859</p>
+                                   <p>创建：2011-06-10 17:58</p>
+                                   <p>类型：行业交流</p>
+                                  </dd>
+                              </dl>
+                            </li>
+                            <li>
+                              <dl>
+                                   <dt><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}"><img src="{$vo.logo}" width="100" height="100" /></a></dt>
+                                   <dd>
+                                   <div class="right"><a class="btn-cancel"><span>加入该群</span></a></div>
+                                   <a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}">{$vo.weiba_name}</a>
+                                   <p>成员：1859</p>
+                                   <p>创建：2011-06-10 17:58</p>
+                                   <p>类型：行业交流</p>
+                                  </dd>
+                              </dl>
+                            </li>
+                          </ul>
+                        </div>
+                     </div>
+                 </div>
+           	 </div>
+          </div> 
+	   </div>
+</div>
+
+<include file="__THEME__/public_footer" />

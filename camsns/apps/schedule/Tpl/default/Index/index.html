@@ -1,0 +1,93 @@
+<include file="__THEME__/public_header"/>
+
+<div id="page-wrap">
+    <div id="main-wrap">
+        <div class="boxShadow">
+
+            <!--顶部留白-->
+            <div>&nbsp;</div><div>&nbsp;</div><div>&nbsp;</div><div>&nbsp;</div>
+
+            <div class="bs" style="font-size:16px; width: 930px; min-height: 1000px;">
+                <div class="row">
+                    <!--左边头像-->
+                    <div class="col-sm-3">
+                        <img src="{$owner['avatar_big']}" style="width: 158px; margin-left:43px; border: 5px solid rgba(0, 0, 0, 0.3);border-left-width: 4px;border-right-width: 4px;border-top-width: 12px;border-bottom-width: 12px;" />
+                    </div>
+                    <!--主要内容-->
+                    <div class="col-sm-9">
+                        <!--发布日程-->
+                        <if condition="$uid==$mid">
+                            <include file="../Public/schedule"/>
+                            <p style="font-size: 2em;">&nbsp;</p>
+                        </if>
+                        <!--日程列表-->
+                        <volist name="page.data" id="schedule">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p class="big-time">{$schedule.date}</p>
+                                </div>
+                                <div class="col-sm-8">
+                                    <php>
+                                        $area1 = D('Area')->where(array('area_id'=>$schedule['area1']))->find();
+                                        $area2 = D('Area')->where(array('area_id'=>$schedule['area2']))->find();
+                                    </php>
+                                    <p class="big-area">{$area1.title} {$area2.title}</p>
+                                    <p>{$schedule.area4}</p>
+                                    <p>{$schedule.event|htmlspecialchars|nl2br}</p>
+                                    <p>
+                                        <button type="button" class="btn btn-link btn-sm delete-schedule" data-url="{:U('/Index/deleteSchedule',array('id'=>$schedule['id']))}">
+                                            <span class="glyphicon glyphicon-remove"></span> 删除
+                                        </button>
+                                        <button type="button" class="btn btn-link btn-sm edit-schedule" data-url="{:U('/Index/editSchedule',array('id'=>$schedule['id']))}">
+                                            <span class="glyphicon glyphicon-pencil"></span> 编辑
+                                        </button>
+                                    </p>
+                                    <p style="font-size: 3em;">&nbsp;</p>
+                                </div>
+                            </div>
+                        </volist>
+                        <div class="row">
+                            <div class="page">
+                                {$page.html}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="col" class="extend clearfix">
+    </div>
+</div>
+
+<script>
+    //删除日程按钮
+    $(function(){
+        $('.delete-schedule').click(function(){
+            //确认删除
+            if(!confirm('您确实要删除吗？')) {
+                return;
+            }
+            //提交删除
+            var url = $(this).attr('data-url');
+            $.post(url, {}, function(a,b,c){
+                if(a.status) {
+                    ui.success(a.data);
+                    setTimeout(function(){location.href = location.href},1000);
+                } else {
+                    ui.error(a.data);
+                }
+            },'json');
+        });
+    })
+    //编辑日程按钮
+    $(function(){
+        $('.edit-schedule').click(function(){
+            var url = $(this).attr('data-url');
+            location.href = url;
+        })
+    })
+</script>
+
+<include file="__THEME__/public_footer"/>

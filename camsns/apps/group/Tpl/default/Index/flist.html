@@ -1,0 +1,63 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__APP__/Js/Common.js"></script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+  <!-- 用户组件列表 begin -->
+  <!-- 用户组件列表 end -->
+
+  <div class="main"> <!-- 右侧内容 begin  -->
+  <div class=page_title> <!-- page_title begin -->
+  <h2><img src="../Public/images/ico_app05.gif" />群组</h2>
+  <div class="c"></div>
+</div><!-- page_title end -->
+  <div class="tab-menu"><!-- 切换标签 begin  -->
+      <ul>
+      <li><a href="__URL__/index" ><span> 我的群组</span></a></li>
+      <li><a href="__URL__/flist" class="on"><span>好友的群组</span></a></li>
+      <li><a href="__URL__/search/"><span>全部群组</span></a></li>
+      <li><a href="__URL__/allTopic"><span>最新话题</span></a></li>
+      <li><a href="__URL__/issue"><span><div class="ico_add">&nbsp;</div>发表话题</span></a></li>
+      <li><a href="__URL__/add"><span><div class="ico_add">&nbsp;</div>创建新群</span></a></li>
+      </ul>
+  </div><!-- 切换标签 end  -->
+  <div class="groupBox">
+    <div class="boxL"><!-- 好友日志 begin  -->
+  		<ul class="flist" style="overflow:hidden;">
+  		 <volist name="group" id="vo" key="key">
+       	  <li class="bx1" onMouseOver="this.className='bx2'" onMouseOut="this.className='bx1'">
+          		<div class="left" style="width: 20%;"><span class="headpic50"><a href="__APP__/Group/index/gid/{$key-1}"><img src="__ROOT__/thumb.php?w=50&h=50&url={$key-1|getgroupinfo='logo'|group_get_photo_url}"/></a></span></div>
+          		<div class="left" style="width: 80%;">
+       			  <h3><a href="__APP__/Group/index/gid/{$key-1}"><strong>{$key-1|getgroupinfo='name'}</strong></a></h3>
+                  <p> 加入：<sublist name="vo" id="sub" offset="0" length='4' key='key'> 
+                  			 <php>if($key != 'd') { </php>
+                  			 	<a href="__TS__/space/{$sub['uid']}" title="{$sub['name']}">{$sub['uid']|getUserName}</a>
+                  	 		<php>}</php>
+                  			</sublist> 
+                  			
+                  			<php>if($vo['c'] > 4 ){</php>等{$vo['c']}人
+                  			<php>} else {</php>
+                  			{$vo['c']}人
+                  			<php>}</php>
+                  			
+                  </p>
+                  </div>
+       	  </li>
+         </volist>
+         
+         
+         
+        </ul>
+       <div class="page">{$page}</div>
+  </div><!-- 好友日志 end  -->
+  </div>  </div><!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />
+</body>
+</html>

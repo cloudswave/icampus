@@ -1,0 +1,98 @@
+<include file="__THEME__/header" />
+<include file="__THEME__/editor" />
+<link rel="stylesheet" href="__APP__/poster.css" type="text/css" media="screen" charset="utf-8" />
+
+<script  type="text/javascript" src="__APP__/poster.js" ></script>
+<script  type="text/javascript" src="__PUBLIC__/js/rcalendar.js" ></script>
+<div class="content_holder">
+<div class="content no_bg boxShadow"><!-- 内容 begin -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l"><!-- 画布 begin -->
+    <div class="mainbox">
+      <div class="mainbox_appR">
+        <div class="right_box box_create"><a href="{:U('poster/index/addPosterSort')}" class="btn_poster_c"></a></div>
+		<include file="../Public/_isHotList" />
+      </div>
+      <div class="mainbox_appC">
+  <div class=page_title> <!-- page_title begin -->
+  <h2><img src="__APP__/images/ico/{$ico}" />发起{$name}</h2>
+   <div style="padding-left:29px"><span class="cGray2">{$explain}</span></div>
+</div><!-- page_title end -->
+  <div class="groupBox">
+    <div class="boxL poster_boxL">
+  	<div class="box1">
+  	<php>if(!empty($smallType)){
+  	  $hasType = "true";
+  	}</php>
+      <form class="form-horizontal" role="form" method="post" action="{:U('poster/index/doAddPoster')}"  enctype="multipart/form-data" onbeforesubmit="check({$hasType})">
+        <dl class="add_event">
+          <php>if(!empty($smallType)){</php>
+          <dd >
+                <label ><span class="txt_impt">*</span>类别：</label>
+                <div class="c2">
+                    <?php foreach($smallType as $cate){ ?> <input type="radio" name="type" text="{$cate.name}" value="{$cate.id}" class="ck" />{$cate.name}
+                <?php } ?>
+                </div>
+              </dd>
+              <php>}</php>
+       	  <dd >
+              <label ><span class="txt_impt">*</span>标题：</label>
+              <div class="c2">
+              <input name="title" type="text" class="form-control text" id="title" maxlength="30" />
+          </div>
+          </dd>
+          <dd > 
+              <label ><span class="txt_impt">*</span>地点：</label>
+              <div class="c2">
+              <!-- <input  type="text" id="selectarea" name="areaval" value="{$userInfo.area}" class="form-control text" size="30"  /> -->
+              <!-- <input type="button" class="btn_b" value="选择地区" onclick="selectArea()" /> -->
+              <input type="text" id="current" name="area" value="{$userInfo.area}" class="form-control text" size="30"/>
+              </div>
+          </dd>
+          <dd >
+              <label >截止时间：</label>
+              <div class="c2"> <input  id="deadline" name="deadline" value="{$deadline}" type="text" class="form-control text" id="deadline" onfocus="rcalendar(this,'full');" style="width:169px" /></div>
+          </dd>          
+          <dd >
+              <label > <span class="txt_impt">*</span>详细介绍：</label>
+     <!--          <div class="c2">
+              <textarea id="explain" name="explain" style="width:99%;height:350px"></textarea>
+              </div> -->
+              <div class="c2">
+              {:W('Editor',array('contentName'=>'explain','value'=>'','width'=>'99%','heigth'=>'350'))}
+              </div>
+          </dd>
+          <volist name="extraField" id="vo">
+            {:W($vo['widget'],$vo)}
+          </volist>
+          <dd >
+                <label >联系方式：</label>
+                <div class="c2">
+                  <input  name="contact" type="text" class="text form-control" id="contact" size="30" />
+                  <br /><span class="cGray2">填写联系人电话，如：张小姐，1346665XXXX</span>
+                </div>
+          </dd>
+          <dd >
+            <label >封面图片：</label>
+            <div class="c2"> <input name="cover" type="file" class="text" /></div>
+          </dd>
+          <dd >
+                <label class="col-sm-2 control-label">&nbsp;</label>
+                <div class="c2">
+                <input type="hidden" name="pid"  value="{$id}"/>
+                <input name="button" type="submit" class="btn_b" id="button" value="确认发起" />
+                </div>
+          </dd>
+        </dl>
+        </form>
+    </div>
+    </div> <!-- end  -->
+ </div>
+  </div><!-- 画布 end  -->
+  <div class="c"></div>
+  </div>
+  </div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" />

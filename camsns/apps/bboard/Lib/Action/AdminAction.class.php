@@ -1,0 +1,191 @@
+<?php
+/**
+ * 频道后台配置
+ * 1.频道分类管理 - 目前支持1级分类
+ * @author zivss <guolee226@gmail.com>
+ * @version TS3.0
+ */
+tsload(APPS_PATH.'/admin/Lib/Action/AdministratorAction.class.php');
+class AdminAction extends AdministratorAction
+{
+	/**
+	 * 初始化，配置内容标题
+	 * @return void
+	 */
+	public function _initialize()
+	{
+		// 管理标题项目
+		$this->pageTitle['index'] = '布告列表';
+		$this->pageTitle['addtopic'] = '发布黑板报';
+		$this->pageTitle['config'] = '展示设置';
+		// 管理分页项目
+		$this->pageTab[] = array('title'=>$this->pageTitle['index'],'tabHash'=>'index','url'=>U('bboard/Admin/index'));
+		$this->pageTab[] = array('title'=>$this->pageTitle['addtopic'],'tabHash'=>'addtopic','url'=>U('bboard/Admin/addtopic'));
+		$this->pageTab[] = array('title'=>$this->pageTitle['config'],'tabHash'=>'config','url'=>U('bboard/Admin/config'));
+
+		parent::_initialize();
+	}
+	public function editTopic()
+	{
+		$this->pageKeyList=array('topic_id','topic_time','topic_uid','content');
+
+		$topic_id=intval($_GET['topic_id']);//获取到参数
+
+		//执行查询
+		$topic=D('bboard_topic')->where('topic_id = '.$topic_id)->find();
+
+		/*对编辑框赋值*/
+
+		$data=$topic;
+		$data['topic_time']=date('Y-m-d',$data['topic_time']);
+		$create_uid = model('User')->getUserInfoByUids($data['topic_uid']);
+		$data['topic_uid']= $create_uid[$data['topic_uid']]['space_link'];
+		
+		
+		// 表单URL设置
+		$this->savePostUrl = U('bboard/Admin/doEditTopic');
+		$this->notEmpty = array('topic_id','topic_time','topic_uid','content');
+        $this->onsubmit = 'admin.checkAddTopic(this)';
+
+		$this->displayConfig($data);
+	}
+	public function doEditTopic()
+	{
+
+		$topic_id = intval($_POST['topic_id']);//获取到Id
+		$topic=D('bboard_topic');
+		$res1= $topic->where('topic_id='.$topic_id)->setField('content',h($_POST['content']));
+		$res2= $topic->where('topic_id='.$topic_id)->setField('topic_time',strtotime($_POST['topic_time']));
+		//部分更新
+		if($res1 == false && $res2 == false)
+		{
+			$this->error('修改失败。');
+		}
+		else
+		{
+			$this->success('修改成功！');
+		}
+	}
+
+
+	/**
+	 * 频道基本配置页面
+	 * @return void
+	 */
+	public function index()
+	{
+		// 设置列表主键
+		$this->_listpk = 'topic_id';
+		$this->pageKeyList = array('topic_id','content','topic_time','topic_uid','DOACTION');
+		// 数据的格式化与listKey保持一致
+		$listData = D('topic')->getTopicList(20);;
+		$this->displayList($listData);
+	}
+
+	public function config()
+	{
+		// 列表key值 DOACTION表示操作
+		$this->pageKeyList = array('big_logo', 'tip');
+		$this->opt['big_logo'] = array('是', '否');
+		$this->opt['tip'] = '本站最新的进展。';
+
+		$this->displayConfig();
+	}
+
+	/**
+	 * 添加频道分类窗口
+	 * @return void
+	 */
+	public function addTopic()
+	{
+        // 列表key值 DOACTION表示操作
+		$this->pageKeyList = array('content');
+		
+		// 表单URL设置
+		$this->savePostUrl = U('bboard/Admin/doAddTopic');
+        $this->onsubmit = 'admin.checkAddTopic(this)';
+		$this->displayConfig();
+	}
+
+	/**
+	 * 添加分类操作
+	 * @return json 操作后的相关信息
+	 */
+	public function doAddTopic()
+	{
+		$data['content'] =h($_POST['content']);
+		$data['topic_time'] = time();
+		$data['topic_uid'] = $this->mid;
+		// 验证数据
+		if(empty($data['content'])) {
+			$this->error('请填写黑板报的信息。');
+		}
+		// 判断重复
+		$status = D('bboard_topic')->add($data);
+		if($status == 0) {
+			$this->error('添加失败。');
+		} else {
+			$this->success('添加成功。');
+		}
+		
+	}
+
+
+	/**
+	 * 删除内容
+	 * @return array 操作成功状态和提示信息
+	 */
+	public function delTopic(){
+		if(empty($_POST['topic_id'])){
+			$return['status'] = 0;
+			$return['data']   = '';
+			echo json_encode($return);exit();
+		}
+		!is_array($_POST['topic_id']) && $_POST['topic_id'] = array($_POST['topic_id']);
+		$data['topic_id'] = array('in',$_POST['topic_id']);
+		$result = D('bboard_topic')->where($data)->delete();
+		if($result){
+			// D('weiba_post')->where('weiba_id='.$weiba_id)->delete();
+			// D('weiba_reply')->where('weiba_id='.$weiba_id)->delete();
+			// D('weiba_follow')->where('weiba_id='.$weiba_id)->delete();
+			// D('weiba_log')->where('weiba_id='.$weiba_id)->delete();
+			$return['status'] = 1;
+			$return['data']   = '删除成功！';
+		}else{
+			$return['status'] = 0;
+			$return['data'] = '删除失败。';
+		}
+		echo json_encode($return);exit();
+	}
+
+
+	/**
+	 * 获取内容信息
+	 * @param array $map 查询条件
+	 * @param string $type 类型
+	 * @return array 获取相应的列表信息
+	 */
+	private function _getData($map, $type)
+	{
+		// 键值对
+		$this->pageKeyList = array('id','uname','content','status','category','DOACTION');
+		$data = D('Channel', 'channel')->getChannelList($map);
+		// 组装数据
+		foreach($data['data'] as &$value) {
+			$value['id'] = $value['feed_id'];
+			$value['status'] = ($value['status'] == 1) ? '<span style="color:green;cursor:auto;">已审核</span>' : '<span style="color:red;cursor:auto;">未审核</span>';
+			$value['category'] = implode('<br />', getSubByKey($value['categoryInfo'], 'title'));
+			switch($type) {
+				case 'audit':
+					$value['DOACTION'] = '<a href="javascript:;" onclick="admin.cancelRecommended('.$value['feed_id'].')">取消推荐</a>';
+					break;
+				case 'unaudit':
+					$channelId = implode(',', getSubByKey($value['categoryInfo'], 'channel_category_id'));
+					$value['DOACTION'] = '<a href="javascript:;" onclick="admin.auditChannelList('.$value['feed_id'].', \''.$channelId.'\')">通过审核</a>&nbsp;-&nbsp;<a href="javascript:;" onclick="admin.rejectChannel('.$value['feed_id'].')">驳回</a>';
+					break;
+			}
+		}
+
+		return $data;
+	}
+}

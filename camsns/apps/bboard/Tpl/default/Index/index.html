@@ -1,0 +1,58 @@
+<include file="__THEME__/public_header" xmlns="http://www.w3.org/1999/html"/>
+
+<div id="page-wrap">
+    <div id="main-wrap">
+        <div class="mb20 boxShadow clearfix extend" style="padding: 0px">
+            <if condition="$big_logo neq ''">
+                <div>
+                    <img src="{$big_logo}" style="max-width: 960px"/>
+
+                </div>
+            </if>
+            <p style="text-align: center;line-height: 40px;font-size: 24px;"> {$tip}</p>
+            <div style="padding:  15px 20px 15px 20px;border:solid 1px #ccc;border-radius: 3px ;">
+                {:W('SendWeibo',array('title'=>'写下你的期望：','initHtml'=>'#我的期望#'))}</div>
+            <div class="clearfix mb5"></div>
+        </div>
+
+        <div class="mb20 boxShadow clearfix extend">
+
+
+            <div class="content">
+                <volist name="topic" id="vo">
+
+                    <div class="c1">
+                        <div class="date">{$vo.topic_time}</div>
+                        <div class="box b1"><i class="arrow-left"></i><i class="icon-circle2"></i>
+                            <span class='ct'>{$vo.content}</span>
+
+                            <p align="left">
+                                </br>
+                                <a id='post'>转发</a></p>
+
+                        </div>
+                    </div>
+
+                </volist>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="container" class="mb10 channel-list clearfix"></div>
+
+    <script>
+        a = $('.c1');
+        a.each(function () {
+
+            $(this).height($(this).children('.box').height() + 47);
+            $(this).find('#post').attr({href: "javascript:ui.sendbox('转发','" + $(this).find('.date').text() + " : 【 " + $(this).find('.ct').text() + " 】来自【" + "黑板报】" + "');" });
+
+        });
+
+
+    </script>
+
+</div>
+<script type="text/javascript" src="__THEME__/js/module.weibo.js"></script>
+<include file="__THEME__/public_footer"/>

@@ -1,0 +1,38 @@
+<dl class="pop_create_album">
+  <dt>
+    <label>{$ts['app']['app_alias']}名称：</label>
+    <input  name="name" type="text" class="s-txt" id="name" onfocus="this.className='s-txt'" onblur="this.className='s-txt'" />
+  </dt>
+<!--   <dd>
+    <label>相册描述：</label>
+    <textarea class="s-textarea"></textarea>
+  </dd> -->
+  <dd>
+    <label>访问权限：</label>
+    <select name="privacy" id="privacy" onchange="javascript:changePrivacy(this);">
+      <option value="1">所有人可见</option>
+      <option value="2">我的粉丝可见</option>
+      <option value="3">仅自己可见</option>
+      <option value="4">凭密码访问</option>
+    </select>
+  </dd>
+  <dd id="need_password" style="display:none;">
+    <label>设置密码：</label>
+    <input name="privacy_data" type="text" class="TextH20" id="textfield3" style="width:300px;" onblur="this.className='TextH20'" onfocus="this.className='Text2'" />
+  </dd>
+  <dd>
+    <label>&nbsp;</label>
+    <a onclick="do_create_album({$isRefresh})" class="btn-green-small">确定</a>
+  </dd>
+</dl>
+
+<script type="text/javascript">
+// 显示私有设置框
+function changePrivacy(obj) {
+	if (obj.value==4) {
+		$('#need_password').show();
+	} else {
+		$('#need_password').hide();
+	}
+};
+</script>

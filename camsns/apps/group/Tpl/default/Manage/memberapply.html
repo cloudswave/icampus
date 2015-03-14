@@ -1,0 +1,89 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/common.js"></script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<script>
+	function manage(uid,op) {
+		v_prompt = "";
+		if(op == 'admin') {
+			v_prompt = '你确定设置该用户成为管理员';
+		}else if(op == 'normal'){
+			v_prompt = '你确定设置该用户成为普通会员';
+		}else if(op == 'out'){
+			v_prompt = '你确定要踢出该用户';
+		}else if(op == 'allow'){
+			v_prompt = '你确定设置该用户成为该群组成员'
+		}
+		if(v_prompt.length){
+			if (!confirm(v_prompt))
+			{
+				return;
+			}
+		}
+		document.actionform.uid.value = uid;
+		document.actionform.op.value = op;
+		document.actionform.submit();
+	}
+</script>
+</head>
+<body>
+<div class="content_holder">
+<div class="content no_bg boxShadow"> 
+<include file="../Public/_mainNav" />
+  <!-- 内容 begin  -->
+  <div class="main no_l"> 
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_appC" style="margin-right:0"> <include file="../Public/manage_group_top" />
+        <div class="mod-feed-tab">
+          <ul class="inner-feed-nav">
+             <li><a href="{:U('group/Manage/membermanage',array('gid'=>$groupinfo['id'],'type'=>'manage'))}" >所有成员</a></li>
+             <li class="current"><a href="#">申请加入的人</a></li>
+          </ul>
+        </div>
+        <form method="post" name="actionform" action="{:U('group/Manage/memberaction')}">
+          <input type="hidden" name="gid" value="{$gid}">
+          <input type="hidden" name="op" value="">
+          <input type="hidden" name="uid" value="">
+        </form>
+        <div class="groupBox">
+          <div class="boxL" style="width:100%;">
+            <div class="box1">
+              <dl class="memberlist">
+                <dd class="cGray2">
+                  <div class="c1">名字</div>
+                  <div class="c2">身份</div>
+                  <div class="c3 mr10">申请理由</div>
+                  <div class="c4">操作</div>
+                  <div class="c"></div>
+                </dd>
+                <volist name="memberlist['data']" id="member">
+                  <dd>
+                    <div class="c1"><span class="pic30 mr5"><space uid="member['uid']" target="_blank">{uavatar=s}</space></span><space uid="member['uid']" class="fn" target="_blank">{uname}</space></div>
+                    <div class="c2">申请者</div>
+                    <div class="c3 mr10">{$member['reason']}&nbsp;</div>
+                    <div class="c4"> <a href="javascript:manage({$member['uid']},'allow');">批准加入</a> <a href="javascript:manage({$member['uid']},'out');">拒绝加入</a> </div>
+                     <div class="c"></div>
+                    
+                    <!--如果是成员--> 
+                    
+                  </dd>
+                </volist>
+              </dl>
+              <p class="mt10">共{$memberlist['count']}人申请成员</p>
+              <div class="page">{$memberlist['html']}</div>
+            </div>
+          </div>
+          <!-- end  --> 
+        </div>
+        <div class="c"></div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  --> 
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/public_footer" />
+</body>
+</html>

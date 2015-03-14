@@ -1,0 +1,135 @@
+<include file="__THEME__/header" />
+
+
+<script type="text/javascript" src="../Public/Js/Common.js"></script>
+<link  href="../Public/layout.css" rel="stylesheet" type="text/css"/>
+<link  href="../Public/group.css" rel="stylesheet" type="text/css"/>
+
+<script>
+
+	
+	function download(fid) {
+		
+		document.downloadform.fid.value = fid; 
+		document.downloadform.submit();
+	}
+	
+	function editfile(fid) {
+		if(fid == {$fileInfo['id']}) {
+			ymPrompt.confirmInfo({
+				icoCls:'',
+				msgCls:'confirm',
+				message:
+				'<br/>文件注释：<input type="text" name="note" size="25" id="note" onfocus="this.select()" value="{$fileInfo.note}"/>',
+				title:'修改文件注释',
+				height:130,
+				width:350,
+				handler:editfile_do,
+				autoClose:true})
+			}
+		}
+	
+	
+	function editfile_do(msg) {
+		
+		if(msg =='ok') {
+			$.ajax( {
+      			type: 'POST',
+     		 	url: "__URL__/editfile",
+      			data:"gid={$gid}&fid={$fileInfo['id']}&note="+$('#note').val(),
+      			success:function(result){
+   					window.location.reload();
+      			}
+     	 	})
+		}
+	}
+	
+	
+	function delfile(fid){
+		if(fid == {$fileInfo['id']})  ymPrompt.confirmInfo({message:'你确定要删除这个共享文件？',title:'删除文件',handler:delfile_do});
+		 
+	}
+	
+	function delfile_do(msg) {
+		
+		if(msg == 'ok') {
+			document.delform.fid.value = {$fileInfo['id']}; 
+		    document.delform.submit();
+		}
+	}
+</script>
+</head>
+
+<body>
+ <form method="POST" action="__URL__/download" name="downloadform">
+  		<input type="hidden" name="gid" value="{$gid}">
+  		<input type="hidden" name="fid" value="">
+ </form>
+ 
+ <form method="POST" action="__URL__/editfile" name="editform">
+  		<input type="hidden" name="gid" value="{$gid}">
+  		<input type="hidden" name="fid" value="">
+  		<input type="hidden" name="note" value="">
+ </form>
+ 
+ <form method="POST" action="__URL__/delfile" name="delform">
+  		<input type="hidden" name="gid" value="{$gid}">
+  		<input type="hidden" name="fid" value="">
+ </form>
+ 
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+   <!-- 用户组件列表 begin -->
+  <!-- 用户组件列表 end -->
+  <div class="main"> <!-- 右侧内容 begin  -->
+ 
+  
+  <div class=page_title> <!-- page_title begin -->
+  	<div class="left" style="width:80px;">
+    	<span class="headpic50"><a href="__APP__/Group/index/gid/{$gid}"><img src="__ROOT__/thumb.php?w=50&h=50&url={$groupinfo['logo']|group_get_photo_url}"/></a></span>
+    </div>
+    <div class="left" style="width:583px;">
+    	<h2> <strong><a href="__APP__/Group/index/gid/{$gid}">{$groupinfo['name']}</a></strong> &gt; <strong><a href="__APP__/Dir/index/gid/{$gid}">群文件共享</a></strong> </h2>
+        <p><a href="__APP__/Dir/index/gid/{$gid}">返回文件列表</a></p>
+      </div>
+    <div class="left alR lh30" style="width:170px;">
+        <a href="javascript:window.history.back();">&lt;&lt;返回上一页</a></div>
+  <div class="c"></div>
+</div><!-- page_title end -->
+
+  <div class="groupBox">
+  <div class="boxL" style="width:100%;">
+    <div class="box1">
+    <h3>下载文件</h3>
+        <div style="margin-top:10px;"><div class="left lh20 alR" style="width:80px"><img src="../Public/images/xiazai.gif" width="50" height="57" /></div><div class="left lh25 f14px" style="width:560px">
+          <div class="left alR" style="width:60px">文件名：</div>
+          <div><strong>{$fileInfo['name']}</strong> <a href="javascript: download({$fileInfo['id']});"><img src="../Public/images/icon/{$fileInfo['filetype']}.gif" width="16" height="16" align="absmiddle" /></a></div>
+          <div class="left alR" style="width:60px"> 大小 ：</div>
+          <div> {$fileInfo['filesize']|formatsize} </div>
+          <div class="left alR" style="width:60px"> 注释 ：</div>
+          <div> {$fileInfo['note']} </div><br />
+          <a href="javascript: download({$fileInfo['id']});"><img src="../Public/images/btm_xiazai.gif" alt="立即下载" /></a>
+        </div><div class="left lh20 cGray2" style="width:190px;">
+          <p>下载次数：{$fileInfo['totaldowns']}  <br />
+          上 传 者： <a href="__TS__/space/{$fileInfo['uid']}">{$fileInfo.uid|getUserName}            </a><br />
+          上传时间：{$fileInfo.ctime|friendlyDate} </p>
+        </div></div>
+    </div>
+    <div class="clear lh30 alR btmline mb10">
+    	<php>if($isadmin || $fileInfo['uid'] == $mid){</php>
+    	<a href="javascript:editfile({$fileInfo['id']});">编辑</a> ┊ 
+    	<a href="javascript:delfile({$fileInfo['id']});">删除</a>
+    	<php>}</php>
+    </div>
+    
+    </div>
+  <!-- end  -->
+  </div>  </div><!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+
+<include file="__THEME__/public_footer" />
+</body>
+</html>

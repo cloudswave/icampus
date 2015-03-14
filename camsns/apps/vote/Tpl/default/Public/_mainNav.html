@@ -1,0 +1,29 @@
+<div class="find-type">
+<div class="app-title clearfix">
+		<div class="search-input">
+            <div id="mod-search">
+                <form name="search_vote" id="search_vote" method="post" action="{:U('vote/Index/index')}">
+                    <dl>
+                    <dt class="clearfix"><!--<i class="ico-search"></i>--><input autocomplete="off" id="searchvote_input" class="s-txt left"  type="text" value="<php>if(!empty($searchkey)){</php>{$searchkey}<php>}else{</php>搜投票<php>}</php>" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜投票';" event-node="searchKey" name='k'><a href="javascript:void(0)" class="btn-search" onclick="if(getLength($('#searchvote_input').val()) && $('#searchvote_input').val()!=='搜投票'){ $('#search_vote').submit(); return false;}"><span>搜索</span></a></dt>
+                    </dl>
+                </form>
+            </div>
+          </div>
+		<h4 class="left"><img src="{$ts['app']['small_icon_url']}" />&nbsp;&nbsp;{$ts['app']['app_alias']}</h4>
+		<div class="app-tab-menu clearfix" style="margin:0 0 0 130px;">
+            
+			<ul>
+				<li><a href="{:U('vote/Index/index')}" <php>if(in_array((ACTION_NAME),array('index','personal')) || (ACTION_NAME)=='pollDetail'&&$vote['uid']!=$mid)echo 'class="current"';</php>>{$ts['app']['app_alias']}首页
+                    <php>if(in_array((ACTION_NAME),array('index','personal')) || (ACTION_NAME)=='pollDetail'&&$vote['uid']!=$mid){</php>
+                    <span class="triangle"></span>
+                    <php>}</php>
+                </a><i class="line"></i></li>
+                <li><a href="{:U('vote/Index/my')}" <php>if(in_array((ACTION_NAME),array('my','addPoll')) || (ACTION_NAME)=='pollDetail'&&$vote['uid']==$mid)echo 'class="current"';</php>>我的{$ts['app']['app_alias']}
+                    <php>if(in_array((ACTION_NAME),array('my','addPoll')) || (ACTION_NAME)=='pollDetail'&&$vote['uid']==$mid){</php>
+                    <span class="triangle"></span>
+                    <php>}</php>
+                </a></li>
+			</ul>
+		</div>
+	</div>
+</div>

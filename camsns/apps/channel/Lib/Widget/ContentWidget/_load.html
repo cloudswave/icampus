@@ -1,0 +1,52 @@
+<volist name="data" id="vo">
+<div class="box boxShadow" id="feed_{$vo.feed_id}">
+
+	<php>if($vo['type'] == 'postimage'):</php>
+	<div class="pic">
+		<a href="{:U('public/Profile/feed', array('feed_id'=>$vo['feed_id'],'uid'=>$vo['user_info']['uid']))}" target="_blank"><i class="ico-detail"></i></a>
+		<ul><li><a onclick="core.weibo.showBigImage({$vo['feed_id']}, 1);" href="javascript:;"><img width="{$vo.width}" height="{$vo.height}" src="{$vo.attachInfo}" alt="{$vo.body|t}" /></a></li></ul>
+		<php>if(count($vo['attach_id']) > 1):</php>
+		<div class="pic-more"><a href="{:U('public/Profile/feed', array('feed_id'=>$vo['feed_id'],'uid'=>$vo['user_info']['uid']))}" target="_blank">点击查看全部图片</a></div>
+		<php>endif;</php>
+	</div>
+	<php>endif;</php>
+
+	<php>if($vo['type'] == 'postvideo'):</php>
+	<div class="pic">
+		<a href="{:U('public/Profile/feed', array('feed_id'=>$vo['feed_id'],'uid'=>$vo['user_info']['uid']))}" target="_blank"><i class="ico-detail"></i></a>
+		<ul><li><a href="{:U('public/Profile/feed', array('feed_id'=>$vo['feed_id'],'uid'=>$vo['user_info']['uid']))}"><img width="225" height="160" src="{$vo.flashimg}" alt="{$vo.body|t}" /></a></li></ul>
+	</div>
+	<php>endif;</php>
+
+	<div class="channel-list-l">
+		<div class="channel-user-conntent mb10 feed_list">                      
+			<p><space uid="vo.user_info.uid">{uname}</space>：{$vo.body|format=true}</p>
+
+			<php>if($vo['type'] == 'postfile'):</php>
+			<ul>
+				<volist name="vo.attachInfo" id="v">
+				<li>
+					<i class="ico-{$v.extension}-small"></i>
+					<a href="{:U('widget/Upload/down',array('attach_id'=>$v['attach_id']))}" title="{$v.name}">{$v.name|getShort=###, 10, '...'}</a>
+				</li>
+				</volist>
+			</ul>
+			<php>endif;</php>
+		</div>
+
+		<div class="channel-user-share">
+			<span class="right f9" style="display:none;" event-node="show_admin" event-args="feed_id={$vo.feed_id}&uid={$vo.user_info.uid}&channel_recommend={:CheckPermission('channel_admin','channel_recommend')}">管理</span>
+			<span>
+				<php>if(in_array('repost',$weibo_premission) && CheckPermission('core_normal','feed_share')):</php>
+				<a event-node="share" event-args="sid={$vo.feed_id}&stable=feed&curtable=feed&curid={$vo.feed_id}&initHTML=&appname=public&cancomment=1" href="javascript:;"><i class="ico-forward"></i>({$vo.repost_count})</a>
+				<php>endif;</php>
+				{:W('Collection',array('sid'=>$vo['feed_id'],'stable'=>'feed','sapp'=>$vo['app'],'ico'=>'ico-favorites','tpl'=>'ico'))}
+				<php>if(in_array('comment',$weibo_premission)):</php>
+				<a href="{:U('public/Profile/feed', array('feed_id'=>$vo['feed_id'],'uid'=>$vo['user_info']['uid']))}"><i class="ico-comment"></i>({$vo.comment_count})</a>
+				<php>endif;</php>
+			</span>
+		</div>
+	</div>
+
+</div>
+</volist>

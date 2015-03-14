@@ -1,0 +1,33 @@
+<include file="__THEME__/public_header" />
+
+<link href="__APP__/weiba.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/public/account.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+
+<div id="page-wrap">
+  <div id="main-wrap">
+    <div class="boxShadow">
+      <include file="../Index/_weiba_header" />
+      <div class="mb10 clearfix extend">
+        <include file="_tab" />
+        <div class="weiba-manage">
+          <form method="post" action="{:U('weiba/Manage/doNotify')}">
+            <input type="hidden" name="weiba_id" value="{$weiba_id}">
+            <h3>发布公告(最多可输入200个汉字)</h3>
+            <dl class="form-set">
+              <textarea class="s-textarea1" name="notify">{$notify}</textarea>
+              <dd>
+                <a href="#" class="btn-green-small right mt5" event-node="submit_btn"><span>确定</span></a>
+                <!-- <a href="" class="btn-cancel"><span>取消</span></a> -->
+              </dd>
+            </dl>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<input type="hidden" value="0" id="user_category_id" />
+
+<include file="__THEME__/public_footer" />

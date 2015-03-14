@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+<app type='core' info='核心'>
+	<module type="normal" info="普通权限">  
+		<rule type="feed_view" info="浏览微博"></rule>
+		<rule type="feed_post" info="发表微博"></rule>
+		<rule type="feed_comment" info="评论微博"></rule>
+		<rule type="feed_report" info="举报微博"></rule>
+		<rule type="feed_share" info="分享微博"></rule>	
+	</module>  
+	<module type="admin" info="管理权限">	
+		<rule type="feed_del" info="删除微博"></rule>
+		<rule type="comment_del" info="删除评论"></rule>
+		<rule type="message_del" info="删除私信"></rule>
+	</module>
+</app>
+<app type='admin' info='后台'>
+	<module type="normal" info="普通权限">  
+		<rule type="admin_login" info="登录后台"></rule>
+	</module>  
+	<module type="admin" info="管理权限">	
+	</module>
+</app>
+</root>

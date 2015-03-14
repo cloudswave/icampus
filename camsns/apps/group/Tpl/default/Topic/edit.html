@@ -1,0 +1,86 @@
+<include file="__THEME__/header" />
+<include file="__THEME__/editor" />
+<script type="text/javascript" src="__APP__/Js/common.js"></script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<script>
+	function checkform(v_form){
+		if (getLength(v_form.title.value) == 0) {
+			v_form.title.focus();
+			ui.error('标题不能为空');
+			return false;
+		} else if (getLength(v_form.title.value) >30) {
+			v_form.title.focus();
+			
+			ui.error('标题内容不能超过30个字');
+			
+			return false;
+		}
+	    var content = E.getData();
+	    content = removeHTMLTag(content);
+	    if(checkPostContent(content) < 10) {
+			ui.error('内容不能小于10个字');
+			return false;
+		}
+		return true;
+	}
+</script>
+<div class="content_holder">
+<div class="content no_bg boxShadow"> 
+<include file="../Public/_mainNav" />
+  <!-- 内容 begin  -->
+  <div class="main no_l"> 
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox"> <include file="../Public/_groupInfo" />
+      <div id="col5" class="st-index-main"> 
+        <div class="extend-foot">
+        <include file="../Public/top" />
+        <div class="groupBox">
+          <div class="box1">
+            <h2 class="tit_h2">编辑帖子</h2>
+            <form method="post" action="{:U('/Topic/edit',array('gid'=>$gid,'tid'=>$thread['id']))}" onbeforesubmit="checkform(this);">
+              <ul class="fW100_ul">
+                <li>
+                  <div class="left alR" style="width:110px;"><strong>标题：</strong></div>
+                  <div style="margin-left:110px;">
+	                <select name="cid" class="text mr5">
+	                  <option value="0">未分类</option>
+	                  <php>foreach( $category_list as $value ){</php>
+	                  <option value="{$value['id']}" <if condition="$thread['cid'] eq $value['id']">selected</if>>{$value['title']}</option>
+	                  <php>}</php>
+	                </select>
+                    <input name="title" value="{$thread.title}" class="text" style=" width: 70%;" onBlur="this.className='text'" onFocus="this.className='text2'" type="text">
+                  </div>
+                </li>
+                <li>
+                  <div class="left alR" style="width:110px;"><strong>内容：</strong></div>
+                  <div style="margin:0 10px 0 110px;">
+                   {:W('Editor',array('contentName'=>'content','value'=>$thread['content']))}
+                  </div>
+                </li>
+                <if condition="$groupinfo['openUploadFile'] && ($groupinfo['whoUploadFile'] == 3 || ($groupinfo['whoUploadFile'] == 2 && $isadmin))">
+                <li>
+                  <div class="left alR" style="width:110px;"><strong>附件：</strong></div>
+                  <div style="margin-left:110px;*zoom:1;">
+                    {:W('UploadAttach', array('uid'=>$mid,'gid'=>$gid,'limit'=>3,'edit'=>$thread['attachids']))}
+                  </div>
+                </li>
+                </if>
+                <li>
+                  <div style="margin-left:110px;margin-top:20px;*margin-top:15px">
+                    <input type="hidden" name="editsubmit" value="do" >
+                    <input name="button" type="submit" class="btn_b mt5" id="button" value="确定" />
+                  </div>
+                </li>
+              </ul>
+            </form>
+          </div>
+        </div>
+       </div>
+        <!-- end  --> 
+      </div>
+    </div>
+    <div class="c"></div>
+  </div>
+</div>
+</div>
+<include file="__THEME__/public_footer" />

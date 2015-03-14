@@ -1,0 +1,86 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__APP__/Js/common.js"></script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<div class="content_holder">
+<div class="content no_bg boxShadow"><!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+<div class="main no_l">
+  <!-- 右侧内容 begin  -->
+  <div class="mainbox">
+    <include file="../Public/_isHotList" />
+    <div class="mainbox_appC">
+        <!-- <div class="tab-menu">
+          <ul>
+              <li><a href="{:U('group/SomeOne/index')}" 
+              <eq name="ACTION_NAME" value="index">class="on"</eq>
+              ><span>{$current_uname}的群组</span></a></li>
+          </ul>
+        </div> -->
+        <div class="tab-menu">
+          <ul> 
+             <li <if condition="$type eq 'all'">class="current"</if>><a href="{:U('group/SomeOne/index')}">全部</a></li>
+             <li <if condition="$type eq 'manage'">class="current"</if>><a href="{:U('group/SomeOne/index',array('uid'=>$uid,'type'=>'manage'))}">{$current_uname}管理的{$ts['app']['app_alias']}</a></li>
+             <li <if condition="$type eq 'join'">class="current"</if>><a href="{:U('group/SomeOne/index',array('uid'=>$uid,'type'=>'join'))}">{$current_uname}加入的{$ts['app']['app_alias']}</a></li>
+             <li <if condition="$type eq 'following'">class="current"</if>><a href="{:U('group/SomeOne/index',array('uid'=>$uid,'type'=>'following'))}">{$current_uname}关注的人的{$ts['app']['app_alias']}</a></li>
+          </ul>
+        </div>
+      <div class="groupBox">
+        <div class="group-list my-group clearfix"><!-- 好友日志 begin  -->
+          <ul>
+            <volist name="grouplist['data']" id="group">
+              <li>
+                <div class="rmenu right">
+                <php>if($uid == $mid){</php>
+                  <if condition="$group['status'] eq 1">
+                    <a href="{:U('group/Group/index',array('gid'=>$group['id']))}">浏览该群</a>
+                    <php>$level = getLevel($uid, $group['id']);</php>
+                    <php>if($level===null){</php>
+                    <a href="javascript:joingroup({$group['id']});">加入该群</a>
+                    <php>} else if($level==='0'){</php>
+                    	成员审核
+                    <php>} else if($level==1 || $level==2){</php>
+                    <a href="{:U('group/Manage/index',array('gid'=>$group['id']))}">管理该群</a>
+                    <php>} else if($level==3){</php>
+                      	该群成员
+                    <php>}</php>
+                <else />
+                  		群组审核
+                    <a href="javascript:;" onclick="delgroup({$group['id']});" >解散该群</a>
+                </if>
+                <php>}</php>
+                </div>
+                <div class="group-pic">
+                	<a href="{$group['id']|group_id_to_url}"><img src="{$group['logo']|logo_path_to_url}" width="100" height="100" /></a>
+                </div>
+                <div class="group-info">
+                  <h3><if condition="$group['status'] eq 1"><a href="{:U('group/Group/index',array('gid'=>$group['id']))}">{$group['name']}</a><else />{$group['name']}</if></h3>
+                  <p>成员：{$group['membercount']}</p>
+                  <p>创建：{$group['ctime']|friendlyDate}</p>
+                  <p>类型：{$group['cid0']|group_getCategoryName}</p>
+                  <php>if($group['unread_usercount']){</php>
+                  <p style="color:red;">消息：
+                  		<php>if($group['unread_usercount']['atme']){</php>
+                  			<a href="{:U('group/Notice/atme',array('gid'=>$group['id']))}" style="color:red;">@提到我的：<font color="red">{$group.unread_usercount.atme}</font>条</a>
+                  		<php>}</php> 
+                  		<php>if($group['unread_usercount']['comment']){</php>
+                  			<a href="{:U('group/Notice/comment',array('gid'=>$group['id'],'type'=>'receive'))}" style="color:red;">收到的评论：<font color="red">{$group.unread_usercount.comment}</font>条</a>
+                  		<php>}</php>	
+                  	</p>
+                  <php>}</php>
+                </div>
+                <div class="c"></div>
+            </li>
+            </volist>
+          </ul>
+          <div class="page">{$grouplist['html']}</div>
+        </div>
+        <!-- 好友日志 end  -->
+      </div>
+    </div>
+    <div class="c"></div>
+  </div></div>
+  <!-- 右侧内容 end  -->
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" /> 

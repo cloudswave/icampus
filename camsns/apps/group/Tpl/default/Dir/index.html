@@ -1,0 +1,164 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__APP__/Js/common.js"></script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<script>
+	function download(fid) {
+		if (!fid) {
+			ui.error('附件参数错误');
+			return false;
+		}
+		document.downloadform.fid.value = fid; 
+		document.downloadform.submit();
+	}
+
+	var get_checked_id = function()
+	{
+	    var ids = new Array();
+	    $.each($('#files_list input:checked'), function(i, n){
+	        var id = $(n).val();
+	        if (id > 0) {
+	            ids.push( id );
+	        }
+	    });
+	    return ids;
+	}
+
+	var check_all_file = function(e)
+	{
+		var $files_list_input = $('#files_list input[name="file_id[]"]');
+		if( e.checked == true ){
+			$files_list_input.attr('checked','true');
+	    }else{
+	    	$files_list_input.removeAttr('checked');
+	    }
+	}
+	var file_set = function(op, fid)
+	{
+		var fids = fid?fid:get_checked_id();
+		if (fids == '') {
+			ui.error('请选择文件');
+			return false;
+		}
+		$.ajax({
+			type: "POST",
+			url:  "__URL__&{:C('VAR_ACTION')}="+op,
+			data: 'gid=<?php echo $gid; ?>&fid=' + fids,
+			dataType:"json",
+			success: function(data)
+			{
+				if (data.flag == 1) {
+					ui.success(data.msg);
+					fids = fids.toString().split(',');
+					switch (op) {
+						case 'delfile':
+							for (i = 0 ; i < fids.length ; i++) {
+								$('#files_list input[name="file_id[]"][value="' + fids[i] + '"]').parent().parent().remove();
+							}
+							break;
+						default:
+							setTimeout(function(){location.reload();},1000);
+							break;
+					}
+				} else {
+					ui.error(data.msg);
+				}
+			}
+		});
+	}
+</script>
+</head>
+
+<body>
+ <form method="POST" action="{:U('group/Dir/download')}" name="downloadform" target="_blank">
+  		<input type="hidden" name="gid" value="{$gid}">
+  		<input type="hidden" name="fid" value="">
+ </form>
+<div class="content_holder">
+<div class="content no_bg">
+<include file="../Public/_mainNav" />
+   <div class="main no_l">
+   <!-- 右侧内容 begin  -->
+   <div class="mainbox">
+   <include file="../Public/_groupInfo" />
+   <div class="mainbox_appC">
+   <!--  简单头部 -->
+   <include file="../Public/top" />
+   <!--  简单头部结束  -->
+  
+
+  <div class="groupBox">
+  <div class="boxL" style="width:100%;_width:99%">
+  		  <if condition="$search_key">
+            <div class="pt10">
+	          <div class="Search_bg">
+	            <div>
+	          	  <form method="post">
+		                <input type="text" name="k"  value="{$search_key}" class="text txt_g"/> <input type="submit" value="搜文件" class="btn_b" />
+		          </form>
+		        </div>
+	          </div>
+            <!--搜索结果-->  
+            <div style="*zoom:1;overflow:hidden;padding:10px 0 0">
+                <div class="right"><a href="{:U('group/Dir/upload', array('gid'=>$gid))}" class="btn_b">上传文件</a></div>
+                <div class="lh35" style="height:35px"><div class="cGray2 clearL lh30">找到 <span class="cRed">{$search_key}</span> 相关结果约：({$fileList.count})条</div></div>
+             </div>
+            <!--//搜索结果-->  
+            </div>
+          <else />
+		    <div class="lh35" style="height:35px; overflow:hidden">
+		      <a href="{:U('group/Dir/upload', array('gid'=>$gid))}" class="right mt5 btn_b" style="margin-top:5px">上传文件</a>
+		      <div><span class="left mr5"><em class="cGray2">共{$fileList['count']}个文件</em>&nbsp;&nbsp;剩<php>echo formatsize($config['spaceSize']*1024*1024-$usedSpace)</php>/共{$config['spaceSize']} MB ,&nbsp;<php>echo substr((1-$usedRate)*100,0,5)</php>%</span><span class="scale left"><span style="width:{:intval($usedRate*100)}%"></span></span></div>
+		    </div>
+          </if>
+  		<ul class="postsList" id="files_list">
+	  	<if condition="$fileList['count']">
+       	  <li class="tit lineS_top">
+   	    	<div class="c1">文件名称</div>
+            <div class="c2">大小</div>
+            <div class="c3">上传者</div>
+            <div class="c4">下载次数</div>
+            <div class="c5">上传时间</div>
+          </li>
+       	  <volist name="fileList['data']" id="file">
+          <li class="lineS_btm">
+   	    	<div class="c1">
+              <if condition="$isadmin">
+                <input name="file_id[]" type="checkbox" value="{$file.id}" class="checkbox" />
+              </if>
+              <if condition="!file_exists(SITE_PATH.'/apps/group/_static/images/icon/'.$file['filetype'].'.gif')"><img src="__APP__/images/icon/txt.gif" class="alM" /><else /><img src="__APP__/images/icon/{$file['filetype']}.gif" class="alM" /></if>
+              <a href="javascript:download('{$file['id']}')" <if condition="$file['note']">title="注释：{$file['note']}"</if>>{$file['name']}</a>
+            </div>
+            <div class="c2">{$file['filesize']}</div>
+            <div class="c3">{$file['uid']|getUserName}</div>
+            <div class="c4">{$file['totaldowns']}</div>
+            <div class="c5">{$file['ctime']|friendlyDate}</div>
+       	  </li>
+       	  </volist>
+          <if condition="$isadmin">
+          <li>
+            <label><input type="checkbox" value="" onClick="check_all_file(this)" class="checkbox" style="_vertical-align:3px;*margin:0 2px 0 0;" />全选</label>&nbsp;&nbsp;
+            <a href="javascript:;" onClick="file_set('delfile', '')">删除</a>&nbsp;&nbsp;
+          </li>
+          </if>
+        <else />
+        	<php>if ($search_key) {</php>
+              <li>没有包含“{$search_key}”的文件</li>
+            <php>} else {</php>
+	          <li>
+	   	    	<p class="cGray2"> 该群还没有人上传文件 <a href="{:U('group/Dir/upload', array('gid'=>$gid))}">上传文件</a></p>
+	       	  </li>
+            <php>}</php> 
+        </if>
+        </ul>
+       	<div class="page">{$fileList['html']}</div>
+    </div>
+  <!-- end  -->
+  </div> <div class="c"></div>
+  </div>
+  <div class="c"></div>
+  </div>
+   </div><!-- 右侧内容 end  -->
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" />

@@ -1,0 +1,36 @@
+<include file="../Public/header" />
+<div id="content"  msgpage="msg_list">
+	<include file="../Public/message_header" />
+	<div id="newmsg"></div>
+	<div id="doR_box"><!-- 回复私信 -->
+		<div id="doRibox">
+			<!-- <input id="doR_input" type="text"></input> -->
+			<textarea id="doR_input" placeholder="回复内容"></textarea>
+		</div>
+		<div id="doRsbox">
+			<button id="doR_submit" type="button">回复</button>
+		</div>
+	</div>
+	<!-- 书写并发送私信 
+	<div id="doPostMsg_box">
+		<input id="doPostMsg_uname" type="text"></input>
+		<textarea id="doPostMsg_area"></textarea>
+		<button id="doPostMsg_submit" type="button">发送私信吧亲！</button>
+	</div>
+	-->
+	<div id="msg_listbox"></div>
+</div>
+<script type="text/javascript">
+var list_id = "{$message['list_id']}";
+var since_id = "0";
+var defalut_since = "{$message['since_id'] - 1}";
+var max_id = 0;
+var timeout = null;
+var type = 1;
+var to = "{$message['to'][0]['member_uid']}";
+// var attach_ids = $.trim($('#attach_ids').val());//设置附件缓存变量
+LazyLoad.js(["js/z.message.js"], function(){
+	console.log("message->detail->script->loaded!");
+});
+</script>
+<include file="../Public/footer" />

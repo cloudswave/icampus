@@ -1,0 +1,119 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="__APP__/poster.css" type="text/css" media="screen" charset="utf-8" />
+<style type="text/css">
+.sort dd {
+  margin: 5px;
+}
+  .sort dd a {
+  padding: 0 1px;
+  line-height: 0px;
+  height: 24px;
+}
+.sort dd a.on {
+display: inline;
+float: none;
+}
+</style>
+
+<script  type="text/javascript" src="__APP__/poster_follow.js" ></script>  
+<div class="content_holder">
+<div class="content no_bg boxShadow"><!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox clearfix">
+      <div class="mainbox_appR">
+        <div class="right_box box_create mb20"><a href="{:U('poster/index/addPosterSort')}" class="btn-create">发布信息</a></div>
+        <include file="../Public/_isHotList" /> </div>
+      <div class="mainbox_appC"> <!-- 右侧内容 begin  -->
+        <div class="tab-menu clearfix" style="height: 32px;"><!-- 切换标签 begin  -->
+          <ul>
+            <li  class="current"><a href="{:U('//personal', array('uid'=>$uid))}"><span><if condition="$uid eq $mid">我<else />{$uid|getUserName}</if>的{$ts['app']['app_alias']}</span></a></li>
+          </ul>
+        </div>
+        <div class="boxL poster_boxL">
+          <div class="sort mt10" >
+            <dl>
+              <volist name="posterType" id="vo">
+                <dd><a href="{:U('//personal',array('uid'=>$_GET['uid'],'pid'=>$vo['id']))}" 
+                  <php>if($vo['id'] == $_GET['pid']) echo "class='on'";</php>
+                  >{$vo.name}</a>
+
+
+
+          <php>if(!isset($poster_type_follow[$vo['id']])):</php>
+            <a href="javascript:;" onclick="poster.upFollowStatus('{$GLOBALS['ts']['mid']}', '{$vo.id}', 'add',0, this)" class="btn-cancel">
+            <span><i class="ico-add-black"></i>关注</span></a>
+            
+        <php>else:</php>
+            <a href="javascript:;" onclick="poster.upFollowStatus('{$GLOBALS['ts']['mid']}', '{$vo.id}', 'del',0, this)" class="btn-att-white">
+            <span><i class="ico-already"></i>已关注</span></a>
+          <php>endif</php>
+
+
+                  </dd>
+              </volist>
+            </dl>
+          </div>
+          <php>if(!empty($type)){</php>
+           <div class="sort mb10" style="background-color:#fff; border-top:0;">
+	            <dl>
+                <volist name="type" id="vo">
+                  <dd><a href="{:U('//personal',array('uid'=>$_GET['uid'],'pid'=>$_GET['pid'],'stid'=>$vo['id']))}" 
+                    <php>if($vo['id'] == $_GET['stid']) echo "class='on'";</php>
+                    >{$vo.name}<!-- <if condition=" $mid neq $uid">({$vo.count})</if> --></a>
+
+
+
+            <php>if(!isset($poster_smalltype_follow[$vo['id']])):</php>
+              <a href="javascript:;" onclick="poster.upFollowStatus('{$GLOBALS['ts']['mid']}', '{$vo.id}', 'add',1, this)" class="btn-cancel">
+             <span><i class="ico-add-black"></i>关注</span></a>
+              
+          <php>else:</php>
+              <a href="javascript:;" onclick="poster.upFollowStatus('{$GLOBALS['ts']['mid']}', '{$vo.id}', 'del',1, this)" class="btn-att-white">
+              <span>
+              <i class="ico-already"></i>已关注</span></a>
+            <php>endif</php>
+
+                    </dd>
+                </volist>
+              </dl>
+
+          </div>
+          <php>}</php>
+          <ul class="search">
+            <volist name="data" id="vo">
+              <li class="lineD_btm" >
+                <div class="left">
+                  <php>if(!empty($vo['cover'])){</php>
+                  <img src="{$vo['cover']}" width="100" height="100" />
+                  <php>}else{</php>
+                  <img src="__APP__/images/list_zw.gif" width="100" height="100" />
+                  <php>}</php>
+                </div>
+                <div class="content_li" >
+                  <h3><a href="{:U('//posterDetail',array('id'=>$vo['id']))}">{$vo.title}</a><if condition="$vo['type']"><span class="cGray2">[{$vo.type}]</span></if></h3>
+                  <p>{$vo.content}</p>
+                  <p class="f9">发布时间：{$vo.cTime|friendlyDate} </p>
+                  <p><space uid="vo.uid">{uname}</space></p>                  
+                </div>
+                
+                <div style="width: 90px;position:absolute;top:10px;right:0;">
+                  <php>if($vo['deadline']&&$vo['deadline']<=time()){</php>
+                  <img src="__APP__/images/icon_ygq1.gif" width="63" height="36" />
+                  <php>}</php>
+                </div>
+                <div class="c"></div>
+              </li>
+            </volist>
+          </ul>
+          <div id="Pagination" class="page">{$html}</div>
+        </div>
+      </div>
+      <!-- 右侧内容 end  -->
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 内容 end --> 
+</div>
+</div>
+<include file="__THEME__/public_footer" />

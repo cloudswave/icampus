@@ -1,0 +1,83 @@
+<include file="__THEME__/public_header" />
+
+<link href="__APP__/weiba.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/public/account.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+<!-- <script type="text/javascript" src="__THEME__/js/module.form.js"></script> -->
+<script>
+var changelock = 0;
+function changeweiba(obj){
+	if ( changelock == 1 ){
+		return;
+	}
+	changelock = 1;
+	var weibaid = $(obj).val();
+	if (weibaid==0){
+		return;
+	}
+	var weibaname = $(obj).children('option[selected="selected"]').text();
+	$('#weibainfo').text('');
+	$.post(U('weiba/Index/checkWeibaStatus'),{weibaid:weibaid},function (res){
+		if(res==1){
+			//ui.error('"'+weibaname+'"，需要关注后才能发表帖子');
+			$('#weibainfo').text('提示："'+weibaname+'"，需要关注后才能发表帖子');
+		}else if(res==2){
+			//ui.error('"'+weibaname+'"，需要管理员才能发表帖子');
+			$('#weibainfo').text('提示："'+weibaname+'"，需要管理员才能发表帖子');
+		}else if(res==3){
+			$('#weibainfo').text('提示："'+weibaname+'"，需要吧主才能发表帖子');
+		}
+		changelock = 0;
+	});
+}
+</script>
+
+<div id="page-wrap">
+	   <div id="main-wrap">
+           <div class="boxShadow"> 
+	   	   	 <include file="_weiba_header" /> 
+
+	   	   	   <div class="mb10 clearfix extend">
+                <p class="pb15"><a href="{:U('weiba/Index/index')}">微吧</a>&nbsp;>&nbsp;发表新帖</p>
+                 <div class="weiba-manage">                     
+                        <!-- <h3>发新贴</h3> -->
+                        <form method="post" action="{:U('weiba/Index/doPost')}" model-node='weiba_post' onsubmit="return setcontent();" onkeydown="if(event.keyCode==13){return false;}" name="weibaPost">
+                            <input type="hidden" value="{$weiba_id}" name="weiba_id" id="weiba_id">
+                        <dl class="form-set">
+                             <dd>
+                                <div class="form-tt"><font color="red"> * </font>选择微吧</div>
+                                <div class="form-row">
+                                <select onchange="changeweiba(this)" name="weiba_id">
+                                <option value="0">====请选择微吧====</option>
+                                <volist name="list" id="v">
+                                <option value="{$v.weiba_id}">{$v.weiba_name}</option>
+                                </volist>
+                                </select><font id="weibainfo" color="red"></font>
+                                </div>
+                            </dd>
+                            <dd>
+                                <div class="form-tt"><font color="red"> * </font>标题</div>
+                                <div class="form-row"><input class="s-txt" type="text" name="title" id="title"></div>
+                            </dd>
+                            <dd>
+                                <div class="form-tt"><font color="red"> * </font>正文</div>
+                                <div class="form-row">{:W('Editor',array('contentName'=>'content','value'=>''))}</div>
+                            </dd>
+                            <dd>
+                                <div class="form-tt">附件</div>
+                                <div class="form-row">{:W('Upload', array('urlquery'=>'attach_type=weiba_attach'))}</div>
+                            </dd>
+                            <dd>
+                                <div class="form-tt"></div>
+                                <div class="form-row"><a href="#" class="btn-green-small mr5" event-node="submit_btn" editor="true"><span>确定</span></a><a href="{:U('weiba/Index/index')}" class="btn-cancel"><span>取消</span></a></div>
+                                <!-- <div class="form-row"><a href="javascript:void(0)" onclick="$('#weiba_post').submit();" class="btn-green-small mr5"><span>确定</span></a><a href="{:U('weiba/Index/detail',array('weiba_id'=>$weiba_id))}" class="btn-cancel"><span>取消</span></a></div> -->
+                            </dd>
+                        </dl> 
+                        </form>                
+                 </div>
+           	 </div>
+          </div>
+	   </div>
+</div>
+
+<include file="__THEME__/public_footer" />

@@ -1,0 +1,214 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/message.css?v2012040501" rel="stylesheet" type="text/css" />
+
+<div id="page-wrap">
+  <div id="main-wrap">
+    <div id="col" class="content-bg clearfix boxShadow">
+      <div id="col4" class="main-left">
+        <div id="aside" class="pad">
+          <dl class="nav-left mt10 border-no">
+            <dd><a href="{:U('public/Mention')}">@提到我的</a></dd>
+            <dd><a href="{:U('public/Comment/index',array('app_name'=>t($_GET['app_name']),'type'=>'receive'))}">收到的评论</a></dd>
+            <dd><a href="{:U('public/Comment/index',array('app_name'=>t($_GET['app_name']),'type'=>'send'))}">发出的评论</a></dd>
+            <dd class="current"><a href="{:U('public/Message')}">我的私信</a></dd>
+            <dd><a href="{:U('public/Message/notify')}">系统消息</a></dd>
+          </dl>
+        </div>
+      </div>
+      
+      <div id="col7" class="main-right">
+        <div class="extend minh person-set">
+          <!--tab菜单-->
+          <div class="feed-nav"><div class="set-hd"><h3>{:L('PUBLIC_PRIVATE_MESSAGE')}</h3></div></div>
+          <!--tab菜单/end-->
+          <!--消息回复区-->
+          <php>if(CheckPermission('core_normal','send_message')){</php>
+          <div id="replay" class="replay-section clearfix">
+            <div class="hd">
+              <span><a href="{:U('public/Message/index')}">{:L('PUBLIC_BACK')}»</a></span>{:L('PUBLIC_METO')}
+              <volist name="message.to" id="mb">
+              <php>if ($i > 1) echo '、';</php>
+              <a href="{$mb['user_info']['space_url']}">{$mb['user_info']['uname']}</a>
+              </volist>
+              {:L('PUBLIC_PRIVATE_MESSAGE')}({:L('PUBLIC_SUM_TO_TALL',array('num'=>"<strong id='message_content_count'>".$message['message_num']."</strong>"))})
+            </div>
+            <div class="article clearfix">
+              <dl class="replay-article clearfix">
+                <dt>{:L('PUBLIC_SENTNOTIFY_MAIL_TO')}：
+                  <volist name="message.to" id="mb">
+                  <php>if ($i > 1) echo '、';</php>
+                  <a href="{$mb['user_info']['space_url']}">{$mb['user_info']['uname']}</a>
+                  </volist>
+                </dt>
+                <dd class="info">
+                  <div class="right ml10"><a href="javascript:;"><img src="{$GLOBALS['ts']['_user']['avatar_small']}" width="50" height="50"></a></div>
+                  <textarea id="reply_content" cols="" rows="" class="s-textarea" onblur="this.className='s-textarea'" onfocus="this.className='s-textarea-focus'"></textarea>
+                </dd>
+                <dd class="action">
+                  <a href="javascript:;" class="btn-green-small right" id="replymessage" onclick="doReply();"><span>{:L('PUBLIC_STREAM_REPLY')}</span></a>
+                  <div class="acts">
+                    <a class="face-block" href="javascript:;" event-node="message_insert_face"><i class="face"></i>表情</a>
+                    <a class="image-block" href="javascript:;"><i class="image"></i>图片
+                    <form style='display:inline;padding:0;margin:0;border:0;outline:none;' >
+                      <input limit="2" type="file" name="attach" inputname='attach' onchange="core.plugInit('uploadFile',this,'','image')" urlquery='attach_type=message_image&upload_type=image&thumb=1&width=100&height=100&cut=1' hidefocus="true">
+                    </form>
+                 </a>
+                 <a class="file-block" href="javascript:;"><i class="file"></i>附件
+                  <form style='display:inline;padding:0;margin:0;border:0' >
+                   <input limit="2" type="file" name="attach" inputname='attach' onchange="core.plugInit('uploadFile',this,'','all')" urlquery='attach_type=message_file&upload_type=file' hidefocus="true">
+                  </form>
+                 </a>
+            <div id="message_face_div_detail"></div>
+          </div></dd>
+              </dl>
+            </div>
+          </div>
+          <php>}</php>
+          <!--消息回复列表-->
+          <div class="reply-lists" id="feed_list"></div>
+          <p class="moreFoot" id="moreFoot"><a id="load_more_btn" onclick="load_more_message(this)" href="javascript:void(0)"><span class="ico_morefoot"></span>{:L('PUBLIC_MORE')}</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type='text/javascript'>
+M.addEventFns({
+  message_insert_face: {
+    click: function () {
+      var parentDiv = $('#message_face_div_detail')[0];
+      core.plugInit('face', this, $('#reply_content'), parentDiv);
+    }
+  }
+});
+
+
+var list_id = "{$message['list_id']}";
+var since_id = "0";
+var defalut_since = "{$message['since_id'] - 1}";
+var max_id = 0;
+var timeout = null;
+var type = '{$type}';
+
+$(document).ready(function(){
+    load_more_message('#load_more_btn');
+	  timeout = setTimeout("load_new_message()", 4000);
+});
+
+shortcut('ctrl+return', doReply , {target:'replay'});
+
+function reply_message(name)
+{
+	var $reply_content = $('#reply_content');
+	var reply_content = $reply_content.val();
+	reply_content = reply_content ? reply_content + ' ' : '';
+  var reply_user = ' ';
+	if(-1 == reply_content.indexOf(reply_user)) {
+		$reply_content.val(reply_content + reply_user);
+	}
+  scrolltotop.scrollup();
+	$reply_content.focus();
+};
+var replylock = 0;
+function doReply()
+{
+  if ( replylock == 1 ){
+	  return;
+  }
+  var reply_content = $('#reply_content').val();
+  var to = "{$message['to'][0]['member_uid']}";
+  if('' == reply_content) {
+    ui.error('{:L('PUBLIC_COMMENT_MAIL_REQUIRED')}');   
+    return false;
+  }
+  $('#replymessage').html('回复中..');
+  var attach_ids = $.trim($('#attach_ids').val());
+  $.post("{:U('public/Message/doReply')}", {id:list_id, reply_content:reply_content, to:to, attach_ids:attach_ids}, function(res) {
+    if(res.status != '0') {
+      $('#reply_content').val('');
+      load_new_message();        
+    } else {
+      ui.error(res.data);
+    }
+    $('#replymessage').html("<span>{:L('PUBLIC_STREAM_REPLY')}</span>");
+    if("undefined" != typeof(core.uploadFile)) {
+      core.uploadFile.clean();
+      core.uploadFile.removeParentDiv();
+    }
+  },'json');
+  replylock = 1;
+  setTimeout(function (){
+	  replylock = 0;
+  },5000);
+};
+function delSession(ids)
+{
+  ids = ids.toString();
+  if(ids == '') {
+    return false;
+  }
+  $.post("{:U('public/Message/doDeleteSession')}", {ids:ids}, function(res) {
+    if (res == '1') {
+      ui.success('{:L('PUBLIC_DELETE_SUCCESS')}');
+      ids = ids.split(',');
+			for(i = 0; i < ids.length; i++) {
+				$('#message_'+ids[i]).remove();
+			}
+			var $message_content_count = $('#message_content_count');
+      var message_content_count  = parseInt($message_content_count.html());
+      $message_content_count.html(message_content_count - ids.length);
+    }else {
+      ui.error('{:L('PUBLIC_DELETE_FAIL')}');
+    }
+  });
+};
+function load_more_message(o)
+{
+	var type = 'old';
+	var $o = $(o);
+	$o.html('{:L('PUBLIC_WATING')}');
+	load_more(type);
+	$o.html('{:L('PUBLIC_MORE')}');
+};
+function load_new_message()
+{
+	var type = 'new';
+	clearTimeout(timeout);
+	load_more(type);
+	timeout = setTimeout("load_new_message()", 4000);
+};
+function load_more(load)
+{
+	if('new' == load) {
+		var param = {since_id:since_id,list_id:list_id,type:type};
+	} else if ('old' == load) {
+    var param = {since_id:defalut_since,max_id:max_id,list_id:list_id,type:type};
+	}
+  $.post(U('public/Message/loadMessage'), param, function(txt){
+    if(txt.data) {
+      if ('new' == load) {
+        $('#feed_list').prepend(txt.data);
+        if(txt.since_id > 0) {
+  				since_id = txt.since_id;
+        }
+        var $message_content_count = $('#message_content_count');
+        var message_content_count  = parseInt($message_content_count.html());
+        $message_content_count.html(message_content_count + txt.count);
+      } else if ('old' == load) {
+        $('#feed_list').append(txt.data);
+        max_id = txt.max_id;
+        if (since_id <= 0) {
+          since_id = txt.since_id;
+        }
+        if (0 == txt.max_id) {
+          $('#moreFoot').css('display', 'none');
+        }
+      }
+    }
+  }, 'json');
+};
+</script>
+<script src="__THEME__/js/message/module.message.js"></script>
+
+<include file="__THEME__/public_footer" />

@@ -1,0 +1,154 @@
+<include file="__THEME__/header" />
+<link href="__APP__/photo.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/event.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    function edit(id){
+
+        ymPrompt.confirmInfo({
+            icoCls:'',
+            msgCls:'confirm',
+            message:'请输入新的名称：<br><input type=\'text\' id=\'newName\' onfocus=\'this.select()\' /><input type=\'hidden\' id=\'editId\' value=\''+id+'\' />',
+            title:'修改照片名称',
+            height:150,
+            handler:editName,
+            autoClose:false
+        });
+    }
+    /**
+     * addCategory
+     * 添加分类
+     * @param category $category
+     * @access public
+     * @return void
+     */
+    function editName(tp){
+        if( tp!="ok" ){
+            return ymPrompt.close();
+        }
+
+        name = $( '#newName' ).val();
+        id   = $('#editId').val();
+        if( name != "" ){
+            $.post( APP+"/Index/editPhoto",{name:name,id:id},function( txt ){
+                ymPrompt.close();
+                if( txt == '0' ){
+                    Alert( '添加失败' );
+                }else if( txt == '-2' ){
+                    Alert( '分类名冲突' );
+                }else if( txt == '-3' ){
+                    Alert( '添加失败，分类名不能为空' );
+                }else{
+                    location.reload();
+                }
+        
+            })
+    
+        }else{
+            ymPrompt.close();
+            Alert( '请输入新的名称' );
+        }
+    }
+</script>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+
+    <include file="__THEME__/apps" />
+
+    <div class="main"> <!-- 右侧内容 begin  -->
+
+        <div class=page_title> <!-- page_title begin -->
+            <h2><img src="{$APPINFO['APP_ICON']}" />相册-{$title}</h2>
+
+            <div class="c"></div>
+        </div><!-- page_title end -->
+        <div class="tab-menu">
+            <!-- 切换标签 begin  -->
+            <ul>
+                <li><a href="__URL__/eventDetail/id/{$id}/uid/{$uid}"><span>活动</span></a></li>
+                <li><a href="__URL__/member/id/{$id}" ><span>成员</span></a></li>
+                <li><a href="__URL__/photos/id/{$id}/uid/{$uid}" class="on"><span>照片</span></a></li>
+                <li><a href="__URL__/upload/eventId/{$id}"><div class="ico_add">&nbsp;</div><span>上传照片</span></a></li>
+            </ul>
+        </div>
+
+        <!-- 切换标签 end  -->
+        <div class="MenuSub">
+
+            <div class="lh30">
+                <div>
+                    <div>
+                        <span class="right" style="margin:0px 30px;">
+                            <a href="__APP__/Index/photo/id/{$pre.id}/eid/{$id}/uid/{$pre.uid}<neq name="type" value="">/type/{$type}</neq>#show_pic">上一张</a>/<a href="__APP__/Index/photo/id/{$next.id}/eid/{$id}/uid/{$next.uid}<neq name="type" value="">/type/{$type}</neq>#show_pic">下一张</a>
+                        </span>
+                        <php>$p_savepath = $photo['filepath'].$photo['filename'];</php>
+			第 <span id="totaldiv">{$now}/{$photoCount}</span> 张 ┊ 
+                        <a href="{$p_savepath|event_get_photo_url=###,0,0,false}" target="_blank">查看原图</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="photoBox">
+            <div class="view">
+                <div class="c1">
+                    <!-- 主图 -->
+                    <div class="alC" id="big_photo"><img src="__ROOT__/thumb.php?w=700&h=700&url={$p_savepath|event_get_photo_url}" /></div>
+                    <div class="info" id="photo_info">
+                        <div><strong>{$photo.savename}</strong></a></div>
+                        <div>上传者：<a href="__TS__/space/{$photo['uid']}">{$photo.name}</a></div>
+                        <div>时间：{$photo.cTime|friendlyDate}</div>
+                    </div>
+                </div>
+
+                <!-- 滚动小图 -->
+
+                <div class="c2" style="overflow:hidden;height:325px;">
+                    <volist name="previews" id="p">
+                        <php>$savepath = $p['filepath'].$p['filename'];</php>
+                        <div><a onclick='showImage({$id})' href="__APP__/Index/photo/id/{$p.id}/eid/{$id}/uid/{$uid}<neq name="type" value="">/type/{$type}</neq>#show_pic"><img src="__ROOT__/thumb.php?w=50&h=50&url={$savepath|event_get_photo_url}" <if condition=" $p[id] eq  $photo[id]">style="border:solid 2px #0000ff;"</if> /></a></div>
+                    </volist>
+                </div>
+			<div class="c"></div>
+            </div>
+            <div class="viewRC">
+                <div class="c1">
+			{:W('Comment',array( 'type'=>'event_photo','appid'=>$photo['id'],'mid'=>$photo['uid'],"face"=>getUserFace($mid),'role'=>1))}
+                </div>
+                <div class="c2">
+                    <php>if($mid == $photo['uid']){</php><div><a href="javascript:edit({$photo.id});">编辑照片名称</a></div><php>}</php>
+                    <!-- <div><a href="javascript:tag();" title="照片里出现了自己或者朋友？  圈出来，朋友就会自动看到哦">圈出照片中的人物</a></div> -->
+                    <if condition="$photo['userId'] eq $mid">
+                        <!-- <div>
+				<div class="left mr10"><a href="javascript:dbrotate(-1);">左旋 <img alt="左旋" src="../Public/images/xz_l.gif" align="absmiddle" /></a></div>
+				<div class="left"><a href="javascript:dbrotate(1);"><img alt="右旋" src="../Public/images/xz_r.gif" align="absmiddle" /> 右旋 </a></div>
+			</div> -->			
+                        <div><a href="javascript:editphoto();">修改标题和属性</a></div>
+                        <!-- <div><a href="javascript:sendtogrpalbum();">复制到群相册</a></div> -->
+                        <div id="divdelphoto"><a href="javascript:delphoto();">删除该照片</a></div>
+                        <!-- <div><a href="javascript:setface();">设为我的头像</a></div> -->
+                        <div><a href="javascript:setcover();">设为专辑封面</a></div>
+                    <else />
+                    
+                    	<div>{:W('Report',array( 'type'=>'照片举报','appid'=>$APPINFO['APP_ID'],'url'=>'/Index/photo/id/'.$p['id'].'/uid/'.$uid.'/eid/'.$id,'title'=>$photo['savename'],'recordId'=>$photo['id']))}</div>
+                    </if>
+                </div>
+                <div class="c"></div>
+            </div>
+        </div>  </div><!-- 右侧内容 end  -->
+    <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />
+<script type="text/javascript">
+    var photo_id		=	'{$photo.id}';
+    var photo_name		=	'{$photo.name}';
+    var album_id		=	'{$album.id}';
+    var now_index_id	=	'{$now}';
+    var uid				=	'{$uid}';
+
+    function refresh_url(albumId){
+        alert(albumId);
+        //window.location.href = APP+'/Index/photo/id/'+photo_id+'aid/'+albumId+'/uid/'+uid;
+    }
+</script>
+<script type="text/javascript" src="../Public/js/photo.js"></script>

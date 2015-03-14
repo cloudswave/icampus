@@ -1,0 +1,41 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="__APP__/group.css" type="text/css" media="screen" charset="utf-8" />
+<script type="text/javascript" src="__APP__/Js/common.js"></script>
+<div class="content_holder">
+<div class="content no_bg boxShadow"> 
+  <!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l"> 
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_C mainC_pad" style="margin-right:20px"> <include file="../Public/manage_group_top" />
+        <div class="mod-feed-tab mb10"> 
+          <ul class="inner-feed-nav">
+             <li <eq name="on" value="all">class="current"</eq>><a href="{:U('group/Log/index', array('gid'=>$gid))}">全部</a></li>
+             <li <eq name="on" value="topic"> class="current" </eq>><a href="{:U('group/Log/index', array('gid'=>$gid,'type'=>'topic'))}">小组话题管理</a></li>
+             <li <eq name="on" value="member"> class="current" </eq>><a href="{:U('group/Log/index', array('gid'=>$gid,'type'=>'member'))}">成员管理</a></li>
+             <li <eq name="on" value="setting"> class="current" </eq>><a href="{:U('group/Log/index', array('gid'=>$gid,'type'=>'setting'))}">小组设置</a></li>
+          </ul>
+        </div>
+        <div class="groupBox">
+            <ul class="log">
+              <volist name="logList['data']" id="log">
+                <li>
+                  <div class="c1"><space uid="log['uid']" target="_blank">{uavatar=s}</space></div>
+                  <div class="c2"><div class="shijian">{$log.ctime|friendlyDate}</div>
+                  {$log.content}</div>
+                </li>
+              </volist>
+            </ul>
+            <div id="pages" class="page">{$logList['html']}</div>
+        </div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  --> 
+</div>
+</div>
+<!-- 内容 end --> 
+
+<include file="__THEME__/public_footer" /> 

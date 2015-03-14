@@ -1,0 +1,39 @@
+<include file="__THEME__/header" />
+<link href="__APP__/group.css" rel="stylesheet" type="text/css" />
+
+<div id="page-wrap">
+	   <div id="main-wrap">
+	   	   <div class="boxShadow"> 	 
+             <include file="../Public/_mainNav" />
+           
+	   	   	   <div class="mb10 clearfix">
+
+                 <include file="../Public/_indexRight" />
+
+                 <div id="col5" class="st-index-main">
+                    <div class="extend-foot">
+                        <div class="group-list clearfix">
+                            <ul>
+                            <volist name="data" id="vo">
+                              <li>
+                                  <div class="group-pic"><a href="{:U('group/Group/index',array('gid'=>$vo['id']))}" target="_blank"><img src="{$vo.logo}" width="100" height="100" /></a></div>
+                                  <div class="group-info">
+                                    <h3><a href="{:U('group/Group/index',array('gid'=>$vo['id']))}" target="_blank">{$vo.name|getShort=12}</a></h3>
+                                    <p>成员：{$vo.membercount}</p>
+                                    <p>分类：{$vo.catename}</p>
+                                    <p>简介：{$vo.intro|getShort=26}</p>
+                                  </div>
+                              </li>  
+                            </volist>
+                            </ul>
+                       </div>
+                       <div id="page" class="page" style="">
+                                {$html}
+                        </div> 
+                     </div>
+                 </div>
+           	 </div>
+          </div>
+	   </div>
+</div>
+<include file="__THEME__/public_footer" />

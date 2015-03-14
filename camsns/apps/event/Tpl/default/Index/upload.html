@@ -1,0 +1,76 @@
+<include file="__THEME__/header" />
+<link href="__APP__/photo.css" rel="stylesheet" type="text/css" />
+<!-- 头部 end -->
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+
+	<include file="__THEME__/apps" />
+
+	<div class="main"> <!-- 右侧内容 begin  -->
+
+		<div class="page_title"> <!-- page_title begin -->
+			<h2><img src="__APP__/images/ico_app02.gif" />上传图片--{$title}</h2>
+		<div class="c"></div>
+</div><!-- page_title end -->
+
+		<div class="tab-menu"><!-- 切换标签 begin  -->
+		<ul>
+			<li class="current"><a href="__URL__/upload/eventId/{$id}"><span>普通上传</span></a></li>
+      <!--<li><a href="__URL__/flash/eventId/{$id}"><span>批量上传</span></a></li>-->
+      <!-- <li><a href="__URL__/eventDetail/id/{$id}/uid/{$uid}"><span>返回活动首页</span></a></li> -->
+
+		</ul>
+		</div><!-- 切换标签 end  -->
+		
+		<div class="photoBox">
+        	<form method="post" action="__APP__/Index/upload_muti_pic" enctype="multipart/form-data" name="upload_single_pic" id="upload_single_pic">
+			<div class="upload">
+			<ul>
+            <li>
+            	<div class="c1">照片1：</div>
+                <div class="c2"><input type="file" name="fileField[]" id="fileField_1" /></div>
+        	</li>
+            <li>
+              	<div class="c1">照片2：</div>
+                <div class="c2"><input type="file" name="fileField[]" id="fileField_2" /></div>
+        	</li>
+            <li>
+             	<div class="c1">照片3：</div>
+                <div class="c2"><input type="file" name="fileField[]" id="fileField_3" /></div>
+        	</li>
+            <li>
+              	<div class="c1">照片4：</div>
+                <div class="c2"><input type="file" name="fileField[]" id="fileField_4" /></div>
+        	</li>
+            <li>
+              	<div class="c1">照片5：</div>
+                <div class="c2"><input type="file" name="fileField[]" id="fileField_5" /></div>
+        	</li>
+            <li>
+              	<div class="c1">照片6：</div>
+                <div class="c2"><input type="file" name="fileField[]" id="fileField_6" /></div>
+        	</li>
+            <li>
+              	<div class="c1">&nbsp;</div>
+                <input type="hidden" name="eventId" value="{$_GET['eventId']}">
+                <div class="c2"><input type="submit" class="btn_b" value="上传照片" />
+                </div>
+        	  </li>
+        	</ul>
+       		<div class="clue">
+          		<p>严禁上传色情、暴力、恐怖、反动等违法照片，永葆{$site_opts.site_name}美好！</p>
+       			<span class="clue_btm"></span>
+     		</div>
+            <div class="c"></div>
+    		</div>
+   			</form>
+        </div>
+        
+	</div><!-- 右侧内容 end  -->
+
+
+<div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" />

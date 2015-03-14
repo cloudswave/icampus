@@ -1,0 +1,93 @@
+<div style="width:300px;padding:20px;text-align:center;">
+<dl style="overflow:hidden;*zoom:1;" class="mb10">
+  <dt style="line-height:24px;height:24px;padding:0;margin:0;float:left;text-align:right;width:90px;">分类名称：</dt><dd class="left" style="text-align:left;"><input type="text" id="title" value="{$category['name']}"></dd>
+</dl>
+<div style="">
+  <php>if (isset($category)) {</php>
+  <input type="button" class="btn_b" onclick="editCategory()" value="确定" />
+  <php>}else {</php>
+  <input type="button" class="btn_b" onclick="addCategory()" value="确定" />
+  <php>}</php>
+  <input type="button" class="btn_w" onclick="cancel()" value="取消" />
+</div>
+</div>
+<script type="text/javascript">
+//添加分类
+function addCategory() {
+    var title   = $('#title').val();
+    if(title == '' || core.getLength(title.replace(/\s+/g,"")) == 0) {
+    	alert("日志分类名称不能为空");
+        $("#title").focus();
+        return false;
+    }
+
+    //判断是否有重名
+    $.post("__URL__&act=isCategoryExist", {title:title}, function(res){
+        if(res == '1') {
+            alert("分类名称已存在");
+            $("#title").focus();
+            return false;
+        }
+        //提交修改
+        $.post("__URL__&act=doAddCategory", {title:title}, function(res){
+            if (res == '0') {
+                ui.error('保存失败');
+            }else {
+                var new_group_html = '';
+                new_group_html += '<tr id="category_'+res+'" overstyle="on">';
+                new_group_html += '<td><input type="checkbox" value="'+res+'" onclick="checkon(this)" id="checkbox2" name="checkbox"></td>';
+                new_group_html += '<td>'+res+'</td>';
+                new_group_html += '<td><div style="float: left;" category_name_'+res+'>'+title+'</div></td>';
+                new_group_html += '<td><a href="javascript:void(0);" onclick="edit('+res+')">编辑</a> ';
+                new_group_html += '<a href="javascript:void(0);" onclick="del('+res+');">删除</a></td>';
+                new_group_html += '</tr>';
+                $('#user_group_list').append(new_group_html);
+                ui.success('添加成功');
+                ui.box.close();
+                setTimeout(function() { window.location.reload()}, 1000);
+            }
+        });
+    });
+}
+
+//编辑分类
+function editCategory() {
+    var title   = $('#title').val();
+    var gid     = "{$category['id']}";
+    if(!title || core.getLength(title.replace(/\s+/g,"")) == 0){
+        alert("日志分类不能为空");
+        $("#title").focus();return false;
+    }
+    //判断名称是否有变化
+    if(title == "{$category['name']}") {
+        ui.error('名称无变化');
+        ui.box.close();
+        return false;
+    }
+
+    //判断是否有重名
+    $.post("__URL__&act=isCategoryExist", {title:title}, function(res){
+        if(res == '1') {
+            alert("分类名称已存在");
+            $("#title").focus();
+            return false;
+        }
+        //提交修改
+        $.post("__URL__&act=doEditCategory", {gid:gid, title:title}, function(res){
+            
+            if (res == '0') {
+                ui.box.close();
+                ui.error('保存失败');
+            }else {
+                $('#category_name_'+gid).html(title);
+                ui.success('保存成功');
+                ui.box.close();
+            }
+        });
+    });
+}
+
+function cancel() {
+    ui.box.close();
+}
+</script>

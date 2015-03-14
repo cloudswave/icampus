@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<title>我的成绩单</title>
+
+	<?php require_once "apps/head.txt";?>
+
+	<script type="text/javascript">
+		require([
+			"dojox/mobile/parser",
+			"dojox/mobile",
+			"dojox/mobile/compat",
+			"dojox/mobile/TabBar"
+		]);
+	</script>
+
+	<style>
+		#list1 li{
+			width: 13%;
+		}
+		#list1 li table{
+			line-height: normal;
+		}
+		#list1 li:nth-child(even){
+			background-color: #97979B;
+		}
+		td {
+			font-size: 17px;
+			color: #ACACAF;
+			text-decoration: none;
+		}
+	</style>
+</head>
+<body style="visibility:hidden;">
+	<div id="group1" data-dojo-type="dojox.mobile.View">
+		<h1 data-dojo-type="dojox.mobile.Heading">我的成绩单</h1>
+	
+
+		<div id="view1" data-dojo-type="dojox.mobile.View">
+			<ul data-dojo-type="dojox.mobile.EdgeToEdgeList">
+			 <volist name="books" id="item">
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									{$item[0]}-{$item[1]}&nbsp;&nbsp;&nbsp;{$item[2]}<BR>
+									{$item[4]}&nbsp;&nbsp;&nbsp;{$item[5]}&nbsp;&nbsp;&nbsp;{$item[6]}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+			</volist>
+			<ul>
+				
+		</div>
+	</div>
+
+
+</body>
+</html>

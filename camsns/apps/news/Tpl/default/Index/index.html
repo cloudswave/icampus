@@ -1,0 +1,105 @@
+<include file="__THEME__/public_header" />
+
+<link href="__APP__/news.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+    
+<div id="page-wrap">
+	   <div id="main-wrap">
+	   	   <div class="boxShadow"> 	 
+             <include file="_news_header" />
+           
+	   	   	   <div class="mb10 clearfix">
+
+                 <include file="_detail_silde" />
+
+                 <div id="col5" class="st-index-main">
+                    <div class="extend-foot">
+                    
+                    	<php>if($small_types):</php>
+                    	<div class="tab-menu">
+                            <ul>
+                            	<li <php>if($real_tid == $t):</php>class="current"<php>endif ;</php>><span><a href="{:U('news/Index/index',array('t' => $t))}">全部</a></span></li>
+                            	<php>foreach($small_types as $tid => $title):</php>
+                                <li <php>if($real_tid == $tid):</php>class="current"<php>endif ;</php>><span><a href="{:U('news/Index/index',array('t' => $tid))}">{$title}</a></span></li>
+                                <php>endforeach ;</php>
+                            </ul>
+                        </div>
+                        <php>endif ;</php>
+                        
+                        
+                        <div class="weiba-sort f9 clearfix"> 
+                        	<php>if($k):</php>
+                        	共搜索出{$newsList.count}条关于&nbsp;<font style="color:red;">"{$k}"</font>&nbsp;的信息
+                        	<php>else:</php>
+                            <span>共有{$newsList.count}条信息</span>
+                            <php>endif;</php>
+                            
+                            <php>if($show_type == 0):</php>
+                            <div class="right">
+					          <a href="{:U('news/Index/index',array('t'=>$t, 'st'=>1))}" class="mr10 <php>if($current_show_type==1):</php>current<php>endif;</php>"><i class="ico-feed mr5"></i>图片</a>
+					          <a href="{:U('news/Index/index',array('t'=>$t, 'st'=>2))}" class="<php>if($current_show_type==2):</php>current<php>endif;</php>"><i class="ico-list mr5"></i>列表</a>
+					        </div>
+					        <php>endif ;</php>
+                        </div>
+                        <php>if($current_show_type == 1):</php>
+                        <div class="weiba-list mb20 clearfix">
+                            <volist name="newsList.data" id="vo">
+                                <dl>
+                                     <dt><a  target="_blank"  href="{:U('news/Index/detail',array('id'=>$vo['news_id']))}">
+                                     <img src="{$vo.image}" width="100" height="100" /></a></dt>
+                                     <dd>
+                                        <div class="right"></div>
+                                        <p class="weiba_name">
+                                        <a target="_blank" href="{:U('news/Index/detail',array('id'=>$vo['news_id']))}">{$vo.title_intro}</a></p>
+                                        <p class="f9 mb10">
+                                       		 <span class="pl5 pr5">{$vo['created']|friendlyDate}&nbsp;发布&nbsp;</span>
+                                        	浏览数:{$vo.hits}<span class="pl5 pr5">/</span>
+                                        	回复数:{$vo.comment_count} 
+                                        	<php>if($vo['is_top']):</php>
+                                        	&nbsp;&nbsp;<i class="ico-bar-top mr5">置顶</i>
+                                        	<php>endif;</php>
+                                        </p>
+                                        <p class="f3">{$vo.content_intro}</p>
+                                     </dd>
+                                  </dl>  
+                            </volist>
+                            <div id="page" class="page" style="">
+                                {$newsList.html}
+                            </div>
+                       </div> 
+                       <php>else:</php>
+                       
+                       <div class="weiba_postlist">
+                           <ul>
+                           <volist name="newsList.data" id="vo">
+                             <li>
+                                <div class="name">
+                                  <a target="_blank" href="{:U('news/Index/detail',array('id'=>$vo['news_id']))}">
+                                  <span style="vertical-align:-2px;">{$vo.title_intro}</span>
+                                  </a>
+                                  <php>if($vo['is_top']):</php>
+                                     	&nbsp;&nbsp;<i class="ico-bar-top mr5">置顶</i>
+                                  <php>endif;</php>
+                                </div>
+                                <div class="f9">
+                                  <span class="right">&nbsp;</span>
+                                  	<span class="pl5 pr5">{$vo['created']|friendlyDate}&nbsp;发布</span>
+                                    <span class="pl5 pr5">浏览数:{$vo.hits}&nbsp;&nbsp;&nbsp;回复数:{$vo.comment_count}</span>
+                                </div>
+                              </li>   
+                           </volist>                         
+                          </ul>
+                          <div id="page" class="page" style="">
+                                {$newsList.html}
+                          </div>
+                        </div>
+                      <php>endif;</php>
+                        
+                     </div>
+                 </div>
+           	 </div>
+          </div>
+	   </div>
+</div>
+
+<include file="__THEME__/public_footer" />

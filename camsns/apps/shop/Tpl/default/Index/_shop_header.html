@@ -1,0 +1,23 @@
+<div class="find-type" style="height:26px;_overflow:hidden">
+      <div class="app-title">
+         <!--  <div class="search-input">
+              <div id="mod-search" event-node="drop_weiba_search">
+               <form name="search_weiba" id="search_weiba" method="get" action="{:U('weiba/Index/search')}">
+                <a href=""><i class="ico-search"></i></a><input type="text" id="search_input" value="搜微吧 / 帖子" onfocus="this.value=''" event-node="searchKey"><a href="" class="btn-search"><span>搜索</span></a>
+               </form>
+              </div>
+          </div> -->
+          <h4 class="left"><a href="{:U('weiba/Index/index')}"><img src="__APP__/images/ico-weib.gif" /></a>积分商城</h4>
+          <div class="app-tab-menu clearfix" style="margin:0 0 0 130px;_position:fixed">
+            <ul>
+              <li><a href="{:U('shop/Index/index')}" <php>if(!$nav){</php> class="current"<php>}</php>>首页<eq name="nav" value=""><span class="triangle"></span></eq></a><i class="line"></i></li>
+              <php>if($nav=="shop_item"){</php>
+              <li><a href="{:U('shop/Index/myshop')}" class="current">商品详情<eq name="nav" value="shop_item"><span class="triangle"></span></eq></a><i class="line"></i></li>
+              <php>}</php>
+              <php>if($GLOBALS['ts']['mid']){</php>
+              <li><a href="{:U('shop/Index/myshop')}" <php>if($nav=="myshop"){</php>class="current"<php>}</php>>我的礼箱<eq name="nav" value="myshop"><span class="triangle"></span></eq></a></li>
+              <php>}</php>
+            </ul>
+          </div>
+      </div>      
+</div>

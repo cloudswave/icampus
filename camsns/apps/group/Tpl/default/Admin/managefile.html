@@ -1,0 +1,191 @@
+<include file="__THEME__/admin_header" />
+<script type="text/javascript">
+function checkAll(o)
+{
+    if( o.checked == true ){
+        $('input[name="checkbox"]').attr('checked','true');
+        $('tr[overstyle="on"]').addClass("bg_on");
+    }else{
+        $('input[name="checkbox"]').removeAttr('checked');
+        $('tr[overstyle="on"]').removeClass("bg_on");
+    }
+}
+
+function checkon(o)
+{
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function getChecked()
+{
+    var ids = new Array();
+    var id;
+    $.each($('table input:checked'), function(i, n){
+    	id = $(n).val();
+        if (id > 0) ids.push(id);
+    });
+    return ids;
+}
+
+// 搜索
+var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+function searchObject() {
+  if(isSearchHidden == 1) {
+      $("#searchObject_div").slideDown("fast");
+      $(".searchObject_action").html("搜索完毕");
+      isSearchHidden = 0;
+  }else {
+      $("#searchObject_div").slideUp("fast");
+      $(".searchObject_action").html("搜索文件");
+      isSearchHidden = 1;
+  }
+}
+
+var ctrl = function(name){
+}
+ctrl.prototype = {
+		del:function(id, type){
+			var id = id ? id : getChecked();
+			id = id.toString();
+			if(id=='' || id==0){
+				alert("请选择要删除的文件");return false;
+			}
+		    if (confirm("确认删除文件？")) {
+		        $.post( '__URL__&act=remove',{id:id,type:type},function(text){
+		        	if (text == 1) {
+		                ui.success("删除多条文件成功");
+		                var id_list = id.split( ',' );   
+		                for (var j=0 ; j< id_list.length ; j++) {
+		                	$('#list_' + id_list[j]).remove(); 
+		                }
+		            } else if ( text == 2 ){
+		                ui.success( "删除成功" );
+		                $('#list_' + id).remove();
+		            } else {
+		            	ui.error("删除失败");
+		            }
+		        });
+		    }
+		}
+	}
+var c = null;
+</script>
+<div class="so_main">
+	<include file="_tab" />
+		<include file="_manage_tab" />
+
+<div id="searchObject_div"<neq name="isSearch" value="1">style="display:none;"</neq>>
+<div class="page_tit">搜索文件 [ <a
+	href="javascript:void(0);" onclick="searchObject();">隐藏</a> ]</div>
+<div class="form2">
+<form method="post">
+	<input type="hidden" name="isSearch" value="1" /><php>if($isSearch != '1') $uid = '';</php>
+	<dl class="lineD">
+		<dt>文件ID：</dt>
+		<dd><input type="text" name="id" class="txt" value="{$id}">
+		</dd>
+	</dl>
+	<dl class="lineD">
+		<dt>群组ID：</dt>
+		<dd><input type="text" name="gid" class="txt" value="{$gid}" /></dd>
+	</dl>
+	<dl class="lineD">
+		<dt>用户ID：</dt>
+		<dd><input type="text" name="uid" class="txt" value="{$uid}" /></dd>
+	</dl>
+	<dl class="lineD">
+		<dt>文件名</dt>
+		<dd>
+			<input type="text" name="name" class="txt" value="{$name}" />
+			<span>支持模糊查询。</span>
+		</dd>
+	</dl>
+	<dl>
+	<dt>结果排序：</dt>
+		<dd><select name="field">			
+			<option value="ctime"<eq name="field" value="addtime">selected</eq>
+			>时间排序</option>
+			<option value="id"<eq name="field" value="id">selected</eq>
+			>发布id排序</option>
+		</select> <select name="order">
+			<option value="desc"<eq name="order" value="desc">selected</eq>
+			>降序</option>
+			<option value="asc"<eq name="order" value="asc">selected</eq>
+			>升序</option>
+		</select> <select name="limit">
+			<option value="10"<eq name="limit" value="10">selected</eq>
+			>每页显示10条</option>
+			<option value="20"<eq name="limit" value="20">selected</eq>
+			>每页显示20条</option>
+			<option value="30"<eq name="limit" value="30">selected</eq>
+			>每页显示30条</option>
+			<option value="100"<eq name="limit" value="100">selected</eq>
+			>每页显示100条</option>
+		</select>
+		</dd>
+	</dl>
+	<div class="page_btm"><input type="submit" class="btn_b"
+	value="确定" /></div>
+</form>
+</div>
+</div>
+
+<div class="Toolbar_inbox">
+	<div class="page right">{$list['html']}</div>
+	<a href="javascript:void(0);" class="btn_a" onclick="searchObject();">
+	<span class="searchObject_action"><neq name="isSearch" value="1">搜索文件<else />搜索完毕</neq></span>
+	</a>
+	<a href="javascript:void(0);" class="btn_a"
+	onclick="c.del(null, 'file')"><span>删除文件</span></a>
+</div>
+
+<div class="list">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th style="width: 30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">ID</th>
+		<th class="line_l">文件名</th>
+		<th class="line_l">群组</th>
+		<th class="line_l">上传者</th>
+        <th class="line_l">上传时间</th>
+		<th class="line_l">文件大小</th>
+		<th class="line_l">格式</th>
+		<th class="line_l">下载次数</th>
+        <th class="line_l">操作</th>
+	</tr>
+	<volist name="list['data']" id="file">
+	<tr id="list_{$file.id}">
+		<td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$file.id}"></td>
+		<td>{$file.id}</td>
+		<td>{$file.name}</td>
+		<td><a href="{:U('group/Group/index', array('gid'=>$file['gid']))}" target="_blank">{$_group_names[$file['gid']]}</a></td>
+		<td><space uid="file.uid" target="_blank">{uname}</space></td>
+		<td>{$file.ctime|friendlyDate}</td>
+		<td>{$file.filesize}</td>
+		<td>{$file.filetype}</td>
+		<td>{$file.totaldowns}</td>
+		<td><a href="javascript:void(0)" onclick="c.del({$file.id}, 'file')">删除</a></td>
+	</tr>
+	</volist>
+</table>
+</div>
+
+<div class="Toolbar_inbox">
+	<div class="page right">{$list['html']}</div>
+	<a href="javascript:void(0);" class="btn_a" onclick="searchObject();">
+	<span class="searchObject_action"><neq name="isSearch" value="1">搜索文件<else />搜索完毕</neq></span>
+	</a>
+	<a href="javascript:void(0);" class="btn_a"
+	onclick="c.del(null, 'file')"><span>删除文件</span></a>
+</div>
+<include file="_footer" />
+<script type="text/javascript">
+c = new ctrl();
+</script>

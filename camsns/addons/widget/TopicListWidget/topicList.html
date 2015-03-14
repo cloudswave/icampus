@@ -1,0 +1,18 @@
+<php>if($topic_list){</php>
+<div class="hot-topic mb20 border-b">
+    <h3>{$title}</h3>
+        <ul>
+        	<volist name="topic_list" id="vo">
+        		<li>
+        			<p><a href="{:U('public/Topic/index',array('k'=>urlencode($vo['topic_name'])))}">{$vo['topic_name']}</a>（{$vo['count']}）</p>
+        			<php>if($vo['note']){</php>
+		                <div class="topic-tips">
+		                    <i class="arrow-y"></i>
+		                    <div class="hot-topic-info">{$vo['note']}</div>
+		                </div>
+		            <php>}</php>
+        		</li>
+        	</volist>
+        </ul>
+</div>
+<php>}</php>

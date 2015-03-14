@@ -1,0 +1,72 @@
+<include file="__THEME__/admin_header" />
+<script type="text/javascript" src="__APP__/Js/json2select.js"></script>
+<div class="so_main"><include file="_tab" />
+<div class="form2">
+<form method="post" id="basic_setting" name="form"
+	action="{:U('group/Admin/addCategory')}" onsubmit="return checkForm();">
+<dl class="lineD">
+	<dt>分类名称：</dt>
+	<dd><input type="text" name="title" id="title" value="" maxlength="25"><p>分类名最多25个字</p></dd>
+</dl>
+<dl>
+	<dt>上级分类：</dt>
+	<dd><span id="pid">&nbsp;</span> <input type="submit"
+		class="btn_b" value="添加" /></dd>
+</dl>
+</form>
+</div>
+
+<div class="list">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th class="line_l">ID</th>
+		<th class="line_l">分类名</th>
+		<th class="line_l">操作</th>
+	</tr>
+	{$category_tree|cateTree}
+	<!--
+	<volist name="category_tree" id="category_top">
+	<tr>
+		<td><strong>{$category_top['a']}</strong></td>
+		<td><strong>{$category_top['t']}</strong></td>
+		<td><strong><a href="javascript:;"
+			onclick="edit('{$category_top['a']}')">修改</a> <a
+			href="{:U('group/Admin/delCategory', array('id'=>$category_top['a']))}"
+			onclick="javascript:return confirm('确实删除“{$category_top['t']}”？');">删除</a></strong></td>
+	</tr>
+	<volist name="category_top['d']" id="category_son">
+	<tr>
+		<td>{$category_son['a']}</td>
+		<td>{$category_top['t']} - {$category_son['t']}</td>
+		<td><a href="javascript:;" onclick="edit('{$category_son['a']}')">修改</a>
+		<a
+			href="{:U('group/Admin/delCategory', array('id'=>$category_son['a'], 'pid'=>$category_top['a']))}"
+			onclick="javascript:return confirm('确实删除“{$category_top['t']} - {$category_son['t']}”？');">删除</a></td>
+	</tr>
+	</volist>
+	</volist>
+	-->
+</table>
+</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	var category_json	=	{:getCategorySelect(0)};
+	$("#pid").json2select(category_json, '', 'cid');
+});
+
+function checkForm()
+{
+	if($.trim($('#title').val()) == '') {
+		ui.error('分类名称不能为空');
+		return false;
+	}
+	return true;
+}
+
+/* 编辑分类 */
+function edit(id) {
+    ui.box.load( '{:U('group/Admin/editCategory')}' + '&id=' + id,'修改');
+}
+</script>
+<include file="_footer" />

@@ -1,0 +1,85 @@
+<include file="__THEME__/header" />
+<link href="__APP__/css/photo.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+#imgslide img {width:550px;}
+#pre {display:block; float:left; height:100%;background:#00CC99;filter:Alpha(Opacity=0);opacity:0; z-index:2; width:330px;  cursor:url(__APP__/images/pre.cur),auto;}
+#next {z-index:2; display:block; float:left;background:#00CC99;filter:Alpha(Opacity=0);opacity:0; height:100%; width:330px; float:left; cursor:url(__APP__/images/next.cur), auto;}
+.xhbsjy_left_centent h1 {float:left;}
+</style>
+
+<script type="text/javascript">
+var photo_id = "{$photo.id}";
+var photo_name =	"{$photo.name}";
+var album_id = "{$album.id}";
+var now_index_id = "{$now}";
+var uid = "{$uid}";
+var now_play = "{$play}";
+var nextid = "{$next.id}";
+var APPNAME = "{$ts.app.app_alias}";
+</script>
+<script type="text/javascript" src="__APP__/js/drag_sort.js"></script>
+<script type="text/javascript" src="__APP__/js/photo.js"></script>
+
+<div class="content_holder">
+	<div class="content no_bg boxShadow">
+		<include file="../Public/_mainNav" />
+		<div class="main no_l">
+    	<div class="mainbox">
+    		<include file="../Public/_isHotList" />
+    		<a name="show_pic" id="show_pic"></a>
+      	<div class="mainbox_appC">
+					<div class="my-photo-info">
+		  			<dl class="clearfix">
+							<dt class="userPic"><a href="{:U('public/Profile/index',array(uid=>$uid))}"><img src="{$uid|getUserFace}" /></a></dt>
+							<dd>
+								<h2>
+									<a href="{:U('photo/Index/albums', array('uid'=>$uid))}">{$uid|getUserName}的相册</a>&nbsp;&gt;&nbsp;
+									<a href="{:U('photo/Index/weiboalbum',array('uid'=>$uid))}">微博相册</a>&nbsp;&gt;&nbsp;
+									<span>当前照片</span>
+								</h2>
+							</dd>
+		  			</dl>
+					</div>
+
+					<div class="photoBox">
+						<div class="view">
+							<div class="c1" >
+								<div class="alC" id="big_photo" style="position:relative">
+									<h1 style="float:none">
+										<volist name="attachInfos" id="vo">
+										<php>$savepath = $vo['save_path'].$vo['save_name']</php>
+										<img style="max-width:640px;" onload="$('#pre').css('height',this.height);$('#next').css('height',this.height);" src="{$savepath|get_photo_url=###, 550, 'auto', false}" pid="{$photo.id}" rel="{$photo.id}" id="big_pic" />
+										</volist>
+										<span id="pre" onclick="rollPic({$pre.id},{$uid});" style="height:50px;position:absolute;top:0;left:0"></span>
+										<span id="next" onclick="rollPic({$next.id},{$uid});" style="height:50px;position:absolute;right:0;top:0"></span>
+									</h1>
+									<br />
+									<span class="lh30 cGray photoName">{$feedInfo.content}</span>
+								</div>
+							</div>
+							<div class="clear" style="height:10px;"></div>
+						</div>
+						<div class="feed_list">
+							<div class="repeat">
+	            <php> $cancomment = CheckPermission('core_normal','feed_comment') && in_array('comment',$weibo_premission) ? 1: 0;</php>
+              {:W('Comment',array('tpl'=>'detail','app_row_id'=>$feedInfo['app_row_id'],'app_uid'=>$feedInfo['uid'],'row_id'=>$feedInfo['feed_id'],'pageHtml'=>1,'limit'=>'20','order'=>'DESC','cancomment'=>$cancomment,'cancomment_old'=>0,'app_name'=>$feedInfo['app'],'canrepost'=>'0'))}    
+							</div>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="c"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+function rollPic(id, uid) {
+	window.location.href = U('photo/Index/weibophoto&id='+id+'&uid='+uid+'#show_pic');
+}
+</script>
+<script type="text/javascript" src="__THEME__/js/module.weibo.js"></script>
+
+<include file="__THEME__/public_footer" />

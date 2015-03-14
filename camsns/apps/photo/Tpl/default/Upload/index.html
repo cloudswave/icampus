@@ -1,0 +1,120 @@
+<include file="__THEME__/header" />
+<link href="__APP__/css/photo.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">var APP_NAME = "{$ts['app']['app_alias']}";</script>
+<div id="page-wrap">
+  <div id="main-wrap">
+    <div class="boxShadow">
+      <include file="../Public/_mainNav" />
+      <div class="main no_l">
+        <div class="mainbox"> 
+        <include file="../Public/_isHotList" />
+          <div class="mainbox_appC">
+		        <div class="tab-menu">
+		          <ul>
+                <li class="current"><a href="{:U('/Upload/index')}"><span>普通上传</span></a></li>
+                <li><a href="{:U('/Upload/flash')}"><span>批量上传</span></a></li>
+                <if condition="$setting['open_camera'] eq 1"><li><a href="{:U('/Upload/camera')}"><span>在线拍照</span></a></li></if>
+                <li><a href="{:U('/Index/photos')}"><span>返回我的图片</span></a></li>
+              </ul>
+            </div>
+		
+            <div class="photoBox">
+              <form method="post" action="{:U('/Upload/upload_muti_pic')}" enctype="multipart/form-data" name="upload_single_pic" id="upload_single_pic" onsubmit="return start_upload();">
+                <div class="upload">
+                  <ul style="width:60%">
+                    <li>
+                      <div class="c1">选择图片{$ts['app']['app_alias']}：</div>
+                      <div class="c2">
+                        {:W('AlbumSelect',array( 'uid'=>$mid , 'form_name'=>'albumId' , 'selected'=>intval($_GET['albumId']) ) )}
+                        <a href="javascript:create_album_tab({$mid});">[创建{$ts['app']['app_alias']}]</a>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="c1">图片1：</div>
+                      <div class="c2"><input type="file" name="fileField[]" id="fileField_1" /></div>
+                    </li>
+                    <li>
+                      <div class="c1">图片2：</div>
+                      <div class="c2"><input type="file" name="fileField[]" id="fileField_2" /></div>
+                    </li>
+                    <li>
+                      <div class="c1">图片3：</div>
+                      <div class="c2"><input type="file" name="fileField[]" id="fileField_3" /></div>
+                    </li>
+                    <li>
+                      <div class="c1">图片4：</div>
+                      <div class="c2"><input type="file" name="fileField[]" id="fileField_4" /></div>
+                    </li>
+                    <li>
+                      <div class="c1">图片5：</div>
+                      <div class="c2"><input type="file" name="fileField[]" id="fileField_5" /></div>
+                    </li>
+                    <li>
+                      <div class="c1">图片6：</div>
+                      <div class="c2"><input type="file" name="fileField[]" id="fileField_6" /></div>
+                    </li>
+                    <li>
+                      <div class="c1">&nbsp;</div>
+                      <div class="c2"><input type="submit" id="submit_button" class="btn_b" value="上传图片" /></div>
+                    </li>
+                  </ul>
+                  <div class="clue">
+                    <p>·单张图最大为{$photo_max_size/1024/1024}M，支持{$photo_file_ext}格式，如果上传失败，请尝试小一点的图片。</p>
+                    <p>· 严禁上传色情、暴力、恐怖、反动等违法图片！</p>
+                    <span class="clue_btm"></span>
+                  </div>
+                </div>
+              </form>
+            </div>  
+            <div class="c"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="__APP__/js/album.js" type="text/javascript"></script>
+<script src="__THEME__/js/jquery.form.js" type="text/javascript"></script>
+<script type="text/javascript">
+function start_upload () {
+	// 必须选一个文件
+	var	files = document.getElementsByName('fileField[]');
+	var checked_files = 0;
+	for	(i = 0; i < files.length; i++) {
+		if (files[i].value != '') {
+			checked_files++;
+		}
+	}
+	if(checked_files>0){
+		$('#submit_button').attr('disabled',true).val("上传中...");
+		return true;
+	}else{
+		ui.error('请至少选择一个文件上传！');
+		return false;
+	}
+	return false;
+};
+
+$(function () {
+  $('#upload_single_pic').ajaxForm({
+    success: function (res) {
+      if (res.status == 0) {
+        $('#submit_button').attr('disabled',false).val("上传图片");
+        ui.error(res.info);
+      } else if (res.status == 1) {
+        ui.success(res.info);
+        setTimeout(function () {
+          location.href = U('photo/Upload/muti_edit_photos') + '&albumId=' + res.data.albumId + '&upnum=' + res.data.upnum;
+        }, 1000);
+      }
+    },
+    dataType: 'json'
+  });
+  return false;
+});
+
+</script>
+
+<include file="__THEME__/public_footer" />

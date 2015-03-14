@@ -1,0 +1,204 @@
+<include file="_header" />
+
+<script>
+//鼠标移动表格效果
+$(document).ready(function(){
+    $("tr[overstyle='on']").hover(
+      function () {
+        $(this).addClass("bg_hover");
+      },
+      function () {
+        $(this).removeClass("bg_hover");
+      }
+    );
+});
+
+function getChecked() {
+    var ids = new Array();
+    $.each($('table input:checked'), function(i, n){
+        ids.push( $(n).val() );
+    });
+    return ids;
+}
+
+function checkon(o){
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function checkAll(o){
+    if( o.checked == true ){
+        $('input[name="checkbox"]').attr('checked','true');
+        $('tr[overstyle="on"]').addClass("bg_on");
+    }else{
+        $('input[name="checkbox"]').removeAttr('checked');
+        $('tr[overstyle="on"]').removeClass("bg_on");
+    }
+}
+
+//搜索用户
+var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+function searchVote() {
+    if(isSearchHidden == 1) {
+        $("#searchVote_div").slideDown("fast");
+        $(".searchVote_action").html("搜索完毕");
+        isSearchHidden = 0;
+    }else {
+        $("#searchVote_div").slideUp("fast");
+        $(".searchVote_action").html("搜索投票");
+        isSearchHidden = 1;
+    }
+}
+
+var ctrl = function(){
+}
+ctrl.prototype = {
+	del:function(id){
+		var id = id ? id : getChecked();
+		id = id.toString();
+		if(id=='' || id==0){
+			ui.error("请选择要删除的投票");
+			return false;
+		}
+    	confirm("是否删除{$ts['app']['app_alias']}");
+	    $.post( '__URL__&act=doDeleteVote',{id:id},function(text ){
+		    if( text > 0 ){
+			    ui.success( "删除{$ts['app']['app_alias']}成功" );
+			    var id_list = id.split( ',' );   
+			    for (var j=0 ; j< id_list.length ; j++   ){
+				   $('#vote_'+id_list[j]).remove(); 
+			    }
+		    }
+            if(text < 0){
+			    ui.error( "删除失败" );
+		    }
+	    });
+    	
+	},
+	edit:function(id,act){
+	  if( act == 'recommend' ){
+		  v= "推荐";
+		  v2 = "取消推荐";
+		  act2 = 'cancel';
+		
+	  }else{
+		  v = "取消推荐";
+		  v2 = "推荐";
+		  act2 = 'recommend';
+	  }
+	  if( confirm( '是否'+v ) ){
+	    $.post('__URL__&act=doChangeIsHot',{id:id,type:act},function( text ){
+			  if( text == 1 ){
+			  ui.success( "操作成功" );
+			  $('#button'+id).html('<a href="javascript:void(0);" onclick="c.edit('+id+',\''+act2+'\')">'+v2+'</a>');
+		   }else{
+			  ui.error( "设置失败" );
+		   }
+	    });
+	  }
+	}
+}
+var c = null;
+</script>
+
+<div class="so_main">
+    <div class="page_tit">{$ts['app']['app_alias']}</div>
+    <include file="_tab" />
+    
+    <div id="searchVote_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+    <div class="page_tit">搜索{$ts['app']['app_alias']} [ <a href="javascript:void(0);" onclick="searchVote();">隐藏</a> ]</div>
+    
+    <div class="form2">
+    <form action="__URL__&act=votelist" method="post">
+    <input type="hidden" name="isSearch" value="1"/>
+        <php>if($isSearch != '1') $uid = '';</php>
+        <dl class="lineD">
+          <dt>用户ID：</dt>
+          <dd>
+            <input name="uid" type="text" value="{$uid}">
+          </dd>
+        </dl>
+	    <dl class="lineD">
+          <dt>标题：</dt>
+          <dd>
+            <input name="title" type="text" value="{$title}">
+          </dd>
+        </dl>
+	    <dl class="">
+          <dt>是否推荐：</dt>
+          <dd>
+            <input type="radio" value="1" name="isHot" <eq name="isHot" value="1">checked</eq> />是<br/>
+            <input type="radio" value="0" name="isHot" <eq name="isHot" value="0">checked</eq> />否<br/>
+            <input type="radio" value="" name="isHot" <eq name="isHot" value="">checked</eq> />全部
+          </dd>
+        </dl>
+        <div class="page_btm">
+	      <input type="submit" class="btn_b" value="确定" />
+	    </div>
+    </form>
+    </div>
+    </div>
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchVote();">
+            <span class="searchVote_action"><neq name="isSearch" value="1">搜索{$ts['app']['app_alias']}<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除{$ts['app']['app_alias']}</span></a>
+    </div>
+  
+    <div class="list">
+        <table id="vote_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+		    <th style="width:30px;">
+		        <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+		        <label for="checkbox"></label>
+		    </th>
+            <th class="line_l">ID</th>
+            <th class="line_l">用户</th>
+            <th class="line_l">标题</th>
+            <th class="line_l">发起时间</th>
+            <th class="line_l">结束时间</th>
+            <th class="line_l">操作</th>
+        </tr>
+        <volist id="vo" name="data">
+		<tr overstyle='on' id="vote_{$vo.id}">
+		  <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+		  <td>{$vo.id}</td>
+		  <td><space uid="vo.uid" >{uname}</space></td>
+		  <td><div style="float:left" id="vote_name_{$vo.id}"><a href="{:U('vote/Index/pollDetail',array('id'=>$vo['id'],'mid'=>$vo['uid']))}" target="_blank">{$vo.title}</a></div></td>
+          <td>{$vo.cTime|date="Y-m-d H:i:s",###}</td>
+          <td>{$vo.deadline|date="Y-m-d H:i:s",###}</td>
+		  <td>
+		      <php>
+              if( $vo['isHot'] ){
+                $button = "取消推荐";
+                $act    = 'cancel';
+              }else{
+                $button = "推荐";
+                $act    = 'recommend';
+              }
+              </php>
+		      <span id="button{$vo['id']}" ><a href="javascript:void(0);" onclick="c.edit({$vo['id']},'{$act}')">{$button}</a></span>
+		      <a href="javascript:void(0);" onclick="c.del({$vo['id']})">删除</a>
+          </td>
+        </tr>
+		</volist>
+        </table>
+    </div>
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchVote();">
+            <span class="searchVote_action"><neq name="isSearch" value="1">搜索{$ts['app']['app_alias']}<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除{$ts['app']['app_alias']}</span></a>
+    </div>
+</div>
+<script type="text/javascript">
+var c = new ctrl();
+</script>
+<include file="_footer" />

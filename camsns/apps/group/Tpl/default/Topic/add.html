@@ -1,0 +1,87 @@
+<include file="__THEME__/header" />
+<include file="__THEME__/editor" />
+<script type="text/javascript" src="__APP__/Js/common.js"></script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<div class="content_holder">
+<div class="content no_bg">
+  <!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l">
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox"> <include file="../Public/_groupInfo" />
+      <div class="mainbox_appC">
+      <include file="../Public/top" />
+        <div class="groupBox">
+            <div class="box1">
+            <h2 class="tit_h2">发表新帖</h2>
+              <form method="post" action="{:U('group/Topic/doAdd',array('gid'=>$gid))}" onbeforesubmit="checkform(this)">
+                <ul class="fW100_ul">
+                  <li>
+                    <div class="left alR" style="width:100px;padding-top:0"><strong style="line-height:26px">标题：</strong></div>
+                    <div style="margin-left:110px;">
+	                    <select name="cid" class="text mr5" style="vertical-align:middle">
+	                      <option value="0">未分类</option>
+	                      <php>foreach( $category_list as $value ){</php>
+	                      <option value="{$value['id']}">{$value['title']}</option>
+	                      <php>}</php>
+	                    </select>
+                      <input name="title" class="text" style="width:60%;" onBlur="this.className='text'" onFocus="this.className='text2'" type="text">
+                    </div>
+                  </li>                
+                  <li>
+                    <div class="left alR" style="width:100px;padding-top:0"><strong style="line-height:26px">内容：</strong></div>
+                    <div style="margin:0 10px 0 110px;">
+                      <!-- <textarea id="content" name="content" style="height:350px;"></textarea> -->
+                      {:W('Editor',array('contentName'=>'content','value'=>''))}
+                    </div>
+                  </li>
+                  <if condition="$groupinfo['openUploadFile'] && ($groupinfo['whoUploadFile'] == 3 || ($groupinfo['whoUploadFile'] == 2 && $isadmin))">
+                  <li>
+                    <div class="left alR" style="width:100px;padding-top:0"><strong style="line-height:26px">附件：</strong></div>
+                  	<div style="margin-left:110px;*zoom:1;">
+                      {:W('UploadAttach', array('uid'=>$mid,'gid'=>$gid,'limit'=>3))}
+                    </div>
+                  </li>
+                  </if>
+                  <li>
+                    <div class="left alR" style="width:100px;">&nbsp;</div>
+                    <div style="margin-left:110px;">
+                      <input type="hidden" name="addsubmit" value="do" >
+                      <input name="button" type="submit" class="btn_b mt5" id="button" value="发表帖子" />
+                    </div>
+                  </li>
+                </ul>
+              </form>
+            </div>
+        </div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+</div>
+</div>
+<script>
+	function checkform(v_form){
+		if(getLength(v_form.title.value) == 0) {
+			v_form.title.focus();
+			ui.error('标题不能为空');
+			return false;
+		}
+		if(getLength(v_form.title.value) > 30) {
+			v_form.title.focus();			
+			ui.error('标题内容不能超过30个字');
+			return false;
+		}
+		
+	    var content = E.getData();
+	    content = removeHTMLTag(content);
+	    if(checkPostContent(content) < 10) {
+				ui.error('内容不能小于10个字');
+				return false;
+			}
+		return true;
+	}
+</script>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" />

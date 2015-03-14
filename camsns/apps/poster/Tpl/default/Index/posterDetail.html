@@ -1,0 +1,108 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="__APP__/poster.css" type="text/css" media="screen" charset="utf-8" />
+<script  type="text/javascript" src="__APP__/poster.js" ></script>
+<div class="content_holder">
+<div class="content no_bg boxShadow"><!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_appR">
+        <div class="right_box box_create"><a href="{:U('poster/Index/addPosterSort')}" class="btn-create"> 发布信息</a></div>
+        <include file="../Public/_isHotList" />
+      </div>
+      <div class="mainbox_appC">
+        <div class="page_title"> <!-- page_title begin -->
+          <h2><span class="right fn f12px"><php>if($admin){</php>
+            <a href="#"> <a href="{:U('//editPoster',array('id'=>$poster['id'],'typeId'=>$poster['pid']))}">修改</a> ┊ <a href="javascript:deletePoster({$poster.id})">删除</a>
+            <php>}</php>
+            <php></php>
+            <php>if( $_SESSION['new_poster'] ){
+            	$sourceurl = U('poster/Index/posterDetail',array('id'=>$poster['id']));
+            	$str = '我在'.$huati.'发布了‘'.$poster['title'].'’ ,详情请点击';
+            	$_SESSION['new_poster'] != 1 && $attachid = $_SESSION['new_poster'];
+            }</php>
+             {:W('Weibo',array('tpl_name'=>$_SESSION['new_poster'] == 1?'poster_create_weibo':'poster_share_weibo','source_url'=>$sourceurl,'attachid'=>$attachid,'from'=>'poster','tpl_data'=>urlencode($str),'button_title'=>'分享'))}
+            <php>if( $_SESSION['new_poster'] ){</php>
+            <!-- 自动弹出分享 --> 
+            <script>
+                $(document).ready(function(){
+                    _widget_weibo_start('', '{$tpl_data}', '{$param_data}');
+                });
+                </script>
+            <php>unset($_SESSION['new_poster']);}</php>
+            {:W('ShareToFeed',array('title'=>'分享','initHTML'=>urlencode('我分享了“'.$poster['title'].'”'),'url'=>U('poster/Index/posterDetail',array('id'=>$poster['id'])),'attachId'=>'','from'=>'poster'))}
+            </span><img src="__APP__/images/ico/{$type.ico}" class="alM mr5" style="width:24px; height:24px;"><strong style="color:#999">{$poster.posterType} </strong></h2>
+          <h2 style="margin:10px 0 0 29px;">{$poster.title}</h2>
+        </div>
+        <!-- page_title end -->
+        <div class="groupBox">
+          <div class="boxL">
+            <div class="box1 mLR15">
+              <div class="info btmlineD">
+                <div class="list">
+                  <div class="img img-rounded">
+                    <php>if(!empty($poster['cover'])){</php>
+                    <img src="{$poster.cover}" />
+                    <php>}</php>
+                  </div>
+                  <ul>
+                    <li>
+                      <div class="c1">发布者：</div>
+                      <div class="c2"><a href="{:U('public/Profile/index',array('uid'=>$poster['uid']))}">{$poster.name}</a>&nbsp;&nbsp;<a href="{:U('//personal',array('uid'=>$uid))}">{$name}发布的所有信息</a></div>
+                    </li>
+                    <li>
+                      <div class="c1"> 有效时间：</div>
+                      <div class="c2">
+                        <php>echo date('Y年n月j日',$poster['cTime']);</php>
+                        -
+                        <php> if($poster['deadline']){ </php>
+                        <php>echo date('Y年n月j日',$poster['deadline']);}else{ echo '不限制';}</php>
+                      </div>
+                    </li>
+                    <php>if(!empty($poster['posterSmallType'])){</php>
+                    <li>
+                      <div class="c1"> {$type.type}：</div>
+                      <div class="c2">{$poster.posterSmallType}</div>
+                    </li>
+                    <php>}</php>
+                    <li>
+                      <div class="c1"> 地区：</div>
+                      <div class="c2">{$poster.area}</div>
+                    </li>
+                    <li>
+                      <div class="c1"> 联系方式：</div>
+                      <div class="c2">{$poster.contact}</div>
+                    </li>
+                    <volist name="extraField" k="key" id="vo">
+                      <php>if(!empty($poster[$vo])){</php>
+                      <li>
+                        <div class="c1"> {$key}：</div>
+                        <div class="c2">{$poster[$vo]}</div>
+                      </li>
+                      <php>}</php>
+                    </volist>
+                    <?php if( $poster['deadline'] && $poster['deadline']<=time()){ ?>
+                    <li> <span class="cGreen lh35">此{$poster.posterType}已经超过有效期</span> </li>
+                    <?php } ?>
+                  </ul>
+                  <div class="c"></div>
+                  <div class="lineS_top pt10"> {$poster.content|stripslashes} </div>
+                </div>
+                <div class="c"></div>
+              </div>
+            </div>
+            <div class="feed_list">
+            <div class="repeat">{:W('Comment',array('tpl'=>'detail', 'table'=>'poster', 'row_id'=>$poster['id'], 'canrepost'=>'0', 'cancomment'=>1, 'cancomment_old'=>0, 'showlist'=>1, 'limit'=>'20', 'order'=>'DESC'))}</div></div>
+          </div>
+          <!-- end  --> 
+        </div>
+      </div>
+      <!-- 画布 end  -->
+      <div class="c"></div>
+    </div>
+  </div>
+</div>
+</div>
+<script src="__THEME__/js/module.weibo.js"></script>
+<!-- 内容 end --> 
+<include file="__THEME__/public_footer" />

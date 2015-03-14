@@ -1,0 +1,33 @@
+<dl class="comment_list clearfix" model-node="comment_list" id="reply_box">        
+<dt><a href="{$userInfo.space_url}"><img width="30" height="30" src="{$userInfo.avatar_tiny}"></a></dt>        
+<dd>
+	<span id="floor_{$reply_id}" class="floor">{$storey}楼</span>
+    <p class="cont">{$userInfo.space_link}
+	<volist name="userInfo['groupData'][$userInfo['uid']]" id="v2">
+            <img style="width:auto;height:auto;display:inline;cursor:pointer" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
+        </volist>
+	：<em>{$content}<span class="time">({:L('PUBLIC_JUST')})</span></em>
+    </p>
+    <p class="info right">
+	<span>
+	<php>if(CheckPermission('weiba_normal','weiba_del_reply') || CheckWeibaPermission( '' , $weiba_id , '' )){</php>
+		<a href="javascript:void(0);" event-node="reply_del" event-args="reply_id={$reply_id}">{:L('PUBLIC_STREAM_DELETE')}</a>
+		<i class="vline">|</i>
+		<php>}</php>
+		<!-- <a href="{:U('weiba/Index/replyEdit',array('reply_id'=>$reply_id))}">编辑</a>
+		<i class="vline">|</i> -->
+		<a href="javascript:void(0);" event-args='weiba_id={$weiba_id}&post_id={$post_id}&post_uid={$post_uid}&to_reply_id={$reply_id}&to_uid={$uid}&to_comment_uname={$user_info.uname}&app_name={$app_name}&table={$table}&feed_id={$feed_id}&comment_id={$comment_id}&addtoend={$addtoend}' 
+	event-node="reply_reply">{:L('PUBLIC_STREAM_REPLY')}</a>
+	</span>
+    </p>
+</dd>
+</dl>  
+<script>
+M(document.getElementById('reply_box'));
+$(function () {
+	var row_id = "{$post_id}";
+	var reply_id = "{$reply_id}";
+	var len = parseInt($('#commentlist_' + row_id).find('dl.comment_list').length);
+	$('#floor_'+reply_id).html(len+'楼');
+});
+</script>

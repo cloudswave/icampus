@@ -1,0 +1,132 @@
+<div class="person-info-face">
+    <a href="{:U('public/Profile/index', array('uid'=>$uid))}" title="{$user_info[$uid]['uname']}"><img src="{$user_info[$uid]['avatar_big']}" /></a>
+</div>
+<div class="person-info clearfix">
+    <dl class="person-info-t clearfix">
+        <dd>
+            <div class="name">
+                <strong><a href="{:U('public/Profile/index', array('uid'=>$uid))}">{$user_info[$uid]['uname']}</a></strong>
+                <div class="person-icon"><volist name="userGroupData[$user_info[$uid]['uid']]" id="vo">
+                <img style="width:auto;height:auto;display:inline;cursor:pointer;vertical-align:-2px;" src="{$vo['user_group_icon_url']}" title="{$vo['user_group_name']}" />&nbsp;
+                </volist>
+                <a href="{:U('public/Index/scoredetail')}" target="_blank"><img style="width:33px;height:9px;display:inline;cursor:pointer;vertical-align:0;" src="{$userCredit.level.src}" event-node='ico_level_right' /></a></div>
+
+            </div>
+            
+            <div class="grade"><if condition="$user_info[$uid]['sex'] eq 1"><i class="ico-male"></i><else /><i class="ico-female"></i></if>&nbsp;{$user_info[$uid]['location']}</div>
+            <php>if(!empty($user_info[$uid]['intro'])){</php>
+                <div class="grade">个人简介：{$user_info[$uid]['intro']|getShort=100}</div>
+            <php>}</php>
+            <php>if($user_tag[$user_info[$uid]['uid']]){</php>
+                <div class="grade tag-lists">
+                        个人标签：
+                        <volist name="user_tag[$user_info[$uid]['uid']]" id="u_t_v">
+                            <a href="{:U('public/Search/index',array('t'=>3,'a'=>'public','k'=>$u_t_v))}">{$u_t_v}</a>&nbsp;&nbsp;
+                        </volist>
+                    
+                </div>
+            <php>}</php>
+            
+            <div class="btn"><p class="left">
+                <php>if($mid != $user_info[$uid]['uid'] && $mid){</php>
+                    {:W('FollowBtn', array('fid'=>$user_info[$uid]['uid'], 'uname'=>$user_info[$uid]['uname'], 'follow_state'=>$follow_state[$user_info[$uid]['uid']], 'isrefresh'=>1))}
+                    <php>if(CheckPermission('core_normal','send_message')){</php>
+                    <eq name='userPrivacy.message' value='0'>
+                    <a onclick="ui.sendmessage({$user_info[$uid]['uid']}, 0)" href="javascript:void(0)" event-node="postMsg" class="ml5 btn-cancel"><span>发私信</span></a>
+                    </eq>&nbsp;
+                    <php>}</php>
+                    <div class="more-box"><span class="ml5"><a href="javascript:;" event-node="more_operation" class="ml5">更多</a></span>
+                    <div id="more_operation" class="layer-list more-drop" style="display:none;">    
+                        <ul onmouseover="$('#more_operation').show();" onmouseout="$('#more_operation').hide()">
+                            <li id="blacklist">{:W('Blacklist',array('tpl'=>'btn', 'fid'=>$user_info[$uid]['uid'], 'isrefresh'=>1))}</li>
+                            <php>if($follow_state[$user_info[$uid]['uid']]['following'] == 1){</php>
+                                <li><a href="javascript:void(0)" onclick="setFollowGroup({$user_info[$uid]['uid']}, 1)">设置分组</a></li>
+                            <php>}</php>
+                        </ul>
+                    </div></div>
+
+                <php>}</php>
+            </p></div>
+            
+        </dd>
+        
+    </dl>
+    <ul class="person-info-b clearfix">
+        <li><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'','uid'=>$uid))}" <php>if(ACTION_NAME=='index'||ACTION_NAME=='feed'){</php>class="current"<php>}</php>><span>微博</span><strong event-node="weibo_count" event-args="uid={$user_info[$uid]['uid']}">{$userData.weibo_count|default=0}</strong></a></li>
+        <li><a href="{:U('public/Profile/following',array('uid'=>$user_info[$uid]['uid']))}" <eq name="ACTION_NAME" value="following">class="current"</eq>><span>关注</span><strong event-node="<php>if($user_info[$uid]['uid']==$mid){</php>following<php>}</php>_count" event-args="uid={$user_info[$uid]['uid']}">{$userData.following_count|default=0}</a></strong></li>
+        <li class="no-border"><a href="{:U('public/Profile/follower',array('uid'=>$user_info[$uid]['uid']))}"
+         <eq name="ACTION_NAME" value="follower">class="current"</eq>><span>粉丝</span><strong event-node="<php>if($user_info[$uid]['uid']!=$mid){</php>following<php>}</php>_count" event-args="uid={$user_info[$uid]['uid']}">{$userData.follower_count|default=0}</a></strong></li>
+        <!-- <li class="no-border <eq name='current' value='collection'>current</eq>"><a href="{:U('public/Collection/index')}"><span>收藏</span>{$userData.favorite_count|default=0}</a></li> -->
+    </ul>
+</div>
+
+<script type="text/javascript">
+// 事件监听
+M.addEventFns({
+    ico_level_right: {
+        load: function() {
+            var offset = $(this).offset();
+            var top = offset.top + 23;
+            var left = offset.left - 10;
+            var html = '<div id="layer_level_right" class="layer-open experience" style="display:none;position:absolute;top:'+top+'px;left:'+left+'px;">\
+                        <dl>\
+                        <dd>{:L('PUBLIC_USER_LEVEL')}：{$userCredit.level.name}</dd>\
+                        <dd>{:L('PUBLIC_USER_POINTS_CALCULATION',array('num'=>$userCredit['credit']['experience']['value'],'experience'=>$userCredit['creditType'][$userCredit['level']['level_type']]))}</dd>\
+                        <dd class="textb">{:L('PUBLI_USER_UPGRADE_TIPS',array('num'=>$userCredit['level']['nextNeed'],'experience'=>$userCredit['creditType'][$userCredit['level']['level_type']]))}</dd>\
+                        </dl>\
+                        </div>';
+            $("body").append(html);
+
+            this._model = document.getElementById("layer_level_right");
+        },
+        mouseenter: function() {
+            $(this._model).css('display', 'block');
+        },
+        mouseleave: function() {
+            $(this._model).css('display', 'none');
+        }
+    },
+    ico_wallet_right: {
+        load: function() {
+            var offset = $(this).offset();
+            var top = offset.top + 23;
+            var left = offset.left - 20;
+            var html = '<div id="layer_wallet_right" class="layer-open scale" style="display:none;position:absolute;top:'+top+'px;left:'+left+'px;">\
+                        <dl>\
+                        <dt></dt>\
+                        <dd>{:L('PUBLIC_USER_POINTS_CALCULATION',array('num'=>intval($userCredit['credit']['score']['value']),'experience'=>$userCredit['creditType']['score']))}</dd>\
+                        </dl>\
+                        </div>';
+            $("body").append(html);
+            this._model = document.getElementById("layer_wallet_right");
+        },
+        mouseenter: function() {
+            $(this._model).css('display', 'block');
+        },
+        mouseleave: function() {
+            $(this._model).css('display', 'none');
+        }
+    },
+    more_operation: {
+        load: function() {
+            var offset = $(this).offset();
+            $('#more_operation').css({'left': 8 + 'px','top': 13 + 'px','padding-top': 0 + 'px', 'position':'absolute', 'width':'85px', 'z-index':5});
+        },
+        click: function() {
+            if($('#more_operation').css('display') == 'none') {
+                $('#more_operation').css('display', '');
+            } else {
+                $('#more_operation').css('display', 'none');
+            }
+            $('body').bind('click', function(event) {
+                if($(event.target).attr('event-node') != 'more_operation' && $(event.target).attr('id') != 'blacklist') {
+                    setTimeout("$('#more_operation').css('display', 'none')",500);
+                }
+            });
+        }
+        // mouseleave: function(){
+        //     $('#more_operation').css('display', 'none');
+        // }
+    }
+}); 
+</script>

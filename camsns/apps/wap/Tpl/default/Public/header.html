@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta name="viewport" content="width=device-width; initial-scale=1.0; minimum-scale=1.0; maximum-scale=2.0"/>
+<meta name="MobileOptimized" content="240"/>
+<title>{$ts['site']['site_name']} WAP版</title>
+<link href="{:APPS_URL}/wap/Tpl/default/Public/style.css" rel="stylesheet" type="text/css" />
+<!-- 视频所需js -->
+<script src="__THEME__/js/jquery-1.7.1.min.js?v={$site.sys_version}"></script>
+<script src="__THEME__/js/jquery.form.js?v={$site.sys_version}"></script>
+<script src="__THEME__/js/common.js?v={$site.sys_version}"></script>
+
+</head>
+<body>
+<div class="top">{$ts['site']['site_name']}</div>
+<div>
+    <a href="{:U('wap/Index/index')}">我的首页</a> 
+    <a href="{:U('wap/Index/publicsquare')}">微博广场</a> 
+    <a href="{$self_url}">刷新</a> 
+    <a href="{:U('wap/Public/logout')}">退出</a>
+</div>
+<div class="nav">
+    <a href="{:U('wap/Index/post')}">发微博</a> | 
+    <a href="{:U('wap/Index/topic')}">话题</a> | 
+    <a href="{:U('wap/Index/search')}">搜索</a> 
+</div>

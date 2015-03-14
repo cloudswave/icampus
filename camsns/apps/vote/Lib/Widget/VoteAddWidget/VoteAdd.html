@@ -1,0 +1,253 @@
+<script src="__PUBLIC__/js/date.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/js/jquery.datapicker.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="__PUBLIC__/js/jquery.datapicker.css" type="text/css" media="screen" charset="utf-8" />
+<div class="pollBox">
+<form id='voteForm{$rand}'>
+	<div class="layer_vote">
+		<ul id="list_vote{$rand}" class="list_vote lineS_btm">
+                <li>
+                    <label>投票主题</label>
+                    <div class="c1"><input id="title{$rand}" name="" type="text" class="txt_vote"/></div>
+                </li>
+                <!--候选项-->
+                <div id="opt_list{$rand}"  class="lineS_top pt10 mt10">
+                    <php>for($i=1;$i<=$count;$i++){</php>
+                    <dl>
+                        <label class="vote_num{$rand}">选项{$i}:</label>
+                        <div class="c1">
+                        <input name="" type="text" class="txt_vote vote_opt{$rand}"/><a href="javascript:void(0)" class="vote_delete hover del"></a>
+                        </div>
+                        <div class="c"></div>
+                    </dl>
+                    <php>}</php>
+                </div>
+                <!--//候选项-->
+                <li>
+                <label>设置</label>
+                <div class="c1">
+                    <select id="type{$rand}" name="type" class="mr5 ml5">
+                        <option value="0">单选</option>
+                        <php>for($i=1;$i<10;$i++){</php>
+                        <option value="{$i}">可多选，最多{$i+1}项</option>
+                        <php>}</php>			
+                    </select>
+                </div>
+                <div class="c"></div>
+                </li>
+                <li style="width:100%">
+                    <label>&nbsp;</label>
+                    <div class="c1"><a href="javascript:void(0)" onclick="Vote.more(this)" class="ml5" id="ops">增加新选项</a></div>
+                    <div class="c"></div>
+                </li>
+                <div class="c"></div>
+			</ul>
+            <!--begin设置新选项-->
+			<dl class="list_send_vote">
+            <dt><a href='javascript:void(0);' onclick='Vote.showMore()'>高级设置</a></dt><!--高级设置-->
+            <!--选项-->
+            <!--提交选项-->
+				<dd class="moreSet{$rand}" style="display:none;overflow:hidden;*zoom:1">
+                <label>截至日期</label>
+                <div class="c1">
+                <select name="date" onchange="Vote.customDeadLine($(this))" class="ml5 mt5 left" id="date{$rand}">
+					<option value='7' selected>一周</option>
+					<option value='30' >一月</option>
+					<option value='180' >半年</option>
+					<option value='365' >一年</option>
+					<option value='custom'>自定义</option>
+				</select>
+                </div>
+				<div class="vote_dealtime_custom{$rand} mt5" style="display:none;margin:2px 0 0 0">	
+					<input type="text" id="deadline{$rand}" class="date-pick" readonly/>
+					<select name="hour" id="hour{$rand}" class="mr5" style="vertical-align:middle">
+                        <php>for($i=0;$i<=23;$i++){</php>
+                        <option value="{$i}">{$i}</option>
+                        <php>}</php>
+                    </select>
+                    {:L('clock')}
+				</div>
+                <div class="c"></div>
+				</dd>
+                <dd class="mt5 moreSet{$rand}" style="display:none;overflow:hidden;*zoom:1">
+                <label>描述:</label>
+                <div class="c1">
+                  <textarea name="explain" id="explain{$rand}" rows="5" class="text ml5" onfocus="this.className='text2 ml5';" onblur="this.className='text ml5';"></textarea></div>
+                <div class="c"></div>
+                </dd>
+            <dd class="mt10">
+                <label style="float:left">&nbsp;</label>
+                <div style="margin-left:90px">
+                <a href="javascript:void(0);" onclick="Vote.check_vote();" class="btn_b ml5">确认</a>
+                <php>if($exit){</php>
+                <a href="javascript:void(0)"  onclick="Vote.exit();" class="btn_w  ml10">取消</a>
+                <php>}</php>
+                </div>
+             </dd>
+            </dl>
+            <!--end设置新选项-->
+		</div>
+	</form>
+</div>
+
+<script>
+var Vote = (function(){
+			var flag  = 1,
+			num_limit = 10,
+			moreDiv   = '.moreSet{$rand}';
+			return {
+				date :function(){
+				    $('.date-pick').datePicker({
+                        clickInput : true,
+                        createButton : false
+                    });
+				},
+				check_vote : function(){
+
+					var title = $.trim($("#title{$rand}").val());
+					var data ={};
+					
+					if(!title){
+						ui.error("标题不能为空！");
+						return false;
+					}
+					if(getLength(title) >50){
+						ui.error("标题长度不大于100个字符");
+						return false;
+					}
+					var flag = 0;
+						$(".vote_opt{$rand}").each(function (i) {
+								if($.trim($(this).val())) flag++;									
+						})
+					if(flag<2){
+						ui.error("{:L('least_two_options')}");
+						return false;
+					}
+					var type = $( '#type{$rand}' ).val();
+					if( type > flag-1 ){
+					    var optLimit = parseInt(type)+1;
+						ui.error("最少填写"+optLimit+"个选项") ;
+						return false;
+					}
+					data.opt =[];
+					data.title = $('#title{$rand}').val();
+					var mustReturn = false;
+					$(".vote_opt{$rand}").each(function(i){
+						data.opt[i] = $.trim($(this).val());
+					    if(getLength(data.opt[i]) > 50){
+					        ui.error("候选项名称不能大于100个字符");//选项最多20个字符
+					        mustReturn = true;
+					        return false;
+					    }
+					    if(data.opt[i] == '' || getLength(data.opt[i].replace(/\s+/g,"")) == 0){
+					    	ui.error("请填写完整候选项内容");
+					    	mustReturn = true;
+					    	return false;
+					    }
+					});
+
+					if(mustReturn) return;
+					data.type = $('#type{$rand}').val();
+					data.date = $('#date{$rand}').val();
+					if(data.date == 'custom'){
+						data.deadline={year:null,month:null,hour:null};
+						var deadlineValue = $("#deadline{$rand}").val();
+						var deadline = deadlineValue.split('-');
+						data.deadline.year = deadline.shift();
+						data.deadline.month = deadline.shift();
+						data.deadline.day = deadline.shift();
+						data.deadline.hour = $("#hour{$rand}").val();
+					}
+					data.explain = $('#explain{$rand}').val();
+					$.post(U('vote/Index/add'),data,function(result){
+						var res = eval('('+result+")");
+						if(res.status){
+							<php>if($inner){</php>
+							ui.success(res.info);
+							window.location.href = res.data.url;
+							<php>}else{</php>
+							CallBack.Vote.addSuccess(res.data,result);
+							ui.success(res.info);
+							<php>}</php>
+						}else{
+							ui.error(res.info);
+						}
+					});
+					
+				},
+				exit:function(){
+				$('.vote_dealtime_custom{$rand}').hide();
+				<php>if($inner){</php>
+					document.getElementById("voteForm{$rand}").reset()
+				<php>}else{</php>
+				    CallBack.Vote.exit();
+				<php>}</php>
+				},
+				showMore : function(){
+					$(moreDiv).toggle();
+				},
+				more:function(obj){
+					var new_vote = $($('#opt_list{$rand}').children().get(0)).clone();
+					var flag = $('#opt_list{$rand}').children('dl').size();
+                    if( num_limit <= flag ){
+                        $(obj).parent().parent().hide();
+                        return;
+                    }
+                    
+					new_vote.children( 'span' ).html( "{:L('option')}"+flag+":" );
+					new_vote.find( 'input' ).val( '' );
+					new_vote.attr('id','');
+					new_vote.show();
+					$( '#opt_list{$rand}' ).append( new_vote );
+					
+					this.removeNode();
+					this.resort();
+					flag++;
+					if( num_limit <= flag ){
+						$(obj).parent().parent().hide();
+						return;
+					}
+					
+				},
+				customDeadLine:function(obj){
+					if(obj.val()=="custom"){
+						$('.vote_dealtime_custom{$rand}').show();
+					}else{
+						$('.vote_dealtime_custom{$rand}').hide();
+					}
+				},
+				resort:function(){
+				    var size = $('#opt_list{$rand}').children('dl').size();
+                    if(size <= 2){ //最少保留2个
+                        $('.vote_delete').hide();
+                    }else{
+                        $('.vote_delete').show();
+                    }
+				    $('.vote_num{$rand}').each(function(key){
+				        $(this).html("{:L('option')}"+(key+1)+":");
+				    });
+				},
+				removeNode:function(){
+				    var self =this;
+				    $('.vote_delete').click(function(){
+                        $(this).parent().parent().remove();
+                        self.resort();
+						var size = $('#opt_list{$rand}').children('dl').size();
+						if(size < num_limit){
+							$('#ops').parent().parent().show();
+						}
+                    });
+				    
+				},
+				init:function(month,today){
+					var self = this;
+					//截止时间
+					this.date();
+					if($('#date{$rand}').val() == 'custom') this.customDeadLine($('#date{$rand}'));
+					$("#day{$rand} option[value='{$date.day|intval}']").attr('selected',true);
+					$("#hour{$rand} option[value='{$date.hour|intval}']").attr('selected',true);
+					this.removeNode();
+				}
+			}
+})();
+Vote.init({$time.mon},{$time.mday});
+</script>

@@ -1,0 +1,37 @@
+@charset "utf-8";
+/* CSS Document */
+
+.tag_left{float:left;overflow:hidden;width:760px;}
+.tag_left .lineC{width:758px; overflow:hidden}
+.tag_right{float:right;overflow:hidden;width:210px;}
+.tag_right .lineC{ width:208px; overflow:hidden}
+
+/*用户标签*/
+.tag_usrtab,.tag_usrtab_2,.tag_usrtab_3{clear:both;float:left;padding:10px; overflow:hidden;}
+.tag_usrtab li,.tag_usrtab_3 li{ float:left; background-color:#EAEAEA;margin-right:10px; font-size:12px;height:28px;line-height:28px;margin:5px 5px 2px 0;padding:0 5px;white-space:nowrap; font-weight:bold; cursor:pointer;}
+.tag_usrtab .bg{margin-right:10px; font-size:12px;height:28px;line-height:28px;margin:5px 5px 2px 0;padding:0 5px;white-space:nowrap;}
+.tag_usrtab .bg a,.tag_usrtab .bg a:visited{ color:#fff;}
+.tag_usrtab li span,.tag_hot_lemma li span,.tag_usrtab_2 li span{ color:#999; font-weight:normal;}
+.tag_tit_line{ border-bottom:1px solid #ddd; padding:10px; font-size:12px;}
+.tag_tit_line span{color:#666; margin-left:5px; font-weight:normal}
+.tag_usrtab_2{ width:90%;}
+.tag_usrtab_2 li{ float:left; line-height:22px; font-size:12px; margin-right:10px;white-space:nowrap;}
+.tag_R_label{ font-size:12px; float:right; padding:0 10px; line-height:25px;}
+.tag_usrtab_3 li a,.tag_usrtab_3 li a:visited{ color:#666;}
+.tit_bg span{ float:right; font-weight:normal; padding-right:5px; }
+.tit_bg span a,.tit_bg span a:visited{color:#999;}
+
+/*搜标签*/
+.tag_so_tab{margin:10px;}
+
+/*热门词条排行榜*/
+.tag_hot_lemma{background:transparent url(../images/pop_icon.gif) no-repeat scroll 5px 2px;padding-left:25px; margin:10px;}
+.tag_hot_lemma li{line-height:16px; font-size:12px; text-align:left;margin-bottom:6px;}
+.tag_hot_lemma li a,.diy_hot_lemma li a:visited {}
+	
+/* 头像列表 */
+.tag_userlist{overflow:hidden;  padding:10px;}
+.tag_userlist li{float:left;font-size:12px;height:80px;text-align:center;width:70px;}
+.tag_userlist li span{}
+.tag_userlist li span a,.tag_userlist li span a:visited{ color:#999;}
+	

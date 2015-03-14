@@ -1,0 +1,134 @@
+@charset "utf-8";
+/* 招贴板样式 */
+a.username, .username{ font-weight: normal}
+.headpic50{height:55px;}
+.groupBox{overflow:hidden; margin-top: 10px}
+.boxL{}
+.box1{padding-bottom: 8px;  overflow: hidden;}
+.box1 h3{font-size: 14px; font-weight: normal; line-height: 30px; padding-left: 5px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #A4C4DD}
+.box1 h4{font-size: 12px; font-weight: bold; line-height: 30px}
+.zd{font-size: 12px; background-color: #0066CC; display: inline-block; color: #FFFFFF; padding-top: 1px; padding-right: 3px; padding-bottom: 1px; padding-left: 3px; margin-right: 5px; line-height: 140%}
+.jh{font-size: 12px; background-color: #FF9900; display: inline-block; color: #FFFFFF; padding-top: 1px; padding-right: 3px; padding-bottom: 1px; padding-left: 3px; margin-right: 5px; line-height: 140%}
+/*活动信息*/
+.info .img{width: 150px; _height:150px; margin-right:10px; float: right; text-align: center; overflow: hidden; margin-bottom:10px}
+.info .img img{max-width:150px;
+width:150px;
+width:e xpression(document.body.clientWidth>150?"150px":"auto");
+overflow:hidden;}
+.info .list{}
+.info .list ul{margin: 0px; padding: 0 0 10px 0; float:left;}
+.info .list ul li{clear: both; line-height: 180%}
+.info .list ul li .c1{float: left; width: 100px; color: #999999; text-align: right}
+.info .list ul li .c2{float: left; width: 280px}
+.info .list .lineS_top img{display:block;max-width:640px;_width:640px;}
+
+/*分类信息*/
+.sort{  border:1px solid #eee; background-color:#F5F5F5 }
+.sort dl{ width:99.9%;margin:0 0 0 5px;overflow:hidden;*width:98%;*zoom:1;}
+.sort dt{ clear: both; font-weight: bold; line-height: 25px; padding-left: 10px; _padding-left:5px}
+.sort dd{ float: left;line-height: 30px;white-space:nowrap;}
+.sort dd a.on{color:#000; font-weight:bold; display:block; float:left; background-color:#fff}
+.sort dd a{ padding:0 8px;}
+/*全部活动式*/
+.poster_boxL .search{ margin:0; padding: 10px 0 0px;width:auto; *width:99%; overflow:hidden}
+.search li{padding-bottom: 10px; clear:both; margin-bottom:10px;position:relative;overflow:hidden;*zoom:1;}
+.search li h3{font-family:"微软雅黑";font-size: 18px; font-weight: normal; margin-bottom:15px;}
+.search li p{margin:0 0 10px 0; padding: 0px}
+.search li .rmenu{}
+.search li .rmenu a{display: block; line-height: 20px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #CCCCCC; padding-left: 5px}
+.search li .rmenu a:hover{color: #FFFFFF; background-color: #005FAB; text-decoration: none}
+.rSort{float: right; width: 200px}
+.rSort h4{font-weight: bold; line-height: 25px; font-size: 12px}
+.rSort ul{width: auto}
+.rSort ul li{line-height: 18px}
+.rSort ul li.on a{color: #FF0000; text-decoration: underline; padding-left: 8px; background-image: url(../images/ico-xiaosanjiao.gif); background-repeat: no-repeat; background-position: 0px center}
+/*参加成员列表*/
+.flist{clear: both; width: 830px; padding-bottom: 10px}
+.flist li{float:left; margin-right:20px; margin-top:20px; padding:5px; width:380px }
+.flist li h3{font-size:14px; font-weight:bold; line-height:30px }
+.flist li p{line-height:20px; margin:0px; padding:0px }
+/*右边列表样式*/
+.boxR{border-bottom-color:#A4C4DD; border-bottom-style:solid; border-bottom-width:1px; border-left-color:#A4C4DD; border-left-style:solid; border-left-width:1px; border-right-color:#A4C4DD; border-right-style:solid; border-right-width:1px; border-top-color:#A4C4DD; border-top-style:solid; border-top-width:0px; clear:both; margin-bottom:10px; padding-bottom:5px; overflow: hidden}
+.boxR h3{background-color:#E7EFF5; border-top-color:#A4C4DD; border-top-style:solid; border-top-width:1px; font-size:12px; font-weight:bold; line-height:30px; margin:0px; padding:0px 0px 0px 5px }
+.boxR p{line-height:18px; margin:0px; padding:5px 0px 5px 5px }
+.ListBox{clear:both; overflow:hidden; width: 100%;*width:99%}
+.ListBox li{background-image:none; display:block; float:left; height:auto; margin-top:8px; text-align:center; width:75px }
+.ListBox li span{display:block; margin-left:auto; margin-right:auto }
+.ListBox li a{display:block; line-height:20px; margin:0px; padding:0px }
+.ListBox li em{color:#666666; display:block; line-height:16px; text-align:center }
+/*活动成员*/
+.pic50box{overflow: hidden; clear: both}
+.pic50box li{width: 80px; float: left; text-align: center; display: block; background-image: none; margin-top: 8px; height: auto}
+.pic50box li span{margin-right: auto; margin-left: auto; display: block}
+.pic50box li a{display: block; line-height: 20px; margin: 0px; padding: 0px}
+/*相册样式*/
+.piclist{width: 640%; margin: 0px; padding: 0px}
+.piclist li{float: left; width: 159px; text-align: center; margin-top: 5px}
+.piclist li img{padding: 2px; border: 1px solid #CCCCCC; margin-bottom: 5px; background-color: #FFFFFF}
+/*发起活动*/
+.add_event{width: 100%;_width:99%;}
+.add_event dd{overflow:hidden;*zoon:1; line-height: 20px; margin-bottom: 10px; display: table; width: 100%}
+.add_event dd label{float: left; width: 17%; text-align: right}
+.add_event dd .txt_impt{vertical-align:-3px;color:#f00;padding:0 5px 0 0}
+.add_event dd .c2{float: left; width: 80%;}
+.add_event dd .c2 label{text-align:left;width:auto;float:left;margin-right:0;display:block}
+.add_event dd .c2 .ck{vertical-align:middle;margin:-3px 5px 0 5px;_margin:-3px 3px 0 3px}
+/*选择城市弹窗*/
+.pop_select_city{width:420px;padding:20px 0;text-align:left;overflow:hidden;*zoom:1}
+.pop_select_city dt,.pop_select_city dd{padding:10px 20px 0}
+.pop_select_city dt{padding:0 20px 10px}
+.pop_select_city dd span{margin:0 5px 0 0}
+.pop_select_city .ullist{list-style-type:none;white-space: nowrap;overflow:hidden;*zoom:1}
+.pop_select_city dd .ullist{list-style-type:none;white-space: nowrap;overflow:hidden;*zoom:1}
+.pop_select_city .ullist li{margin:5px 5px 5px 0;float:left;}
+.pop_select_city .ullist li a{}
+.pop_select_city .ullist .on a{border-radius:3px;background-color:#999;padding:0 3px;color:#fff;*padding:0}
+
+/*推荐招贴*/
+.Recommended li{margin:0 0 10px 0;}
+.Recommended li h3{line-height:18px;font-weight:bold;}
+.Recommended li p{line-height:18px;}
+
+
+.add_event dd label {
+  width: 120px;
+}
+
+	.content_li{
+		margin: 0 10px 0 110px;
+	}
+
+@media screen and (max-width: 600px) {
+
+.form-group {
+	margin-right: auto;
+	margin-left: auto;
+ }
+
+  .add_event dd .c2 {
+	width: 100%;
+  }
+
+.info .img {
+
+	margin-left: 10px;
+	float: none;
+
+}
+
+.info .list ul li .c1 {
+  width: auto;
+}
+
+
+	.content_li{
+		margin: 0 10px 0 110px;
+	}
+
+.add_event dd label {
+	width: auto;
+}
+
+}
+
+

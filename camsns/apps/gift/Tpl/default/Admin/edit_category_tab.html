@@ -1,0 +1,67 @@
+<div style="width:350px;padding:20px;text-align:center;">
+<form>
+    <table cellpadding=3 cellspacing=3>
+    <tr>
+        <td align="right" >名称：</td>
+        <td align="left" ><input type="text" id="name"  value="{$category.name}" >
+        </td>
+    </tr> 
+    </table>
+    <div>
+        <input type="button" onclick="editC()" class="btn_b" value="确定">
+        <input type="reset" class="btn_b" value="重置">
+    </div>
+</form>
+</div>
+<script>
+	function editC(){
+        var name = $( '#name' ).val();
+        var id       = '{$id}';
+        if(core.getLength(name.replace(/\s+/g,"")) == 0){
+            ui.error("分类名称不能为空！");
+            $("#name").focus();
+            return false;
+        }
+        if( name != "" ){
+			if(id){
+            	$.post( "__URL__&act=editCategory",{name:name,id:id},function( res ){
+					switch ( res ){
+						case '-1':
+							ui.error( '分类名称不能为空！' );
+							break;
+						case '1':
+							$('#category_name_'+id).html(name);
+							ui.box.close();
+							ui.success('修改分类成功');
+							break;
+						case '2':
+							ui.box.close();
+							ui.error("分类名称未改变");
+							break;
+						default:
+							ui.error('修改失败');
+					}
+            	});
+			}else{
+            	$.post( "__URL__&act=addCategory",{name:name},function( res ){
+					switch ( res ){
+						case '-1':
+							ui.error( '分类名称不能为空' );
+							break;
+						case '1':
+							ui.box.close();
+							ui.success('添加分类成功');
+							setTimeout(function() {location.reload();}, 1500);
+							break;
+						default:
+							ui.error('添加分类失败');
+					}
+            	});
+			}
+        }else{
+            ui.error( '分类名称不能为空！' );
+            $( '#name' ).focus();
+            return false;
+        }
+    }
+</script>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta name="viewport" content="width=device-width; initial-scale=1.0; minimum-scale=1.0; maximum-scale=2.0"/>
+<meta name="MobileOptimized" content="240"/>
+<title>{$site_name}</title>
+<link href="{:APPS_URL}/wap/Tpl/default/Public/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="top">{$ts['site']['site_name']}</div>
+<div>
+    您说的：<br/><br/>{$content}<br/><br/>
+    超过了{$weibo_nums}字（共{$length}字），是否自动分成{$parts}条微博发布？<br/>
+    <form action="{:U('wap/Index/doPost')}" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="content" value="{$content}"/>
+    <input type="submit" name="split" value="确定"/>
+    <input type="submit" name="nosplit" value="取消"/>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+@charset "utf-8";
+/* CSS Document */
+
+#wrapper {
+	border:1px #000 solid;
+	position:relative;
+	overflow:hidden;
+	width:535px;
+	height:179px;
+	font-size:14px;
+	font-family:Tahoma, Geneva, sans-serif;
+}
+#number {
+	width:110px;
+	position:absolute;
+	right:0;
+	bottom:10px;
+}
+#number li {
+	padding-left:6px;
+	float:left;
+	text-indent:-9999px;
+	width:21px;
+	height:24px;
+	overflow:hidden;
+	background-image:url(../images/number1.gif);
+	background-repeat:no-repeat;
+}
+#buttom_0 {
+	background-position:0 0;
+}
+#buttom_1 {
+	background-position:-29px 0;
+}
+#buttom_2 {
+	background-position:-58px 0;
+}
+#buttom_3 {
+	background-position:-87px 0;
+}
+#buttom_0.selected {
+	background-position:0 -24px;
+}
+#buttom_1.selected {
+	background-position:-29px -24px;
+}
+#buttom_2.selected {
+	background-position:-58px -24px;
+}
+#buttom_3.selected {
+	background-position:-87px -24px;
+}

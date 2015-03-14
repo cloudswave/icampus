@@ -1,0 +1,17 @@
+<div class="find-type">
+<div class="app-title clearfix">
+    <h4 class="left"><img src="{$ts['app']['small_icon_url']}" />&nbsp;&nbsp;{$ts['app']['app_alias']}</h4>		
+	<div class="app-tab-menu clearfix" style="margin:0 0 0 130px;">
+		
+		<ul>
+			<li><a href="{:U('/Index/index')}" <php>if(in_array((ACTION_NAME),array('index','all_photos','all_albums')) || !in_array((ACTION_NAME),array('all_photos','all_albums'))&&$uid!=$mid)echo 'class="current"';</php>>{$ts['app']['app_alias']}中心<php>if(in_array((ACTION_NAME),array('index','all_photos','all_albums')) || !in_array((ACTION_NAME),array('all_photos','all_albums'))&&$uid!=$mid){</php><span class="triangle"></span><php>}</php></a><i class="line"></i></li>
+                <li><a href="{:U('/Index/receivebox')}" <php>if(!in_array((ACTION_NAME),array('index','all_photos','all_albums'))&&$uid==$mid)echo 'class="current"';</php>>我的{$ts['app']['app_alias']}<php>if(!in_array((ACTION_NAME),array('index','all_photos','all_albums'))&&$uid==$mid){</php><span class="triangle"></span><php>}</php></a></li>
+		</ul>
+	</div>
+</div>
+</div>
+
+
+
+
+

@@ -1,0 +1,102 @@
+<div class="BlogBox">
+  <div class="LogList"><!-- 好友日志 begin  -->
+    <ul>
+      <volist name="data" id="vo">
+        <li class="lineD_btm">
+            <php>if( !((3 == $vo['private'] && $vo['uid'] != $mid) || (1 == $vo['private'] && !friend_areFriends( $mid,$vo['uid'] ))) ){</php>
+            <h3>
+              <a href="{:U('blog/Index/show', array('id'=>$vo['id'], 'mid'=>$vo['uid']))}">{$vo['title']}</a>
+            </h3>
+            <php>}</php>
+            <php>if( 3 == $vo['private'] && $vo['uid'] != $mid ){</php>
+            <div class="bg_msg">
+              <div class="bg_msg_btm">
+                <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td width="40" align="center"><img src="__APP__/images/ico_yaoshi.png" width="20" height="20" /></td>
+                    <td>本{$ts['app']['app_alias']}需要密码才能访问</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <php>}elseif( 1 == $vo['private'] && !friend_areFriends( $mid,$vo['uid'] ) && $vo['uid'] != $mid){</php>
+            <div class="bg_msg">
+              <div class="bg_msg_btm">
+                <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td width="40" align="center"><img src="__APP__/images/ico_suo.png" width="20" height="20" /></td>
+                    <td>只有主人的好友可以查看此{$ts['app']['app_alias']}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <php>}else{</php>
+              <php>
+              // 过滤HTML代码
+              $vo['content'] = strip_tags($vo['content']);
+              </php>
+              <p class="f14px roundbgF6 content mb15">
+                <php>if($vo['cover']){</php>
+				<span class="thumbs_block">
+                    <img src="{$vo['cover']}" width="200px" height="140px"/>
+				  </span>
+                <php>}</php>
+                {:getShort($vo['content'],$titleshort,$suffix)}</p>
+            <php>}</php>
+            <p class="cGray2">
+              <span class="right">分类：<php>
+              if ($vo['uid'] == $ts['user']['uid'])
+                  $url = U('blog/Index/my', array('cateId'=>$vo['category']));
+              else
+                  $url = U('blog/Index/personal', array('cateId'=>$vo['category'], 'uid'=>$vo['uid']));
+              </php>
+              <a href="{$url}" class="mr10">{$vo['category_title']}</a>
+              阅读：<a href="{:U('blog/Index/show', array('id'=>$vo['id'], 'mid'=>$vo['uid']))}" class="mr10">{$vo['readCount']}</a>
+              评论：<a href="{:U('blog/Index/show', array('id'=>$vo['id'], 'mid'=>$vo['uid']))}#comment">{$vo['commentCount']}</a></span>
+              <span class="name1"><php>if(ACTION_NAME == 'my' && $vo['uid']==$ts['user']['uid']) {</php>
+              <a href="{:U('blog/Index/edit', array('id'=>$vo['id'], 'mid'=>$vo['uid']))}">编辑</a> | <a href="javascript:deleteBlog('{:U('blog/Index/doDeleteBlog', array('id'=>$vo['id']))}')">删除</a>&nbsp;&nbsp;
+            <php>}else {</php>
+              {$user_info[$vo['uid']]['space_link']}
+              <!-- 用户分组图标 -->
+            <php>}</php></span>
+              <span class="cGray2">发表于 {$vo['cTime']|friendlyDate}</span>
+            </p>
+        </li>
+      </volist>
+    </ul>
+    <div class="page">{$html}</div>
+  </div>
+  <!-- 好友日志 end  --> 
+  <div class="c"></div>
+</div>
+<script type="text/javascript">
+//v2.0(判断图片载入后显示缩略图)
+/* function set_thumbs(obj, W, H) {
+  jQuery(obj + ' img').hide().each(function() {
+    var w, h, cw, ch;
+    function doResize(o) {
+      cw = o.width();
+      ch = o.height();//console.log(o);console.log(cw);console.log(ch);
+      w = W;
+      h = ch*W/cw;
+			if(cw<=W && ch<=H){
+			  h=ch;
+			  w=cw;
+      }else if(cw>=W && ch>=H){
+			  w = W;
+        h = ch*W/cw;
+			}else if (cw>=W && ch<=H) {
+        w = W;
+        h = ch*W/cw;
+      } else {
+        h = H;
+        w = cw*H/ch;
+      }
+        o.attr('style', 'width: ' + w + 'px; height: ' + h + 'px; ').hide().fadeIn('slow');
+    }
+    if (jQuery(this).get(0).complete) doResize(jQuery(this));
+    else jQuery(this).bind("load", function() { doResize(jQuery(this)); });
+  });
+}
+set_thumbs('.thumbs_block', 200, 140); */
+</script>

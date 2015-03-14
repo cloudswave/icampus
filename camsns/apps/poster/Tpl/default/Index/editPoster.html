@@ -1,0 +1,109 @@
+<include file="__THEME__/header" />
+<include file="__THEME__/editor" />
+<link rel="stylesheet" href="__APP__/poster.css" type="text/css" media="screen" charset="utf-8" />
+<script  type="text/javascript" src="__APP__/poster.js" ></script>
+<script  type="text/javascript" src="__PUBLIC__/js/rcalendar.js" ></script>
+<div class="content_holder">
+<div class="content no_bg boxShadow"><!-- 内容 begin -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l"><!-- 画布 begin -->
+    <div class="mainbox">
+      <div class="mainbox_appR">
+        <div class="right_box box_create"><a href="{:U('poster/index/addPosterSort')}" class="btn_poster_c"></a></div>
+		<include file="../Public/_isHotList" />
+      </div>
+      <div class="mainbox_appC">
+  <div class=page_title> <!-- page_title begin -->
+  <h2><span class="right fn f12px"><a href="javascript:history.back( -1 )">返回上一页</a></span><img src="__APP__/images/ico/{$ico}" />修改{$name}</h2>
+   <div style="padding-left:29px"><span class="cGray2">{$explain}</span></div>
+</div><!-- page_title end -->
+  <div class="groupBox">
+    <div class="boxL poster_boxL">
+    <div>
+     
+    </div>
+  	<div class="box1">
+  	     <php>if(!empty($smallType)){
+      $hasType = "true";
+    }</php>
+      <form method="post" action="{:U('poster/index/doEditPoster')}"  enctype="multipart/form-data" onbeforesubmit="check({$hasType})">
+        <dl class="add_event">
+          <php>if(!empty($smallType)){</php>
+          <dd>
+            <label><span class="txt_impt">*</span>类别：</label>
+            <div class="c2">
+                <?php foreach($smallType as $cate){ ?>
+                  <input class="text" type="radio" name="type" text="{$cate.name}" value="{$cate.id}" <php>if($poster['type']==$cate['id']) echo "checked";</php> />{$cate.name}
+                <?php } ?>
+            </div>
+          </dd>
+          <php>}</php>
+       	  <dd>
+              <label><span class="txt_impt">*</span>标题：</label>
+              <div class="c2">
+              <input class="form-control" name="title" type="text"  value="{$poster.title}" class="text" id="title" maxlength="60" />
+              </div>
+          </dd>
+          <dd>
+              <label><span class="txt_impt">*</span>地点：</label>
+              <div class="c2">
+<!--                 <input class="form-control" type="text" id="selectarea" name="areaval" value="{$poster.address}" class="text" size="30" /> -->
+                <!-- <input type="button" class="btn_b" value="选择地区" onclick="selectArea()" /> -->
+                <input class="form-control" type="text"  id="current" name="area" size="30" value="{$poster.area}" />
+              </div>            
+          </dd>
+          <dd>
+              <label>截止时间：</label>
+              <div class="c2"> <input class="form-control" id="deadline" value="{$poster.deadline}" name="deadline" type="text" class="text" id="deadline" onfocus="rcalendar(this,'full');" id="deadline" /> </div>
+          </dd>
+          <dd>
+              <label><span class="txt_impt">*</span>详细介绍：</label>
+            <!--   <div class="c2">
+              <textarea class="text" id="explain" name="explain" style="width:99%">{$poster.content}</textarea>
+              </div> -->
+              <div class="c2">
+              {:W('Editor',array('contentName'=>'explain','value'=>$poster['content'],'width'=>'99%'))}
+              </div>
+          </dd>
+          <volist name="extraField" id="vo">
+            {:W($vo['widget'],$vo)}
+          </volist>
+          <dd>
+              <label>联系方式：&nbsp;&nbsp;&nbsp;</label>
+              <div class="c2">
+                <input class="form-control" name="contact" type="text" value="{$poster.contact}" class="text" id="contact" size="30" />
+                <br /><span class="cGray2">填写联系人电话，如：张小姐，1346665XXXX            </span>
+              </div>
+          </dd>
+          <dd>
+              <label>图片：&nbsp;&nbsp;&nbsp;</label>
+              <div class="c2">
+              <input name="cover" class="text" type="file" />
+              </div>
+          </dd>
+          <dd>
+              <label>&nbsp;</label>
+              <div class="c2">
+              <input type="hidden" name="id"  value="{$poster.id}"/>
+              <input name="button" type="submit" class="btn_b" id="button" value="确认发起" />
+              </div>
+          </dd>
+        </dl>
+        </form>
+    </div>
+    </div> <!-- end  -->
+ </div>
+  </div><!-- 画布 end  -->
+  <div class="c"></div>
+  </div>
+  </div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" />
+<script>
+function selectArea(){
+    var typevalue = $("#current").val();
+    ui.box.load(U('poster/Area/area')+'&selected='+typevalue,'选择城市');
+}
+</script>

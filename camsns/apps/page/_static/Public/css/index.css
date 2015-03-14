@@ -1,0 +1,62 @@
+/* TAB */
+.tab, .tab li, .tab li span{display:block;}
+.tab{height:29px;background-position:0px 28px;background-repeat:repeat-x;clear:both;padding-left:5px;margin-bottom:1px;}
+.tab li{background-position:0px -32px;line-height:29px;padding-left:15px;float:left;margin-right:5px;}
+.tab li span{background-position:right -32px;padding-right:15px;white-space:nowrap;color:#333;cursor:pointer;font-size:14px}
+.tab li span a, .tab li span a:visited, .tab li span a:hover{color:#333;text-decoration:none;}
+.tab li.on{background-position:left -1px;}
+.tab li.on span{background-position:right -1px;font-weight:bold;}
+.contents_left{ text-align:left;}
+.contents_min{ width:560px;float:left;text-align:left;}
+.contents_min.w768{ width:770px;}
+.contents_right{ width:200px;float:right;text-align:left;}
+.Intell{ clear:both;padding-bottom:7px;font-size:12px;padding-top:0;}
+.Intell dt{ margin-bottom:2px;}
+.Intell dd{/*background:url(../images/Intell_d_bg.gif) repeat-x bottom;*/ border-bottom:1px dotted #ddd;height:34px;line-height:34px;padding-left:10px;padding:0 7px;margin:0 3px; text-align:left;}
+.Intell dd.no{ border-bottom:0;}
+.Intell dd .icon{ background:url(../images/Intell_d_icon.gif) no-repeat center;height:7px;width:4px;float:right;margin-top:12px;padding-right:10px;}
+.Intell dd a, .Intell dd a:visited{ color:#666;padding-right:3px;}
+.Intell dd a:hover{ color:#333;}
+.Intell dd span{ font-weight:bold;color:#333;padding-right:5px;}
+.new_ask{ clear:both;font-size:12px;padding-bottom:7px;}
+.new_ask dt{margin-bottom:5px}
+.new_ask dt span{ float:right;padding-right:10px;}
+.new_ask dd{background:url(../images/new_ask_d_icon.gif) no-repeat left 11px;padding-left:10px;margin-left:10px;overflow:hidden;word-wrap:break-word;line-height:24px;height:24px;padding-left:10px;}
+.new_ask dd a,.new_ask dd a:visited{ color:#333}
+.new_ask dt a{ color:#999;font-weight:normal;}
+.new_ask dd span{color:#666;width:60px;text-align:center;}
+.new_ask dd .ba span a, .new_ask dd .ba span a:visited{ color:#999;}
+.new_ask dd .ba01{float:left;text-align:left;width:400px;}
+.new_ask dd .ba01 a, .new_ask dd .ba01 a:visited{ color:#333;padding-right:3px;}
+
+.new_ask dd .ba{float:left;text-align:left;width:400px;}
+.new_ask dd.bg{ background:none;margin:0;}
+.new_ask dd .lek{float:left;text-align:left;width:100px;overflow:hidden;height:22px;}
+.new_ask dd .ba a{margin-right:10px;}
+.new_ask dd .ba a.cor{ color:#666;}
+.new_ask dd.bg strong{ padding-right:10px;font-weight:normal;color:#333;}
+
+.exp_space{ clear:both;font-size:12px;padding-top:0;overflow:hidden;}
+.exp_space dt{ margin-bottom:3px;}
+.exp_space dt a ,.exp_space dt a:visited{ color:#999;font-weight:normal;}
+.exp_space dd{ height:70px;float:left;width:60px;text-align:center;margin-top:10px;padding-left:5px; overflow:hidden}
+.exp_space dd a,.exp_space dd a:visited{ color:#333}
+.exp_space_list{ padding-bottom:5px;font-size:12px;}
+.exp_space_list li{background:url(../images/new_ask_d_icon.gif) no-repeat left;padding-left:10px;width:160px;overflow:hidden;word-wrap:break-word;line-height:21px;}
+.exp_space_list li a, .exp_space_list li a:visited{ color:#333}
+.h6{ height:6px;}
+.banner{ padding-bottom:10px;}
+.adfont{ padding:10px;line-height:21px;}
+.mail_box{ padding:7px 22px;height:41px;line-height:41px;font-weight:bold;}
+.mail_box a,.mail_box a:visited{ color:#333}
+.news{ clear:both;font-size:12px;padding-top:7px;}
+.news dd{background:url(../images/new_ask_d_icon.gif) no-repeat left 10px;padding-left:10px;height:22px;width:160px;overflow:hidden;word-wrap:break-word;line-height:21px;padding:0 7px;}
+.news dd a, .news dd a:visited{ color:#333;}
+.catch{margin:8px;border-top:1px solid #ddd;}
+.catch p{font-size:14px;font-weight:bold;line-height:25px;padding:0 10px;}
+.lable{ height:75px;font-size:12px;overflow:hidden;}
+.lable .tag{ width:23px;text-align:center;float:left;line-height:19px;border-right:1px solid #ddd;}
+.lable .cent{ line-height:21px;padding:7px 10px;width:720px;float:left;}
+.lable .cent a{ padding:0 5px;color:#666;}
+.lable .cent a:hover{ color:#333}
+

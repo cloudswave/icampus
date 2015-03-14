@@ -1,0 +1,28 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="__APP__/poll.css" type="text/css" media="screen" charset="utf-8" />
+<link href="__PUBLIC__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+<div class="content_holder">
+<div class="content no_bg boxShadow"><!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_appR">
+        <div class="right_box box_create mb20"><a href="{:U('vote/Index/addPoll')}" class="btn-create">发起投票</a></div>
+		    <include file="../Public/_isHotList" />	
+      </div>
+      <div class="mainbox_appC">
+        <div class="tab-menu"><!-- 切换标签 begin  -->
+          <ul>
+             <li <php> echo (empty($_GET['action']) || $_GET['action']=='in')?'class="current"':NULL;</php>><a href="{:U('vote/Index/my',array('action'=>'in'))}" ><span>我参与的{$ts['app']['app_alias']}</span></a></li>
+	           <li <php> echo ($_GET['action']=='add')?'class="current"':NULL;</php>><a href="{:U('vote/Index/my',array('action'=>'add'))}" ><span>我发起的{$ts['app']['app_alias']}</span></a></li>
+          </ul>
+        </div>
+        <include file="../Public/_polllist" /> 
+        <div class="c"></div>
+      </div>
+  <div class="c"></div>
+</div>
+</div>
+</div>
+</div>
+<include file="__THEME__/public_footer" />

@@ -1,0 +1,24 @@
+<php>if(empty($userlist)) {</php>暂无更多信息<php>}</php>
+<volist name="userlist" id="vo">
+<div class="list">
+  <table>
+    <tr>
+      <td valign="top">
+          <a href="{:U('wap/Index/weibo',array('uid'=>$vo['user']['uid']))}" class="pl"><img src="{$vo['user']['avatar_small']}" alt="头像" class="por" width="50" height="50"/></a>
+      </td>
+      <td valign="top">
+          <a href="{:U('wap/Index/weibo',array('uid'=>$vo['user']['uid']))}" class="nk">{$vo['user']['uname']}</a><br/>
+          粉丝{$vo['user']['count_info']['follower_count']}人<br/>
+          <php>if($vo['user']['uid'] != $mid) {</php>
+            {$vo['user']['follow_state']['value']}&nbsp;
+	          <php>if(!$vo['user']['follow_state']['following']){</php>
+	          <a href="{:U('wap/Index/doFollow',array('from'=>$type,'type'=>'follow','key'=>$keyword,'page'=>$page,'user_id'=>$vo['user']['uid']))}">关注</a>
+	          <php>}else {</php>
+	          <a href="{:U('wap/Index/doFollow',array('from'=>$type,'type'=>'unfollow','key'=>$keyword,'page'=>$page,'user_id'=>$vo['user']['uid']))}">取消关注</a>
+	          <php>}</php>
+          <php>}</php>
+      </td>
+    </tr>
+</table>
+</div>
+</volist>

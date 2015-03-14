@@ -1,0 +1,235 @@
+<include file="__THEME__/public_header" />
+  <div id="page-wrap">
+    <div id="main-wrap">
+      <div id="col">
+        <include file="search_top" />
+        <div id="col8" class="st-section boxShadow content-bg">
+          <div class="">
+            <!--右边-->
+            <div id="col3" class="st-index-right">
+              <div class="right-wrap">
+                <!-- <div class="hot-topic mb20">
+                    <h3>热门话题</h3>
+                    <ul>
+                       <li>
+                          <p><a href="">ThinkSNS开发者大赛</a>（365）</p>
+                          <div class="topic-tips">
+                          <i class="arrow-topic"></i>
+                          <div class="topic-info">亲，你在哪了？优秀的TS开发者，"iPad 3+Honor+Kindle 4"在等你了。加油～～</div>
+                         </div>
+                        </li>
+                        <li><p><a href="">ThinkSNS开发者大赛</a>（365）</p></li>
+                        <li><p><a href="">ThinkSNS开发者大赛</a>（365）</p></li>
+                        <li><p><a href="">ThinkSNS开发者大赛</a>（365）</p></li>
+                        <li><p><a href="">ThinkSNS开发者大赛</a>（365）</p></li>
+                        <li><p><a href="">ThinkSNS开发者大赛</a>（365）</p></li>
+                       <li>
+                          <p><a href="">ThinkSNS开发者大赛</a>（365）</p>
+                          <div class="topic-tips">
+                          <i class="arrow-topic"></i>
+                          <div class="topic-info">亲，你在哪了？优秀的TS开发者，"iPad 3+Honor+Kindle 4"在等你了。加油～～</div>
+                         </div>
+                       </li>
+                    </ul>
+                </div>
+                <div class="attention mb20 clearfix">
+                    <h3>同你同地区的人（你们都在北京海淀区）</h3>
+                    <ul>
+                       <li><a href="" class="face"><img src="__THEME__/image/face50.jpg" />廖素南</a><span>加关注</span></li>
+                       <li><a href="" class="face"><img src="__THEME__/image/face50.jpg" />廖素南</a><span>加关注</span></li>
+                       <li><a href="" class="face"><img src="__THEME__/image/face50.jpg" />廖素南</a><span>加关注</span></li>
+                      <li><a href="" class="face"><img src="__THEME__/image/face50.jpg" />廖素南</a><span>加关注</span></li>
+                      <li><a href="" class="face"><img src="__THEME__/image/face50.jpg" />廖素南</a><span>加关注</span></li>
+                     <li><a href="" class="face"><img src="__THEME__/image/face50.jpg" />廖素南</a><span>加关注</span></li>
+                    </ul>
+                </div>
+                <div class="attention mb20 clearfix">
+                    <h3>同你同职业的人（你们都是爱花者）</h3>
+                    <ul>
+                       <li><a href="" class="face"><img src="__THEME__/image/face50.jpg" />廖素南</a><span>加关注</span></li>
+                       <li><a href="" class="face"><img src="__THEME__/image/face50.jpg" />廖素南</a><span>加关注</span></li>
+                       <li><a href="" class="face"><img src="__THEME__/image/face50.jpg" />廖素南</a><span>加关注</span></li>
+                      <li><a href="" class="face"><img src="__THEME__/image/face50.jpg" />廖素南</a><span>加关注</span></li>
+                      <li><a href="" class="face"><img src="__THEME__/image/face50.jpg" />廖素南</a><span>加关注</span></li>
+                     <li><a href="" class="face"><img src="__THEME__/image/face50.jpg" />廖素南</a><span>加关注</span></li>
+                    </ul>
+                </div> -->                        
+              </div>
+            </div>
+            <div id="col5" class="st-index-main">
+              <!-- <php>if($keyword == ""){</php><div><font color="red">抱歉，搜索关键字不能为空</font></div><php>}</php> -->
+              <div class="extend-foot">
+              <!--feednav-->
+                <div class="feed-nav">
+                  <div class="tab-title">
+                    <php>if($keyword != ""){</php>
+                    <div class="left">
+                    <!-- 所有地区<a href="">[筛选]</a><i class="vline">| -->
+                      </i>时间&nbsp;<a href="javascript:void(0);" onclick="selectDate()">[筛选]</a>
+                      <php>if($Stime && $Etime){</php>
+                        ({$Stime} ~ {$Etime})
+                      <php>}</php>
+                    </div>
+                    <div class="mod-feed-tab right" id="mod-feed-tab" <php>if(!isset($_GET['feed_type']) && empty($_GET['feed_key'])){</php> style="display:block"<php>}</php> >
+                      <ul class="inner-feed-nav">
+                        <li <eq name='feed_type' value=''>class="current"</eq>>
+                            <a href="{:U('public/Search/index',array('type'=>$type,'feed_type'=>'','k'=>$keyword,'a'=>'public','t'=>2, 'Stime'=>$Stime,'Etime'=>$Etime))}">{:L('PUBLIC_ALL_STREAM')}</a></li>
+                        <li <eq name='feed_type' value='post'>class="current"</eq>>
+                        <a href="{:U('public/Search/index',array('type'=>$type,'feed_type'=>'post','k'=>$keyword,'a'=>'public','t'=>2, 'Stime'=>$Stime,'Etime'=>$Etime))}">{:L('PUBLIC_ORIGINAL_STREAM')}</a></li>
+                        <li <eq name='feed_type' value='repost'>class="current"</eq>>
+                        <a href="{:U('public/Search/index',array('type'=>$type,'feed_type'=>'repost','k'=>$keyword,'a'=>'public','t'=>2,'Stime'=>$Stime, 'Etime'=>$Etime))}">{:L('PUBLIC_SHARE_STREAM')}</a></li>
+                        <li <eq name='feed_type' value='postimage'>class="current"</eq>>
+                        <a href="{:U('public/Search/index',array('type'=>$type,'feed_type'=>'postimage','k'=>$keyword,'a'=>'public','t'=>2,'Stime'=>$Stime, 'Etime'=>$Etime))}">{:L('PUBLIC_IMAGE_STREAM')}</a></li>
+                        <li <eq name='feed_type' value='postfile'>class="current"</eq>>
+                        <a href="{:U('public/Search/index',array('type'=>$type,'feed_type'=>'postfile','k'=>$keyword,'a'=>'public','t'=>2,'Stime'=>$Stime, 'Etime'=>$Etime))}">{:L('PUBLIC_FILE_STREAM')}</a></li>
+                        <li <eq name="feed_type" value="postvideo">class="current"</eq>>
+                        <a href="{:U('public/Search/index',array('type'=>$type,'feed_type'=>'postvideo','k'=>$keyword,'a'=>'public','t'=>2,'Stime'=>$Stime, 'Etime'=>$Etime))}">视频</a></li>
+                      </ul>
+                    </div>
+                    <php>}</php>
+                  </div>
+                </div>
+                <!--feed list-->
+                <include file="weibo" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<include file="__THEME__/public_footer" />
+<script>
+  var selectDate = function(){
+    var app = $('#app').val();
+    var mod = $('#mod').val();
+    var t = $('#t').val();
+    var a = $('#a').val();
+    var k = "{$keyword}";
+    var feed_type = "{$feed_type}";
+    ui.box.load(U('public/Search/selectDate')+'&app='+app+'&mod='+mod+'&t='+t+'&a='+a+'&k='+encodeURI(k)+'&feed_type='+feed_type, '时间筛选','$("#rcalendar").css("display","none")');
+  };
+
+  //旋转图片
+function revolving (type, id) {
+  var img = $("#image_index_"+id);
+  img.rotate(type);
+}
+
+
+$.fn.rotate = function(p){
+
+  var img = $(this)[0],
+    n = img.getAttribute('step');
+  // 保存图片大小数据
+  if (!this.data('width') && !$(this).data('height')) {
+    this.data('width', img.width);
+    this.data('height', img.height);
+  };
+  this.data('maxWidth',img.getAttribute('maxWidth'))
+
+  if(n == null) n = 0;
+  if(p == 'left'){
+    (n == 0)? n = 3 : n--;
+  }else if(p == 'right'){
+    (n == 3) ? n = 0 : n++;
+  };
+  img.setAttribute('step', n);
+
+  // IE浏览器使用滤镜旋转
+  if(document.all) {
+    if(this.data('height')>this.data('maxWidth') && (n==1 || n==3) ){
+      if(!this.data('zoomheight')){
+        this.data('zoomwidth',this.data('maxWidth'));
+        this.data('zoomheight',(this.data('maxWidth')/this.data('height'))*this.data('width'));
+      }
+      img.height = this.data('zoomwidth');
+      img.width  = this.data('zoomheight');
+      
+    }else{
+      img.height = this.data('height');
+      img.width  = this.data('width');
+    }
+    
+    img.style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+ n +')';
+    // IE8高度设置
+    if ($.browser.version == 8) {
+      switch(n){
+        case 0:
+          this.parent().height('');
+          //this.height(this.data('height'));
+          break;
+        case 1:
+          this.parent().height(this.data('width') + 10);
+          //this.height(this.data('width'));
+          break;
+        case 2:
+          this.parent().height('');
+          //this.height(this.data('height'));
+          break;
+        case 3:
+          this.parent().height(this.data('width') + 10);
+          //this.height(this.data('width'));
+          break;
+      };
+    };
+  // 对现代浏览器写入HTML5的元素进行旋转： canvas
+  }else{
+    var c = this.next('canvas')[0];
+    if(this.next('canvas').length == 0){
+      this.css({'visibility': 'hidden', 'position': 'absolute'});
+      c = document.createElement('canvas');
+      c.setAttribute('class', 'maxImg canvas');
+      img.parentNode.appendChild(c);
+    }
+    var canvasContext = c.getContext('2d');
+    switch(n) {
+      default :
+      case 0 :
+        img.setAttribute('height',this.data('height'));
+        img.setAttribute('width',this.data('width'));
+        c.setAttribute('width', img.width);
+        c.setAttribute('height', img.height);
+        canvasContext.rotate(0 * Math.PI / 180);
+        canvasContext.drawImage(img, 0, 0);
+        break;
+      case 1 :
+        if(img.height>this.data('maxWidth') ){
+          h = this.data('maxWidth');
+          w = (this.data('maxWidth')/img.height)*img.width;
+        }else{
+          h = this.data('height');
+          w = this.data('width');
+        }
+        c.setAttribute('width', h);
+        c.setAttribute('height', w);
+        canvasContext.rotate(90 * Math.PI / 180);
+        canvasContext.drawImage(img, 0, -h, w ,h );
+        break;
+      case 2 :
+        img.setAttribute('height',this.data('height'));
+        img.setAttribute('width',this.data('width'));
+        c.setAttribute('width', img.width);
+        c.setAttribute('height', img.height);
+        canvasContext.rotate(180 * Math.PI / 180);
+        canvasContext.drawImage(img, -img.width, -img.height);
+        break;
+      case 3 :
+        if(img.height>this.data('maxWidth') ){
+          h = this.data('maxWidth');
+          w = (this.data('maxWidth')/img.height)*img.width;
+        }else{
+          h = this.data('height');
+          w = this.data('width');
+        }
+        c.setAttribute('width', h);
+        c.setAttribute('height', w);
+        canvasContext.rotate(270 * Math.PI / 180);
+        canvasContext.drawImage(img, -w, 0,w,h);
+        break;
+    };
+  };
+};
+</script>
+<script type="text/javascript" src="__THEME__/js/module.weibo.js"></script>

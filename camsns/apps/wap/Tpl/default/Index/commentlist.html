@@ -1,0 +1,60 @@
+<include file="../Public/header" />
+<div class="userinfo">
+  <php>if($is_owner) {</php>
+    <php>
+    switch(ACTION_NAME) {
+        case 'atMe':
+            echo '@我的';
+            break;
+        case 'replyMe':
+            echo '评论我的';
+            break;
+		case 'favorite':
+            echo '我的 收藏';
+            break;
+        default:
+            echo '我的 微博';
+    }
+    </php>
+  <br />
+  <php>}else {</php>
+  <table border="0" cellpadding="0" cellspacing="2">
+    <tr>
+    <td valign="top"><img src="{$profile['face']}" alt="头像" class="por" /></td>
+    <td valign="top">
+        {$profile['uname']} / {$profile['sex']} / 
+        <php>echo empty($profile['location'])?'未知':$profile['location'];</php><br/>
+        <php>if($profile['is_followed']=='unfollow'){</php>
+            未关注
+            <a href="{:U('wap/Index/doFollow',array('from'=>'weibo','type'=>'follow','user_id'=>$profile['uid']))}">关注</a>
+        <php>}else {</php>
+            已关注
+            <a href="{:U('wap/Index/doFollow',array('from'=>'weibo','type'=>'unfollow','user_id'=>$profile['uid']))}">取消关注</a>
+        <php>}</php>
+        <!-- <a href="#">资料及操作</a>&nbsp; -->
+    </td>
+    </tr>
+  </table>
+  <php>}</php>
+  <include file="../Public/statistics" />
+</div>
+<include file="../Public/commentlist" />
+<div>
+    <php>
+        $has_pre   = $page > 1;
+        $has_after = count($weibolist) >= $item_count;
+    </php>
+    <php>if($has_pre) {</php>
+    <a href="{:U('wap/Index/weibo',array('uid'=>$_GET['uid'],'page'=>$page-1))}">上页</a>
+    <php>}</php> 
+    <php>if($has_after) {</php>
+    <a href="{:U('wap/Index/weibo',array('uid'=>$_GET['uid'],'page'=>$page+1))}">下页</a>
+    <php>}</php>
+    <php>if($has_pre || $has_after) {</php>
+    <form action="{:U('wap/Index/weibo',array('uid'=>$_GET['uid']))}" method="post">
+    <input type="text" name="page" size="2" />
+    <input type="submit" value="跳页" /> 第{$page}页
+    </form>
+    <php>}</php>
+</div>
+<include file="../Public/footer" />

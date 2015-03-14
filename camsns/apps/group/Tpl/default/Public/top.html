@@ -1,0 +1,53 @@
+<script type="text/javascript" src="__APP__/Js/common.js"></script>
+<script>
+<if condition="$is_invited eq 1">
+$(document).ready(function(){
+    joingroup({$gid});
+});
+</if>
+</script>
+<div class="mod_announcement">
+        <div class="right">
+              <php>if ($isadmin) {</php>
+              <a href="{:U('group/Manage/announce', array('gid'=>$gid))}">修改</a>
+              <php>}</php>
+        </div>
+        <h4 class="titround_Ann">最新公告</h4>
+        <span>{$groupinfo['announce']}</span>
+    </div>
+<div class="tab-menu">
+    <div class="right mt5">
+        <!-- <a href="">分享群组</a><i class="vline">|</i><a href="" class="btn-att-green">加入该群</a> -->
+        <if condition="$groupinfo['brower_level'] eq -1">
+                      {:W('ShareToFeed',array('title'=>'分享群组','initHTML'=>urlencode('分享我加入了的一个群组“'.$groupinfo['name'].'”'),'url'=>U('group/Group/index',array('gid'=>$gid)),'from'=>'group'))}
+                	  &nbsp;&nbsp;<span class="cGray2">|</span>&nbsp;&nbsp;
+                </if>
+                <php>if (($ismember && $groupinfo['need_invite'] != 2) || $isadmin) { </php>
+                    <a href="{:U('group/Invite/create',array('gid'=>$groupinfo['id']))}">邀请好友</a>
+                    &nbsp;&nbsp;<span class="cGray2">|</span>&nbsp;&nbsp;
+                <php>}</php>
+                <php>if($isadmin){</php>
+                    <span class="ico_Modify"></span><a href="{:U('/Manage/',array('gid'=>$groupinfo['id']))}">管理群组</a>
+                    &nbsp;&nbsp;<span class="cGray2">|</span>&nbsp;&nbsp;
+                    
+                <php>}</php>
+                <php>if(!isadmin($mid,$gid) && !ismember($mid,$gid)){</php>
+                    <php>if($groupinfo['membercount'] == $config['groupMaxUser']){</php>
+                        	人数已经满({$groupinfo['membercount']})
+                    <php>}else{</php>
+                        <a href="javascript:joingroup({$gid})" class="btn_shenqing">加入该群</a>
+                    <php>}</php>
+                    <php>} elseif(iscreater($mid,$gid)){</php>
+                        
+                    <php>} else {</php>
+                        <span class="cGray2">已加入群组</span> <a href="javascript:quitgroup({$gid})">退出</a>
+                    <php>}</php>
+    </div>
+      <ul>
+          <if condition="$groupinfo['openWeibo']"><li <if condition="$current eq 'group'">class="current" </if>><a href="{:U('/Group/',array('gid'=>$groupinfo['id']))}"> <span>群聊</span></a></li></if>
+          <if condition="$groupinfo['openBlog']"><li <if condition="$current eq 'topic'">class="current" </if>><a href="{:U('/Topic/',array('gid'=>$groupinfo['id']))}"><span>帖子</span></a></li></if>
+          <if condition="$groupinfo['openUploadFile']"><li <if condition="$current eq 'dir'">class="current" </if>><a href="{:U('/Dir/',array('gid'=>$groupinfo['id']))}"><span>文档</span></a></li></if>
+          <li <if condition="$current eq 'member'">class="current" </if>><a href="{:U('/Member/',array('gid'=>$groupinfo['id']))}"><span>成员</span></a></li>
+      	  <li <if condition="$current eq 'notice'">class="current" </if>><a href="{:U('group/Notice/atme',array('gid'=>$groupinfo['id']))}"><span>消息</span></a></li>
+      </ul>
+</div>

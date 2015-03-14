@@ -1,0 +1,72 @@
+<div class="right-box mb20 clearfix border-b" model-node="related_list">
+	<h3><a href="javascript:;" event-node="change_related" event-args="uid={$uid}&limit={$limit}" id="changerelated" class="right">换一换</a>{$title}</h3>
+    <volist name="user" id="vo">
+    	<dl model-node="related_dl">
+    		<dt><a event-node="face_card" uid="{$vo[userInfo]['uid']}" href="{$vo.userInfo.space_url}" class="face"><img src="{$vo.userInfo.avatar_small}" width="50" height="50"/></a></dt>
+            <dd>
+                <div class="right">{:W('FollowBtn', array('fid'=>$vo['userInfo']['uid'], 'uname'=>$vo['userInfo']['uname'], 'follow_state'=>$vo['followState'], 'refer'=>'following_right'))}</div>
+                <p><span><a event-node="face_card" uid="{$vo.userInfo.uid}" target="_blank" href="{$vo.userInfo.space_url}">{$vo.userInfo.uname|getShort=###,7}</a></span></p>
+                <p><a class="f3" <php>if(!empty($vo['info']['extendMsg'])):</php> event-node="show_extend_msg"<php>endif;</php>>{$vo.info.msg}<php>if(!empty($vo['info']['extendMsg'])):</php><i class="arrow-down-grey"></i><php>endif;</php></a></p>
+            </dd>
+            <dd class="att-box"><i class="arrow-y"></i><p>{$vo.info.extendMsg}</p></dd>
+        </dl>
+    </volist>
+</div>
+
+<script type="text/javascript">
+// 事件监听
+M.addModelFns({
+    related_list: {
+        load: function() {
+            $(this).find('dl').each(function(i, n) {
+                if(i != 0) {
+                    $(this).find('dd').last().css('display', 'none');
+                } else {
+                    var extendMsg = $(this).find('dd').last().find('p').html();
+                    if(extendMsg === '') {
+                        $(this).find('dd').last().css('display', 'none');
+                    } else {
+                        $(this).find("i").eq(0)[0].className = "arrow-up-grey";
+                    }
+                }
+            });
+        }
+    }
+});
+$(function (){
+	setTimeout(function (){
+		$('#changerelated').click();
+	},100)
+});
+// 事件绑定
+M.addEventFns({
+    // 换一换操作
+    change_related: {
+        click: function() {
+            var args = M.getEventArgs(this);
+            var _model = M.getModels('related_list');
+            $.post(U('widget/RelatedUser/changeRelate'), {uid:args.uid, limit:args.limit}, function(data) {
+                var html = '<h3><a href="javascript:;" event-node="change_related" event-args="uid={$uid}&limit={$limit}" class="right">换一换</a>{$title}</h3>';
+                html += data;
+                $(_model).html(html);
+                M($(_model)[0]);
+            }, 'json');
+            return false ;
+        }
+    },
+    // 显示更多信息操作
+    show_extend_msg: {
+        click: function() {
+            var extendMsgObj = $(this.parentModel).find('dd').last();
+            if(extendMsgObj.css('display') == 'none') {
+                extendMsgObj.css('display', 'block');
+                $(this).find("i").eq(0)[0].className = "arrow-up-grey";
+            } else {
+                extendMsgObj.css('display', 'none');
+                $(this).find("i").eq(0)[0].className = "arrow-down-grey";
+            }
+            return false;
+        }
+    }
+});
+</script>

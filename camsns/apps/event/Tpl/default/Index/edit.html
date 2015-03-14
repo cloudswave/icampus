@@ -1,0 +1,177 @@
+<include file="__THEME__/header" />
+<include file="__THEME__/editor" />
+<link rel="stylesheet" href="__APP__/event.css" type="text/css" media="screen" charset="utf-8" />
+<script  type="text/javascript" src="__APP__/js/rcalendar.js" ></script>
+<script type="text/javascript" src="__APP__/js/event.js"></script>
+<div class="content_holder">
+<div class="content no_bg boxShadow">
+  <!-- 内容 begin  -->
+  <include file="../Public/_mainNav" />
+  <div class="main no_l">
+    <div class="mainbox clearfix">
+      <include file="../Public/_isHotList" />
+      <!-- 画布 begin  -->
+      <div class="mainbox_appC">
+        <div class=page_title>
+          <h2>编辑活动</h2>
+        </div>
+        <div class="groupBox">
+          <div class="box1">
+            <form method="post" action="{:U('//doEditEvent')}" onsubmit="return funcheck();" enctype="multipart/form-data" model-node='event_edit'>
+              <dl class="add_event">
+                <dd>
+                  <label><span class="txt_impt">*</span>活动名称：</label>
+                  <div class="c2">
+                    <input name="title" type="text" class="text" id="title" onfocus="this.className='text2'" onblur="this.className='text'" size="60" value="{$title}" />
+                  </div>
+                  <div class="c"></div>
+                </dd>
+                <dd>
+                  <label> 活动城市：</label>
+                  <div class="c2">
+                    <input type="hidden" id="current" />
+                    <input type="text" name="city" value="{$city}" class="text" onfocus="this.className='text2'" onblur="this.className='text'" size="30" id="selectarea" readonly />
+                    <input type="button" class="btn_b" value="选择地区" onclick="selectArea()" />
+                  </div>
+                  <div class="c"></div>
+                </dd>
+                <dd>
+                  <label><span class="txt_impt">*</span>活动地点：</label>
+                  <div class="c2">
+                    <input type="hidden" name="ts_current" id="ts_current">
+                    <input type="text" class="text" onfocus="this.className='text2'" onblur="this.className='text'" size="30" name="address"  value='{$address}' id="address"/>
+                  </div>
+                  <div class="c"></div>
+                </dd>
+                <dd>
+                  <label><span class="txt_impt">*</span>活动时间：</label>
+                  <div class="c2">
+                    <input name="sTime" type="text" class="text" id="sTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" size="20" value="<?php echo date( 'Y-m-d H:i:s',$sTime ); ?>" readonly/>
+                    -
+                    <input name="eTime" type="text" class="text" id="eTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" size="20" value="<?php echo date( 'Y-m-d H:i:s',$eTime ); ?>" readonly />
+                  </div>
+                  <div class="c"></div>
+                </dd>
+                <dd>
+                  <label><span class="txt_impt">*</span>截止报名：</label>
+                  <div class="c2">
+                    <input name="deadline" type="text" class="text" id="deadline" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" size="20" value="<?php echo date( 'Y-m-d H:i:s',$deadline );?>" readonly />
+                  </div>
+                  <div class="c"></div>
+                </dd>
+                <dd>
+                  <label> 活动经费：</label>
+                  <div class="c2">
+                    <select name="cost" id="cost" class="text">
+                      <option value="0">免费</option>
+                      <option value="1">AA制</option>
+                      <option value="2">50元以下</option>
+                      <option value="3">50-200元</option>
+                      <option value="4">200-500元</option>
+                      <option value="5">500-1000元</option>
+                      <option value="6">1000元以上</option>
+                    </select>
+                    <script type="text/javascript" charset="utf-8">
+                    $( "#cost option[value='{$cost}']" ).attr( 'selected',true );
+                    </script>
+                    资费说明：
+                    <input name="costExplain" type="text" class="text" id="textfield2" onfocus="this.className='text2'" onblur="this.className='text'" size="30" value="{$costExplain}"/>
+                  </div>
+                  <div class="c"></div>
+                </dd>
+                <dd>
+                  <label> 活动人数：</label>
+                  <div class="c2">
+                    <input name="limitCount" type="text" class="text" id="limitCount" onfocus="this.className='text2'" onblur="this.className='text'" size="5" value="<?php if( $lc == '无限制' ) {echo intval(0);} else{ echo intval($limitCount);} ?>" onKeyUp="this.value=this.value.replace(/\D/g,'')" />
+                    <span class="cGray2"> 活动人数上限，设0表示无限制</span></div>
+                    <div class="c"></div>
+                </dd>
+                <dd>
+                  <label><span class="txt_impt">*</span>活动分类：</label>
+                  <div class="c2">
+                    <select name="type" id="type" class="text">
+                      <option value="0">请选择活动分类</option>
+                      <?php foreach($category as $k=>$cate){ ?>
+                      <option value="{$k}" 
+                      <php>if( $cate === $type ) {echo "selected";}</php>
+                      >{$cate}
+                      </option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                  <div class="c"></div>
+                </dd>
+                <dd>
+                  <label><span class="txt_impt">*</span>活动介绍：</label>
+                  <div class="c2">
+                    <!-- <textarea id="explain" name="explain" style="width:100%; height:350px;">{$explain}</textarea> -->
+                    {:W('Editor',array('contentName'=>'explain','value'=>$explain,'heigth'=>''))}
+                  </div>
+                  <div class="c"></div>
+                </dd>
+                <dd>
+                  <label>联系方式：</label>
+                  <div class="c2">
+                    <input name="contact" type="text" class="text" id="textfield3" onfocus="this.className='text2'" onblur="this.className='text'" size="30" value="{$contact}" />
+                    <br />
+                    <span class="cGray2">填写联系人电话，如：张小姐，1346665XXXX </span></div>
+                </dd>
+                <?php 
+                $allow = "";
+                $friend = "";
+                  if( $opts['allow'] ){
+                    $allow = "checked";
+                  }
+                  if( $opts['friend'] ){
+                    $friend = "checked";
+                  }
+                ?>
+                <dd>
+                  <label>活动选项：&nbsp;&nbsp;&nbsp;</label>
+                  <div class="c2">
+                    <div>
+                      <input type="checkbox" name="friend" id="choice1" value="1" {$friend}/>
+                      只允许我关注的人参加该活动</div>
+                    <div>
+                      <input type="checkbox" name="allow" id="choice2" value="1" {$allow}/>
+                      活动参加人员需要审批</div>
+                  </div>
+                </dd>
+                <dd>
+                  <label>活动海报：&nbsp;&nbsp;&nbsp;</label>
+                  <div class="c2">
+                    <input name="cover" type="file" />
+                    <!--<span class="cGray2">图片将上传您的默认相册</span><br /> -->
+                  </div>
+                  <input name="old_cover" type="hidden" value='{$coverId}'>
+                </dd>
+                <!-- <li>
+                <div class="c1">将图片上传到：</div> 
+                   <div class="c2">
+                {:W('AlbumList',array( 'uid'=>$mid , 'form_name'=>'albumId' , 'selected'=>intval($_GET['albumId']) ) )}
+                </div>
+              </li> -->
+                <dd>
+                  <label>&nbsp;</label>
+                  <div class="c2">
+                    <input type="hidden" name="id" value="{$id}">
+                    <input type="hidden" name="optsId" value="{$optsId}">
+                    <input event-node="submit_btn" name="button" type="submit" class="btn_b" id="button" value="保存" />
+                  </div>
+                </dd>
+              </dl>
+            </form>
+          </div>
+          <div class="c"></div>
+        </div>
+        <!-- end  -->
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- 画布 end  -->
+<div class="c"></div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />

@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{&SITE_TITLE}</title>
+    <link href="__APP__/css/admin.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="__APP__/js/jquery.126.js" ></script>
+	<script src="__APP__/js/admin.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="container">
+	  <div class="tab">
+      	<div style="float:right"><a href="__URL__/photo_recycle/show_type/pic">图形</a> | <a href="__URL__/photo_recycle/show_type/list">列表</a></div>
+		<ul>
+			<li><a href="__URL__/index">{$ts['app']['app_alias']}全局设置</a></li>
+            <li><a href="__URL__/photo_list">图片审核</a></li>
+			<li><a href="__URL__/album_list">{$ts['app']['app_alias']}审核</a></li>
+			<li><a href="__URL__/photo_recycle" class="on">图片回收站</a></li>
+            <li><a href="__URL__/album_recycle">{$ts['app']['app_alias']}回收站</a></li>
+		</ul>
+		</div>
+      <!--<include file="inc_search" />	  -->
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tableborder" id="checkList">
+        <tbody>
+          <tr class="top">
+            <td class="border" colspan="10"></td>
+          </tr>
+          <if condition=" t($_GET['show_type']) eq 'pic' ">
+          <tr>
+            <td colspan="10">
+            <div style=" width:100%; ">
+            <volist name="data" id='vo'>
+            <li id="list_{$vo.id}" style="float:left; width:130px; height:230px; padding:5px; margin:5px; border:1px solid #999; list-style:none;">
+            	<img src="__ROOT__/thumb.php?w=120&h=100&t=f&url={$vo.savepath|get_photo_url}" /><br />
+                {$vo.name}<br />
+                {$vo.albumId}<br />
+                {$vo.userId|getUserName}<br />
+                {$vo.cTime|friendlyDate}<br />
+                {$vo.size}<br />
+                {$vo.cTime|friendlyDate}<br />
+                {$vo.privacy|get_privacy}<br />
+                <input type="checkbox" class="checkbox" id="checkboxtest" name="id[]" value="{$vo['id']}" />
+                <a href="###" onclick="javascript:restore_photo('{$vo.id}','__URL__')">清空</a> | 
+				<a href="###" onclick="javascript:clean_photo('{$vo.id}','__URL__')">还原</a>
+            </li>
+            </volist>
+            </div>
+            </td>
+          </tr>
+          <else />
+          <tr class="label">
+            <th>&nbsp;</th>
+            <th>ID</th>
+            <th>图片预览</th>
+            <th>图片名称</th>
+            <th>所属{$ts['app']['app_alias']}</th>
+            <th>所属用户</th>
+            <th>上传时间</th>
+            <th>文件大小</th>
+            <th>文件隐私</th>
+            <th>其它操作</th>
+          </tr>
+
+          <volist name="data" id='vo'>
+            <tr id="list_{$vo.id}">
+              <td><input type="checkbox" class="checkbox" id="checkboxtest" name="id[]" value="{$vo['id']}" /></td>
+              <td>{$vo.id}</td>
+              <td>{$vo.savepath}</td>
+              <td>{$vo.name}</td>
+              <td>{$vo.albumId}</td>
+              <td>{$vo.userId|getUserName}</td>
+              <td>{$vo.cTime|friendlyDate}</td>
+              <td>{$vo.size}</td>
+              <th>{$vo.privacy|get_privacy}</th>
+              <td>
+              	<input type="button" onclick="javascript:restore_photo('{$vo.id}','__URL__')" value="还原" />
+			    <input type="button" onclick="javascript:clean_photo('{$vo.id}','__URL__')" value="清空" />
+			  </td>
+            </tr>
+          </volist>
+          </if>
+          <tr>
+            <td class="footer" colspan="7">
+              <button type="button" onclick="checkall('checkList',true)">全选</button>
+              <button type="button" onclick="checkall('checkList',false)">全不选</button>
+
+              <button type="button" onclick="javascript:restore_photo('0','__URL__')">还原</button>
+			  <button type="button" onclick="javascript:clean_photo('0','__URL__')">清空</button>           
+            </td>
+          </tr>
+          <tr>
+            <td class="footer" colspan="10">{$html}</td>
+          </tr>
+          <tr class="bottom">
+            <td class="border" colspan="10">&nbsp;</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  </body>
+</html>

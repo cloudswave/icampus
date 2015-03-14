@@ -1,0 +1,18 @@
+          <li>
+            <div class="c1">{$label}：&nbsp;&nbsp;&nbsp;</div>
+            <div class="c2">
+            <volist name="data" id='vo'>
+            <php>
+                if(strpos($vo,'[selected]') !== false){
+                    $checked="checked";
+                }
+                $vo = str_replace('[selected]',$vo);
+            </php>
+              <label>
+                  <input type="radio"  name="{$field}[]" {$checked} id="choice1" value="{$vo}" />{$vo}
+              </label>
+            </volist>
+            </div>
+          </li>
+
+

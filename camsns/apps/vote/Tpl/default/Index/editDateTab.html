@@ -1,0 +1,103 @@
+<!--编辑投票时间弹窗-->
+    <dl class="pop_vote_edit">
+        <dt>请输入新的结束时间：</dt>
+        <dd>
+            <select name = "year" id="year">
+            <php>for( $i=intval(date( 'Y',time()));$i<intval(date( 'Y',time() ))+5;$i++ ){
+                echo "<option value=\"$i\">".$i."</option>";
+            }</php>
+            </select>年
+            <select name = "month" id="month">
+            <php>for( $i=1;$i<13;$i++ ){
+            echo "<option value=\"$i\">".$i."</option>";
+            }</php>
+            </select>月
+            <select name = "day" id="day">
+            <php>for( $i=1;$i<32;$i++ ){
+            echo "<option value=\"$i\">".$i."</option>";
+            }</php>
+            </select>日
+            <select name = "hour" id="hour">
+            <php>for( $i=0;$i<24;$i++ ){
+            echo "<option value=\"$i\">".$i."</option>";
+            }</php>
+            </select>时
+        </dd>
+        <dd><input type="button" onclick="editDate()" class="btn_b" value="确定"></dd>
+    </dl>
+<!--End 编辑投票时间弹窗-->
+<php>
+	$time = explode('-',date( 'Y-n-j-H',$deadline ));
+	list( $year,$month,$day,$hour ) = $time;
+</php>
+<script>
+$(document).ready(function(){
+    // document.getElementById("year").focus();
+    $('#year').focus();
+});
+	$( '#year option[value={$year}]' ).attr( 'selected',true ) ;
+	$( '#month option[value={$month}]' ).attr( 'selected',true ) ;
+	day();
+	$( '#day option[value={$day}]' ).attr( 'selected',true ) ;
+	$( '#hour option[value={$hour}]' ).attr( 'selected',true ) ;
+
+			//判断月份天数
+			function day(){
+				var days=Array(31,28,31,30,31,30,31,31,30,30,30,31);
+				var month = $( '#month' ).val();
+				var day = $( '#day' ).val();
+				var html = null;
+				if(month == 2){
+					var year = $( '#year' ).val();
+					days[1] = (year%100!=0&&year%4==0 || year%400==0)?29:28;
+				}
+				for(i=1;i<=days[month-1];i++){
+					html+='<option value="'+i+'">'+i+'</option>';
+				}
+				$('#day').html(html);
+                $("#day option[value="+day+"]").attr('selected',true);
+			}
+			
+	//检测年份选项变动
+	$('#month').change(function() {
+		day();
+	});
+	//检测年份选项变动
+	$('#year').change(function() {
+		day();
+	});
+			
+	function editDate(){	
+		var year = $( '#year' ).val();
+		var month = $( '#month' ).val();
+		var day = $( '#day' ).val();
+		var hour = $( '#hour' ).val();
+		var id       = {$id};
+		$.post(U('vote/Index/editDate'),{year:year,month:month,day:day,hour:hour,id:id},function(res){
+			switch ( res ){
+			case '0':
+				ui.error( '时间无变化！' );
+				break;
+			case '-1':
+				ui.error( '非合法修改，无法得知{$ts['app']['app_alias']}ID' );
+				break;
+			case '-2':
+				ui.error( '非合法修改，这一个{$ts['app']['app_alias']}不存在!' );
+				break;
+			case '-3':
+				alert( '不允许修改的时间小于当前时间' );
+				break;
+			case '1':
+				month = (month<10)?'0'+month:month;
+				day = (day<10)?'0'+day:day;
+				hour = (hour<10)?'0'+hour:hour;
+				$( '#deadline' ).html( year+'-'+month+'-'+day+' '+hour+':00:00' ) ;
+				ui.box.close();
+				ui.success('修改结束时间成功');
+				break;
+			default:
+				ui.error('修改结束时间失败');
+			}
+		});
+	}
+</script>

@@ -1,0 +1,34 @@
+<div class="right_box">
+  
+<!--搜索活动&分类浏览END-->   
+           
+ <!--推荐活动--> 
+  <div class="right_box">
+    <h2>推荐{$ts['app']['app_alias']}</h2>
+    <ul class="Recommended">
+      <volist name="is_recommend_list" id="vo"> 
+   	   <li>
+            <div class="left alC" style="padding:0 10px 0 0;"><span class="headpic50">
+
+                 <php>if(!empty($vo['cover'])){</php>
+                   <img src="{$vo['cover']}" width="100" height="100"/>
+                 <php>}else{</php>
+                   <img src="__APP__/images/list_zw.gif" width="100" height="100" />
+                 <php>}</php>
+                 
+            </span></div>
+            <div class="left" style="width:65%;">
+            <h3><a href="{:U('//posterDetail',array('id'=>$vo['id']))}">{$vo.title}</a></h3>
+            <p><neq name="vo['type']" value="">
+              类别：<if condition="$vo['type']"><span class="cGray2 f12px">{$vo.type}</span></if>
+            </neq></p>
+                <!-- <p>{$vo.content}</p> -->
+                 <p>发布时间：{$vo.cTime|friendlyDate} </p>
+            </div>
+            <div class="c"></div>
+        </li>
+	   </volist>
+    </ul>
+  </div>  
+ <!--推荐活动 end--> 
+</div>

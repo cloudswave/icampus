@@ -1,0 +1,125 @@
+/*图标*/
+.hot-post-number1,.hot-post-number2,.hot-post-number3,.hot-post-number4,.hot-post-number5,.hot-post-number6,.hot-post-number7,.hot-post-number8,.hot-post-number9,.hot-post-number10{float:left;background:url(images/weiba-numbers.png) no-repeat;width:24px;height:24px;display:inline-block;_background:url(images/weiba-numbers.gif) no-repeat;}
+.hot-post-number1{background-position:0 0;}
+.hot-post-number2{background-position:0 -40px;}
+.hot-post-number3{background-position:0 -80px;}
+.hot-post-number4{background-position:0 -120px;}
+.hot-post-number5{background-position:0 -160px;}
+.hot-post-number6{background-position:0 -200px;}
+.hot-post-number7{background-position:0 -240px;}
+.hot-post-number8{background-position:0 -280px;}
+.hot-post-number9{background-position:0 -320px;}
+.hot-post-number10{background-position:0 -360px;}
+.btn-create,.btn-create:hover{background:url(images/create_btn1.png) no-repeat 0 0;display:block;width:230px;height:52px;line-height:50px;font-size:24px;font-family:"微软雅黑";text-align:center;color:#666;}
+
+.channel-title{padding:20px;}
+.channel-title img{margin:0 10px 0 0;}
+.channel-title h4{color:#0F8CA8;font-size:20px;font-family:"微软雅黑"}
+.channel-type a{width:95px;height:36px;line-height:36px;text-align:center;color:#333;font-size:14px;background:#e9ecee;margin:0 1px 0 0;display:inline-block;}
+.channel-type a.no-margin{margin:0;width:96px;}
+.channel-type a:hover,.channel-type a.current{background:#0F8CA8;color:#fff;}
+#col3 .pad{padding:20px 20px 20px 0;}
+
+.weiba-box1 .weiba-pic-title{padding:0;background:0;border:0;}
+.weiba-pic{margin:0 0 20px 0;}
+.weiba-pic li{float:left;margin:20px 26px 0 0;_margin:20px 20px 0 0;}
+
+/*热贴推荐*/
+.hot-posts-list li{padding:15px 0;border-bottom:1px dotted #DDDDDD;}
+.hot-posts-list .name{margin:0 0 15px 0;}
+.hot-posts-list .name .num{color:#ff9722;border:1px solid #ccc;position:relative;margin:-3px 0 0 0;background:#fcfcfc;padding:1px 8px;border-radius:2px;-webkit-border-radius:2px;-zom-border-radius:2px;-kthml-border-radius:2px;}
+.hot-posts-list .num .arrow-weiba{position:absolute;left:5px;bottom:-6px;}
+.hot-posts-list .name a{font-size:14px;}
+.hot-posts-list .name a.tit{margin:0 10px;}
+.hot-posts-list .name .weiba-name{color:#666;font-weight:700;}
+.hot-posts-list .post-pic{margin:0 0 15px 0;}
+.hot-posts-list .post-pic a{margin:0 10px 0 0;}
+.hot-posts-list .date a,.hot-posts-list .date a:hover{color:#999;}
+.hot-posts-list .hot-post-content{margin:0 0 0 40px;}
+
+.recommend-weiba li{float:left;width:100px;height:100px;margin:0 10px 10px 0;position:relative;}
+
+
+.my-weiba-list li{padding:15px 0;border-bottom:1px dotted #ddd;}
+.my-weiba-list li:hover{background:#f6f6f6;}
+
+
+.weiba-sort .no-result{width:550px;display:inline-block;word-break:break-all;}
+.weiba-sort em{font-style:normal;}
+.weiba-sort a.current{color:#333;font-weight:bold;}
+.weiba-list dl{border-bottom:1px dotted #ddd;padding:25px 0;overflow:hidden;*zoom:1;}
+.weiba-list dt{float:left;width:100px;height:100px;}
+.weiba-list dd{margin:0 0 0 115px;}
+.weiba-list dd .f3{line-height:20px}
+
+
+.weiba-post-title{ border-bottom:1px dotted #DDDDDD;}
+.weiba-post-title dt{}
+.weiba-post-title dd{}
+.Posts-content .content{_width:649px;_overflow:hidden;}
+.Posts-content .content h3{font-family:"微软雅黑";font-size:22px;margin:0 0 15px 0;}
+.Posts-content .content h3 i{font-family:"宋体";font-size:12px; line-height:14px; overflow:hidden; display:inline-block; vertical-align:middle;*vertical-align:1px;}
+.Posts-content .content .ico-img{}
+.Posts-content .content .weiba-article{line-height:22px;font-size:14px;}
+.Posts-content .content .weiba-article img{margin:10px 0;max-width:649px;width:expression(this.width > 649? "649px":this.width );}
+.Posts-content .content .text{font-size:14px;line-height:25px;color:#333;}
+
+.ico-bar-top0{background:#f19ec2;color:#fff;padding:2px 6px;border-radius:2px;-webkit-border-radius:2px;-zom-border-radius:2px;-kthml-border-radius:2px;font-style:normal;}
+.ico-bar-top{background:#30b8f1;color:#fff;padding:2px 6px;border:1px solid #0395d2;border-radius:2px;-webkit-border-radius:2px;-zom-border-radius:2px;-kthml-border-radius:2px;font-style:normal;}
+.ico-bar-Sofa{background:#feebeb;line-height:16px;color:#999;padding:2px 6px;border-radius:2px;-webkit-border-radius:2px;-zom-border-radius:2px;-kthml-border-radius:2px;font-style:normal;}
+.ico-bar-floor{background:#f3f3f3;color:#999;padding:2px 6px;border-radius:2px;-webkit-border-radius:2px;-zom-border-radius:2px;-kthml-border-radius:2px;font-style:normal;}
+.ico-bar-fine{background:#ff9865;color:#fff;padding:2px 6px;border:1px solid #ff6906;border-radius:2px;-webkit-border-radius:2px;-zom-border-radius:2px;-kthml-border-radius:2px;font-style:normal;}
+
+.search-content p{font-size:20px;margin:3px 20px 0 0;font-family:"微软雅黑";color:#0F8CA8;}
+
+/*微吧管理*/
+.weiba-manage .form-set{margin:20px 0;}
+.weiba-manage .s-textarea1{width:910px;height:90px;resize:none;padding:4px;}
+.weiba-manage .blog dd{border-bottom:1px dotted #ddd;padding:10px 0;overflow:hidden;*zoom:1;}
+.weiba-manage .blog .form-tt{float:left;width:50px;}
+.weiba-manage .blog .form-row{margin:0 0 0 60px;}
+.weiba-manage .blog .form-row p{line-height:25px;}
+.weiba-manage .member-list dt,.weiba-manage .member-list dd{padding:10px 0;border-bottom:1px dotted #ddd;overflow:hidden;*zoom:1;}
+.weiba-manage .member-list .c{line-height:20px;float:left;width:19.5%;text-align:left;margin:0 10px;*width:19.8%;_margin:0 5px;}
+.weiba-manage .member-list .c1{float:left;width:19.5%;text-align:left;line-height:50px;white-space:nowrap;overflow:hidden;margin:0 10px;*width:19.8%;_margin:0 5px;_padding:10px 0;}
+.weiba-manage .member-list .c2{float:left;width:19.5%;text-align:left;line-height:50px;white-space:nowrap;overflow:hidden;margin:0 10px;*width:19.8%;_margin:0 5px;}
+.weiba-manage .member-list .c3{float:left;width:auto;text-align:left;line-height:50px;margin:0 10px;_margin:0 5px;}
+
+/*微吧公告*/
+.right-box .content p{line-height:20px}
+
+
+/*全部帖子列表&单个微吧内帖子列表*/
+.weiba_postlist{}
+.weiba_postlist li{padding:15px 0 20px;border-bottom:1px dotted #ddd;}
+.weiba_postlist li:hover{background:#f6f6f6;}
+.weiba_postlist .name{margin:0 0 18px 0;}
+.weiba_postlist .name .num{color:#ff9722;border:1px solid #ccc;position:relative;background:#fcfcfc;padding:1px 8px;border-radius:2px;-webkit-border-radius:2px;-zom-border-radius:2px;-kthml-border-radius:2px;}
+.weiba_postlist .num .arrow-weiba{position:absolute;left:5px;bottom:-6px;}
+.weiba_postlist .name a{font-size:18px; font-family: "微软雅黑";}
+.weiba_postlist .name a i{font-family:"宋体";font-size:12px; line-height:14px; overflow:hidden; display:inline-block; vertical-align:middle;*vertical-align:-2px;}
+.weiba_postlist .f9 a{color: #999;}
+
+.lh25{ line-height:25px;}
+
+/*微吧列表*/
+.weiba_name { margin-bottom:15px;}
+.weiba_name a{ font-size:18px; font-family:"微软雅黑";}
+
+/*微吧推荐*/
+.recommend-weiba ul{margin:20px -15px 0 0;}
+.recommend-weiba li{float:left;width:100px;height:100px;margin:0 10px 10px 0;position:relative;*margin:0 8px 10px 0;}
+.recommend-weiba li .name{width:100px;height:22px;line-height:22px;font-size:14px;cursor:pointer;text-align:center;position:absolute;bottom:0;left:0;color:#333;}
+.recommend-weiba li span{width:100px;height:22px;line-height:22px;font-size:14px;text-align:center;position:absolute;bottom:0;left:0;color:#333;background:rgba(255,255,255,0.3);background:#eee\9; filter:alpha(opacity=50);}
+.recommend-weiba li a{width:100px;height:100px;}
+
+/*用户信息*/
+.weiba-myinfo{padding:0 0 20px 0;height:100px;}
+.weiba-myinfo dt{width:100px;height:100px;float:left;}
+.weiba-myinfo dd{margin:0 0 0 110px;}
+.weiba-myinfo dd .name{display:inline-block;padding:0 0 15px 0;}
+.weiba-myinfo dd p{line-height:25px;}
+
+/*微吧分类*/
+.weiba-type{margin:0 0 20px 0;font-size:14px;padding:0 0 10px 0;}
+.weiba-type a{color:#333;margin:0 5px;padding:3px 7px;display:inline-block;border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;}

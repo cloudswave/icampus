@@ -1,0 +1,217 @@
+<include file="_header" />
+<script>
+function getChecked() {
+    var ids = new Array();
+    $.each($('table input:checked'), function(i, n){
+        ids.push( $(n).val() );
+    });
+    return ids;
+}
+
+function checkon(o){
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function checkAll(o){
+    if( o.checked == true ){
+        $('input[name="checkbox"]').attr('checked','true');
+        $('tr[overstyle="on"]').addClass("bg_on");
+    }else{
+        $('input[name="checkbox"]').removeAttr('checked');
+        $('tr[overstyle="on"]').removeClass("bg_on");
+    }
+}
+
+//搜索用户
+var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+function searchObject() {
+    if(isSearchHidden == 1) {
+        $("#searchObject_div").slideDown("fast");
+        $(".searchObject_action").html("搜索完毕");
+        isSearchHidden = 0;
+    }else {
+        $("#searchObject_div").slideUp("fast");
+        $(".searchObject_action").html("搜索招贴");
+        isSearchHidden = 1;
+    }
+}
+
+var ctrl = function(){
+}
+ctrl.prototype = {
+    del:function(id){
+        var id = id ? id : getChecked();
+        id = id.toString();
+        if(id=='' || id==0){
+			ui.error("请选择要删除的招贴");return false;
+		}
+        if( confirm("是否删除{$ts['app']['app_alias']}？") ){
+          $.post( '__URL__&act=doDeletePoster',{id:id},function(text ){
+              if( text == 1 ){
+                  ui.success( "删除多个{$ts['app']['app_alias']}成功" );
+                  var id_list = id.split( ',' );   
+                  for (var j=0 ; j< id_list.length ; j++   ){
+                      $('#list_'+id_list[j]).remove(); 
+                  }
+              }else if( text == 2 ){
+                  ui.success( "删除成功" );
+                  $('#list_'+id).remove();
+              }else{
+                  ui.error( "删除失败" );
+              }
+          });
+        }
+    },
+    transfer:function(id){
+      var id = id ? id : getChecked();
+      id = id.toString();
+      if(id=='' || id==0) return ;
+      ui.box.load('__URL__&act=transferEventTab&id='+id,{title:'活动分类转移'});
+    },
+    edit:function(id,act){
+      if( act == 'recommend' ){
+          v= "推荐";
+          v2 = "取消推荐";
+          act2 = 'cancel';
+        
+      }else{
+          v = "取消推荐";
+          v2 = "推荐";
+          act2 = 'recommend';
+      }
+      if( confirm( '是否'+v ) ){
+        $.post('__URL__&act=doChangeIsHot',{id:id,type:act},function( text ){
+              if( text == 1 ){
+              ui.success( "操作成功" );
+              $('#button'+id).html('<a href="javascript:void(0);" onclick="c.edit('+id+',\''+act2+'\')">'+v2+'</a>');
+           }else{alert(text);
+              ui.error( "设置失败" );
+           }
+        });
+      }
+    },
+    recommend:function(id,recommend){
+      $.post( '__URL__&act=recommendPoster',{id:id,recommend:recommend},function(text ){
+        if(recommend == 0){
+          var act = 1;
+          var v = '取消';
+        }
+        if(recommend == 1){
+          var act = 2;
+          var v = '<font color="red">推荐</font>';
+        }
+
+        if(text){
+          ui.success('操作成功');
+          // $('#button'+id).html('<a href="javascript:void(0);" onclick="c.recommend('+id+',\''+act+'\')" id="button"'+id+'>'+v+'</a>');
+          setTimeout("location.href = location.href",1500);
+        }else{
+          ui.error('操作失败');
+        }
+      });
+    }
+
+}
+var c = null;
+</script>
+
+<div class="so_main">
+  <include file="_tab" />
+
+    <div id="searchObject_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+    <div class="page_tit">搜索{$ts['app']['app_alias']} [ <a href="javascript:void(0);" onclick="searchObject();">隐藏</a> ]</div>
+    <div class="form2">
+    <form action="__URL__&act=adminPoster" method="POST">
+    <input type="hidden" name="isSearch" value="1"/>
+        <php>if($isSearch != '1') $uid = '';</php>
+        <dl class="lineD">
+          <dt>用户ID：</dt>
+          <dd>
+            <input name="uid" class="txt" value="{$uid}"><span> 多个用户用英文逗号隔开。</span>
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>标题：</dt>
+          <dd>
+            <input name="title" class="txt" value="{$title}"><span>支持模糊查询。 </span>
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>{$ts['app']['app_alias']}大分类：</dt>
+          <dd>
+            <select name="pid">
+              <option value=0>请选择大分类</option>
+              <volist name="posterType" k="key" id="vo">
+                 <option value="{$key}" <php>if($key == $_POST['pid'])echo "selected";</php>>{$vo}</option>
+              </volist>
+            </select>
+          </dd>
+        </dl>        
+        <dl>
+          <dt>{$ts['app']['app_alias']}小分类：</dt>
+          <dd>
+            <select name="type">
+              <option value=0>请选择小分类</option>
+              <volist name="smallType" k="key" id="vo">
+                <option value="{$key}" <php>if($key == $_POST['type'])echo "selected";</php>>{$vo}</option>
+              </volist>
+            </select>
+          </dd>
+        </dl>
+        <div class="page_btm">
+          <input type="submit" class="btn_b" value="确定" />
+        </div>
+    </form>
+    </div>
+    </div>
+
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchObject();">
+            <span class="searchObject_action"><neq name="isSearch" value="1">搜索{$ts['app']['app_alias']}<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除{$ts['app']['app_alias']}</span></a>
+    </div>
+
+    <div class="list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <th style="width:30px;">
+                <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                <label for="checkbox"></label>
+            </th>
+            <th>ID</th>
+            <th>标题</th>
+            <th>发起者</th>
+            <th>时间</th>
+            <th>管理</th>
+          </tr>
+          <volist name="data" id="vo">
+          <tr id="list_{$vo.id}">
+            <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+            <td>{$vo.id}</td>
+            <td><a href="{:U('//posterDetail',array('id'=>$vo['id']))}" target="_blank">{$vo.title}</a></td>
+            <td><a href="{:U('public/Profile/index',array('id'=>$vo['uid']))}" target="_blank">{$vo.uid|getUserName}</a></td>
+            <td>{$vo.cTime|friendlyDate}</td>
+            <td><a href="javascript:void(0);" onclick="c.recommend({$vo['id']},{$vo['recommend']})" id="button{$vo['id']}"><eq name="vo['recommend']" value="0"><font color="red">推荐</font></eq><eq name="vo['recommend']" value="1">取消</eq></a>&nbsp;&nbsp;<a href="javascript:void(0);" onclick="c.del({$vo['id']})">删除</a></td>
+          </tr>
+          </volist>
+        </table>
+    </div>
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchObject();">
+            <span class="searchObject_action"><neq name="isSearch" value="1">搜索{$ts['app']['app_alias']}<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除{$ts['app']['app_alias']}</span></a>
+    </div>
+</div>
+<include file="_footer" />
+<script type="text/javascript">
+c = new ctrl();
+</script>

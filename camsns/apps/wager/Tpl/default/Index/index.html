@@ -1,0 +1,234 @@
+<include file="__THEME__/public_header" />
+<link rel="stylesheet" type="text/css" href="__APP__/wager.css"/>
+<div id="page-wrap">
+<div id="main-wrap">
+  <div class="boxShadow">
+    <div class="find-type">
+      <div class="app-title clearfix">
+        <div class="app-tab-menu left">
+          <h4 href="{:U('Wager/Index/index')}" class="left"><img src="__APP__/images/icon_app.png" />&nbsp;&nbsp;分歧终端机</h4>
+        </div>
+      </div>
+    </div>
+    <div class="mb10 clearfix">
+      <!--content-->
+        <div class="beforehand"><img src="__APP__/images/man_s1_on.gif" /><img src="__APP__/images/man_s2_on.gif" /><img src="__APP__/images/man_s3_on.gif" /><img src="__APP__/images/man_h1.gif" /><img src="__APP__/images/man_h2.gif" /><img src="__APP__/images/man_h3.gif" /><img src="__APP__/images/robot_h1.gif" /><img src="__APP__/images/robot_h2.gif" /><img src="__APP__/images/robot_h3.gif" /></div>
+        <div class="maincon">
+            <!--主显示区-->
+            <div class="l_con">
+                <!--头部区域-->
+                <div class="top_a">
+                    <div class="a1">
+                        <div class="p_logo"><a href="javascript::void(0);"><img src="__APP__/images/robot_pp.gif" alt="Yovae机器人" width="48" height="48" border="0"></a></div>
+                        <div class="p_info">
+                            <div class="p_name"><a href="">Yovae机器人</a></div>
+                            <div class="p_coin">赔率<span class="coin_t">1:2</span></div>
+                        </div>
+                    </div>
+                    <div class="a2">
+                        <div class="h1" style="visibility:hidden">赢：<span class="t1" id="num_win">0</span>  平：<span class="t2" id="num_eq">0</span>  输：<span class="t3" id="num_lose">0</span></div>
+                        <div class="h2">
+                            <select id="money_select" name="select" size="1" class="input">
+
+                                <option>10</option>
+                                <option>20</option>
+                                <option>50</option>
+                                <option>80</option>
+                                <option>100</option>
+                                <option value="0">自定义</option>
+                            </select>
+                            <input id="money_input" type="text" class="input" style="display: none;">
+                        </div>
+                        <div class="h3" id="pnl_ret"></div>
+                    </div>
+                    <div class="a3">
+                        <div class="p_logo"><a href="{$user['space_url']}"><img src="{$user['avatar_small']}" alt="{$user.uname} " width="48" height="48" border="0"></a></div>
+                        <div class="p_info">
+                            <div class="p_name"><a class="follow_uname" href="{$user['space_url']}" event-node='face_card' uid="{$mid}" style="font-size:14px">{$user['uname']}</a></div>
+                            <div class="p_coin">我的{$score['alias']}：<span id="num_mymoney" class="coin_t">{$score['value']}</span></div>
+                        </div>
+                    </div>
+                </div>
+                <!--头部区域end-->
+                <!--主显示区-->
+                <div class="vs_a">
+                    <div class="vs_l" id="pnl_robot"><img src="__APP__/images/robot_h0.gif" width="360" height="325"></div>
+                    <div class="vs_m">
+                        <div class="vs_pic"><img src="__APP__/images/vs.gif" alt="VS" width="58" height="52"></div>
+                        <!--记录显示区-->
+                        <div class="vs_history" id="pnl_vs_history">
+                            <div class="list_tit"><img src="__APP__/images/vs_top.gif" width="88" height="32"></div>
+
+                            <div class="list_v" id="pnl_vshis"></div>
+                        </div>
+                        <!--记录显示区-->
+                    </div>
+                    <div class="vs_r"><span class="vs_l" id="pnl_man"><img src="__APP__/images/man_h0.gif" width="360" height="325"></span></div>
+                </div>
+                <!--主显示区end-->
+            </div>
+            <!--主显示区end-->
+            <!--操作按钮-->
+            <div class="r_con">
+                <p>选择出招↓</p>
+                <p><a id="btn_1" href="javascript:void(0)"><img src="__APP__/images/man_s1.gif" width="120" height="120" border="0" title="剪子"></a></p>
+                <p><a id="btn_2" href="javascript:void(0)"><img src="__APP__/images/man_s2.gif" width="120" height="120" border="0" title="包袱"></a></p>
+                <p><a id="btn_3" href="javascript:void(0)"><img src="__APP__/images/man_s3.gif" width="120" height="120" border="0" title="锤"></a> </p>
+            </div>
+            <!--操作按钮end-->
+        </div>
+        <div style="clear: both; padding: 10px;  height: 30px;"><a href="http://www.ithinksns.org" target="_blank" style="float: right;">Yovae出品</a> </div>
+      <!--/content-->
+    </div>
+  </div>
+
+</div>
+<script>
+    var scope={
+        times:5
+    };
+    jQuery(function(){
+        jQuery("#btn_pk_myfans").click(function(){
+            PK_n(scope.times,false,function(d){
+                jQuery("#num_mymoney").html(d.toString());
+            });
+        });
+
+        jQuery("#money_select").change(function(){
+            var _val=jQuery(this).val();
+            if(_val=="0")
+            {
+                jQuery(this).hide();
+                jQuery("#money_input").show().trigger("focus");
+            }
+        });
+        jQuery("#money_input").dblclick(function(){
+            jQuery(this).hide();
+            jQuery("#money_select").show();
+            jQuery("#money_select option").eq(0).attr("selected","selected");
+        });
+        function histroyPanel(v,i){
+            var _t='<div class="list"><div class="v'+v+' i'+i+'"></div></div>';
+            if(jQuery("#pnl_vs_history").children().length==8)
+            {
+                jQuery("#pnl_vs_history").children().eq(1).remove();
+            }
+            jQuery(_t).insertBefore(jQuery("#pnl_vshis"));
+        }
+        var _sysbusy=false;
+        jQuery("#btn_1,#btn_2,#btn_3").click(function(){
+            if(_sysbusy){return;}
+            _sysbusy=true;
+            var _id=parseInt(jQuery(this).attr("id").replace("btn_",""));
+            var _act="0";
+            switch(_id)
+            {
+                case "1":
+                    _act=2;
+                    break;
+                case "2":
+                    _act=5;
+                    break;
+                case "3":
+                    _act=0;
+                    break;
+            }
+            var _money=parseInt(jQuery("#money_select").val());
+            if(_money==0)
+            {
+                _money=parseInt(jQuery("#money_input").val().replace(/-/g,""));
+                if(isNaN(_money))
+                {
+                    jQuery("#money_input").val("");
+                }
+                else{jQuery("#money_input").val(_money);}
+            }
+            if(100>=_money&&_money>=1)
+            {
+                jQuery.getJSON("{:U('Wager/Index/ajax_wager')}",{cash:_money,wegerid:_act},function(data){
+                    var _l='<img src="__APP__/images/face1.gif" width="28" height="25" align="absmiddle" /> 你输了'+data.wincoin;
+                    var _e='<img src="__APP__/images/face2.gif" width="29" height="27" align="absmiddle" /> 平手，再来一次！';
+                    var _w='<img src="__APP__/images/face3.gif" width="27" height="26" align="absmiddle" /> 你赢了'+data.wincoin;
+                    var _r="";
+                    var _rid=0;
+                    var _mymoney=0;
+
+                    switch(data.display)
+                    {
+                        case "win":
+                            _r=_w;
+                            _rid=_id+1;
+                            jQuery("#num_win").text(parseInt(jQuery("#num_win").text())+1);
+                            _mymoney=parseInt(jQuery("#num_mymoney").text())+data.wincoin;
+                            break;
+                        case "nowin":
+                            _r=_l;
+                            _rid=_id-1;
+                            jQuery("#num_lose").text(parseInt(jQuery("#num_lose").text())+1);
+                            _mymoney=parseInt(jQuery("#num_mymoney").text())-data.wincoin;
+                            break;
+                        case "eq":
+                            _r=_e;
+                            _rid=_id;
+                            jQuery("#num_eq").text(parseInt(jQuery("#num_eq").text())+1);
+                            _mymoney=parseInt(jQuery("#num_mymoney").text());
+                            break;
+
+                    }
+                    if(data.ret==1)
+                    {
+                        if(_rid==0)_rid=3;
+                        if(_rid==4)_rid=1;
+                        jQuery("#pnl_ret").html(_r);
+                        jQuery("#pnl_man").html('<img src="__APP__/images/man_h'+_id+'.gif" width="360" height="325" />');
+                        jQuery("#pnl_robot").html('<img src="__APP__/images/robot_h'+_rid+'.gif" width="360" height="325" />');
+
+                        var _x=jQuery("#pnl_ret").offset().left+100;
+                        var _y=jQuery("#pnl_ret").offset().top;
+                        if(data.display=="win")
+                        {
+                            jQuery("<div/>").appendTo(jQuery("body")).addClass("coin_t").css({position:"absolute",top:_y+30,left:_x}).html("+"+data.wincoin)
+                                    .animate( {top: jQuery("#num_mymoney").offset().top,left:jQuery("#num_mymoney").offset().left}, {duration: 800,complete:function(){jQuery(this).remove();_sysbusy=false;jQuery("#num_mymoney").text(data.coin.toString()); } } );
+                            histroyPanel(_id,1);
+                        }
+                        else if(data.display=="nowin")
+                        {
+                            jQuery("<div/>").appendTo(jQuery("body")).addClass("coin_t2").css({position:"absolute",top:jQuery("#num_mymoney").offset().top-20,left:jQuery("#num_mymoney").offset().left}).html("-"+data.wincoin)
+                                    .animate( {top: jQuery("#num_mymoney").offset().top+80}, {duration: 700,complete:function(){jQuery(this).remove();_sysbusy=false;jQuery("#num_mymoney").text(data.coin.toString()); } } );
+                            histroyPanel(_id,3);
+                        }
+                        else
+                        {
+                            histroyPanel(_id,2);
+                            _sysbusy=false;
+                        }
+                    }
+                    else
+                    {
+                        alert(data.msg||"服务器繁忙！");
+                        _sysbusy=false;
+                    }
+
+
+                });
+            }
+            else
+            {
+                alert("请输入1-100的整数！");
+                jQuery("#money_input").trigger("focus");
+                _sysbusy=false;
+            }
+        }).mouseover(function(){
+            var _i=jQuery(this).find("img");
+            var _src=_i.attr("src").replace(".gif","_on.gif");
+            _i.attr("src",_src);
+        }).mouseout(function(){
+            var _i=jQuery(this).find("img");
+            var _src=_i.attr("src").replace("_on.gif",".gif");
+            _i.attr("src",_src);
+        }).focus(function(){
+            jQuery(this).trigger("blur");
+        });
+    });
+</script>
+<include file="__THEME__/public_footer" />

@@ -1,0 +1,53 @@
+<include file="__THEME__/header" />
+<link href="__APP__/css/photo.css" rel="stylesheet" type="text/css" />
+<!-- 头部 end -->
+<div class="content_holder">
+<div class="content no_bg">
+  <include file="../Public/_mainNav" />
+  <div class="main no_l">
+    <div class="mainbox extend">
+        <div class="page_title" style="margin:0 auto">
+          <h2>编辑{$ts['app']['app_alias']}</h2>
+        </div>
+        <div class="lineS_btm lh30"> <span class="photo_tit"><strong>{$album.name}</strong></span><a href="{:U('/Manage/album_edit',array(id=>$album['id']))}" class="ml5">[编辑]</a>  (共<span class="cRed">{$album.photoCount}</span>张) | <a href="{:U('/Index/albums',array(uid=>$album['userId']))}">返回全部{$ts['app']['app_alias']}列表</a> </div>
+        <div class="photoBox">
+          <div class="order"><input type="button" onClick="serialize();return false;" class="btn_b right" value="保存" />提示：用鼠标拖动图片，然后点击“保存”按钮即可。</div>
+          <ul id="sortable" class="orderlist">
+            <volist name="photos" id="li">
+              <li id="{$li.id}"> <a href="{:U('/Index/photo')}&id={$li.id}&aid={$album.id}&uid={$li.userId}" class="preview" rel="__ROOT__/thumb.php?w=400&h=400&t=f&url={$li.savepath|get_photo_url}" title="{$li.name}"><img width="168" height="168" src="{$li.savepath|get_photo_url}" /><br />
+                <span class="username">{$li.name|getShort='10'}</span></a></li>
+            </volist>
+          </ul>
+        </div>
+        <div class="lh30"><span class="right cGray2">{$album.mTime|friendlyDate}创建</span></div>
+      <div class="c"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script type="text/javascript" src="__APP__/js/ui.core.js"></script>
+<script type="text/javascript" src="__APP__/js/ui.sortable.js"></script>
+<script type="text/javascript">
+var aid = '{$aid}';
+$(document).ready(
+  function () {
+    $("#sortable").sortable();
+    $("#sortable").disableSelection();
+  }
+);
+
+function serialize () {
+  var serial = $('#sortable').sortable("toArray");
+  var order = serial.join(',');
+  $.post('{:U('/Manage/save_order')}', {order:order, id:aid}, function (result) {
+    if(result == 1){
+      ui.success('保存成功');
+      location.href = U('photo/Index/album') + '&id=' + aid + '&uid=' + {$uid};
+    }else{
+      ui.error('顺序无变化');
+    }
+  });
+};
+</script>
+<include file="__THEME__/public_footer" />

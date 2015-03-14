@@ -1,0 +1,38 @@
+<div id="col3" class="st-index-right">
+   <div class="right-wrap">
+       <div class="weiba-posts-list border-b mb20" >
+        <h3>最新{$app['app_alias']}</h3>
+        <ul>
+           <php>foreach($silde_new_news as $vo):</php>
+           <li>
+           <i class="ico-piece"></i>
+           <div class="post-name">
+	           <a href="{:U('news/Index/detail',array('id' => $vo['news_id']))}" target="_blank" title="{$vo['news_title']}">
+	           	{$vo['news_title']|msubstr=###,0,15}
+	           </a>
+	           <a href="" class="f9"> </a>
+           </div>
+           </li>
+           <php>endforeach;</php>     
+        </ul>
+      </div> 
+      <div class="weiba-posts-list">
+        <h3>热门{$app['app_alias']}</h3>
+        <ul>
+         <php>$_tempcount = 1 ;</php>
+         <php>foreach($silde_hot_news as $vo):</php>
+           <li style="float:left;">
+           <i class="ico-num ico-num{$_tempcount++}"  style="float:left;"></i>
+           <div class="post-name" style="float:left;width: 185px;">
+	           <a href="{:U('news/Index/detail',array('id' => $vo['news_id']))}" target="_blank" title="{$vo['news_title']}">
+	           	{$vo['news_title']|msubstr=###,0,13}
+	           </a>
+	           <a href="" class="f9"> </a>
+           </div>
+           </li>
+           <php>endforeach;</php> 
+        </ul>
+      </div>
+   </div>
+ <!-- 微吧帖子右下 -->
+</div>

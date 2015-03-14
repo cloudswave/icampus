@@ -1,0 +1,93 @@
+<include file="__THEME__/public_header" />
+
+<link href="__APP__/weiba.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/public/account.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+<script>
+var UPLOAD_URL ='{:UPLOAD_URL}';
+</script>    
+
+<div id="page-wrap">
+	   <div id="main-wrap">
+           <div class="boxShadow">
+	   	   	 <include file="../Index/_weiba_header" />
+
+	   	   	   <div class="mb10 clearfix extend">
+
+                <include file="_tab" />
+
+                 <div class="weiba-manage">                     
+                    <form method="post" action="{:U('weiba/Manage/doWeibaEdit')}" id="weibaInfo">
+                        <input type="hidden" name="weiba_id" value="{$weiba_detail['weiba_id']}" id="weiba_id">
+                        <dl class="form-set">
+                            <dd>
+                                <div class="form-tt"><font color="red"> * </font>微吧名称：</div>
+                                <div class="form-row"><input type="text" class="s-txt" name="weiba_name" value="{$weiba_detail['weiba_name']}" id="weiba_name"></div>
+                            </dd>
+                            <dd>
+                            <div class="form-tt"><font color="red"> * </font>微吧分类：</div>
+                                <div class="form-row">
+                                <select name="cid" id="cid">
+                                <volist name="weiba_cates" id="v">
+                                <option value="{$key}" <php>if($key==$weiba_detail['cid']){</php>selected="selected"<php>}</php>>{$v}</option>
+                                </volist>
+                                </select>
+                                </div>
+                            </dd>
+                            <dd>
+                                <div class="form-tt"><font color="red"> * </font>logo：</div>
+                                <!-- <div class="form-row"><span class="left mr10"><img src=""/></span><span>更换微吧头像:<br />{:W('Upload',array('attachIds'=>$weiba_detail['logo'], 'uploadType'=>'image'))}</span></div> -->
+
+                                <div class="form-row">
+                                    <input type="file" name="attach" onchange="upload('logo',this)" urlquery='attach_type=feed_image&upload_type=image&thumb=1'>
+                                    <div id='show_logo'><php>if($weiba_detail['logo']){</php><img src="{$weiba_detail['logo_url']}" width="150" height="150"><php>}</php></div>
+                                    <input name="logo" id="form_logo" type="hidden" value="{$weiba_detail['logo']}" class="s-txt" style="width:200px;" />
+                               </div>
+                            </dd>
+                            <dd>
+                                <div class="form-tt"><font color="red"> * </font>简介：</div>
+                                <div class="form-row"><textarea class="s-textarea" name="intro" id="intro">{$weiba_detail['intro']}</textarea></div>
+                            </dd>
+                            <dd>
+                                <div class="form-tt">发帖权限：</div>
+                                <div class="form-row"><label><input type="radio" class="s-ck" value="0" name="who_can_post" name="who_can_post"<eq name="weiba_detail['who_can_post']" value="0">checked</eq>>所有人均可发帖</label>
+                                <label><input type="radio" class="s-ck" value="1" name="who_can_post" <eq name="weiba_detail['who_can_post']" value="1">checked</eq>>仅限该吧粉丝发帖</label>
+                                <label><input type="radio" class="s-ck" value="2" name="who_can_post" <eq name="weiba_detail['who_can_post']" value="2">checked</eq>>仅限微吧管理员发帖</label>
+                                <label><input type="radio" class="s-ck" value="3" name="who_can_post" <eq name="weiba_detail['who_can_post']" value="3">checked</eq>>仅限吧主发帖</label></div>
+                            </dd>
+                                <!-- <dd>
+                                    <div class="form-tt">回贴权限:</div>
+                                    <div class="form-row"><label><input type="radio" class="s-ck">所有人均可回贴</label><label><input type="radio" class="s-ck">仅限该吧粉丝回贴</label></div>
+                                </dd> -->
+                                <!-- <php>if(CheckPermission('core_admin','admin_login')){</php>
+                                    <dd>
+                                        <div class="form-tt">设置超级吧主:</div>
+                                        <div class="form-row"><select><option>请选择成员</option></select></div>
+                                    </dd>
+                                <php>}</php>
+                                <php>if(in_array($mid,$weiba_admin) || CheckPermission('core_admin','admin_login')){</php>
+                                    <dd>
+                                        <div class="form-tt">设置小吧主:</div>
+                                        <div class="form-row"><select><option>请选择成员</option></select></div>
+                                    </dd>
+                                <php>}</php> -->
+                            <dd>
+                                <div class="form-tt"></div>
+                                <div class="form-row">
+                                    <a href="javascript:void(0);" class="btn-green-small mr5" onclick="saveWeibaInfo($('#weibaInfo'))"><span>确定</span></a>
+                                    <!-- <a href="#" class="btn-green-small mr5" event-node="submit_btn"><span>确定</span></a> -->
+                                    <!-- <a href="" class="btn-cancel"><span>取消</span></a> -->
+                                </div>
+                            </dd>
+                        </dl>
+                    </form>
+                 </div>
+                    
+                    
+               </div>
+           	 </div>
+           </div>
+	   </div>
+</div>
+
+<include file="__THEME__/public_footer" />

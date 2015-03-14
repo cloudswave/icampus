@@ -1,0 +1,65 @@
+<link rel="stylesheet" href="__ROOT__/apps/group/_static/group.css" type="text/css" media="screen" charset="utf-8" />
+<div class="groupBox">
+	<div class="group-list my-group clearfix">
+		<ul>
+	    <volist name="data" id="group">
+	      <li>
+	        <div class="rmenu right">
+	          <if condition="$group['status'] eq 1">
+	            <a href="{:U('group/Group/index',array('gid'=>$group['id']))}">浏览该群</a>
+	            <php>$level = getLevel($GLOBALS['ts']['mid'], $group['id']);</php>
+	            <php>if($level===null){</php>
+	            <a href="javascript:joingroup({$group['id']});">加入该群</a>
+	            <php>} else if($level==='0'){</php>
+	            	成员审核
+	            <php>} else if($level==1 || $level==2){</php>
+	            <a href="{:U('group/Manage/index',array('gid'=>$group['id']))}">管理该群</a>
+	            <php>} else if($level==3){</php>
+	              	该群成员
+	            <php>}</php>
+	        <else />
+	          		群组审核
+	            <a href="javascript:;" onclick="delgroup({$group['id']});" >解散该群</a>
+	        </if>
+	        </div>
+	        <div class="group-pic">
+	        	<a href="{$group['id']|group_id_to_url}"><img src="{$group['logo']|logo_path_to_url}" width="100" height="100" /></a>
+	        </div>
+	        <div class="group-info">
+	          <h3><if condition="$group['status'] eq 1"><a href="{:U('group/Group/index',array('gid'=>$group['id']))}">{$group['name']}</a><else />{$group['name']}</if></h3>
+	          <p>成员：{$group['membercount']}</p>
+	          <p>创建：{$group['ctime']|friendlyDate}</p>
+	          <p>类型：{$group['group_type']}</p>
+<!-- 	          <php>if($group['unread_usercount']){</php>
+	          <p>消息：
+	          		<php>if($group['unread_usercount']['atme']){</php>
+	          			<a href="{:U('group/Notice/atme',array('gid'=>$group['id']))}">@提到我的：<font color="red">{$group.unread_usercount.atme}</font>条</a>
+	          		<php>}</php> 
+	          		<php>if($group['unread_usercount']['comment']){</php>
+	          			<a href="{:U('group/Notice/comment',array('gid'=>$group['id'],'type'=>'receive'))}">收到的评论：<font color="red">{$group.unread_usercount.comment}</font>条</a>
+	          		<php>}</php>	
+	          </p>
+	          <php>}</php> -->
+	        </div>
+	        <div class="c"></div>
+	    </li>
+	    </volist>
+		</ul>
+		<div class="page">{$page}</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+// 加入群组
+function joingroup(gid) {
+    ui.box.load(U('group/Group/joinGroup')+'&gid='+gid,'加入群组');
+}
+// 删除群组
+function delgroup(gid) {
+    ui.box.load(U('group/Group/delGroupDialog')+'&gid='+gid,'解散群组');
+}
+// 退出群组
+function quitgroup(gid) {
+    ui.box.load(U('group/Group/quitGroupDialog')+'&gid='+gid,'脱离群组');
+}
+</script>

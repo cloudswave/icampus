@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="__APP__/blog.css" type="text/css" media="screen" charset="utf-8" />
+<link href="__PUBLIC__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+
+<div class="find-type">
+	<div class="app-title clearfix">
+		<div class="search-input">
+            <div id="mod-search">
+                <form name="search_blog" id="search_blog" method="GET" action="{:U('blog/Index/search')}">
+                    <dl>
+                    <dt class="clearfix">
+                    <input name="app" type="hidden" value="blog"/>
+	  				<input name="mod" type="hidden" value="Index"/>
+	 				 <input name="act" type="hidden" value="search"/>
+                    <input autocomplete="off" id="searchblog_input" class="s-txt left"  type="text" value="<php>if(!empty($_GET['key'])){</php>{$_GET['key']}<php>}else{</php>搜日志<php>}</php>" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜日志';" event-node="key" name='key'><a href="javascript:void(0)" class="btn-search" onclick="if(getLength($('#searchblog_input').val()) && $('#searchblog_input').val()!=='搜日志'){ $('#search_blog').submit(); return false;}"><span>搜索</span></a></dt>
+                    </dl>
+                </form>
+            </div>
+          </div>
+		<h4 class="left"><img src="{$ts['app']['small_icon_url']}" />&nbsp;&nbsp;{$ts['app']['app_alias']}</h4>
+		<div class="app-tab-menu clearfix" style="margin:0 0 0 130px;">           
+			<ul>
+				<php>$_header_tab_on_my = in_array(ACTION_NAME, array('my','admin','addBlog','edit')) || (ACTION_NAME == 'show' && $isOwner == '1') ? '1' : '0';</php>
+                <li><a href="{:U('blog/Index/index')}" <eq name="_header_tab_on_my" value="0">class="current"</eq>>{$ts['app']['app_alias']}首页<eq name="_header_tab_on_my" value="0"><span class="triangle"></span></eq></a><i class="line"></i></li>
+                <li><a href="{:U('blog/Index/my')}" <eq name="_header_tab_on_my" value="1">class="current"</eq>>我的{$ts['app']['app_alias']}<eq name="_header_tab_on_my" value="1"><span class="triangle"></span></eq></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<!--<div class=page_tit>
+    <h2><img src="{$ts['app']['icon_url']}" />{$ts['app']['app_alias']}</h2>
+    <ul class="tit_tab">
+        <php>$_header_tab_on_my = in_array(ACTION_NAME, array('my','admin','addBlog')) || (ACTION_NAME == 'show' && $isOwner == '1') ? '1' : '0';</php>
+        <li><a href="{:U('blog/Index/index')}" <eq name="_header_tab_on_my" value="0">class="on"</eq>>{$ts['app']['app_alias']}首页</a></li>
+        <li><a href="{:U('blog/Index/my')}" <eq name="_header_tab_on_my" value="1">class="on"</eq>>我的{$ts['app']['app_alias']}</a></li>
+    </ul>
+    <div class="c"></div>
+</div>-->

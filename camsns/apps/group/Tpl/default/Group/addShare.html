@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>增加分享</title>
+<script type="text/javascript">
+<!--
+	//指定当前组模块URL地址
+	var	URL		=	'__URL__';
+	var	APP		=	'__APP__';
+	var	PUBLIC	=	'__PUBLIC__';
+	var	ROOT	=	'__ROOT__';
+	var TS		=	'__TS__';
+    var MID        = parent.MID;
+    var TPIS = parent.TPIS;	
+//-->
+</script>
+<link href="__THEME__/public.css?20110429" rel="stylesheet" type="text/css" />
+<link href="__THEME__/layout.css?20110429" rel="stylesheet" type="text/css" />
+<link href="__THEME__/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ts_common.js"></script>
+</head>
+
+<body>
+<form id="form1" name="form1" method="post"><!-- action="__URL__/doaddShare" onsubmit="parent.ymPrompt.close()"-->
+<table width="100%" border="0" cellspacing="3" cellpadding="0" class="mt10">
+	<tr>
+		<td align="right" valign="top" class="lh25">同时通知给：</td>
+		<td align="left"><div style="width:350px;">{:W("SelectFriend")}</div></td>
+	</tr>
+	<tr>
+		<td width="100" height="30" align="right">标题：</td>
+		<td align="left"><span class="edit">{$name} <!--<input name="name" type="text" id="name" value="{$name}" />--> </span></td>
+	</tr>
+	<tr>
+		<td align="right" valign="top">描述：</td>
+		<td align="left"><span class="input_box"> 
+			<textarea name="info"	cols="40" rows="4" id="info"></textarea> </span></td>
+	</tr>	
+	<tr>
+		<td align="right">&nbsp;</td>
+		<td align="left">
+			<input name="aimId" type="hidden" id="aimId" value="{$aimId}" /> 
+			<input name="gid" type="hidden" id="gid" value="{$aimId}" />
+			<input name="button" type="button" class="btn_b"	id="button" value="提 交"  onclick="ts_doaddshare()"/>
+			<input name="button2" type="button"	class="btn_w" id="button2" value="取 消" onclick="parent.ymPrompt.close()" />
+			</td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

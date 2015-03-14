@@ -1,0 +1,40 @@
+<div class="footer">
+   <div class="login-footer">
+    <php>if(!empty($site_bottom_nav) && $site_bottom_child_nav){</php>
+      <div class="foot clearfix">
+         <volist name="site_bottom_nav" id="nv">
+         <dl>
+            <dt><a href="{$nv.url}" target="{$nv.target}">{$nv['navi_name']}</a></dt>
+            <volist name="nv.child" id="cv">
+            <dd><a href="{$cv.url}" target="{$cv.target}">{$cv['navi_name']}</a></dd>
+            </volist>
+         </dl>
+         </volist>
+      </div>
+    <php>} else if(!empty($site_bottom_nav)) { </php>
+      <div class="foot foot1 clearfix">
+         <volist name="site_bottom_nav" id="nv">
+         <dl>
+            <dt><a href="{$nv.url}" target="{$nv.target}">{$nv['navi_name']}</a></dt>
+         </dl>
+         </volist>
+      </div>
+    <php>}</php>
+    <p>
+      <span class="right">Powered By <a href="#" title="启明星网络科技有限公司" target="_blank">启明星网络科技有限公司</a></span>
+      {$GLOBALS.ts.site.site_footer}
+    </p>
+  </div>
+</div><!--footer end-->
+
+</div><!--page end-->
+{:Addons::hook('public_footer')}
+<!-- 统计代码-->
+<div id="site_analytics_code" style="display:none;">
+{$site.site_analytics_code|base64_decode}
+</div>
+<eq name='site.site_online_count' value='1'>
+<script src="{:SITE_URL}/online_check.php?uid={$mid}&uname={$user.uname}&mod={:MODULE_NAME}&app={:APP_NAME}&act={:ACTION_NAME}&action=trace"></script>
+</eq>
+</body>
+</html>

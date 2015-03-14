@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<title>应用列表</title>
+
+	<?php require_once "apps/head.txt";?>
+
+	<script type="text/javascript">
+		require([
+			"dojox/mobile/parser",
+			"dojox/mobile",
+			"dojox/mobile/compat",
+			"dojox/mobile/IconContainer"
+		]);
+	</script>
+
+	<style>
+		.box {
+			border: 1px solid #A7C0E0;
+			width: 300px;
+			height: 250px;
+			background-image: url(images/widget-bg.png);
+			background-repeat: no-repeat;
+			background-color: white;
+		}
+	</style>
+</head>
+<body style="visibility:hidden;">
+	<div id="view1" data-dojo-type="dojox.mobile.View">
+		<h1 data-dojo-type="dojox.mobile.Heading">应用列表</h1>
+		<ul data-dojo-type="dojox.mobile.IconContainer">
+			<li data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"失物招领", icon:"apps/lostfind/AppInfo/icon_app_large.png", href:"index.php?app=lostfind&mod=Index&act=index", transition:"slide"'></li>
+
+			<li data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"兼职招聘", icon:"apps/jobs/AppInfo/icon_app_large.png", href:"index.php?app=jobs&mod=Index&act=index", transition:"slide"'></li>
+
+			<li data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"图书馆", icon:"apps/library/AppInfo/icon_app_large.png", href:"index.php?app=library&mod=Index&act=index", transition:"slide"'></li>
+
+			<li data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"教务处", icon:"apps/jwc/AppInfo/icon_app_large.png", href:"index.php?app=jwc&mod=Index&act=index", transition:"slide"'></li>
+
+			<li data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"校园导航", icon:"apps/ctgunavi/AppInfo/icon_app_large.png", href:"index.php?app=ctgunavi&mod=Index&act=index", transition:"slide"'></li>
+
+			<li data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"QQ小助手", icon:"apps/qqhelper/AppInfo/icon_app_large.png", href:"index.php?app=qqhelper&mod=Index&act=index", transition:"slide"'></li>
+
+			<li data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"校吧", icon:"apps/weiba/AppInfo/icon_app_large.png", href:"index.php?app=weiba&mod=Index&act=index", transition:"slide"'></li>
+
+			<li data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"微助手", icon:"apps/poster/AppInfo/icon_app_large.png", href:"index.php?app=poster&mod=Index&act=index", transition:"slide"'></li>
+
+			<li data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"找人", icon:"apps/people/AppInfo/icon_app_large.png", href:"index.php?app=people&mod=Index&act=index", transition:"slide"'></li>
+
+			<li data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"买卖", icon:"apps/deal/AppInfo/icon_app_large.png", href:"index.php?app=deal&mod=Index&act=index", transition:"slide"'></li>
+
+			<li data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"分歧终端", icon:"apps/wager/AppInfo/icon_app_large.png", href:"index.php?app=wager&mod=Index&act=index", transition:"slide"'></li>
+
+			<li data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"相册", icon:"apps/photo/AppInfo/icon_app_large.png", href:"index.php?app=photo&mod=Index&act=index", transition:"slide"'></li>
+
+			<li data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"活动", icon:"apps/event/AppInfo/icon_app_large.png", href:"index.php?app=event&mod=Index&act=index", transition:"slide"'></li>
+
+			<li data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"礼物", icon:"apps/gift/AppInfo/icon_app_large.png", href:"index.php?app=gift&mod=Index&act=index", transition:"slide"'></li>
+
+
+
+
+			
+		</ul>
+	</div>
+
+	
+</body>
+</html>

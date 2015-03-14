@@ -1,0 +1,60 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="__APP__/Js/common.js"></script>
+<script>
+	var checkFriend = function(){
+		if($('#ui_fri_ids').val()!=''){
+			return true;
+		}else{
+			ui.error('请选择好友');
+			return false;
+		}
+		
+	}
+</script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<div class="content_holder">
+<div class="content no_bg boxShadow">
+  <!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <!-- 内容 begin  -->
+  <div class="main no_l">
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox" style="min-height:580px;_height:580px"><include file="../Public/_groupInfo" />
+      <div id="col5" class="st-index-main">
+        <div class="extend-foot">
+        <div class="page_title invite-user-info" style="height:60px; overflow:hidden;*zoom:1">
+            <h2><a href="{:U('/Group/',array('gid'=>$groupinfo['id']))}" class="right">进入该群首页>></a>
+            <img src="{$groupinfo['logourl']}" style="width:50px; height:50px; border:1px #ddd solid;" />
+            <a href="{:U('/Group/',array('gid'=>$groupinfo['id']))}">{$groupinfo['name']}</a> >>群组邀请
+            </h2>
+        </div>
+        <!-- page_title end -->
+        <!-- 切换标签 end  -->
+        <div class="groupBox">
+          <php>if($from == 'create') {</php><div class="f14px mb20"> 您已成功创建群"{$groupinfo['name']}" &nbsp;</div><php>}</php>
+          <div class="create_box" style="*zoom:1;height:30px">
+            <div class="lh25"><php>if ($groupinfo['membercount'] > 1) {</php>该群有{$groupinfo['membercount']}名成员，继续邀请好友加入>> <php>} else {</php>该群还没有其它成员，邀请好友加入>> <php>}</php></div>
+            <div class="l400">
+              <form action="{:U('group/Invite/create',array('gid'=>$groupinfo['id']))}" method="post" name="group_invite" id="group_invite" onsubmit="return checkFriend(this)">
+	              <!-- 添加好友-->
+	              <div class="left w300">{:W('SearchUser', array('name' => 'fri_ids','follow'=>0,'max'=>10))}</div>
+	              <div class="left">
+		              <input type="hidden" value="1" name="sendsubmit" />
+		              <input type="submit" class="btn-green-big" value="发送邀请" />
+	              </div>
+              </form>
+            </div>
+          </div>
+          <!--create_box-->
+        </div>
+      </div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" />

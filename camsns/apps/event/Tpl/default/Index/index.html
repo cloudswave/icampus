@@ -1,0 +1,29 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="__APP__/event.css" type="text/css" media="screen" charset="utf-8" />
+<link href="__APP__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/js/event.js"></script>
+<div class="content_holder">
+<div class="content no_bg boxShadow">
+<include file="../Public/_mainNav" />
+  <div class="main no_l">
+    <!-- 画布 begin  -->
+    <div class="mainbox clearfix">
+      <include file="../Public/_isHotList" />
+      <div class="mainbox_appC">
+        <div class="tab-menu">
+          <!-- 切换标签 begin  -->
+          <ul>
+            <li <php> echo (empty($_GET['order']) || $_GET['order']=='hot')?'class="current"':NULL;</php>><a href="{:U('//',array('order'=>'hot'))}" ><span>热门{$ts['app']['app_alias']}</span></a></li>
+            <li <php> echo ($_GET['order']=='new')?'class="current"':NULL;</php>><a href="{:U('//',array('order'=>'new'))}" ><span>最新{$ts['app']['app_alias']}</span></a></li>
+            <li <php> echo ($_GET['order']=='following')?'class="current"':NULL;</php>><a href="{:U('//',array('order'=>'following'))}"><span>我关注的{$ts['app']['app_alias']}</span></a></li>
+          </ul>
+        </div>
+            <include file="../Public/_eventList" />
+          <div class="c"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- 右侧内容 end  -->
+<include file="__THEME__/public_footer" /> 

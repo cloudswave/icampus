@@ -1,0 +1,82 @@
+<include file="__THEME__/header" />
+<link href="__APP__/css/photo.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+#imgslide img {width:550px;}
+#pre {display:block; float:left; height:100%;background:#003366;filter:Alpha(Opacity=0);opacity:0; z-index:2; width:330px;  cursor:url(__APP__/images/pre.cur),auto;_background:transparent;}
+#next {z-index:2; display:block; float:left;background:#00CC99;filter:Alpha(Opacity=0);opacity:0; height:100%; width:330px; float:left; cursor:url(__APP__/images/next.cur), auto;_background:transparent;}
+.xhbsjy_left_centent h1 {float:left;}
+</style>
+
+<script type="text/javascript" src="__APP__/js/photo.js"></script>
+
+<div class="content_holder">
+	<div class="content no_bg boxShadow">
+		<include file="../Public/_mainNav" />
+		<div class="main no_l">
+    	<div class="mainbox">
+    		<include file="../Public/_isHotList" />
+    		<a name="show_pic" id="show_pic"></a>
+      	<div class="mainbox_appC">
+					<div class="my-photo-info">
+		  			<dl class="clearfix">
+							<dt class="userPic"><a href="{:U('public/Profile/index',array(uid=>$photo['userId']))}"><img src="{$photo['userId']|getUserFace}" /></a></dt>
+							<dd>
+								<p>
+									<a href="{:U('photo/Index/albums', array('uid'=>$uid))}">{$uid|getUserName}的相册</a>&nbsp;&gt;&nbsp;
+									<a href="{:U('photo/Index/album',array('uid'=>$photo['userId'],'id'=>$album['id']))}">{$album['name']}</a>&nbsp;&gt;&nbsp;
+									<span>{$photo.name}</span>
+								</p>
+							</dd>
+		  			</dl>
+					</div>
+
+					<div class="lineS_btm lh30 mLR15" style="height:30px;line-height:30px;overflow:hidden;*zoom:1;">
+						<div class="left">
+							<if condition="$photo['userId'] eq $mid">
+							<span id="divdelphoto">
+								<a href="javascript:;" onclick="photo.delphoto({$photo['albumId']}, {$photo['id']})" class="mr10"><span class="ico-del"></span>删除</a></span>
+      					<a href="javascript:;" onclick="photo.setcover({$photo['albumId']}, {$photo['id']})" class="mr10"><span class="ico-cover"></span>设为封面</a>
+      					<a href="javascript:;" onclick="photo.editphotoTab({$photo['albumId']}, {$photo['id']})" class="mr10"><span class="ico-modify"></span>修改</a>
+							</if>
+							<a href="{$photo.savepath|get_photo_url=###,0,0,false}" target="_blank"><span class="ico-artwork"></span>查看原图</a>
+						</div>
+					</div>
+
+					<div class="photoBox">
+						<div class="view">
+							<div class="c1" >
+								<div class="alC" id="big_photo" style="position:relative">
+									<h1 style="float:none">
+										<img style="max-width:640px;" onload="$('#pre').css('height',this.height);$('#next').css('height',this.height);" src="{$photo.savepath|get_photo_url=###, 550, 'auto', false}" pid="{$photo.id}" rel="{$photo.id}" id="big_pic" />
+										<span id="pre" onclick="rollPic({$pre.id},{$uid},{$pre.albumId});" style="height:50px;position:absolute;top:0;left:0"></span>
+										<span id="next" onclick="rollPic({$next.id},{$uid},{$next.albumId});" style="height:50px;position:absolute;right:0;top:0"></span>
+									</h1>
+									<br />
+									<span class="lh30 cGray photoName">{$photo.name}</span>
+								</div>
+							</div>
+							<div class="clear" style="height:10px;"></div>
+						</div>
+						<div class="feed_list">
+							<div class="repeat">
+							{:W('Comment',array('tpl'=>'detail','table'=>'photo','id_field'=>'id','row_id'=>$photo['id'],'pageHtml'=>1,'limit'=>'20','order'=>'DESC','app_uid'=>$uid, 'cancomment'=>1, 'cancomment_old'=>0, 'showlist'=>1,'canrepost'=>'0'))}
+							</div>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="c"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+function rollPic(id,uid,albumId){
+	window.location.href=U('photo/Index/photo&id='+id+'&aid='+albumId+'&uid='+uid+'#show_pic');
+}
+</script>
+<script type="text/javascript" src="__THEME__/js/module.weibo.js"></script>
+
+<include file="__THEME__/public_footer" />

@@ -1,0 +1,292 @@
+<include file="../Public/header" />
+<!-- 主体内容 -->
+<div id="content"  msgpage="replyMe" interface="list">
+<include file="../Public/message_header" />
+<php>if(empty($commentlist)) {</php>暂无更多信息<php>}</php>
+	<volist name="commentlist" id="feed">
+	<div id="c_{$feed.sourceInfo.feed_id}" class="c_replyme" cid="{$feed.sourceInfo.feed_id}" commentid="{$feed.comment_id}" rowid="{$feed.sourceInfo.feed_id}" appid="{$feed.uid}" touid="{$feed.uid}" page="" feedtype="{$feed.sourceInfo.type}" isdel="{$feed.sourceInfo.api_source.is_del}">
+		
+
+		<!-- 评论 -->
+		<div class="c_info">
+			<div class="c_ava">
+				<img src="{$feed.user_info.avatar_small}" width=40 height=40>
+			</div>
+			<div class="info_text">
+				<div id="c_info_name_{$feed.sourceInfo.feed_id}" class="c_info_name">{$feed.user_info.uname}</div>
+				<div class="c_info_more_box">
+					<div class="c_time">
+						<php>if($feed['app'] == 'weiba' || $feed['app'] == 'w3g' || $feed['app'] == 'public'){
+								$ctime=strtotime($feed[ctime]);
+								echo friendlyDate($ctime);
+							}else{
+								echo friendlyDate($feed[ctime]);
+							}
+						</php>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="c_content_{$feed.sourceInfo.feed_id}" class="c_content">
+			<php>
+				if($feed[to_comment_id] != 0){
+					$res = M('Comment')->where('comment_id='.$feed[to_comment_id])->find();
+					$uname = getUserName($feed[to_uid]);
+					echo wapFormatContent($feed[content].' //@'.$uname.'：'.$res[content]);
+				}else{
+					echo wapFormatContent($feed[content]);
+				}
+
+			</php>
+		</div>
+
+		<!-- 原文 -->
+
+		<div class="c_zf_box">
+			<dt class="bgcolor_arrow"><em class="arrline">◆</em><span class="downline">◆</span></dt>
+			<php>if($feed[sourceInfo][is_del] == 0){</php>
+				<div class="c_zf_content">
+					<div id="c_content_yw_{$feed.sourceInfo.feed_id}">
+						<span class="c_zf_content_name">@{$feed.sourceInfo.source_user_info.uname}</span>:
+						<php>echo wapFormatContent($feed['sourceInfo'][feed_content]);</php>
+					</div>
+					<php>
+						if($feed['sourceInfo']['type'] == 'weiba_post' || $feed['sourceInfo']['source_table'] == 'weiba_post'){
+							</php>
+								<div class="loadweiba" weibaid="{$feed.sourceInfo.api_source.post_id}">
+									查看全文
+								</div>
+							<php>
+						}
+					</php>
+				</div>
+				<!-- 原文的图 -->
+				<php>if($feed['sourceInfo']['type']=='postimage') {</php>
+					<div class="feed_img_box">
+						<php>foreach($feed['sourceInfo']['attach'] as $value){</php>
+							<img bm="{$value['attach_middle']}" class="feed_img" src="{$value['attach_small']}">
+						<php>}</php>
+					</div>
+				<php>}</php>
+			<php>}else{</php>
+				<!-- 已被删除 -->
+				<dt class="bgcolor_arrow"><em class="arrline">◆</em><span class="downline">◆</span></dt>
+				<div class="c_zf_content">原文已被删除</div>
+
+			<php>}</php>
+		<!-- 转发的原文 -->
+		<php>if (($feed['sourceInfo']['type'] == 'repost' && $feed['sourceInfo']['api_source']['is_del'] == '0') || ($feed['sourceInfo']['type'] == 'repost' && $feed['transpond_data']['api_source']['is_del'] == '0') || ($feed['sourceInfo']['type'] == 'repost' && $feed['sourceInfo']['is_del'] == '0')) {</php>
+			<div id="c_zf_box_{$feed.feed_id}" class="c_zf_box">
+				<dt class="bgcolor_arrow"><em class="arrline">◆</em><span class="downline">◆</span></dt>
+				<div class="c_zf_content">
+					<span class="c_zf_content_name">@{$feed.sourceInfo.transpond_data.uname}</span>:
+					<php>echo wapFormatContent($feed['sourceInfo']['transpond_data'][feed_content]);
+						if($feed['sourceInfo']['transpond_data']['type'] == 'weiba_post'){
+						</php>
+							<div class="loadweiba" weibaid="{$feed.sourceInfo.transpond_data.api_source.post_id}">
+								查看全文
+							</div>
+						<php>
+						}
+					</php>
+				</div>
+			<!-- 转发的图 -->
+			<php>if($feed['sourceInfo']['transpond_data']['type']=='postimage') {</php>
+				<div class="feed_img_box">
+					<php>foreach($feed['sourceInfo']['transpond_data']['attach'] as $value){</php>
+						<img bm="{$value['attach_middle']}" class="feed_img" src="{$value['attach_small']}">
+					<php>}</php>
+				</div>
+			<php>}</php>
+
+			<!-- 附件 -->
+			<div ><php>if(isset($feed['sourceInfo']['transpond_data']['attach']) && $feed['sourceInfo']['transpond_data']['type'] == 'postfile'){</php>
+				<div class="attach_box">
+					<php>foreach($feed['sourceInfo']['transpond_data']['attach'] as $value){
+							switch($value['extension']){
+								case 'png':$type='pic';break;
+								case 'jpg':$type='pic';break;
+								case 'jpeg':$type='pic';break;
+								case 'bmp':$type='pic';break;
+								case 'gif':$type='pic';break;
+								case 'zip':$type='zip';break;
+								case 'rar':$type='zip';break;
+								case 'doc':$type='word';break;
+								case 'docx':$type='word';break;
+								case 'xls':$type='xls';break;
+								case 'ppt':$type='ppt';break;
+								case 'pdf':$type='pdf';break;
+								default:$type='unknow';break;
+							}
+							$size=$value['size'];
+							if($size > 1024 && $size< 1024*1024){
+								$size=$size/1024;
+								$size=round($size,2);
+								$size.='K';
+							}else if($size < 1024){
+								$size.='B';
+							}else{
+								$size=$size/1024/1024;
+								$size=round($size,2);
+								$size.='M';
+							}
+					</php>
+						<a class="attachs_a" href="{:U('widget/Upload/down',array('attach_id'=>$value['attach_id']))}" type="<php>echo $value['extension'];</php>">
+							<div class="attachs" style="background-image:url(img/attach/{$type}.png)">
+								<div class="attachs_name">
+									<php>echo $value['attach_name'];</php>
+								</div>
+								<div class="attachs_size">
+									<php>echo $size;</php>
+								</div>
+							</div>
+						</a>
+					<php>}</php>
+				</div>
+			  <php>}</php>
+			</div>
+				<div class="c_zf_info">
+					<div class="c_zf_info_time">{$feed.sourceInfo.transpond_data.publish_time|friendlyDate}</div>
+					<div class="c_zf_info_counts">
+						<span class="c_zf_info_count">转发:{$feed.sourceInfo.transpond_data.repost_count}</span>
+						<span class="c_zf_info_count">评论:{$feed.sourceInfo.transpond_data.comment_count}</span>
+						<span class="c_zf_info_count">赞:{$feed.sourceInfo.transpond_data.digg_count}</span>
+					</div>
+				</div>
+			</div>
+		<php>}elseif (($feed['sourceInfo']['type'] == 'repost' && $feed['sourceInfo']['api_source']['is_del'] == '1') || ($feed['type']['sourceInfo'] == 'repost' && $feed['transpond_data']['api_source']['is_del'] == '1') || ($feed['sourceInfo']['type'] == 'repost' && $feed['sourceInfo']['is_del'] == '1')) {</php>
+			<!-- 原微博已被删除 -->
+			<div class="c_zf_box">
+				<dt class="bgcolor_arrow"><em class="arrline">◆</em><span class="downline">◆</span></dt>
+				<div class="c_zf_content">原文已被删除</div>
+			</div>
+		<php>}</php>
+		<!--转发原文结束-->
+		
+		<!-- 原文的附件 -->
+		<div ><php>if(isset($feed['sourceInfo']['attach']) && $feed['sourceInfo']['type'] == 'postfile'){</php>
+					<div class="attach_box">
+						<php>foreach($feed['sourceInfo']['attach'] as $value){
+								switch($value['extension']){
+									case 'png':$type='pic';break;
+									case 'jpg':$type='pic';break;
+									case 'jpeg':$type='pic';break;
+									case 'bmp':$type='pic';break;
+									case 'gif':$type='pic';break;
+									case 'zip':$type='zip';break;
+									case 'rar':$type='zip';break;
+									case 'doc':$type='word';break;
+									case 'docx':$type='word';break;
+									case 'xls':$type='xls';break;
+									case 'ppt':$type='ppt';break;
+									case 'pdf':$type='pdf';break;
+									default:$type='unknow';break;
+								}
+								$size=$value['size'];
+								if($size > 1024 && $size< 1024*1024){
+									$size=$size/1024;
+									$size=round($size,2);
+									$size.='K';
+								}else if($size < 1024){
+									$size.='B';
+								}else{
+									$size=$size/1024/1024;
+									$size=round($size,2);
+									$size.='M';
+								}
+						</php>
+							<a class="attachs_a" href="{:U('widget/Upload/down',array('attach_id'=>$value['attach_id']))}" type="<php>echo $value['extension'];</php>">
+								<div class="attachs" style="background-image:url(img/attach/{$type}.png)">
+									<div class="attachs_name">
+										<php>echo $value['attach_name'];</php>
+									</div>
+									<div class="attachs_size">
+										<php>echo $size;</php>
+									</div>
+								</div>
+							</a>
+						<php>}</php>
+					</div>
+			  <php>}</php>
+		</div>
+
+		<!--微吧 转发的原文 -->
+		<php>if ($feed['sourceInfo']['type'] == 'weiba_repost' && $feed['sourceInfo']['api_source']['is_del'] == '0' || ($feed['sourceInfo']['source_table'] == 'weiba_repost' && $feed['api_source']['is_del'] == '0')){</php>
+			<div id="c_zf_box_{$feed.feed_id}" class="c_zf_box">
+				<dt class="bgcolor_arrow"><em class="arrline">◆</em><span class="downline">◆</span></dt>
+				<div class="c_zf_content">
+					<span class="c_zf_content_name">@{$feed.sourceInfo.api_source.source_user_info.uname}</span>:
+					<php>echo wapFormatContent($feed['sourceInfo']['api_source']['source_content']);
+						</php>
+							<div class="loadweiba" weibaid="{$feed.sourceInfo.api_source.post_id}">
+								查看全文
+							</div>
+				</div>
+				<div class="c_zf_info">
+					<div class="c_zf_info_time">{$feed.sourceInfo.transpond_data.publish_time|friendlyDate}</div>
+					<div class="c_zf_info_counts">
+						<span class="c_zf_info_count">回复:{$feed.sourceInfo.api_source.reply_count}</span>
+						<span class="c_zf_info_count">浏览:{$feed.sourceInfo.api_source.read_count}</span>
+					</div>
+				</div>
+			</div>
+		<php>}elseif($feed['sourceInfo']['type'] == 'weiba_repost' && $feed['sourceInfo']['api_source']['is_del'] == '1' || ($feed['sourceInfo']['source_table'] == 'weiba_repost' && $feed['api_source']['is_del'] == '1')){</php>
+			<!-- 原微博已被删除 -->
+			<div class="c_zf_box">
+				<dt class="bgcolor_arrow"><em class="arrline">◆</em><span class="downline">◆</span></dt>
+				<div class="c_zf_content">原文已被删除</div>
+			</div>
+		<php>}</php>
+
+
+		</div>
+		<!-- 原文结束 -->
+	</div>
+	</volist>
+
+	<!-- 分页 -->
+	<div id="pager_box">
+		<php>if(empty($_GET['page']) || $_GET['page']==1){</php>
+			<a href="javascript:;" link="" id="prev" class="pager_child pager_p_n_none ">上一页</a>
+		<php>}else{</php>
+			<a href="javascript:;" link="{:U('w3g/Index/replyMe',array('page'=>$page-1))}" id="prev" class="pager_child pager_p_n ">上一页</a>
+		<php>}</php>
+		<select id="page_sel" class="pager_child">
+			<php>
+				$_GET['page']!=0?$get=$_GET['page']:$get=1;
+				$_count = ceil($count/10);
+				if($get<6){
+					for($i=0;$i<($_count);$i++){
+						$get==$i+1?$selected='selected="selected"':$selected='';
+						if($i>9){
+							break;
+						}
+			</php>
+			<option value="{:U('w3g/Index/replyMe')}&page={$i+1}" <php>echo $selected;</php>>第{$i+1}页</option>
+			<php>	}
+				}elseif($get>=6){
+					for($i=($get-5);$i<$get;$i++){
+						$get==$i+1?$selected='selected="selected"':$selected='';
+			</php>
+			<option value="{:U('w3g/Index/replyMe')}&page={$i+1}" <php>echo $selected;</php>>第{$i+1}页</option>
+			<php>	}</php>
+			<php>	for($i=$get;$i<($get+5);$i++){
+						$get==$i+1?$selected='selected="selected"':$selected='';
+						if($i>$_count-1){
+							break;
+						}
+			</php>
+			<option value="{:U('w3g/Index/replyMe')}&page={$i+1}" <php>echo $selected;</php>>第{$i+1}页</option>
+			<php>	}</php>
+			<php>}</php>
+			
+		</select>
+		<php>if($get == ($_count)) {</php>
+			<a href="javascript:;" link="" id="next" class="pager_child pager_p_n_none">下一页</a>
+		<php>}else{</php>
+			<a href="javascript:;" link="{:U('w3g/Index/replyMe',array('page'=>$page+1))}" id="next" class="pager_child pager_p_n">下一页</a>
+		<php>}</php>
+	</div>
+</div>
+	<!-- 列表结束################################################################################################ -->
+<include file="../Public/footer" />

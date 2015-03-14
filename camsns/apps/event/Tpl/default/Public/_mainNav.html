@@ -1,0 +1,38 @@
+<div class="find-type">
+<div class="app-title clearfix">
+		<div class="search-input">
+            <div id="mod-search" model-node="drop_weiba_search">
+                <form name="search_event" id="search_event" method="post" action="{:U('event/Index/index')}">
+                    <dl>
+                    <dt class="clearfix"><!--<i class="ico-search"></i>--><input autocomplete="off" id="searchevent_input" name="title" class="s-txt left"  type="text" value="<php>if(!empty($searchkey)){</php>{$searchkey}<php>}else{</php>搜活动<php>}</php>" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜活动';" event-node="searchKey" name='k'><a href="javascript:void(0)" class="btn-search" onclick="if(getLength($('#searchevent_input').val()) && $('#searchevent_input').val()!=='搜活动'){ $('#search_event').submit(); return false;}"><span>搜索</span></a></dt>
+                    </dl>
+                </form>
+            </div>
+      </div>
+      <h4 class="left"><img src="{$ts['app']['small_icon_url']}" />&nbsp;&nbsp;{$ts['app']['app_alias']}</h4>		
+		 <div class="app-tab-menu clearfix" style="margin:0 0 0 130px;">
+     
+			<ul>
+				<li><a href="{:U('event/Index/index')}" <php>if(!in_array((ACTION_NAME),array('personal','addEvent','edit','eventDetail')))echo 'class="current"';</php> <php>if(in_array((ACTION_NAME),array('eventDetail'))&& $uid!=$mid)echo 'class="current"';</php>>{$ts['app']['app_alias']}首页
+          <php>if(!in_array((ACTION_NAME),array('personal','addEvent','edit','eventDetail'))){</php><span class="triangle"></span><php>}</php>
+          <php>if(in_array((ACTION_NAME),array('eventDetail'))&& $uid!=$mid){</php><span class="triangle"></span><php>}</php>
+        </a><i class="line"></i></li>
+
+        <li><a href="{:U('event/Index/personal', array('action'=>'launch'))}" <php>if(in_array((ACTION_NAME),array('personal','addEvent','edit')))echo 'class="current"';</php> <php>if(in_array((ACTION_NAME),array('eventDetail'))&& $uid==$mid)echo 'class="current"';</php>>我的{$ts['app']['app_alias']}
+          <php>if(in_array((ACTION_NAME),array('personal','addEvent','edit'))){</php><span class="triangle"></span><php>}</php>
+          <php>if(in_array((ACTION_NAME),array('eventDetail'))&& $uid==$mid){</php><span class="triangle"></span><php>}</php>
+        </a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!--
+<div class="page_tit">
+  <!-- page_title begin -->
+  <!--<h2><img src="{$ts['app']['icon_url']}" />{$ts['app']['app_alias']}</h2>
+  <ul class="tit_tab">
+    <li><a href="{:U('event/Index/index')}" <php>if(in_array((ACTION_NAME),array('index','all_photos','all_albums')) || !in_array((ACTION_NAME),array('all_photos','all_albums'))&&$uid!=$mid)echo 'class="on"';</php>>{$ts['app']['app_alias']}首页</a></li>
+    <li><a href="{:U('event/Index/personal', array('action'=>'launch'))}" <php>if(!in_array((ACTION_NAME),array('index','all_photos','all_albums'))&&$uid==$mid)echo 'class="on"';</php>>我的{$ts['app']['app_alias']}</a></li>
+  </ul>
+  <div class="c"></div>
+</div>-->

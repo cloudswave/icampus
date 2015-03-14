@@ -1,0 +1,67 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="__APP__/gift.css" type="text/css" media="screen" charset="utf-8" />
+<link href="__PUBLIC__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+<div class="content_holder">
+<div class="content no_bg boxShadow">
+<include file="../Public/_mainNav" />
+  <div class="main no_l">
+    <div class="mainbox">
+      <div class="mainbox_appC" style="margin-right:0">
+    <div class="tab-menu">
+      <ul>
+        <li class="current"><a  href="{:U('gift/Index/receivebox')}"><span>收到的礼物</span></a></li>
+        <li><a href="{:U('gift/Index/sendbox')}"><span>送出的礼物</span></a></li>
+      </ul>
+    </div> 
+	<div class="gift_list">
+	<volist name="gifts['data']" id='gift' empty="暂时还没有收到礼物哦">
+	<div class="gift_box">
+    <div style=" overflow:hidden; width:100%;">
+        	<div class="left" style="width:90px;"><img src="{$gift.giftImg|realityImageURL}" width="70px" height="70px" /></div>
+            <div class="left" style="width:560px;">
+			<php>if($gift['sendWay']==3) { </php>
+			
+				  <div class="lh20">神秘人物 	在 {$gift.cTime|friendlyDate} 花费了 {$gift.giftPrice}点{$type} 赠送给您的礼物。 </div>
+	              
+				  <php>if($gift['toUserId']==$mid) { </php>
+				  <div class="cGray2 lh30">				  
+				  <php>echo getUserWo($gift['fromUserId'],$mid);</php>还给您留言说：</div>
+				  <div class="quote" style="margin:0;"><p>{$gift.sendInfo}<span class="quoteR">&nbsp;</span></p></div>
+				  <php> } </php>
+			<php> }elseif($gift['sendWay']==2) { </php>  
+			
+				  <div class="lh20">			  
+				  <php>if($gift['toUserId']==$mid) { </php>
+				  {$user_info[$gift['fromUserId']]['space_link']}
+				  <php> }else{ </php>
+					神秘人物
+				  <php> } </php>
+						  
+				  在 {$gift.cTime|friendlyDate} 花费了 {$gift.giftPrice}点{$type} 赠送给您的礼物。<br />
+				  <php>if($gift['toUserId']==$mid) { </php>
+					<a href="{:U('gift/Index/index', array('uid'=>$gift['fromUserId']))}">给{$gift.fromUserId|getUserName}回赠礼物</a></div>
+				  <div class="cGray2 lh30"><php>echo getUserWo($gift['fromUserId'],$mid);</php>还给您留言说：</div>
+				  <div class="quote" style="margin:0;"><p>{$gift.sendInfo}<span class="quoteR">&nbsp;</span></p></div>
+				  <php> }else{ </php>
+				      </div>
+				  <php> } </php>
+			<php>} else {</php> 
+			  <div class="lh20">{$user_info[$gift['fromUserId']]['space_link']} 在 {$gift.cTime|friendlyDate} 花费了 {$gift.giftPrice}点{$type} 赠送给您的礼物。<br /> 
+                <a href="{:U('gift/Index/index', array('uid'=>$gift['fromUserId']))}">给{$gift.fromUserId|getUserName}回赠礼物</a></div>
+              <div class="cGray2 lh30"><php>echo getUserWo($gift['fromUserId'],$mid);</php>还给您留言说：</div>
+              <div class="quote" style="margin:0;"><p>{$gift.sendInfo}<span class="quoteR">&nbsp;</span></p></div>
+
+			<php> } </php>
+			  </div>
+              </div>
+	<div class="c"></div>            
+   </div> </volist>
+    </div>
+   <div id="Pagination" class="page">{$gifts.html}</div>
+</div>
+  </div>
+  <div class="c"></div>
+</div>
+</div>
+</div>
+<include file="__THEME__/public_footer" /> 

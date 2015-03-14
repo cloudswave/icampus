@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="__ROOT__/apps/photo/_static/css/photo.css" type="text/css" media="screen" charset="utf-8" />
+<div class="profile-photo-list">
+	<ul>
+		<php>$photoAlbumTitle = $isMe ? '我的相册' : 'TA的相册';</php>
+		<volist name="data" id="vo">
+		<li>
+			<a href="{:U('photo/Index/photo',array('id'=>$vo['id'],'aid'=>$vo['albumId'],'uid'=>$vo['userId']))}"><img src="{$vo.savepath|getImageUrl=###,200,200,true}" width="150" height="150"></a>
+			<p>{$vo.name|getShort=10}</p>
+			<p>来自相册：<a href="{:U('photo/Index/album', array('uid'=>$vo['userId'],'id'=>$vo['albumId']))}">{$vo.album|getShort=5}</a></p>
+		</li>
+		</volist>
+	</ul>
+	<div class="page">{$html}</div>
+</div>

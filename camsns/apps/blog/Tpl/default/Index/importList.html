@@ -1,0 +1,118 @@
+<include file="__THEME__/header" />
+
+<link rel="stylesheet" href="__APP__/blog.css" type="text/css" media="screen" charset="utf-8" />
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+  <script type="text/javascript" charset="utf-8">
+   var g_selected = 0;
+var selected = new Array();
+  /*
+   *  方法:Array.baoremove(dx)
+   *  功能:删除数组元素.
+   *  参数:dx删除元素的下标.
+   *  返回:在原数组上修改数组.
+   */
+  Array.prototype.baoremove = function(dx)
+  {
+    if(isNaN(dx)||dx>this.length){return false;}
+    this.splice(dx,1);
+  }
+
+function selectCheck(v_obj,i)
+{
+   if (v_obj.checked == true)
+   {
+     selected[i-1] = v_obj.value;
+     g_selected++;
+   }
+   else
+   {
+     selected.baoremove(i-1);
+     g_selected--;
+   }
+}
+g_selectedall = false;
+  function selectAll(){
+    selected.splice( 0,selected.length );
+
+    if( false == g_selectedall ){
+      $("input[type='checkbox']").each(function(i) {
+       selected[i]=$( this ).val();
+       $(this).attr("checked", true); 
+      });
+      g_selectedall = true;
+    }else{
+      $("input[type='checkbox']").each(function() {
+        $(this).attr("checked", false); 
+      });
+      g_selectedall = false;
+      g_selected = 0;
+    }
+
+  }
+
+function check()
+{
+ if (g_selected > 0)
+ {
+   return true;
+ }
+ else
+ {
+  Alert("请选择待导入的文章");
+ return false;
+ }
+
+}
+  </script>
+  <include file="__THEME__/apps" />
+  <div class="main"><!-- 画布 begin  -->
+    <div class="BlogBox">
+      <div class="LogList" style="width:100%;"><!-- 好友日志 begin  -->
+        <div class="MenuSub">
+          <!-- <a href="javascript:history.back(-1)">返回上一页</a> -->
+        </div>
+        <form action="__URL__/doImport/" method="post">
+        <ul>
+          <li class="cGray2 btmlineD" style="margin:0px;">
+          <div class="left alC" style="width:5%;"><a href="javascript:selectAll()">全选</a></div>
+          <div class="left" style="width:50%;">日记标题</div>
+          <div class="left" style="width:20%;">日记分类</div>
+          <div class="left" style="width:20%;">权限</div>
+          </li>
+          <volist name="importBlog" id = "vo">
+            <li class="btmlineD" style="margin:0px;">
+            <div class="left alC" style="width:5%;"><input name="id[]" type="checkbox" value="{$vo['id']}" onclick="selectCheck( this,{$i}) )" /></div>
+            <div class="left" style="width:50%;"><a href="{$vo['link']}"  target="_blank">{$vo['title']}</a></div>
+            <div class="left" style="width:20%;">
+              <select name="class_{$vo['id']}">
+                <sublist name="category" id="ca">
+                <option value="{$ca['id']}" selected="selected">{$ca['name']}</option>
+                </sublist>
+              </select>
+            </div>
+            <div class="left" style="20%;">
+              <select name="privacy_{$vo['id']}" onchange="javascript:checkPrivacy(this);">
+                <option value="0" selected="selected">全站可见</option>
+                <option value="1">仅好友可见</option>
+                <option value="2">私密</option>
+              </select>
+            </div>
+            </li>
+          </volist>
+          <li style="margin:0px;">
+          <input name="" type="submit" class="btn_b" value="导入所选文章" />
+          </li>
+        </ul>
+        </form>
+      </div>
+      <!-- 好友日志 end  -->
+    </div>
+
+
+  </div><!-- 画布 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />

@@ -1,0 +1,10 @@
+.content{padding:20px;background:url(./images/line-d.jpg) repeat-y  6%  0;}
+.c1{position:relative;margin:0 0 20px 0}
+.date{font-size:14px;font-family:Arial;background:#0ec317;padding:3px 5px;position:absolute;left:0;color:#fff;}
+.box{width:830px;left:55px;border:1px solid #dddddd;padding:10px;position:absolute;border-radius:3px;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;top:32px;box-shadow:0 2px 0 0 #ebebeb}
+.box ul{padding-left:20px;}
+.box li{line-height:25px;font-size:14px;list-style-type:square;}
+.box .arrow-right{position:absolute;right:-11px;top:12px;background:url(./images/arrow-right.jpg) no-repeat;width:11px;height:18px}
+.box .arrow-left{position:absolute;left:-11px;background:url(./images/arrow-left.jpg) no-repeat;width:11px;height:18px}
+.box .icon-circle1{position:absolute;background:url(./images/icon-circle.jpg) no-repeat;width:12px;height:12px;right:-32px;top:13px}
+.box .icon-circle2{position:absolute;background:url(./images/icon-circle.jpg) no-repeat;width:12px;height:12px;left:-24px;top:13px}

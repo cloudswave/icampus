@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!-- <html manifest='__ROOT__/manifest.php'> -->
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/> 
+<title><neq name= '_title' value=''>{$_title} - {$site.site_name}<else />{$site.site_name} - {$site.site_slogan}</neq></title>
+<meta content="<neq name= '_keywords' value=''>{$_keywords}<else />{$site.site_header_keywords}</neq>" name="keywords">
+<meta content="<neq name= '_description' value=''>{$_description}<else />{$site.site_header_description}</neq>" name="description">
+{:Addons::hook('public_meta')}
+<link href="__THEME__/image/favicon.ico?v={$site.sys_version}" type="image/x-icon" rel="shortcut icon">
+
+
+
+
+<!-- <link href="__THEME__/css/global.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
+<link href="__THEME__/css/module.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
+<link href="__THEME__/css/menu.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
+<link href="__THEME__/css/form.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
+<link href="__THEME__/css/jquery.atwho.css?v={$site.sys_version}" rel="stylesheet" type="text/css" /> -->
+<link href="__THEME__/css/css.php?t=css&f=global.css,module.css,menu.css,form.css,jquery.atwho.css&v={$site.sys_version}.css" rel="stylesheet" type="text/css" />
+
+
+
+
+<php>if(!empty($appCssList)):</php>
+<volist name='appCssList' id='cl'>
+<link href="{:APP_PUBLIC_URL}/{$cl}?v={$site.sys_version}" rel="stylesheet" type="text/css"/>
+</volist>
+<php>endif;</php>
+
+
+
+
+
+<script>
+/**
+ * 全局变量
+ */
+var SITE_URL  = '<php> echo SITE_URL;</php>';
+var UPLOAD_URL= '<php> echo UPLOAD_URL;</php>';
+var THEME_URL = '__THEME__';
+var APPNAME   = '<php> echo APP_NAME;</php>';
+var MID     = '<php> echo $mid;</php>';
+var UID     = '<php> echo $uid;</php>';
+var initNums  =  '<php> echo $initNums;</php>';
+var SYS_VERSION = '<php> echo $site["sys_version"];</php>'
+// Js语言变量
+var LANG = new Array();
+</script>
+<php>if(!empty($langJsList)) {</php>
+<volist name="langJsList" id="vo">
+<script src="{$vo}?v={$site.sys_version}"></script>
+</volist>
+<php>}</php>
+<!-- <script src="__THEME__/js/jquery-1.7.1.min.js?v={$site.sys_version}"></script>
+<script src="__THEME__/js/jquery.form.js?v={$site.sys_version}"></script>
+<script src="__THEME__/js/common.js?v={$site.sys_version}"></script>
+<script src="__THEME__/js/core.js?v={$site.sys_version}"></script>
+<script src="__THEME__/js/module.js?v={$site.sys_version}"></script>
+<script src="__THEME__/js/module.common.js?v={$site.sys_version}"></script>
+<script src="__THEME__/js/jwidget_1.0.0.js?v={$site.sys_version}"></script>
+<script src="__THEME__/js/jquery.atwho.js?v={$site.sys_version}"></script>
+<script src="__THEME__/js/jquery.caret.js?v={$site.sys_version}"></script>
+<script src="__THEME__/js/ui.core.js?v={$site.sys_version}"></script>
+<script src="__THEME__/js/ui.draggable.js?v={$site.sys_version}"></script>
+<script src="__THEME__/js/plugins/core.comment.js?v={$site.sys_version}"></script>
+<script src="__THEME__/js/plugins/core.digg.js?v={$site.sys_version}"></script> -->
+<script src="__THEME__/js/js.php?t=js&f=jquery-1.7.1.min.js,jquery.form.js,common.js,core.js,module.js,module.common.js,jwidget_1.0.0.js,jquery.atwho.js,jquery.caret.js,ui.core.js,ui.draggable.js,plugins/core.comment.js,plugins/core.digg.js&v={$site.sys_version}.js"></script>
+<script src="__THEME__/js/plugins/core.comment.js?v={$site.sys_version}"></script>
+<script src="__THEME__/js/plugins/core.digg.js?v={$site.sys_version}"></script>
+
+
+{:Addons::hook('public_head',array('uid'=>$uid))}
+
+
+<style type="text/css">
+.login-footer .foot dl {
+float: left;
+width: auto;
+text-align: center;
+margin: 0 10px;
+}
+
+#header .head-bd .nav li .dropmenu {
+  width:370px;left:-50px;display:none;z-index:100;
+}
+
+
+#login_bg{
+  height: 100% !important;
+}
+/* max-width */
+@media screen and (max-width: 767px) {
+/*login*/
+  #wrap-hd {
+  width: auto;
+  top: 10px;
+  left: 20px;
+  height: 400px;
+  margin:0 auto;
+   }
+
+   #footer .footer-wrap {
+    margin: 0 auto;
+    padding: 15px 0;
+    width: auto !important;
+    text-align: center;
+    margin-left: 0px !important;
+    position: relative !important;
+    left: auto !important;
+    line-height: 0 !important;
+}
+
+.s-login {
+  top: 120px;
+
+ }
+
+ #wrap-hd .logo {
+ 
+   margin-bottom: 3px;
+}
+
+
+
+.error-box {
+  left: 0px;
+}
+
+
+#login-bg {
+  min-height: 425px;
+}
+
+/*注册*/
+#header .head-bd {
+  margin: 0 auto;
+  width: 100%;
+ }
+
+ #header .head-bd .reg {
+   padding: 11px 10px;
+}
+
+.reg-wrap .title {
+   margin: 0 0 10px 0;
+}
+ .reg-main .article {
+   padding: 10px;
+}
+
+.reg-wrap {
+    width: 100% !important;
+ 
+}
+
+.login-footer {
+   width: 100%;
+}
+
+.footer {
+  width: 100%;
+ 
+}
+
+.reg-main .article .item dd .form-tt {
+    width: auto;
+    padding: 8px 10px 8px 0;
+}
+
+.reg-main .article .item .captcha-tips .box-ver, .reg-main .article .item .captcha-tips .ico-ok {
+   position: static;
+}
+
+.reg-main .article .item dd {
+   margin: 0 0 10px 0
+}
+.article .s-txt, .article .s-txt-focus {
+    width: 250px !important;
+}
+
+
+#body_page {
+   min-height: 100%;
+}
+}
+</style>
+
+
+</head>
+<body>

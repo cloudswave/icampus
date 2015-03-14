@@ -1,0 +1,20 @@
+<div id="col3" class="st-index-right">
+	<div class="right-wrap">
+	<!-- 个人信息 -->
+	{:W('UserInformation', array('uid'=>$mid, 'tpl'=>'right', 'isReturn'=>$isReturn))}
+	<!-- 广告位 -->
+	{:Addons::hook('show_ad_space', array('place'=>'home_right_top'))}
+	<!-- 插件位 -->
+	{:W('CheckIn')}
+	<!-- 插件位 -->
+	{:Addons::hook('home_index_right_top')}
+	<!--应该用插件实现-->
+	{:W('TopicList',array('type'=>1, 'limit'=>10))}
+	<!-- 话题右下广告 -->
+    {:Addons::hook('show_ad_space', array('place'=>'topic_right'))}
+	<!-- 插件位 -->
+	{:Addons::hook('home_index_right_bottom')}
+	<!-- 首页右下广告位 -->
+	{:Addons::hook('show_ad_space', array('place'=>'home_right_bottom'))}
+	</div>
+</div>

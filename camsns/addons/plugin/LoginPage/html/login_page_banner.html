@@ -1,0 +1,30 @@
+<div class="Toolbar_inbox">
+<a href="{:Addons::adminPage('login_page_banner_addimage')}&tabhash=login_page_banner" class="btn_a"><span>添加</span></a></div>
+<div class="list">
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+  <tbody><tr>
+  <th class="line_l">图片</th>    <th class="line_l">链接地址</th>    <th class="line_l">操作</th>  </tr>
+  <volist name="data" id="v">
+  <tr id="tr_{$key}" overstyle="on" class="">
+  <td><img alt="" src="{$v.bannerurl}" width="100" height="100"></td>  
+  <td>{$v.bannerlink}</td>  
+  <td><a href="{:Addons::adminPage('login_page_banner_addimage')}&banner_key={$key}&tabhash=login_page_banner">编辑</a>
+  <a href="javascript:;" onclick="deletebanner({$key})">删除</a></td>  
+  </tr>
+  </volist>
+  </tbody></table>
+</div>
+<script>
+function deletebanner(bannerkey){
+	if ( confirm('确定删除') ){
+		var jumpurl = "{:Addons::adminPage('login_page_banner')}";
+		$.post("{:Addons::adminUrl('login_page_banner_delete')}",{bannerkey:bannerkey,jumpUrl:jumpurl},function (res){
+			eval('var data='+res);
+			if ( data.status == 1){
+				ui.success('删除成功');
+				$('#tr_'+bannerkey).remove();
+			}
+		});
+	}
+}
+</script>

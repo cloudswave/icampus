@@ -1,0 +1,52 @@
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="__APP__/Js/group.info.form.js" ></script>
+<script>
+	function addsubmit() {
+		var verify = $('#verify').val();
+		if (verify == "" || verify == undefined) {
+			ui.error("请输入验证码");
+			return ;
+		}
+		
+		if (confirm('解散后无法恢复！确认解散？')) {
+			var verify = $('input[name="verify"]').val()
+			$.ajax({
+	 			type: "POST",
+	 			url: U('group/Group/delGroup'),
+	 			data:   "gid={$gid}&verify=" + verify,
+	 			success: function(msg){
+	 				if (msg == '1') {
+		 				$('#pop1').hide();
+		 				$('#pop2').show();
+	 				} else {
+						ui.error(msg);
+	 				}
+	 			} 
+			});
+		}
+	}
+</script>
+
+    <!--解散群组弹窗-->
+    <dl class="pop_group" id="pop1">
+        <dt>解散后无法恢复！确认解散</dt>
+        <dd>
+      	<div>
+      		<input name="verify" type="text" class="text" id="verify" style="width:70px;vertical-align:middle" />
+	  		<img src="__ROOT__/public/captcha.php" onclick="group_info.change_verify()" id="verifyimg" class="alM" />
+      		<a href="###" onclick="group_info.change_verify()" alt="换一张">看不清楚，换一个</a>
+      	</div>
+        </dd>
+        <dd>
+            <a class="btn-green-small mr5" onclick="addsubmit();">确 定</a>
+            <a class="btn-cancel" onclick="javascript:ui.box.close();"><span>取 消</span></a>
+        </dd>
+    </dl>
+    
+    <dl class="pop_group" id="pop2" style="display:none">
+        <dt>解散群组成功</dt>
+        <dd>
+        <a class="btn-green-small" onclick="javascript:parent.window.location.href=U('group/SomeOne/index');ui.box.close();">确 定</a>
+        </dd>
+    </dl>
+    <!--End 解散群组弹窗-->

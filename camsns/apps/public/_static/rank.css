@@ -1,0 +1,26 @@
+
+/*排行列表*/
+.rank-bg{background:#fff;}
+.rank-box{width:278px;height:530px;padding:20px 20px 0 20px;float:left;border-right:1px solid #ddd;margin:20px 0;}
+.rank-box.no-border{border-right:0;}
+.rank-tit{font-size:14px;color:#333;font-weight:bold;margin:0 0 10px 0;}
+.rank-tit span{font-size:12px;}
+.rank-num{width:278px;text-align:center;height:24px;line-height:24px;background:#f6f6f6;border-top:2px solid #ddd;color:#999;font-size:12px;}
+.rank-num em{color:#ffa200;font-style:normal;font-weight:bold;font-size:14px;}
+.rank-cate{height:27px;line-height:27px;border-bottom:1px dotted #b9bcbd;overflow:hidden;zoom:1;color:#999;}
+.rank-cate .num{float:left;width:44px;display:inline-block;}
+.rank-cate .name{float:left;display:inline-block;}
+.rank-lists{height:44px;line-height:44px;border-bottom:1px dotted #b9bcbd;overflow:hidden;*zoom:1;}
+.rank-lists .name{float:left;display:inline-block;_margin:6px 0 0 0;}
+.rank-lists .name .face{margin:0 10px 0 0;width:30px;display:inline-block;}
+.rank-box .rank-lists.current{background:#eee;}
+.rank-forward{width:960px;padding:60px 0;text-align:center;}
+.btn-forward-rank, .btn-forward-rank:hover{background:#414448;color:#fff;display:inline-block;font-family:"微软雅黑";font-size:16px;height:46px;text-align:center;width:240px;line-height:46px;}
+
+/*图标*/
+.ico-comment{background-position:-219px -66px;width:16px;height:16px;vertical-align:-6px;*vertical-align:-3px}
+.ico-forward{background-position:-219px 0;width:16px;height:16px;vertical-align:-5px;*vertical-align:-3px}
+.ico-favorites{background-position:-219px -33px;width:16px;height:16px;vertical-align:-4px;*vertical-align:-2px}
+
+.rank-box2{margin:10px 0 20px 0;}
+.rank-box2 li a{line-height:28px;margin:2px 0 0 0;}

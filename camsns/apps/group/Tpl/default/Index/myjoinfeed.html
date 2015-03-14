@@ -1,0 +1,57 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__APP__/Js/Common.js"></script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+   <!-- 用户组件列表 begin -->
+  <!-- 用户组件列表 end -->
+  <div class="main"> <!-- 右侧内容 begin  -->
+  <div class=page_title> <!-- page_title begin -->
+  <h2><img src="../Public/images/ico_app05.gif" />群组</h2>
+  <div class="c"></div>
+</div><!-- page_title end -->
+  <div class="tab-menu"><!-- 切换标签 begin  -->
+      <ul>
+       <li><a href="__URL__/index/uid/{$uid}" class="on"><span><php>if($mid != $uid){ </php>{$uid|getUserName}<php>} else {</php> 我<php>}</php>的群组</span></a></li>
+      <li><a href="__URL__/flist/uid/{$uid}"><span><php>if($mid != $uid){ </php>{$uid|getUserName}<php>}</php>好友的群组</span></a></li>
+      <li><a href="__URL__/search"><span>全部群组</span></a></li>
+      <li><a href="__URL__/add"><span><div class="ico_add">&nbsp;</div>创建新群</span></a></li>
+      </ul>
+  </div><!-- 切换标签 end  -->
+  <div class="MenuSub"><a href="__URL__/myjoinfeed/uid/{$uid}" class="cGray" ><php>if($mid != $uid){ </php>{$uid|getUserName}<php>} else {</php> 我<php>}</php>所在群组的最新动态</a>|<a href="__URL__/newtopic/uid/{$uid}" class="fB">最新话题</a></div>
+  <div class="groupBox">
+  	
+  <div class="boxL"><!-- 好友日志 begin  -->
+  		<ul>
+  		
+  		<volist name="myJoinFeed['data']" id="list">
+       	  <li>
+          		<div class="left" style="width: 70px;"><span class="headpic50"><a href="__APP__/Group/index/gid/{$list['gid']}"><img src="__ROOT__/thumb.php?w=50&h=50&url={$list.gid|getgroupinfo='logo'|group_get_photo_url}" height="50px" width="50px"/></a></span></div>
+          		<div class="left" style="width: 550px;">
+       			  <h3 class="f14px lh30 btmlineD"><span class="right"> <a href="__APP__/Group/index/gid/{$list['gid']}" class="f12px">更多&raquo;</a></span><a href="group.html"><strong><a href="__APP__/Group/index/gid/{$list['gid']}">{$list['name']|msubstr=0,20}</a></strong></a></h3>
+                <ul class="list">
+                	  <sublist name="list['feed']" id="data">                      
+                       		<li>{$data.title}:{$data.body}</li>
+                      </sublist>
+                      
+               </ul>
+            </div>
+       	  </li>
+       </volist>
+        </ul>
+       <div class="page">{$myJoinFeed['html']}</div>
+  </div><!-- 好友日志 end  -->
+  </div>  </div><!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+
+<include file="__THEME__/public_footer" />
+
+</body>
+</html>
+

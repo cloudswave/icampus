@@ -1,0 +1,59 @@
+<div class="quike-login">
+        <form id="quick_login_form" method="POST" action="{:U('public/Passport/doLogin')}" onsubmit="return quicksubmit()">
+            <ul>
+                <li>
+                    <label class="">邮箱：</label>
+                    <div class="input-box"><input type="text" id="login_email" class="s-txt"/></div>
+                </li>
+                <li class="mb">
+                    <label class="">密码：</label>
+                    <div class="input-box">
+                <input id="login_password" type="password" class="s-txt" />
+            </div>
+                </li>
+                <li>
+                    <div class="input-box h">
+                    <a href="{:U('public/Passport/findPassword')}" class="right">忘记密码？</a><span><input type="checkbox" id="login_remeber" class="checkbox" checked="checked" />下次自动登录</span></div>
+                </li>
+                <li>
+                    <div class="input-box">
+                    <php>if($register_type == 'open'):</php>
+                          <a href="{:U('public/Register')}" class="right f14">注册帐号</a>
+                    <php>endif;</php>
+                    <input type="submit" value="登录" class="btn-green-big" style="border:0px;" />
+                    </div>
+                </li>
+            </ul>
+            </form>
+            <php>if(Addons::requireHooks('login_input_footer')):</php>
+            <p class="quike-reg"><div id="js_login_input" style="display:none" class="error-box"></div><div class="login-ft">{:Addons::hook('login_input_footer_title_q')}{:Addons::hook('login_input_footer')}</div></p>
+            <php>endif;</php>
+        </div>
+<script>
+function quicksubmit(){
+	var email = $.trim($('#login_email').val());
+	var password = $.trim($('#login_password').val());
+	var remember = 0;
+	if ( !email ){
+		ui.error('用户邮箱不能为空！');return false;
+	}
+	if ( !password ){
+		ui.error('密码不能为空！');return false;
+	}
+	if ( $('#login_remeber').get(0).checked == true ){
+		remember = 1;
+	}
+	$.post(U('public/Passport/doLogin'),{login_email:email,login_password:password,login_remember:remember},function (res){
+		eval('var data='+res);
+		if ( data.status == 1 ){
+			location.reload();
+		} else {
+		    ui.error(data.info);
+		    return false;
+        }
+	});
+    return false;
+}
+</script>
+<script src="__THEME__/js/jquery.form.js" type="text/javascript"></script>
+<script src="__THEME__/public/login.js" type="text/javascript"></script>

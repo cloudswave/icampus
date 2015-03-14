@@ -1,0 +1,27 @@
+<div class="find-type">
+<div class="app-title clearfix">
+<!-- 		<div class="search-input" style="z-index:99;">
+      <div id="mod-search" model-node="drop_weiba_search">
+        <form name="search_weiba" id="search_weiba" method="post" action="{:U('weiba/Index/search')}">
+          <input type="hidden" name="type" value="2"/>
+          <dl>
+            <dt class="clearfix"><input autocomplete="off" id="searchweiba_input" class="s-txt left"  type="text" value="<php>if(!empty($searchkey)){</php>{$searchkey}<php>}else{</php>搜微吧 / 帖子<php>}</php>" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜微吧 / 帖子';" event-node="searchKey" name='k'><a href="javascript:void(0)" class="btn-search" onclick="if(getLength($('#searchweiba_input').val()) && $('#searchweiba_input').val()!=='搜微吧 / 帖子'){ $('#search_weiba').submit(); return false;}"><span>搜索</span></a></dt>
+          </dl>
+        </form>
+      </div>
+    </div> -->
+		<h4 class="left"><img src="{$ts['app']['small_icon_url']}" />&nbsp;&nbsp;{$ts['app']['app_alias']}</h4>
+		<div class="app-tab-menu clearfix" style="margin:0 0 0 130px;">
+      
+			<ul>
+        <li><a <eq name="ACTION_NAME" value="index">class="current"</eq> href="{:U('photo/Index/index')}">{$ts['app']['app_alias']}首页<eq name="ACTION_NAME" value="index"><span class="triangle"></span></eq></a><i class="line"></i></li>
+        <php>
+          $whoNav = ($uid === $mid) ? '我' : getUserName($uid);
+          $checkedArr = array('albums', 'album', 'photo', 'weiboalbum', 'weibophoto', 'album_edit', 'photos', 'muti_edit_photos', 'album_order');
+        </php>
+        <li><a <php>if(in_array(ACTION_NAME, $checkedArr)):</php>class="current"<php>endif;</php> href="{:U('photo/Index/albums')}">{$whoNav}的{$ts['app']['app_alias']}<php>if(in_array(ACTION_NAME, $checkedArr)):</php><span class="triangle"></span><php>endif;</php></a><i class="line"></i></li>
+        <li><a <eq name="ACTION_NAME" value="flash">class="current"</eq> href="{:U('photo/Upload/flash')}">上传照片<eq name="ACTION_NAME" value="flash"><span class="triangle"></span></eq></a></li>
+			</ul>
+		</div>
+	</div>
+</div>

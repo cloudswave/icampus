@@ -1,0 +1,156 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/message.css?v2012040501" rel="stylesheet" type="text/css" />
+<script>
+var $CONFIG = new Object();
+$CONFIG['location'] = 'msglist';
+</script>
+<div id="page-wrap">
+    <div id="main-wrap">
+      <div id="col" class="content-bg clearfix boxShadow">
+          <div id="col4" class="main-left">
+              <div id="aside" class="pad">
+                  <dl class="nav-left mt10 border-no">
+                      <dd><a href="{:U('public/Mention')}">@提到我的</a></dd>
+                      <dd><a href="{:U('public/Comment/index',array('app_name'=>t($_GET['app_name']),'type'=>'receive'))}">收到的评论</a></dd>
+                      <dd><a href="{:U('public/Comment/index',array('app_name'=>t($_GET['app_name']),'type'=>'send'))}">发出的评论</a></dd>
+                      <dd class="current"><a href="{:U('public/Message')}">我的私信</a></dd><dd><a href="{:U('public/Message/notify')}">系统消息</a></dd>
+                  </dl>
+              </div>
+          </div>
+          <div id="col7" class="main-right">
+              <div class="extend minh person-set">
+              <!--tab菜单-->
+              <div class="feed-nav">
+              <php>if(CheckPermission('core_normal','send_message')){</php>
+                <div class="set-hd"><a href="javascript:;" event-node="postMsg" onclick="ui.sendmessage()" class="btn-green-small right"><span>发私信</span></a><h3>{:L('PUBLIC_PRIVATE_MESSAGE')}</h3></div>
+              <php>}</php>
+              </div>
+              <!--tab菜单/end-->
+                <!--消息列表-->
+                <div class="private-lists">
+                    <if condition="empty($data)"><div class="note">{:L('PUBLIC_NO_MORE_INFO')}</div></if>
+                    <volist name="data" id="vo">
+                      <dl class="private-list" id="message_{$vo['list_id']}" model-node='gotoDetail' model-args="id={$vo['list_id']}&type={$vo['type']}">
+                        <php>if(CheckPermission('core_admin','message_del')):</php>
+                          <a class="ico-close hover right" href="javascript:void(0);" onclick="ui.confirm(this,'{:L('PUBLIC_DIALOGUE_DELETE_CONFIRM')}');return false;" callback="delMessage({$vo['list_id']})"></a>
+                        <php>endif;</php>
+                          <dt class="face">
+                            <php> if($vo['last_message']['to_uid'][0] == $mid){</php>
+                              <a href="{$vo['last_message']['user_info']['space_url']}"><img src="{$vo['last_message']['user_info']['avatar_middle']}" width="50" height="50" event-node="face_card" uid="{$vo['last_message']['user_info']['uid']}"></a>
+                            <php>}else{</php>
+                              <a href="{$vo['to_user_info'][$vo['last_message']['to_uid'][0]]['space_url']}"><img src="{$vo['to_user_info'][$vo['last_message']['to_uid'][0]]['avatar_middle']}" width="50" height="50" event-node="face_card" uid="{$vo['to_user_info'][$vo['last_message']['to_uid'][0]]['uid']}"></a>
+                            <php>}</php>
+                          </dt>
+                          
+                          <dd class="info">
+                            <p class="hd">
+
+                            <php> if($vo['last_message']['user_info']['uid'] == $mid){</php>
+                            <php>
+                            $sendToUserInfo = getSubByKey($vo['to_user_info'], 'space_link');
+                            </php>
+                            {:L('PUBLIC_SENTTO')} {:implode('、', $sendToUserInfo)}：
+                            <php>}else{</php>
+                            {$vo.last_message.user_info.space_link}{:L('PUBLIC_SAY')}：
+                            <php>}</php>
+                            <br/>
+
+                            {$vo.last_message.content|parse_html}
+                            <p class="date"><span class="hover">
+                            <a href="{:U('public/Message/detail', array('id'=>$vo['list_id'],'type'=>$vo['type']))}">
+                              <php> if($vo['from_uid'] == $mid){</php> {:l('PUBLIC_VIVER_TAOLK')}<php>}else{</php> {:L('PUBLIC_STREAM_REPLY')} <php>}</php>
+                            </a>
+                            </span>{$vo.list_ctime|friendlyDate}
+                            <php>if($vo['new']>0){</php> <img src="__THEME__/image/icon_new.gif" />   <php>}</php>
+                            </p>
+                        </dd>
+                      </dl>
+                    </volist>
+                </div>
+                <!--消息列表/end-->
+                <!--页码-->
+                <div id="page" class="page">{$html}</div>
+                <!--页码/end-->
+              </div>
+            </div>
+      </div>
+    </div>
+</div>
+
+<script type="text/javascript">	
+  
+	function checkon(o){
+		if( o.checked == true ){
+			$(o).parents('li').addClass('bg_on') ;
+		}else{
+			$(o).parents('li').removeClass('bg_on') ;
+		}
+	}
+	
+	function checkAll(o){
+		if( !o || o.checked == true ) {
+			$('input[type="checkbox"]').attr('checked','true');
+			$('ul[overstyle="on"]').addClass("bg_on");
+		}else if ( o.checked == false ) {
+			$('input[type="checkbox"]').removeAttr('checked');
+			$('ul[overstyle="on"]').removeClass("bg_on");
+		}
+	}
+
+	//获取已选择用户的ID数组
+	function getChecked() {
+		var ids = new Array();
+		$.each($('ul input:checked'), function(i, n){
+			ids.push( $(n).val() );
+		});
+		return ids;
+	}
+
+    function setIsRead() {
+        var ids = getChecked();
+        if (ids == '') ui.error('{:L('PUBLIC_CHOOSE_PRIVATE')}');
+        
+        $.post("{:U('public/Message/doSetIsRead')}", {ids:ids.toString()}, function(res){
+            if (res == '1') {
+                ui.success('{:L('PUBLIC_SAVE_SUCCESS')}');
+                
+				for(i = 0; i < ids.length; i++) {
+					$('#message_' + ids[i] + ' span.message_new').remove();
+				}
+            }else {
+                ui.error('{:L('PUBLIC_SAVE_FAIL')}');
+            }
+        });
+    }
+
+    function delMessage(ids) {
+        ids = ids ? ids : getChecked();
+        ids = ids.toString();
+        if (ids == '') return false;
+        
+        $.post("{:U('public/Message/doDelete')}", {ids:ids}, function(res){
+            if (res == '1') {
+                ui.success('{:L('PUBLIC_DELETE_SUCCESS')}');
+                ids = ids.split(',');
+				for(i = 0; i < ids.length; i++) {
+					$('#message_'+ids[i]).remove();
+				}
+				var $message_list_count = $('#message_list_count');
+                var message_list_count  = parseInt($message_list_count.html());
+                $message_list_count.html(message_list_count - ids.length);
+            }else {
+                ui.error('{:L('PUBLIC_DELETE_FAIL')}');
+            }
+        });
+        return false;
+    }
+		$(document).ready(function() {
+		$(".private-lists dl").hover(function() {
+		$(this).addClass("current");
+		}, function() {
+		$(this).removeClass("current");
+		});
+		});
+</script>
+<script src="__THEME__/js/message/module.message.js"></script>
+<include file="__THEME__/public_footer" /> 

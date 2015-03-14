@@ -1,0 +1,142 @@
+<include file="../Public/_header" />
+
+<div class="so_main">
+    <div class="page_tit">WebIM配置</div>
+    <div style="heigh:50px; background-color:#FFC; border: 1px #CCC solid; padding:30px; color:#F00;">注意: webim/config.php须设置为可写<br><br>WebIM插件通过跨域WebSocket/JSONP实现，以保证对ThinkSNS主站没有负载压力。使用前请前往【<a href="http://nextalk.im" target="_blank"><strong>http://nextalk.im</strong></a>】购买独立的消息服务器，或者申请免费在线ApiKey。</div>
+    <div class="form2">
+        <form method="post" action="{:Addons::adminUrl('saveConfig')}">
+			
+           <dl class="lineD">
+              <dt>开启插件</dt>
+              <dd>
+              <input class="radio" type="radio" name="isopen" value="true"  <?php echo $IMC['isopen'] ? 'checked=""' : '' ?>>&nbsp;是
+                <input class="radio" type="radio" name="isopen" value="false" <?php echo ! $IMC['isopen'] ? 'checked=""' : '' ?>>&nbsp;否
+              </dd>
+           </dl>
+
+            <dl class="lineD">
+                <dt>注册域名：</dt>
+                <dd>
+                    <input class="text" type="text" id="domain" value="{$IMC.domain}" name="domain">
+                    <p>在线版用户输入在nextalk.im中注册的域名</p>
+                </dd>
+            </dl>
+
+            <dl class="lineD">
+                <dt>注册ApiKey：</dt>
+                <dd>
+                    <input class="text" type="text" id="apikey" value="{$IMC.apikey}" name="apikey">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>IM服务器: </dt>
+                <dd>
+                    <input class="text" type="text" id="host" value="{$IMC.host}" name="host" placeholder="webim20.cn">
+                </dd>
+            </dl>
+
+            <dl class="lineD">
+                <dt>IM服务器端口：</dt>
+                <dd>
+                    <input class="text" type="text" id="port" value="{$IMC.port}" name="port" placeholder="8000">
+                </dd>
+            </dl>
+             <dl class="lineD">
+                <dt>本地语言：</dt>
+                <dd>
+                    <select class="select" id="local" name="local">
+                        <option value="zh-CN" <?php echo $IMC['local']== 'zh-CN' ? 'selected="selected"' : '' ?>>简体中文</option>
+                        <option value="zh-TW" <?php echo $IMC['local'] == 'zh-TW' ? 'selected="selected"' : '' ?>>繁体中文</option>
+                        <option value="en" <?php echo $IMC['local'] == 'en' ? 'selected="selected"' : '' ?>>English</option>
+                    </select>
+                </dd>
+            </dl>
+
+            <dl class="lineD">
+                <dt>表情：</dt>
+                <dd>
+                    <input class="text" type="text" id="emot" value="{$IMC.emot}" name="emot" placeholder="default">
+                </dd>
+            </dl>
+
+            
+             <dl class="lineD">
+                <dt>工具条透明度</dt>
+                <dd>
+                    <input class="text" type="text" id="opacity" value="{$IMC.opacity}" name="opacity">
+                </dd>
+            </dl>
+
+             <dl class="lineD">
+                <dt>开启群组聊天</dt>
+                <dd>
+                <input class="radio" type="radio" name="enable_room" value="true"  <?php echo $IMC['enable_room'] ? 'checked=""' : '' ?>>&nbsp;是
+                <input class="radio" type="radio" name="enable_room" value="false" <?php echo ! $IMC['enable_room'] ? 'checked=""' : '' ?>>&nbsp;否
+                </dd>
+            </dl>
+
+             <dl class="lineD">
+                <dt>开启群陌生人聊天</dt>
+                <dd>
+                <input class="radio" type="radio" name="enable_chatlink" value="true"  <?php echo $IMC['enable_chatlink'] ? 'checked=""' : '' ?>>&nbsp;是
+                <input class="radio" type="radio" name="enable_chatlink" value="false" <?php echo ! $IMC['enable_chatlink'] ? 'checked=""' : '' ?>>&nbsp;否
+                </dd>
+            </dl>
+
+             <dl class="lineD">
+                <dt>显示真实姓名:</dt>
+                <dd>
+                <input class="radio" type="radio" name="show_realname" value="true"  <?php echo $IMC['show_realname'] ? 'checked=""' : '' ?>>&nbsp;是
+                <input class="radio" type="radio" name="show_realname" value="false" <?php echo ! $IMC['show_realname'] ? 'checked=""' : '' ?>>&nbsp;否
+                </dd>
+            </dl>
+
+             <dl class="lineD">
+                <dt>显示菜单:</dt>
+                <dd>
+                <input class="radio" type="radio" name="enable_menu" value="true"  <?php echo $IMC['enable_menu'] ? 'checked=""' : '' ?>>&nbsp;是
+                <input class="radio" type="radio" name="enable_menu" value="false" <?php echo ! $IMC['enable_menu'] ? 'checked=""' : '' ?>>&nbsp;否
+                </dd>
+            </dl>
+           
+             <dl class="lineD">
+                <dt>显示通知按钮:</dt>
+                <dd>
+                <input class="radio" type="radio" name="enable_noti" value="true"  <?php echo $IMC['enable_noti'] ? 'checked=""' : '' ?>>&nbsp;是
+                <input class="radio" type="radio" name="enable_noti" value="false" <?php echo ! $IMC['enable_noti'] ? 'checked=""' : '' ?>>&nbsp;否
+                </dd>
+            </dl>
+
+             <dl class="lineD">
+                <dt>默认管理员UID列表</dt>
+                <dd>
+                    <input class="text" type="text" id="admin_uids" value="{$IMC.admin_uids}" name="admin_uids">
+                </dd>
+            </dl>
+
+             <dl class="lineD">
+                <dt>支持访客聊天:</dt>
+                <dd>
+                <input class="radio" type="radio" name="visitor" value="true"  <?php echo $IMC['visitor'] ? 'checked=""' : '' ?>>&nbsp;是
+                <input class="radio" type="radio" name="visitor" value="false" <?php echo ! $IMC['visitor'] ? 'checked=""' : '' ?>>&nbsp;否
+                </dd>
+            </dl>
+
+             <dl class="lineD">
+                <dt>显示离线好友:</dt>
+                <dd>
+                <input class="radio" type="radio" name="show_unavailable" value="true"  <?php echo $IMC['show_unavailable'] ? 'checked=""' : '' ?>>&nbsp;是
+                <input class="radio" type="radio" name="show_unavailable" value="false" <?php echo ! $IMC['show_unavailable'] ? 'checked=""' : '' ?>>&nbsp;否
+                </dd>
+            </dl>
+
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<include file="../Public/_footer" />
+
+

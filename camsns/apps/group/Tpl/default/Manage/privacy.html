@@ -1,0 +1,133 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__APP__/Js/common.js"></script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<div class="content_holder">
+<div class="content no_bg boxShadow"> 
+<include file="../Public/_mainNav" />
+  <!-- 内容 begin  -->
+  <div class="main no_l"> 
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_C mainC_pad" style=" margin-right:20px"> <include file="../Public/manage_group_top" />
+        <div class="groupBox">
+          <div style="width:100%;">
+            <form method="post" action="{:U('group/Manage/privacy',array('gid'=>$gid))}">
+              <ul class="add_group">
+                <li>
+                  <div class="c1">内容权限：</div>
+                  <div class="c2">
+                    <p>
+                      <label><input class="s-ck" name="brower_level" type="radio" value="-1" onclick="isShow(-1)"<eq name="groupinfo['brower_level']" value="-1"> checked </eq>/>公开</label>
+                      <span class="cGray2">（群组内容公开，所有用户可见）</span>
+                    </p>
+                    <p>
+                      <label><input class="s-ck" name="brower_level" type="radio" value="1" onclick="isShow(1)"<eq name="groupinfo['brower_level']" value="1"> checked </eq>/>私密</label>
+                      <span class="cGray2">（群组内容私密，仅成员可见）</span></p>
+                  </div>
+                </li>
+                <li>
+                  <div class="c1">加入方式：</div>
+                  <div class="c2">
+                     
+                    <p class="isHidden" class="s-ck" <eq name="groupinfo['brower_level']" value="1"> style="display:none;"</eq>>
+                      <label><input  class="s-ck" name="need_invite" type="radio" value="0"<eq name="groupinfo['need_invite']" value="0"> checked </eq>/>任何人均可加入</label>
+                    </p>
+
+                    <p>
+                      <label><input class="s-ck" name="need_invite" type="radio" value="1"<eq name="groupinfo['need_invite']" value="1"> checked </eq>/>需管理员批准后方可加入</label>
+                    </p>
+                    <p>
+                      <label><input class="s-ck" name="need_invite" type="radio" value="2"<eq name="groupinfo['need_invite']" value="2"> checked </eq>/>邀请加入</label>
+                    </p>
+                  </div>
+                </li>
+				<php>if (model('Xdata')->get('group:weibo')) {</php>
+				<li>
+                  <div class="c1">群微博：</div>
+                  <div class="c2">
+                    <label><input  class="s-ck" name="openWeibo" type="radio" value="1"<eq name="groupinfo['openWeibo']" value="1"> checked </eq>/>开启</label>
+                    <label><input  class="s-ck" name="openWeibo" type="radio" value="0"<eq name="groupinfo['openWeibo']" value="0"> checked </eq>/>关闭</label>
+                    <span class="cGray2">（默认只有群内成员才可以发表）</span></div>
+                </li>
+				<php>}</php>
+				<php>if (model('Xdata')->get('group:discussion')) {</php>
+                <li>
+                  <div class="c1">群帖子：</div>
+                  <div class="c2">
+                    <label><input  class="s-ck" name="openBlog" type="radio" value="1"<eq name="groupinfo['openBlog']" value="1"> checked </eq>/>开启</label>
+                    <label><input  class="s-ck" name="openBlog" type="radio" value="0"<eq name="groupinfo['openBlog']" value="0"> checked </eq>/>关闭</label>
+                    <span class="cGray2">（默认只有群内成员才可以发表）</span></div>
+                </li>
+				<php>}</php>
+                <php>if (model('Xdata')->get('group:uploadFile')) {</php>
+                <li>
+                  <div class="c1">群文档：</div>
+                  <div class="c2">
+                    <label><input class="s-ck" name="openUploadFile" type="radio" value="1" onclick="doSwitch(1,'openUploadFile')"<eq name="groupinfo['openUploadFile']" value="1"> checked </eq>/>开启</label>
+                    <label><input class="s-ck" name="openUploadFile" type="radio" value="0" onclick="doSwitch(0,'openUploadFile')"<eq name="groupinfo['openUploadFile']" value="0"> checked </eq>/>关闭</label>
+                  </div>
+                </li>
+                <li class="openUploadFile">
+                  <div class="c1">上传文件权限：</div>
+                  <div class="c2">
+                    <label><input class="s-ck" name="whoUploadFile" type="radio" value="3"<eq name="groupinfo['whoUploadFile']" value="3"> checked </eq>/>群内成员</label>
+                    <label><input class="s-ck" name="whoUploadFile" type="radio" value="2"<eq name="groupinfo['whoUploadFile']" value="2"> checked </eq>/>仅管理员</label>
+                  </div>
+                </li>
+                <li class="openUploadFile">
+                  <div class="c1">下载文件权限：</div>
+                  <div class="c2">
+                    <label><input class="s-ck" name="whoDownloadFile" type="radio" value="3"<eq name="groupinfo['whoDownloadFile']" value="3"> checked </eq>/>群内成员</label>
+                    <label><input class="s-ck" name="whoDownloadFile" type="radio" value="2"<eq name="groupinfo['whoDownloadFile']" value="2"> checked </eq>/>仅管理员</label>
+                    <label><input class="s-ck" name="whoDownloadFile" type="radio" value="0"<eq name="groupinfo['whoDownloadFile']" value="0"> checked </eq>/>任何人</label>
+                  </div>
+                </li>
+                <php>}</php>
+                <li>
+                  <div class="c1">&nbsp;</div>
+                  <div class="c2">
+                    <input type="hidden" value="1" name="editsubmit">
+                    <input type="hidden" value="{$gid}" name="gid">
+                    <input name="button" type="submit" class="btn_b mt5" id="button" value="保存" />
+                  </div>
+                </li>
+              </ul>
+            </form>
+          </div>
+          <!-- end  --> 
+        </div>
+        <div class="c"></div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  --> 
+</div>
+</div>
+<!-- 内容 end --> 
+<script>
+function doSwitch(i,name){			
+	if (i == 0) {
+		$("."+name).css('display','none');
+	} else if (i == 1) {
+		$("."+name).css('display','block');
+	}
+}
+doSwitch({$groupinfo['openUploadFile']},'openUploadFile');
+</script> 
+
+<script>
+function isShow(i){
+  if (i == 1) {
+    var checkedIndex = $('input[name="need_invite"]:checked').val();
+    if (checkedIndex == 0) {
+      $('input[name="need_invite"]').eq(1).attr('checked', 'checked');
+    }
+    $(".isHidden").css('display','none');
+  }else if(i == -1){
+    $(".isHidden").css('display','block');
+  }
+}
+</script>
+
+<include file="__THEME__/public_footer" />

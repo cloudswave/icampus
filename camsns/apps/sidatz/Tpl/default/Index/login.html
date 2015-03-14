@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<title>{$title}</title>
+	
+<script src="//yandex.st/dojo/1.9.1/dojo/dojo.js"
+        data-dojo-config="async:true, parseOnLoad:true,isDebug:true"></script>
+	<script type="text/javascript">
+		require([
+    "dijit/dijit",
+    "dojo/parser",
+    "dojox/mobile",
+    "dojox/mobile/deviceTheme",
+    "dojox/mobile/TextBox",
+    "dojox/mobile/Button",
+    "dojox/mobile/ScrollableView",
+    "dojox/mobile/IconContainer",
+    "dojox/mobile/IconItem"
+		]);
+	</script>
+</head>
+<body style="visibility:hidden;">
+	<div id="home" data-dojo-type="dojox.mobile.View" data-dojo-props='keepScrollPos:false'>
+		<h1 data-dojo-type="dojox.mobile.Heading">教务处欢迎您{$data}</h1>
+		<ul data-dojo-type="dojox.mobile.IconContainer">
+			<li id="icon2" data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"我的课表",icon:"apps/library/Tpl/default/images/icon-2.png", href:"index.php?app=jwc&mod=Index&act=course",transition:"slide"'></li>
+
+			<li id="icon3" data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"成绩查询", icon:"apps/library/Tpl/default/images/icon-2.png", href:"index.php?app=jwc&mod=Index&act=score",transition:"slide"'></li>
+
+			<li id="icon4" data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"四六级成绩", icon:"apps/library/Tpl/default/images/icon-2.png", href:"#",transition:"slide"'></li>
+
+			<li id="icon5" data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"四六级报名", icon:"apps/library/Tpl/default/images/icon-2.png", url:"#", transition:"slide"'></li>
+
+			<li id="icon6" data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"个人信息", icon:"apps/library/Tpl/default/images/icon-2.png", url:"index.php?app=jwc&mod=Index&act=stuinfo", transition:"slide", sync:false'></li>
+
+			<li id="icon7" data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"密码修改", icon:"apps/library/Tpl/default/images/icon-2.png", url:"index.php?app=jwc&mod=Index&act=password", transition:"slide", sync:false'></li>
+
+			<li id="icon8" data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"选课", icon:"apps/library/Tpl/default/images/icon-2.png", url:"#", transition:"slide", sync:false'></li>
+
+			<li id="icon9" data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"评教", icon:"apps/library/Tpl/default/images/icon-2.png", url:"#", transition:"slide", sync:false'></li>
+
+		</ul>
+	</div>
+
+
+</body>
+</html>

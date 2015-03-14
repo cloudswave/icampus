@@ -1,0 +1,50 @@
+/* 
+    Document   : 1
+    Created on : 2012-2-10, 12:46:29
+    Author     : alan QQ:8510001
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.fakesay.com
+*/
+.changestylepop{background:#fff;width:700px;position: absolute;z-index:998;right: 0px;top:0;overflow: hidden;border: 1px #bbb solid;padding:0px;box-shadow:0 0 5px #888;-webkit-box-shadow:0 0 15px #888;-khmtl-box-shadow:0 0 15px #888;-zom-box-shadow:0 0 15px #888;}
+.diy{position: absolute;top:35px;left:0;border-top:#ccc solid 1px;margin:0 10px;padding:10px 0;width:200px}
+.diy dd,.diy dt{padding:0 0 5px;*float:left;*zoom:1}
+.openok{position: relative;}
+
+.page_home0{background: url(0/body_bg.jpg) no-repeat top center #CEE9F9!important;}
+.page_home1{background: url(1/body_bg.png) no-repeat top center #31798D!important;}
+.page_home2{background: url(2/body_bg.png) no-repeat top center #DBF2D0!important;}
+.page_home3{background: url(3/body_bg.png) no-repeat top center #EADBA4!important;}
+.page_home4{background: url(4/body_bg.png) no-repeat top center #FADFE0!important;}
+
+.header_holder0{z-index:9999;position:fixed;_position:absolute;width:100%;min-width:1000px;background:url(0/head_bg.png) repeat-x 0 0 transparent;left:0;top:0}
+.header_holder1{z-index:9999;position:fixed;_position:absolute;width:100%;min-width:1000px;background:url(1/head_bg.png) repeat-x 0 0 transparent;left:0;top:0}
+.header_holder2{z-index:9999;position:fixed;_position:absolute;width:100%;min-width:1000px;background:url(2/head_bg.png) repeat-x 0 0 transparent;left:0;top:0}
+.header_holder3{z-index:9999;position:fixed;_position:absolute;width:100%;min-width:1000px;background:url(3/head_bg.png) repeat-x 0 0 transparent;left:0;top:0}
+.header_holder4{z-index:9999;position:fixed;_position:absolute;width:100%;min-width:1000px;background:url(4/head_bg.png) repeat-x 0 0 transparent;left:0;top:0}
+.data .default,.data .black,.data .green,.data .yellow,.data .pink{width: 50px;height: 50px; }
+
+.data .default{background-image: url(0/body_bg.jpg)}
+.data .black{background-image: url(1/body_bg.png)}
+.data .green{background-image: url(2/body_bg.png)}
+.data .yellow{background-image: url(3/body_bg.png)}
+.data .pink{background-image: url(4/body_bg.png)}
+
+.stylemore{position: absolute; top:10px;right: 35px;}
+
+/*changestyle com begin*/
+.default{margin: 6px;-webkit-border-radius: 2px;-moz-border-radius: 2px ;border-radius: 2px;background-color: #0F8CA8;width: 36px;height:36px;display: block;float: left;cursor:pointer}
+.black{margin:  6px;-webkit-border-radius: 2px;-moz-border-radius: 2px ;border-radius: 2px;background-color: #347B90;width: 36px;height: 36px;display: block;float: left;cursor:pointer}
+.green{margin:  6px;-webkit-border-radius: 2px;-moz-border-radius: 2px ;border-radius: 2px;background-color: #A9BA5B;width: 36px;height: 36px;display: block;float: left;margin-left: 2px;cursor:pointer}
+.yellow{margin:  6px;-webkit-border-radius: 2px;-moz-border-radius: 2px ;border-radius: 2px;background-color: #CCB085;width: 36px;height: 36px;display: block;float: left;margin-left: 2px;cursor:pointer}
+.pink{margin:  6px;-webkit-border-radius: 2px;-moz-border-radius: 2px ;border-radius: 2px;background-color: #C789C0;width: 36px;height: 36px;display: block;float: left;margin-left: 2px;cursor:pointer}
+.isborder{border: 1px #999999 solid;}
+.templete_enter {background: url(enter.png) -6px 0;display: block;width:24px;height:24px;position: absolute;right: 0px;top:0;z-index:9;} 
+.templete_enter:hover{background: url(enter.png) 0 30px;display: block;width:29px;height:29px;position: absolute;right: 0px;top:0;}
+
+/*changestyle end*/
+

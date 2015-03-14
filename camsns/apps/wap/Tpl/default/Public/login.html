@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta name="viewport" content="width=device-width; initial-scale=1.0; minimum-scale=1.0; maximum-scale=2.0"/>
+<meta name="MobileOptimized" content="240"/>
+<title>{$ts['site']['site_name']} WAP版</title>
+<link href="{:APPS_URL}/wap/Tpl/default/Public/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="top">欢迎访问 {$ts['site']['site_name']}</div>
+<div class="addtbox"> 
+    <form action="{:U('wap/Public/doLogin')}" method="post">
+	邮箱：<br />
+	<input type="text" name="email"/><br />
+    密码：<br />
+	<input type="text" name="password" /><br />
+    <input type="hidden" id="login_remember" name="login_remember" value="0" />
+    <input type="checkbox" name="remember" checked="checked" value="1"/>记住登录状态 （需浏览器支持cookie功能）<br/>
+    <input type="submit" name="submit" value="登录" /> 
+    <eq name="is_register_open" value="1">
+        <php>$register_url = U('/Public/register');</php> 
+        <input type="button" name="" value="注册" onclick="window.location.href='{$register_url}'" />
+    </eq>
+    </form>
+</div>
+<div>
+小提示：<br/> 
+1、节省流量，请咨询各地手机上网资费。<br/> 
+2、登录成功后保存任意页面为书签，下次通过书签访问，也可免去登录过程。<br/> 
+3、请不要直接通过手机浏览器的发送地址功能将登录后的页面地址发送给朋友，以免泄露个人信息及密码。<br/> 
+<a href="{:U('wap/Public/wapToNormal')}">访问普通版</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<include file="_header" />
+
+<script>
+//鼠标移动表格效果
+$(document).ready(function(){
+    $("tr[overstyle='on']").hover(
+      function () {
+        $(this).addClass("bg_hover");
+      },
+      function () {
+        $(this).removeClass("bg_hover");
+      }
+    );
+});
+
+$(function(){
+    $( "select[name='sorder']" ).val("{$sorder}");
+    $( "select[name='eorder']" ).val("{$eorder}");
+    $( "select[name='limit']" ).val("{$limit}");
+});
+
+function getChecked() {
+    var ids = new Array();
+    $.each($('table input:checked'), function(i, n){
+        ids.push( $(n).val() );
+    });
+    return ids;
+}
+
+function checkon(o){
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function checkAll(o){
+    if( o.checked == true ){
+        $('input[name="checkbox"]').attr('checked','true');
+        $('tr[overstyle="on"]').addClass("bg_on");
+    }else{
+        $('input[name="checkbox"]').removeAttr('checked');
+        $('tr[overstyle="on"]').removeClass("bg_on");
+    }
+}
+
+//搜索用户
+var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+function searchVote() {
+    if(isSearchHidden == 1) {
+        $("#searchVote_div").slideDown("fast");
+        $(".searchVote_action").html("搜索完毕");
+        isSearchHidden = 0;
+    }else {
+        $("#searchVote_div").slideUp("fast");
+        $(".searchVote_action").html("搜索用户");
+        isSearchHidden = 1;
+    }
+}
+
+var ctrl = function(name){
+  this.elements = document.getElementsByName('id[]');
+  this.length = this.elements.length;
+}
+ctrl.prototype = {
+reverse:function(){
+          for(i=0;i<this.length;i++){
+            this.elements[i].checked= !this.elements[i].checked;
+          }
+        },
+all:function(){
+      for(i=0;i<this.length;i++){
+        this.elements[i].checked = true;
+      }
+    },
+unAll:function(){
+        for(i=0;i<this.length;i++){
+          this.elements[i].checked = false;
+        }
+      },
+toggle:function(obj){
+         this[obj.checked ? 'all' : 'unAll']();
+       },
+del:function(id){
+	var id = id ? id : getChecked();
+    id = id.toString();
+    if(id=='' || id==0) return ;
+      if( confirm( "是否彻底删除{$ts['app']['app_alias']}") ){
+        var act = "delete"; 
+        $.post( '__URL__&act=recycleMan',{id:id,type:act},function(text ){
+            if( text == 1 ){
+              ui.success( "删除成功" );
+            var id_list = id.split( ',' );   
+            for (var j=0 ; j< id_list.length ; j++   ){
+            $( '#vote_'+id_list[j] ).remove(); 
+            }
+            }else if( text == 2 ){
+                ui.success( "删除成功" );
+                $( '#vote_'+id ).remove(); 
+            }else{
+            	ui.error( "删除失败" );
+            }
+            });
+      }
+    },
+edit:function(id){
+	var id = id ? id : getChecked();
+    id = id.toString();
+    if(id=='' || id==0) return ;
+       if( confirm( '是否恢复选中的{$ts['app']['app_alias']}' ) ){
+         var act="resume";
+         $.post( '__URL__&act=recycleMan',{id:id,type:act},function( text ){
+            if( text == 1 ){
+            	ui.success( "恢复成功" );
+            var id_list = id.split( ',' );   
+            for (var j=0 ; j< id_list.length ; j++){
+            $( '#vote_'+id_list[j] ).remove();
+            }
+            }else if( text == 2 ){
+                ui.success( "恢复成功" );
+            $( '#vote_'+id ).remove(); 
+            }else{
+             ui.error( "恢复失败" );
+            }
+            });
+     }
+}
+}
+var c = null;
+</script>
+
+<div class="so_main">
+    <div class="page_tit">{$ts['app']['app_alias']}</div>
+    <include file="_tab" />
+    
+    <div id="searchVote_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+    <div class="page_tit">搜索{$ts['app']['app_alias']} [ <a href="javascript:void(0);" onclick="searchVote();">隐藏</a> ]</div>
+    
+    <div class="form2">
+    <form action="__URL__&act=recycle" method="post">
+    <input type="hidden" name="isSearch" value="1"/>
+        <php>if($isSearch != '1') $uid = '';</php>
+        <dl class="lineD">
+          <dt>用户ID：</dt>
+          <dd>
+            <input name="uid" type="text" value="{$uid}">
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>标题：</dt>
+          <dd>
+            <input name="title" type="text" value="{$title}">
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>内容：</dt>
+          <dd>
+            <input name="content" type="text" value="{$content}">
+          </dd>
+        </dl>
+        <div class="page_btm">
+          <input type="submit" class="btn_b" value="确定" />
+        </div>
+    </form>
+    </div>
+    </div>
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchVote();">
+            <span class="searchVote_action"><neq name="isSearch" value="1">搜索{$ts['app']['app_alias']}<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.edit()"><span>恢复{$ts['app']['app_alias']}</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除{$ts['app']['app_alias']}</span></a>
+    </div>
+  
+    <div class="list">
+        <table id="vote_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <th style="width:30px;">
+                <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                <label for="checkbox"></label>
+            </th>
+            <th class="line_l">ID</th>
+            <th class="line_l">用户</th>
+            <th class="line_l">标题</th>
+            <th class="line_l">发布时间</th>
+            <th class="line_l">更新时间</th>
+            <th class="line_l">操作</th>
+        </tr>
+        <volist id="vo" name="data">
+        <tr overstyle='on' id="vote_{$vo.id}">
+          <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+          <td>{$vo.id}</td>
+          <td><space uid="vo.uid" >{uname}</space></td>
+          <td><div style="float:left" id="vote_name_{$vo.id}">{$vo.title}</div></td>
+          <td>{$vo.cTime|date="Y-m-d H:i:s",###}</td>
+          <td>{$vo.deadline|date="Y-m-d H:i:s",###}</td>
+          <td>
+              <a href="javascript:void(0);" onclick="c.edit({$vo['id']})">恢复</a>
+              <a href="javascript:void(0);" onclick="c.del({$vo['id']})">删除</a>
+          </td>
+        </tr>
+        </volist>
+        </table>
+    </div>
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchVote();">
+            <span class="searchVote_action"><neq name="isSearch" value="1">搜索{$ts['app']['app_alias']}<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.edit()"><span>恢复{$ts['app']['app_alias']}</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除{$ts['app']['app_alias']}</span></a>
+    </div>
+</div>
+<script>
+c = new ctrl('id[]');
+</script>
+<include file="_footer" />

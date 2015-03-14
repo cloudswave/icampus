@@ -1,0 +1,49 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="../Public/event.css" type="text/css" media="screen" charset="utf-8" />
+<script type="text/javascript" src="../Public/js/event.js"></script>
+<link href="__APP__/photo.css" rel="stylesheet" type="text/css" />
+<link href="__APP__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+  <include file="__THEME__/apps" />
+  <div class="main"><!-- 画布 begin  -->
+    <div class=page_title> <!-- page_title begin -->
+      <h2><img src="{$APPINFO['APP_ICON']}" />相册-{$title}</h2>
+
+    <div class="c"></div>
+</div><!-- page_title end -->
+    <div class="tab-menu">
+      <!-- 切换标签 begin  -->
+      <ul>
+        <li><a href="__URL__/eventDetail/id/{$id}/uid/{$uid}"><span>活动</span></a></li>
+        <li><a href="__URL__/member/id/{$id}" ><span>成员</span></a></li>
+        <li><a href="__URL__/photos/id/{$id}/uid/{$uid}" class="on"><span>照片</span></a></li>
+        <li><a href="__URL__/upload/eventId/{$id}"><span><div class="ico_add">&nbsp;</div>上传照片</span></a></li>
+      </ul>
+    </div>
+    <!-- 切换标签 end  -->
+    <div class="photoBox">
+      <div class="MenuSub">
+      </div>
+          <div>
+      <ul class="mark">
+        <volist name="data" id="vo">
+          <li><a href="__URL__/photo/id/{$vo['id']}/uid/{$vo['uid']}/eid/{$id}"><img src="{$vo['path']}" width="130" height="87" /></a><div class="name"><a href="__URL__/photo/id/{$vo['id']}/uid/{$vo['uid']}/eid/{$id}">{$vo['name']}上传{$vo['savename']}</a></div>
+        </li>
+        </volist>
+        <div class="c"></div>
+      </ul>
+      <div style="height:10px;"> </div>
+      </div>
+      <!-- fphotolist end  -->
+      <div id="Pagination" class="pagination">{$html}</div>
+    </div>
+  </div><!-- 右侧内容 end  -->
+
+
+<div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" />
+

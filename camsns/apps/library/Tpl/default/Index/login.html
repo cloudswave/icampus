@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<title>{$title}</title>
+	
+    <?php require_once "apps/head.txt";?>
+	<script type="text/javascript">
+		require([
+			"dojo/_base/window",
+			"dojo/_base/connect",
+			"dojo/dom-construct",
+			"dojo/ready",
+			"dijit/registry",
+			"dojo/request",
+			"dojox/mobile/ProgressIndicator",
+			"dojox/mobile/ListItem",
+			"dojox/mobile/parser",
+			"dojo/json",
+			"dojo/_base/array",
+			"dojox/mobile/ViewController",
+			"dojox/mobile",
+			"dojox/mobile/compat",
+			"dojox/mobile/ScrollableView",
+			"dojox/mobile/RoundRectDataList",
+			"dojox/mobile/IconContainer"
+		], function(win,connect, domConstruct, ready, registry, request, ProgressIndicator, ListItem, parser,JSON,arrayUtil,ViewController){
+			
+			// Load content into existing view and make transition
+			myAction2 = function(){
+				var ul = registry.byId("list");
+				var listItem = this;
+				if(ul.getChildren().length==0)
+	            {
+	            		request.get("index.php?app=library&mod=Index&act=bookborrowed", {
+	                handleAs: "json"
+		            }).then(function(data){
+		            	
+		            	JSON.stringify(data);
+		            	removeAll();
+		                arrayUtil.forEach(data, function(item,i){
+		                       
+		                            addItem(item);
+		                        });
+								listItem.transitionTo("view2");
+		                    }
+	                );
+	            	
+	            }
+	            else
+	            {
+	            	listItem.transitionTo("view2");
+	            }
+				
+	            function removeAll()
+	            {
+	            	for(var i=0;i<ul.getChildren().length;i++)
+	            		ul.removeChild(ul.getChildren()[i]);
+	            }
+	            
+	            function addItem(item)
+				{
+					var itemWidget = new ListItem({
+								href:"http://210.42.38.33/bookinfo.aspx?"+item[5],
+		                        lazy: true
+		                    });
+					ul.addChild(itemWidget);
+					
+					dojo.place("<div class='textBox'><div class='subject'>"+item[0]+"</div>"+item[4]+"&nbsp;&nbsp;&nbsp;&nbsp;"+item[2]+"<span style='color:red'>&nbsp;&nbsp;&nbsp;&nbsp;到期："+item[1]+"</span></div>", itemWidget.id);
+				}
+
+/*
+				setTimeout(function(){ // network latency simulation
+					var markup = '<h1 data-dojo-type="dojox.mobile.Heading" data-dojo-props=\'back:"Home", moveTo:"home"\'>Loaded View 1</h1>' +
+						'<div data-dojo-type="dojox.mobile.RoundRect" data-dojo-props=\'shadow:true\'>Thank you!</div>';
+					var container = view2.containerNode;
+					container.innerHTML = markup;
+					parser.parse(container);
+					prog.stop();
+					listItem.transitionTo("view2");
+				}, 2000);
+				*/
+			}
+
+			borrowedAction = function()
+			{
+				var ul = registry.byId("borrowedlist");
+				var listItem = this;
+				if(ul.getChildren().length==0)
+	            {
+	            		request.get("index.php?app=library&mod=Index&act=renew", {
+	                handleAs: "json"
+		            }).then(function(data){
+		            	JSON.stringify(data);
+		                arrayUtil.forEach(data, function(item,i){
+		                       
+		                            addItem(item);
+		                        });
+								listItem.transitionTo("borrowedview");
+		                    }
+	                );
+	        
+	            }
+	            else
+	            {
+	            	listItem.transitionTo("borrowedview");
+	            }
+	            var i=0;
+
+	            function addItem(item)
+				{
+
+					var itemWidget = new ListItem({
+								id:item[3],
+		                        lazy: true
+		                    });
+					ul.addChild(itemWidget);
+					
+					dojo.place("<div class='textBox'><div class='subject'>"+item[0]+"</div>"+item[4]+"&nbsp;&nbsp;&nbsp;&nbsp;"+item[2]+"<span style='color:red'>&nbsp;&nbsp;&nbsp;&nbsp;到期："+item[1]+"</span></div>", itemWidget.id);
+		            
+				}
+
+			}
+
+
+		});
+	</script>
+</head>
+<body style="visibility:hidden;">
+	<div id="home" data-dojo-type="dojox.mobile.View" data-dojo-props='keepScrollPos:false'>
+		<h1 data-dojo-type="dojox.mobile.Heading">图书馆欢迎您：{$student.name}</h1>
+		<ul data-dojo-type="dojox.mobile.IconContainer">
+			<li id="icon2" data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"当前借阅",icon:"apps/library/Tpl/default/images/icon-2.png", href:"index.php?app=library&mod=Index&act=bookborrowed",transition:"slide"'></li>
+			<li id="icon3" data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"图书查询", icon:"apps/library/Tpl/default/images/icon-1.png", href:"index.php?app=library&mod=Index&act=search",transition:"slide"'></li>
+			<li id="icon4" data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"图书续借", icon:"apps/library/Tpl/default/images/icon-2.png", href:"index.php?app=library&mod=Index&act=renew",transition:"slide"'></li>
+			<li id="icon5" data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"图书荐购", icon:"apps/library/Tpl/default/images/icon-1.png", href:"index.php?app=library&mod=Index&act=tuijian", transition:"slide"'></li>
+			<li id="icon6" data-dojo-type="dojox.mobile.IconItem" data-dojo-props='label:"新书订阅通告", icon:"apps/library/Tpl/default/images/icon-1.png", url:"data/view-sample.html", transition:"slide", sync:false'></li>
+		</ul>
+	</div>
+
+
+</body>
+</html>

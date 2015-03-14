@@ -1,0 +1,30 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*左边列表*/
+.left_titl{ text-align:left;font-size:12px;margin:6px 10px;}
+.title_bg_01{ background:#fff;text-align:left;margin:0 auto;padding:0px 3px 10px 3px;overflow:hidden;width:178px;}
+.ass{ line-height:23px;padding:0 0 0 3px;margin-top:10px;font-size:12px ;}
+.ass dt a,.ass dt a:visited{ font-size:12px;text-decoration:underline; font-weight:bold; color:#00679B}
+.ass dt a.on{ color:#333; font-weight:bold}
+.ass dd a{font-size:12px;margin-right:3px;}
+.ass dd a:hover{ color:#333 }
+.ass.top_T{ line-height:23px;border-bottom:1px dashed #ddd;overflow:hidden;padding-bottom:5px;}
+.ass.top_T .fc{font-size:12px;font-weight:normal;}
+.ass.top_T .fc span{ color:#00679B; font-weight:bold}
+
+.cl{ float:left; text-align:left; overflow:hidden}
+.cc{ float:left; text-align:center; overflow:hidden}
+.cr{ float:right; text-align:right; overflow:hidden}
+
+/*右边列表*/
+.centers_right{width:770px; margin-left:10px; float:left}
+.top_address {font-size:12px;line-height:25px;border-bottom:1px solid #ddd;}
+.top_address a{ color:#666}
+.channe_list{ width:385px; float:left}
+.channe_list li{ font-size:12px;  padding:5px 0; line-height:22px;}
+.channe_list li a{ color:#00679B}
+.exper_list{ font-size:12px;}
+.exper_list li{ border-bottom:1px dashed #ddd; padding:10px 0; line-height:25px; display:inline-block; width:100%}
+.exper_list li a,.exper_list li a:visited{ color:#00679B}
+.exper_list li a:hover{ text-decoration:none}

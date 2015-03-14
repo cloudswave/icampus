@@ -1,0 +1,76 @@
+<include file="__THEME__/public_header" />
+
+<div id="page-wrap">
+  <div id="main-wrap">
+    <div class="boxShadow">
+
+      <div class="find-type">
+        <div class="app-title clearfix">
+          <div class="search-input">
+            <form id="search_people" action="{:U('public/Search/index')}" method="GET">
+                <input name="app" value="public" type="hidden" />
+                <input name="mod" value="Search" type="hidden" />
+                <input name="a" value="public" id='search_a' type="hidden"/>
+                <input name="t" value="1" id='search_t' type="hidden"/>
+                <input id="searchpeople_input" class="s-txt left"  type="text" value="<php>if(!empty($searchkey)){</php>{$searchkey}<php>}else{</php>请输入昵称<php>}</php>" onfocus="this.value=''" onblur="if(this.value=='') this.value='请输入昵称';" name="k">
+                <a href="javascript:void(0)" class="btn-search" onclick="if(getLength($('#searchpeople_input').val()) && $('#searchpeople_input').val()!=='请输入昵称'){ $('#search_people').submit(); return false;}"><span>搜索</span></a>
+            </form>
+          </div>
+          <h4 class="left"><img src="{$ts['app']['small_icon_url']}" />&nbsp;&nbsp;找人</h4>
+          <div class="app-tab-menu clearfix" style="margin:0 0 0 130px;">
+            
+            <ul>
+              <php>if(in_array('tag',$findPeopleConfig)){</php>
+                <li>
+                  <a <eq name="type" value="tag">class="current"</eq> href="{:U('people/Index/index', array('type'=>'tag'))}">按标签<eq name="type" value="tag"><span class="triangle"></span></eq></a>
+                </li>
+              <php>}</php>
+              <php>if(in_array('area',$findPeopleConfig)){</php>
+                <li>
+                  <php>if($findPeopleConfig[0] != 'area'){</php><i class="line"></i><php>}</php>
+                  <a <eq name="type" value="area">class="current"</eq> href="{:U('people/Index/index', array('type'=>'area'))}">按地区<eq name="type" value="area"><span class="triangle"></span></eq></a>
+                </li>
+              <php>}</php>
+              <php>if(in_array('verify',$findPeopleConfig)){</php>
+                <li>
+                  <php>if($findPeopleConfig[0] != 'verify'){</php><i class="line"></i><php>}</php>
+                  <a <eq name="type" value="verify">class="current"</eq> href="{:U('people/Index/index', array('type'=>'verify'))}">认证用户<eq name="type" value="verify"><span class="triangle"></span></eq></a>
+                </li>
+              <php>}</php>
+              <php>if(in_array('official',$findPeopleConfig)){</php>
+                <li>
+                  <php>if($findPeopleConfig[0] != 'official'){</php><i class="line"></i><php>}</php>
+                  <a <eq name="type" value="official">class="current"</eq> href="{:U('people/Index/index', array('type'=>'official'))}">官方推荐<eq name="type" value="official"><span class="triangle"></span></eq></a>
+                </li>
+              <php>}</php>
+            </ul>
+          </div>
+      </div>
+     </div>
+
+      <div id="col" class="extend clearfix">
+        
+          <div id="col0">
+            {:W('Menu', array('cid'=>$cid,'sex'=>$sex,'area'=>$area,'verify'=>$verify,'type'=>$type))}
+          </div>
+
+          <div id="col9" class="st-index-right">
+          <php>if(in_array($type, array('tag','area'))):</php>
+          {:W('Filter', array('cid'=>$cid,'sex'=>$sex,'area'=>$area,'verify'=>$verify,'type'=>$type))}
+          <php>endif;</php>
+          <php>if(in_array($type, array('verify','official')) && !empty($topUser)):</php>
+          {:W('Face', array('uids'=>$topUser,'type'=>$type))}
+          <php>endif;</php>
+
+          <php>if(in_array($type, array('verify', 'official'))):</php>
+          {:W('UserList', array('cid'=>$cid,'uids'=>$topUser,'type'=>$type,'verify'=>$verify,'pid'=>$pid))}
+          <php>else:</php>
+          {:W('UserList', array('cid'=>$cid,'sex'=>$sex,'area'=>$area,'verify'=>$verify,'type'=>$type))}
+          <php>endif;</php>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<include file="__THEME__/public_footer" />

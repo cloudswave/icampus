@@ -1,0 +1,34 @@
+<include file="__THEME__/header" />
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<script>
+$(document).ready(function(){	
+	var $timeout = $('#timeout');
+	var timeout  = $('#timeout').html();
+	var interval = setInterval(function(){
+		if (timeout > 0) {
+			$timeout.html(--timeout);
+		} else {
+			clearInterval(interval);
+			location.href="{:U('group/Group/index', array('gid'=>$gid))}";
+		}
+	}, 1000);
+});
+</script>
+  <!-- 内容 begin  -->
+<div class="Prompt">
+  <div class="Prompt_top"></div>
+  <div class="Prompt_con">
+    <div class="prompt_A" style="_float:none;">提示信息</div>
+    <div class="prompt_B"><span class="Prompt_ok"></span></div>
+    <div class="Prompt_tishi">
+      <h2>邀请成功</h2>
+      <p class="one">默认系统将在 <span style="color:blue;font-weight:bold" id="timeout">5</span> 秒后自动跳转到当前群组首页。</p>
+      <p class="two"><a href="{:U('group/Invite/create',array('gid'=>$gid))}">继续邀请好友>></a></p>
+      <p class="three"><a href="{:U('group/Group/index', array('gid'=>$gid))}">进入群组首页>></a></p>
+    </div>
+    <div class="c"></div>
+    </div>
+    <div class="Prompt_btm"></div>
+  </div> 
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" />

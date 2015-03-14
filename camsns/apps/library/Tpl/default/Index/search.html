@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>{$title}</title>
+
+<?php require_once "apps/head.txt";?>
+<script type="text/javascript">
+require([
+  "dijit/dijit",
+  "dojo/parser",
+  "dojox/mobile",
+  "dojox/mobile/deviceTheme",
+  "dojox/mobile/Button",
+  "dojo/hash",
+  "dojox/mobile/ScrollableView",
+  "dojox/mobile/TextBox",
+  "dojox/io/xhrScriptPlugin",
+  "dojo/data/ItemFileReadStore",
+  "dojox/mobile/RoundRectList",
+  "dojox/mobile/ListItem"
+]);
+    </script>
+<style type="text/css">
+    #item1, #item2, #item3 {
+        font-weight: normal;
+        font-size: 12px;
+    }
+    .subject {
+        font: bold 16px Helvetica;
+    }
+    .textBox {
+        overflow: hidden;
+    }
+    </style>
+</head>
+<body>
+
+ <h1 data-dojo-type="dojox.mobile.Heading" id="head1" data-dojo-props='fixed:"top"'>图书查询</h1>
+ <input type="text" id="words" value="{$words}" data-dojo-type="dojox/mobile/TextBox" style="margin: 4px; width: 70%;"></input>
+ <button data-dojo-type="dojox/mobile/Button" style="width: 15%;" OnClick="javascript:window.location.href='index.php?app=library&mod=Index&act=search&words='+words.value">
+   查询</button>
+  
+
+
+        <ul id="list" data-dojo-type="dojox.mobile.RoundRectList" data-dojo-props='append:true,variableHeight:true'>
+             <volist name="books" id="item">
+                    <li data-dojo-type="dojox.mobile.ListItem" data-dojo-props='href:"{$item['idhref']}"'>
+                    <div class='textBox'><div class='subject'>{$item['name']}</div>{$item['positonno']}&nbsp;&nbsp;&nbsp;&nbsp;{$item['author']}<span style='color:red'>&nbsp;&nbsp;&nbsp;&nbsp;剩余：{$item['has']}</span></div>
+                
+                </li>
+            </volist>
+        </ul>
+
+</body>
+</html>

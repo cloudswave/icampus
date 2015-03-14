@@ -1,0 +1,9 @@
+<div class="mainbox_appR">
+  <div class="right_box">
+    <php>if(ACTION_NAME === 'photo' && MODULE_NAME === 'Index'):</php>
+    {:W('AlbumList', array('tpl'=>'photo', 'albumId'=>$albumId, 'uid'=>$uid, 'photoId'=>$photoId))}
+    <php>endif;</php>
+    {:W('AlbumList', array('tpl'=>'hot'))}
+    {:W('AlbumList', array('tpl'=>'new'))}
+  </div>
+</div>

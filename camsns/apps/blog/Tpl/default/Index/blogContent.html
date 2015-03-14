@@ -1,0 +1,101 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__APP__/Js/Common.js" ></script>
+
+{:W('Weibo',array('tpl_name'=>$mid==$uid?'blog_create_weibo':'blog_share_weibo','button_title'=>'分享'))}
+<php>
+$tpl_data = array('author'=>getUserName($uid),'title'=>text($title),'body'=>getShort(text($content),80),'url'=>U('blog/Index/show',array('id'=>$id,'mid'=>$uid)));
+$tpl_data = urlencode(serialize($tpl_data));
+$param_data = urlencode(serialize(array('has_status'=>1,'is_success_status'=>1,'status_title'=>'发布成功')));
+</php>
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+  <include file="../Public/_blog_header" />
+  <div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox">
+
+    <include file="../Public/_right" />
+
+    <div class="mainbox_appC">
+      <p class="pb15 font-f-s">
+          <a href="">日志</a> > <eq name="isOwner" value="1">
+            <a href="{:U('blog/Index/my')}" >我的全部{$ts['app']['app_alias']}</a>
+            <else/>
+           <a href="{:U('blog/Index/personal', array('uid'=>$uid))}" >{$uid|getUserName}的全部{$ts['app']['app_alias']}</a>
+           </eq>  > <eq name="isOwner" value="1"><a href="{:U('blog/Index/my', array('cateId'=>$category['id']))}">{$category['name']}</a><else/><a href="{:U('blog/Index/personal', array('uid'=>$uid,'cateId'=>$category['id']))}">{$category['name']}</a></eq>
+      </p>
+      <div class="tit_log">
+            <h3>{$title}</h3>
+            <p class="f9">
+            <span class="right">
+              <php>if($isAdmin){</php>
+                <a href="{:U('blog/Index/edit', array('id'=>$id, 'mid'=>$uid))}">编辑</a>&nbsp;&nbsp;
+                <span class="cGray2">|</span>&nbsp;&nbsp;
+                <a href="javascript:deleteBlog('{:U('blog/Index/doDeleteBlog', array('id'=>$id))}')">删除</a>&nbsp;&nbsp;<span class="cGray2">|</span>&nbsp;&nbsp;
+              <php>}else{</php>
+                <eq name="isOwner" value="1">
+                  <a href="{:U('blog/Index/edit', array('id'=>$id, 'mid'=>$uid))}">编辑</a>&nbsp;&nbsp;
+                  <span class="cGray2">|</span>&nbsp;&nbsp;
+                  <a href="javascript:deleteBlog('{:U('blog/Index/doDeleteBlog', array('id'=>$id))}')">删除</a>&nbsp;&nbsp;<span class="cGray2">|</span>&nbsp;&nbsp;
+                </eq>
+              <php>}</php>
+              {:W('ShareToFeed',array('title'=>'分享','initHTML'=>urlencode('我分享了一篇日志“'.$title.'”'),'url'=>U('blog/Index/show',array('id'=>$id,'mid'=>$uid)),'attachId'=>'','from'=>'blog'))}
+            </span>
+            <span class="mr10">{$user_info['space_link']}</span><em>发表于：{$cTime|friendlyDate}</em>      
+            </p>
+          </div>    
+    <div class="BlogBox">
+      <div class="">
+        <div class="btmline f9">
+            <div class="right">
+                <a href="{:U('blog/Index/show', array('id'=>$id, 'action'=>'lt', 'mid'=>$uid))}">上一篇</a> / <a href="{:U('blog/Index/show', array('id'=>$id, 'action'=>'gt', 'mid'=>$uid))}">下一篇</a>
+            </div>
+            第 {$num}/{$count} 篇{$ts['app']['app_alias']}
+ 
+ 
+        </div>
+        <div style="margin:20px 0; " class="mLR15">
+          
+          <php>if( $isOwner == 0 && $private == 4 ){</php>
+          <div class="bg_msg">
+            <div class="bg_msg_btm">
+              <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="40" align="center"><img src="__APP__/images/ico_suo.png" width="20" height="20" /></td>
+                  <td>只有主人可以查看此日志</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <php>}elseif( $isOwner == 0 && $private == 2 && $relationship=='unfollow'){</php>
+          <div class="bg_msg">
+            <div class="bg_msg_btm">
+              <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="40" align="center"><img src="__APP__/images/ico_suo.png" width="20" height="20" /></td>
+                  <td>只有主人关注的人可以查看此日志</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <php>}else{</php>
+            <div class="f14px blog_con lh180 mb20"><div class="ke-post img_resize">{$content}</div></div>
+            <neq name="mTime" value="0"><div class="cGray2 lh30">最后修改时间: {$mTime|friendlyDate}</div></neq>
+          <php>} </php>
+          
+        </div>
+        <div class="feed_list">
+           <div class="repeat">
+             {:W('Comment',array('tpl'=>'detail', 'table'=>'blog', 'row_id'=>$id,'app_detail_summary'=>$title,'app_uid'=>$uid, 'canrepost'=>'0', 'cancomment'=>1, 'cancomment_old'=>0, 'showlist'=>1, 'limit'=>'20', 'order'=>'DESC'))}
+           </div>
+        </div>
+      </div>
+    </div>
+    <div class="c"></div>
+    </div>
+    </div>
+  </div>
+  <div class="c"></div>
+</div>
+</div>
+<script src="__THEME__/js/module.weibo.js"></script>
+<include file="__THEME__/public_footer" />

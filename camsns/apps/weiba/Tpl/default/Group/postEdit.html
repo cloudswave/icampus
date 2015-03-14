@@ -1,0 +1,41 @@
+<include file="__THEME__/public_header" />
+
+<link href="__APP__/weiba.css" rel="stylesheet" type="text/css" />
+<link href="__THEME__/public/account.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+<!-- <script type="text/javascript" src="__THEME__/js/module.form.js"></script> -->
+    
+
+<div id="page-wrap">
+	   <div id="main-wrap">
+           <div class="boxShadow"> 
+	   	   	 <include file="_weiba_header" /> 
+
+	   	   	   <div class="mb10 clearfix extend">
+                <p class="pb15"><a href="{:U('weiba/Index/index')}">微吧</a>&nbsp;>&nbsp;<a href="{:U('weiba/Index/detail',array('weiba_id'=>$post_detail['weiba_id']))}">{$weiba_name}</a>&nbsp;>&nbsp;编辑帖子</p>
+                 <div class="weiba-manage">                     
+                        <form method="post" action="{:U('weiba/Index/doPostEdit')}" model-node='weiba_post_edit' name="weibaPost" onkeydown="if(event.keyCode==13){return false;}" onsubmit="return setcontent();">
+                            <input type="hidden" value="{$post_detail['post_id']}" name="post_id" id="post_id">
+                            <php>if($log){</php><input type="hidden" value="{$log}" name="log" id="log"><php>}</php>
+                        <dl class="form-set">
+                            <dd>
+                                <div class="form-tt"><font color="red"> * </font>标题</div>
+                                <div class="form-row"><input class="s-txt" type="text" name="title" id="title" value="{$post_detail['title']}"></div>
+                            </dd>
+                            <dd>
+                                <div class="form-tt"><font color="red"> * </font>正文</div>
+                                <div class="form-row">{:W('Editor',array('contentName'=>'content','value'=>$post_detail['content']))}</div>
+                            </dd>
+                            <dd>
+                                <div class="form-tt"></div>
+                                <div class="form-row"><a href="#" class="btn-green-small mr5" event-node="submit_btn" editor="true"><span>确定</span></a><a href="{:U('weiba/Index/postDetail',array('post_id'=>$post_detail['post_id']))}" class="btn-cancel"><span>取消</span></a></div>
+                            </dd>
+                        </dl> 
+                        </form>                
+                 </div>
+           	 </div>
+           </div>
+	   </div>
+</div>
+
+<include file="__THEME__/public_footer" />

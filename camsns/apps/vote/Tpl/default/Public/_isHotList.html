@@ -1,0 +1,8 @@
+<div class="right-list">
+    <h3>推荐</h3>
+    <ul>
+	<volist name="IsHotList" id="vo">
+   		<li><!--<a href="{:U('public/Profile/index', array('uid'=>$vo['uid']))}">{$vo.username}</a>：--><i class="ico-piece"></i><div class="info"><a href="{:U('vote/Index/pollDetail', array('id'=>$vo['id']))}">{$vo.title} </a><em class="f9">(共{$vo.vote_num}票)</em></div></li>
+	</volist>
+	</ul>
+</div>

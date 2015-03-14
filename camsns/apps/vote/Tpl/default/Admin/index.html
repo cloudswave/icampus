@@ -1,0 +1,58 @@
+<include file="_header" />
+<div id="container" class="so_main">
+  <div class="page_tit">{$ts['app']['app_alias']}</div>
+  <include file="_tab" />
+  <form action ="{:U('vote/Admin/doChangeBase')}" method="post" >
+    <div class="form2 no_line">
+      <dl class="lineD">
+        <dt>
+          每页显示{$ts['app']['app_alias']}条数：
+        </dt>
+        <dd>
+          <input name="limitpage" class="txt" value ="{$limitpage}" />
+          <p>设置{$ts['app']['app_alias']}列表页每页显示条数。默认为20条记录。</p>
+        </dd>
+      </dl>
+<!--      <dl class="lineD">
+        <dt>
+          默认结束时间：
+        </dt>
+        <dd>
+          <select id="defaultTime" name="defaultTime">
+             <option value = "86400">一天</option>
+             <option value = "259200">三天</option>
+             <option value = "604800">一周</option>
+             <option value = "2592000">一个月</option>
+             <option value = "7776000">三个月</option>
+             <option value = "15552000">半年</option>
+             <option value = "31104000">一年</option>
+          </select>
+          <p>{$ts['app']['app_alias']}结束时间距离发布时间间隔。</p>
+        </dd>
+      </dl>
+-->
+      <dl class="">
+        <dt>
+          {$ts['app']['app_alias']}参与显示：
+        </dt>
+        <dd>
+          <select id="join" name="join">
+              <option value = "all">全部</option>
+              <option value = "following">我关注的</option>
+          </select>
+          <p>设置{$ts['app']['app_alias']}情况列表显示范围：所有人的 或 我所关注的人的。</p>
+        </dd>
+      </dl>
+      <div class="page_btm">
+        <input type="submit" class="btn_b" value="确定" />
+      </div>
+    </div>
+  </form>
+</div>
+<include file="_footer" />
+
+<script type="text/javascript">
+    $( "#join option[value='{$join}']" ).attr( 'selected',true );
+    $( "#allorder option[value='{$allorder}']" ).attr( 'selected',true );
+    $( "#defaultTime option[value='{$defaultTime}']" ).attr( 'selected',true );
+</script>

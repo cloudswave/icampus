@@ -1,0 +1,25 @@
+<div class=page_title> 
+  <!-- page_title begin -->
+  <div class="left" style="width:70px;"><span class="headpic50"><a href="{:U('group/Group/index',array('gid'=>$groupinfo['id']))}"><img src="{$groupinfo['logourl']}"/></a></span></div>
+  <div style="margin-left:70px">
+    <h2><a href="{:U('group/Group/index',array('gid'=>$gid))}">{$groupinfo['name']}</a> > 群管理</h2>
+  </div>
+  <div style="clear:left;"></div>
+</div>
+<!-- page_title end -->
+<div class="tab-menu"> 
+  <!-- 切换标签 begin  -->
+  <php>$a = M("Group")->where(array('id'=>intval($_GET['gid'])))->getField('uid');if($_SESSION['mid'] ==$a ){</php>
+  	<span class="right"><a href="javascript:;" onclick="delgroup({$groupinfo['id']});" class="btn_b">解散群</a></span>
+  <php>}</php>
+  <ul>
+    <li <if condition="$current eq 'basic'">class="current" </if>><a href="{:U('group/Manage/index',array('gid'=>$groupinfo['id']))}"><span>基本信息</span></a></li>
+    <php>if(iscreater($mid,$gid)){</php>
+    <li <if condition="$current eq 'privacy'">class="current" </if>><a href="{:U('group/Manage/privacy',array('gid'=>$groupinfo['id']))}"><span>访问权限</span></a></li>
+    <php>}</php>
+    <li <if condition="$current eq 'membermanage'">class="current" </if>><a href="{:U('group/Manage/membermanage',array('gid'=>$groupinfo['id']))}"><span>成员管理</span></a></li>
+    <li <if condition="$current eq 'announce'">class="current" </if>><a href="{:U('group/Manage/announce',array('gid'=>$groupinfo['id']))}"><span>公告发布</span></a></li>
+    <li <if condition="$current eq 'log'">class="current" </if>><a href="{:U('group/Log/index',array('gid'=>$groupinfo['id']))}"><span>管理日志</span></a></li>
+  </ul>
+</div>
+<!-- 切换标签 end  --> 

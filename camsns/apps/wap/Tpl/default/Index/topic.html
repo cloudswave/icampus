@@ -1,0 +1,13 @@
+<include file="../Public/header" />
+<volist name="topic" id="vo">
+<div class="list">
+<table>
+  <tr>
+    <td valign="top">
+      <a href="{:U('wap/Index/doSearch',array('key'=>$vo['topic_name']))}" class="pl">{$vo['topic_name']}({$vo['count']})</a>
+    </td>
+  </tr>
+</table>
+</div>
+</volist>
+<include file="../Public/footer" />

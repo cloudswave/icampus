@@ -1,0 +1,62 @@
+<include file="__THEME__/header" />
+<include file="__THEME__/editor" />
+<script type="text/javascript" src="__APP__/Js/addBlog.js"></script>
+<div class="content_holder">
+<div class="content no_bg boxShadow">
+  <include file="../Public/_blog_header" />
+  <div class="main no_l">
+    <div class="mainbox">
+        <include file="../Public/_right_post" />
+        <div class="mainbox_appC">
+        <div class=page_title>   
+            <h2>发表{$ts['app']['app_alias']}</h2>
+        </div>
+        <div class="BlogBox">
+          <form action="{:U('blog/Index/doAddBlog')}" method="post" enctype="multipart/form-data" model-node='event_post'>
+            <div class="LogList">
+              <ul class="edit">
+                <li style="padding:0;">
+                  <label>标题: &nbsp;</label>
+                  <div class="c1">
+                    <select name="category" id="select" onchange="javascript:changeCategory($(this))" class="text mr5">
+                      <php>foreach( $blog_category as $value ){</php>
+                      <option value="{$value['id']}" title="{$value['name']}">{$value['name']|getShort=8}</option>
+                      <php>}</php>
+                      <optgroup id="group">
+                      <option value="0">+添加分类</option>
+                      </optgroup>
+                    </select>
+                    <input id="title" name="title" type="text" class="text" style="width:363px" onBlur="this.className='text'" onFocus="this.className='text2'" maxlength="25" />
+                  </div>
+                </li>
+                <li style="padding:0;">
+                  <label>内容: &nbsp;</label>
+                  <!-- <div class="c1"><textarea id="content" name="content" style="height:350px;" ></textarea></div> -->
+                  <div class="c1">{:W('Editor',array('contentName'=>'content','value'=>'','height'=>'350px'))}</div>
+                </li>
+	            <li style="padding:0;">
+                    <label>访问: &nbsp;</label>
+                    <div class="c1">
+	                <select name="private" class="text mr5">
+	                    <option value="0">所有人可见</option>
+	                    <option value="2">仅我的粉丝可见</option>
+						<option value="4">仅自己可见</option>
+	                </select>
+	                </div>
+	            </li>
+                <li style="padding:0;">
+                  <label>&nbsp;</label>
+                  <div class="c1"><p><input name='button' id="button" type="submit" class="btn_b" event-node="submit_btn" value="发表" editor="true"/></p></div>
+                </li>
+              </ul>
+            </div>
+          </form>
+        </div>
+        <div class="c"></div>
+      </div>
+    </div>
+    <div class="c"></div>
+  </div>
+</div>
+</div>
+<include file="__THEME__/public_footer" />

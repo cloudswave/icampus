@@ -1,0 +1,9 @@
+<div class="addtbox">
+发微博：
+<form action="{:U('wap/Index/doPost')}" method="post" enctype="multipart/form-data">
+<textarea cols="" rows="2" style="width:99%" name="content">{$keyword}{$content}</textarea>
+请选择要上传的图片(注：需要浏览器支持): 
+<input type="file" name="pic" /><br />
+<input type="submit" value="发布" />
+</form>
+</div>

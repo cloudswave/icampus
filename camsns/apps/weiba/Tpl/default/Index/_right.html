@@ -1,0 +1,54 @@
+<php>
+$canpostweiba = intval(CheckPermission('weiba_normal','weiba_post'));
+</php>
+
+<div id="col3" class="st-index-right">
+  <div class="right-wrap">
+  <php>if($mid){</php>
+    <div class="mod_create mb20">
+       <a id="quick_post" href="javascript:;" class="btn-create">发布新帖</a>
+    </div>
+    <dl class="weiba-myinfo mb20 border-b">
+      <dt>
+        <a href="{$user.space_url}"><img src="{$user.avatar_middle}" width="100" height="100"/></a>
+      </dt>
+      <dd>
+        <a href="{$user.space_url}" class="name">{$user.uname}</a>
+        <!-- <p><a href="{:U('weiba/Index/myWeiba',array('type'=>'myFollowing'))}">关注微吧</a><span class="f9">({$followCount})</span></p> -->
+        <p><a href="{:U('weiba/Index/myWeiba',array('type'=>'myPost'))}">发表帖子</a><span class="f9">({$postCount})</span></p>
+        <p><a href="{:U('weiba/Index/myWeiba',array('type'=>'myReply'))}">回复帖子</a><span class="f9">({$replyCount})</span></p>
+        <p><a href="{:U('weiba/Index/myWeiba',array('type'=>'myFavorite'))}">收藏帖子</a><span class="f9">({$favoriteCount})</span></p>
+      </dd>
+    </dl>
+    <php>}</php>
+     <div class="rank-box1">
+       <h3>微吧排行榜</h3>
+       <ul>
+          <volist name="weiba_order" id="v1">
+              <li><i class="ico-num ico-num{$i}"></i>
+                  <dl>
+                     <dt><a href="{:U('weiba/Index/detail',array('weiba_id'=>$v1['weiba_id']))}"><img src="{$v1.logo}" width="30" height="30" /></a></dt>
+                     <dd><p><a href="{:U('weiba/Index/detail',array('weiba_id'=>$v1['weiba_id']))}">{$v1.weiba_name}</a></p><p>粉丝数：{$v1.follower_count|default=0}　帖子数：{$v1.thread_count|default=0}</p></dd>
+                  </dl>
+              </li>
+          </volist>
+       </ul>
+     </div>
+    <!-- 微吧首页右下广告 -->
+    {:Addons::hook('show_ad_space', array('place'=>'weiba_right'))}
+  </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+  var canpostweiba = "{$canpostweiba}";
+  $('#quick_post').bind('click', function () {
+    if (canpostweiba == 1) {
+      location.href = U('weiba/Index/quickPost');
+    } else {
+      ui.error('对不起，您没有权限进行该操作！');
+    }
+    return false;
+  });
+});
+</script>

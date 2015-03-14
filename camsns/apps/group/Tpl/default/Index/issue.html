@@ -1,0 +1,112 @@
+<include file="__THEME__/header" />
+
+
+<script type="text/javascript" src="__APP__/Js/Common.js"></script>
+<script type="text/javascript" src="__APP__/Js/index.js"></script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<script>
+	function getstrlen(chars){ 
+		
+		chars = chars.replace(/^\s+|\s+$/g,"");
+		return chars.replace(/[^\x00-\xff]/g,"xx").length; 
+   }
+	function checkform(v_form){
+		if(getstrlen(v_form.title.value) == 0) {
+			v_form.title.focus();
+			alert('标题不能为空');
+			return false;
+		}
+		if(getstrlen(v_form.title.value) > 90) {
+			v_form.title.focus();
+			
+			alert('标题内容过长');
+			return false;
+		}
+		
+		if(getstrlen(v_form.content.value) == 0) {
+			v_form.content.focus();
+			alert('内容不能为空');
+			return false;
+		}
+		return true;
+	}
+</script>
+
+</head>
+
+<body>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+
+  <!-- 用户组件列表 begin -->
+  <!-- 用户组件列表 end -->
+
+  <div class="main"> <!-- 右侧内容 begin  -->
+  <div class=page_title> <!-- page_title begin -->
+    <div class="left" style="width:583px;">
+    	<h2 id="group_name"><a href="__APP__/Group/index/gid/{$myAllGroup[0]['id']}">{$myAllGroup[0]['name']}</a> &gt; 发表话题</h2>
+
+    </div>
+  
+    <div class="left alR lh30" style="width:170px;">
+        <a href="JavaScript:window.history.back()">&lt;&lt;返回上一页</a></div>
+  <div class="c"></div>
+</div><!-- page_title end -->
+  <!-- 切换标签 end  -->
+  <div class="groupBox">
+  <div class="boxL" style="width:100%;">
+    <div class="box1">
+  	<h3>发表新话题</h3>
+  	<form method="post" action="__APP__/Topic/doAdd/" onSubmit="return checkform(this);">
+    <ul class="pt10">
+   		 <li class="li">
+          	<div class="lh25 alR left" style="width:10%;padding:5px 0;"><strong>选择群组：</strong></div>
+            <div class="left" style="width:90%;padding:5px 0;">
+              <label>
+                <select name="gid" id="select_group" onChange="doSwitch();">
+                  <volist name="myAllGroup" id="group" >
+                  <option value="{$group['id']}">{$group['name']}</option>
+                  </volist>
+                  </select>
+              </label>
+            </div>
+       	  </li>
+          <li class="li">
+          	<div class="lh35 alR left" style="width:10%"><strong>标题：</strong></div>
+            <div class="left" style="width:90%">
+              <input name="title" class="Text" style="padding: 8px; width: 70%;" onBlur="this.className='Text'" onFocus="this.className='Text1'" type="text">
+
+            </div>
+       	  </li>
+          <li class="li pt10">
+          	<div class="left alR lh30" style="width:10%"><strong>内容：</strong></div>
+            <div class="left" style="width:90%"><textarea rows="10"  name="content" style="display:none;"></textarea>
+            <iframe id="Editor" name="Editor" src="__PUBLIC__/js/Editor/editor.html?id=content&amp;height=400&width=700" frameborder="0" marginheight="0" marginwidth="0" scrolling="No" style="width: 95%; height: 400px"></iframe>
+            </div>
+       	  </li>
+		  <li class="li">
+		  <div class="lh35 alR left" style="width:10%"><strong>附件：</strong></div>
+            <div class="left" style="width:90%; padding-top:5px;">
+			{:W( 'UploadAttach',array( 'uid'=>$mid , 'type'=>'group_topic' , 'callback'=>'attach_upload_success') )}
+            </div>
+		  </li>
+		  <li class="li">
+              <div style="width:10%" class="left">&nbsp;</div>
+              <div class="left" style="width:90%">
+              <input type="hidden" name="addsubmit" value="do" >
+              <input name="button" type="submit" class="btn_b mt5" id="button" value="发表话题" />
+              </div>
+	      </li>
+      </ul>
+      </form>    
+    </div>
+    </div>
+  <!-- end  -->
+  </div>  </div><!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" />
+</body>
+</html>

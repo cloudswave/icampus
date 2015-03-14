@@ -1,0 +1,14 @@
+<php> 
+      if(ACTION_NAME=='index'){ $tabClass['public'] = 'current'; }
+      elseif(ACTION_NAME=='data'){ $tabClass['public_data'] = 'current'; }
+	  else{ $tabClass[$type] = 'current'; }
+</php>
+<div class="tab-menu clearfix">
+  <ul>
+    <li class="{$tabClass.public}"><span><a href="{:U('public/Profile/index',array('type'=>$type,'feed_type'=>'','uid'=>$uid))}">微博</a></span></li>
+    <li class="{$tabClass.public_data}"><span><a href="{:U('public/Profile/data',array('uid'=>$uid))}">资料</a></span></li>
+	<volist name='appArr' id='vo'>
+	    <li class="{$tabClass[$key]}"><span><a href="{:U('public/Profile/appList',array('type'=>$key,'uid'=>$uid))}">{$vo}</a></span></li>
+	</volist>
+  </ul>
+</div>

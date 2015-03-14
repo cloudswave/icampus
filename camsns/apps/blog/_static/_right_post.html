@@ -1,0 +1,59 @@
+<div class="mainbox_appR">
+<div class="mod_create">
+    <a href="{:U('blog/Index/addBlog')}" title="发表{$ts['app']['app_alias']}" class="btn_blog_c"></a>
+    <h4><a href="{:U('blog/Index/my')}">进入我的日志首页</a></h4>
+</div>
+
+<div class="mod_search clearfix">
+    <h2>搜索{$ts['app']['app_alias']}</h2>
+  <div>
+	<form action="{:U('blog/Index/search')}" method="GET" name="subform">
+      <input name="app" type="hidden" value="blog"/>
+	  <input name="mod" type="hidden" value="Index"/>
+	  <input name="act" type="hidden" value="search"/>
+	  <span class="left mr5">
+	  <input name="key" type="text" value="{$_GET['key']|t}" class="txt_blog_s"/>
+	  </span>
+	  <input type="submit" class="btn_b left" value="搜 索" />
+	</form>
+  </div>
+</div>
+
+<div class="right-list clearfix">
+    <h3>推荐{$ts['app']['app_alias']}</h3>
+    <php>if(empty($relist)){</php>暂无推荐{$ts['app']['app_alias']}<php>}</php>
+        <ul>    
+        <volist name="relist" id="vo">
+            <li><i class="ico-piece"></i><div class="info"><a href="{:U('blog/Index/show', array('id'=>$vo['id'], 'mid'=>$vo['uid']))}">{$vo.title}</a></div></li>
+        </volist>
+        </ul>    
+</div>
+
+<eq name="ACTION_NAME" value="my">
+<div class="right-list clearfix">
+    <h3>日志分类（<span><a href="{:U('blog/Index/admin')}" style="padding-left: 0px;" >管理</a></span>）</h3>
+    <ul>
+    <li><a href="{:U('blog/Index/my')}" class="current">所有分类</a></li>
+    <php>foreach( $category as $key=>$value ) {</php>
+    <li><i class="ico-piece"></i><div class="info"><a href="{:U('blog/Index/my', array('cateId'=>$value['id']))}">{$value['name']} ( {$value['count']} )</a></div></li>
+    <php>}</php>
+    </ul>
+</div>
+{:W( 'FileAway', $file_away)}
+</eq>
+</div>
+<script>
+
+// function jSubmit(){
+//       if (document.createEvent) { // w3c
+//                     var evObj = document.createEvent('MouseEvents');
+//                     evObj.initEvent('submit', true, false);
+//                     document.addBlog.dispatchEvent(evObj);
+//                 }
+//                 else if (document.createEventObject) { // ie
+//                     document.addBlog.fireEvent('onsubmit');
+//                 }
+
+//                 document.addBlog.submit();
+// }
+</script>

@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>图书查询</title>
+
+        <script type="text/javascript" src="dojox/mobile/deviceTheme.js" data-dojo-config="mblThemeFiles: ['base','IconContainer','TabBar','SimpleDialog','Button']"></script>
+    <script type="text/javascript" src="dojo/dojo.js" data-dojo-config="async: true, parseOnLoad: true"></script>
+
+    <script type="text/javascript">
+        require([
+            "dojo/_base/Deferred",
+            "dojo/dom-class",
+            "dojox/data/QueryReadStore",
+            "dojo/ready",
+            "dijit/registry",
+            "dojox/mobile/ProgressIndicator",
+            "dojox/mobile/parser",
+            "dojox/mobile",
+            "dojox/mobile/compat",
+            "dojox/mobile/ScrollableView",
+            "dojox/mobile/EdgeToEdgeDataList"
+        ], function(Deferred, domClass, QueryReadStore, ready, registry, ProgressIndicator){
+            //var url = "data/fruits.json";
+            //var url = "data/fake_service.php";
+
+            var url = "index.php?app=library&mod=Index&act=query&words=oracle";
+            store = new QueryReadStore({url: url});
+
+            var start = 1,
+                count = 20,
+                prog1 = null,
+                list = null;
+            function loadMore(){
+                busy(true);
+                setTimeout(function(){ // to simulate network latency
+                    Deferred.when(list.setQuery({start:start, count:count}), function(){
+                        busy(false);
+                    });
+                    start += count;
+                    return false;
+                }, 1000);
+            };
+
+            function busy(flag){
+                if(!prog1){
+                    prog1 = new ProgressIndicator({size:30, center:false});
+                    prog1.domNode.style.position = "absolute";
+                    prog1.domNode.style.margin = "5px";
+                    domClass.add(prog1.domNode, "mblProgWhite");
+                }
+                if(flag){
+                    var head1 = registry.byId("head1");
+                    prog1.placeAt(head1.domNode);
+                    prog1.start();
+                }else{
+                    prog1.stop();
+                }
+            }
+
+            adjustDestination = function(to, pos, dim){
+                var dim = this.getDim();
+                var h = dim.c.h; // container height
+                var disp = dim.d.h; // display height
+                if(to.y < disp - h){
+                    loadMore();
+                    to.y = disp - h;
+                }
+                return true;
+            }
+
+            ready(function(){
+                list = registry.byId("list");
+                list.setStore(store, {start:start, count:count});
+                start += count;
+            });
+        });
+    </script>
+</head>
+<body style="visibility:hidden;">
+    <div data-dojo-type="dojox.mobile.ScrollableView" data-dojo-props='adjustDestination:adjustDestination'>
+        <h1 data-dojo-type="dojox.mobile.Heading" id="head1" data-dojo-props='fixed:"top"'>图书查询【oracle数据库】</h1>
+        <!--
+        <div data-dojo-type="dojox.mobile.RoundRect" data-dojo-props='shadow:true'>
+			<table style="width:100%">
+				<tr>
+					<td><span class="bold">ComboBox</span></td>
+					<td style="text-align:right"><input type="text" data-dojo-type="dojox.mobile.ComboBox" data-dojo-props='value:"", list:"states"'></td>
+				</tr>
+				<tr>
+					<td style="vertical-align:top"><span class="bold">TextArea</span></td>
+					<td style="text-align:right">
+						<textarea data-dojo-type="dojox.mobile.TextArea" rows="3" cols="20">TextArea</textarea><br>
+						<textarea data-dojo-type="dojox.mobile.ExpandingTextArea" rows="3" cols="20">ExpandingTextArea</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align:top"><span class="bold">TextBox</span></td>
+					<td style="text-align:right"><input data-dojo-type="dojox.mobile.TextBox" intermediateChanges="true" maxLength="9" selectOnClick="true" placeHolder="max 9 chars" onChange="console.log('onChange fired with ' + arguments[0])"></td>
+				</tr>
+				<tr>
+					<td style="vertical-align:top"><span class="bold">SearchBox</span></td>
+					<td style="text-align:right"><input data-dojo-type="dojox.mobile.SearchBox" type="search" selectOnClick="true" placeHolder="Search" data-dojo-props='list:"states", pageSize:5, onSearch:myOnSearch'></td>
+				</tr>
+			</table>
+		</div>
+		-->
+        <ul data-dojo-type="dojox.mobile.EdgeToEdgeDataList" id="list" data-dojo-props='append:true'></ul>
+    </div>
+</body>
+</html>

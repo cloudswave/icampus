@@ -1,0 +1,13 @@
+<php>if(empty($commentlist)) {</php>暂无更多信息<php>}</php>
+<volist name="commentlist" id="weibo">
+<div class="list">
+        <!-- 原创 -->
+        <php>if($hideUsername!=1){</php><a href="{:U('wap/Index/weibo',array('uid'=>$weibo['uid']))}">{$weibo['user_info']['uname']}</a>: <php>}</php>
+        {$weibo['content']|getShort=###,140,'...'}<br/>
+    <p>
+	<a href="{:U('wap/Index/detail',array('weibo_id'=>$weibo['row_id']))}">查看</a> | 
+	<a href="{:U('wap/Index/detail',array('weibo_id'=>$weibo['row_id']))}">回复</a>
+	<em>{$weibo['ctime']} 来自{$from_type[$weibo['client_type']]}</em>
+    </p>
+</div>
+</volist>

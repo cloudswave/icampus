@@ -1,0 +1,35 @@
+
+        <div class="pollBox">
+          <div class="LogList">
+            <ul>
+              <volist name="votes.data" id="vo">
+                <li>
+                  <dl class="user">
+                    <dd class="userPic"><space uid="vo.uid">{uavatar}</space></dd>
+                    <dt>{$vo.user_info.space_link}</dt>
+                  </dl>
+                  <div class="vote_joinum">
+                      <div><strong>{$vo.vote_num}</strong>参与人数</div>
+                    </div>
+                  <dl class="info">
+                    <dt class="title"><a href="{:U('vote/Index/pollDetail',array('id'=>$vo['id']))}" class="U">{$vo.title|getShort=20}</a><php>if( $vo['deadline'] < time() ){</php>
+                    <span class="cRed ">(已结束)</span></p>
+                    <php>}else{</php>
+                     <php>}</php></dt>
+                    <volist name="vo.opts" id="opt">
+                      <php>if($vo['type'] == "0"){</php>
+                      <dd><input type="radio" name="checkbox" id="checkbox" disabled="true" class="ck"/><php>}else{</php>
+                      <dd><input type="checkbox" name="checkbox" id="checkbox" disabled="true" class="ck"/><php>}</php>{$opt.name}</dd>
+                    </volist>
+                  </dl>
+                  <php>if( $vo['deadline'] < time() ){</php>
+                    <p><span class="right cGray2">发起时间：{$vo.cTime|friendlyDate}&nbsp;&nbsp; <a href="{:U('vote/Index/pollDetail',array('id'=>$vo['id']))}">查看投票&gt;&gt;</a></span></p>
+                    <php>}else{</php>
+                    <p><span class="right cGray2">发起时间：{$vo.cTime|friendlyDate}&nbsp;&nbsp; <a href="{:U('vote/Index/pollDetail',array('id'=>$vo['id']))}">参与投票&gt;&gt;</a></span></p>
+                    <php>}</php>
+                </li>
+              </volist>
+            </ul>
+            <div id="Pagination" class="page">{$votes.html}</div>
+          </div>
+        </div>

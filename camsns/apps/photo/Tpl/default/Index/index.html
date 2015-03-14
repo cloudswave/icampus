@@ -1,0 +1,28 @@
+<include file="__THEME__/header" />
+<link href="__APP__/css/photo.css" rel="stylesheet" type="text/css" />
+
+<div class="content_holder">
+  <div class="content no_bg boxShadow">
+    <include file="../Public/_mainNav" />
+    <div class="main no_l">
+      <div class="mainbox">
+        <include file="../Public/_isHotList" />
+        <div class="mainbox_appC">
+          <div class="tab-menu" id="tab_menu">
+            <ul>
+              <li <eq name="order" value="hot">class="current"</eq>><a href="{:U('photo/Index/index',array('order'=>'hot'))}"><span>热门照片</span></a></li>
+              <li <eq name="order" value="new">class="current"</eq>><a href="{:U('photo/Index/index',array('order'=>'new'))}"><span>最新照片</span></a></li>
+              <li <eq name="order" value="following">class="current"</eq>><a href="{:U('photo/Index/index',array('order'=>'following'))}"><span>我关注的人的照片</span></a></li>
+            </ul>
+          </div>
+
+          {:W('PhotoList', array('type'=>$order))}
+          
+          <div class="c"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<include file="__THEME__/public_footer" />

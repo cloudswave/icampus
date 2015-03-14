@@ -1,0 +1,20 @@
+<?php
+return array(
+'ADVANCE_SETTING'=>'高级设置',
+'A_MONTH'=>'一月',
+'A_WEEK'=>'一周',
+'A_YEAR'=>'一年',
+'CANCEL'=>'取消',
+'CAN_MULTI_SELECT'=>'可多选，最多',
+'CLOCK'=>'时',
+'CONFIRM'=>'确认',
+'CUSTOM'=>'自定义',
+'DEAD_LINE'=>'截止日期',
+'HALF_YEAR'=>'半年',
+'LEAST_TWO_OPTIONS'=>'至少填写2个选项',
+'OPTION'=>'候选项',
+'OPTIONS_MOST'=>'项',
+'SINGLE'=>'单选',
+'VOTE_SETTING'=>'投票设置',
+'VOTE_TOPIC'=>'投票主题'
+);

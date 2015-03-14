@@ -1,0 +1,26 @@
+<form action="{:Addons::adminUrl('login_page_banner_addimage')}" method="post">
+<div class="form2">
+  	    <dl class="lineD">
+      <dt><font color="red"> * </font>上传图片：</dt>
+      <dd>
+      <div>
+      <input type="file" name="attach" onchange="admin.upload('login_banner',this)" urlquery='attach_type=feed_image&upload_type=image&thumb=1'>
+   <div id='show_login_banner'><php>if($banner){</php><img src="{$bannerurl}" width="100" height="100"><php>}</php></div>
+   <input name="login_banner" id="form_login_banner" type="hidden" value="{$banner}" class="s-txt" style="width:200px;" />
+   <input name="jumpUrl" type="hidden" value="{:Addons::adminPage('login_page_banner')}"></div>
+   图片尺寸大小：960*300
+    </dd>
+      </dl>
+      <dl class="lineD">
+       <dt>图片链接：</dt>
+      <dd>
+      <input type="hidden" name="banner_key" value="{$banner_key}" />
+     <input type="text" style="width:200px" class="s-txt" value="{$bannerlink}" name="banner_link">
+    </dd>
+      </dl>
+    <div class="page_btm">
+    <input type="text" style="display:none">
+      <input type="submit" id="form_submit" value="保存" class="btn_b">
+      
+    </div>
+  	</div></form>

@@ -1,0 +1,25 @@
+<div class="find-type">
+<div class="app-title">
+          <div class="search-input">
+            <div id="mod-search" model-node="drop_weiba_search">
+                <form name="search_group" id="search_group" method="post" action="{:U('group/Index/search')}">
+                    <input type="hidden" name="type" value="2"/>
+                    <dl>
+                    <dt class="clearfix"><!--<i class="ico-search"></i>--><input id="searchgroup_input" class="s-txt left"  type="text" value="<php>if(!empty($search_key)){</php>{$search_key}<php>}else{</php>搜群组<php>}</php>" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜群组';" event-node="searchKey" name='k'><a href="javascript:void(0)" class="btn-search" onclick="if(getLength($('#searchgroup_input').val()) && $('#searchgroup_input').val()!=='搜群组'){ $('#search_group').submit(); return false;}"><span>搜索</span></a></dt>
+                    </dl>
+                </form>
+            </div>
+          </div>
+          <h4 class="left"><img src="{$ts['app']['small_icon_url']}" />&nbsp;&nbsp;群组</h4>
+          <div class="app-tab-menu clearfix" style="margin:0 0 0 130px;">
+            
+            <ul>
+              <li><a href="{:U('group/Index/index')}" <php>if(!$nav){</php> class="current"<php>}</php>>首页<eq name="nav" value=""><span class="triangle"></span></eq></a><i class="line"></i></li>
+              <!-- <li><a href="{:U('weiba/Index/weibaList')}" <php>if($nav=="weibalist"){</php>class="current"<php>}</php>>群组<eq name="nav" value="weibalist"><span class="triangle"></span></eq></a><php>if($GLOBALS['ts']['mid']){</php><i class="line"></i><php>}</php></li> -->
+              <php>if($GLOBALS['ts']['mid']){</php>
+              <li><a href="{:U('group/SomeOne')}" <php>if($nav=="mygroup"){</php>class="current"<php>}</php>>我的群组<eq name="nav" value="mygroup"><span class="triangle"></span></eq></a></li>
+              <php>}</php>
+            </ul>
+          </div>
+      </div>      
+</div>

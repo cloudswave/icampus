@@ -1,0 +1,183 @@
+<style type="text/css">
+.feed_img_lists img.imgsmall { cursor: url("http://timg.sjs.sinajs.cn/t3/style/images/common/small.cur"), auto; }
+.feed_img_lists img.pre{cursor:url(<?php echo THEME_PUBLIC_URL; ?>/image/pre.cur), auto}
+.feed_img_lists img.next{cursor:url(<?php echo THEME_PUBLIC_URL; ?>/image/next.cur), auto}
+</style>
+
+<volist name="message.data" id="vo">
+  <dl class="reply-list <php>if($vo['from_uid'] == $uid){ echo 'my-reply'; }</php> clearfix">
+  <dt class="face">
+    <a href="{$vo['user_info']['space_url']}"><img src="{$vo['user_info']['avatar_middle']}" width="50" height="50"></a>
+  </dt>
+  <dd class="info">
+    <p class="hd">
+      <a href="{$vo['user_info']['space_url']}">
+        <if condition="$vo['from_uid'] eq $mid">
+        {:l('PUBLIC_ME')}：
+        <else />
+        {$vo['user_info']['uname']}：
+        </if>
+      </a>
+      {$vo.content|parse_html}
+    </p>
+    <php>if($vo['attach_type'] === 'message_image'):</php>
+    <div small-div="{$vo.message_id}" class="feed_img_lists">
+      <ul class="small">
+        <volist name="vo.attach_infos" id="v">
+          <li>
+            <a small="{$vo.message_id}" small-image="{$v.attach_id}" small-image-url="{:getImageUrl($v['file'])}" w="{$v.width}" href="javascript:;">
+              <img class="imgicon" title="点击放大" src="{:getImageUrl($v['file'], 100, 100, true)}" width="100" height="100" />
+            </a>
+          </li>
+        </volist>
+      </ul>
+    </div>
+    <div style="display: none;" big-div="{$vo.message_id}" class="feed_img_lists"></div>
+  <php>elseif($vo['attach_type'] === 'message_file'):</php>
+  <div class="input-content attach-file">
+    <ul class="feed_file_list">
+      <volist name="vo.attach_infos" id="v">
+        <li>
+          <a href="{:U('widget/Upload/down',array('attach_id'=>
+            $v['attach_id']))}" class="current right" title="下载">
+            <i class="ico-down"></i>
+          </a>
+          <i class="ico-{$v.extension}-small"></i>
+          <a href="{:U('widget/Upload/down',array('attach_id'=>$v['attach_id']))}">{$v.attach_name}</a>
+          <span class="tips">({$v.size|byte_format})</span>
+        </li>
+      </volist>
+    </ul>
+  </div>
+  <php>endif;</php>
+  <p class="date">
+    <php>if(CheckPermission('core_normal','send_message')):</php>
+    <span><a href="javascript:;" onclick="reply_message('{$vo['user_info']['uname']}')">{:l('PUBLIC_STREAM_REPLY')}</a></span>
+    <php>endif;</php>
+    {$vo.mtime|friendlyDate}
+  </p>
+</dd>
+
+</dl>
+</volist>
+
+<script type="text/javascript">
+(function () {
+  var imgUrl = $.parseJSON('<?php echo $imgUrl; ?>');
+  console.log(imgUrl);
+
+  $('a[small-image]').each(function (i, n) {
+    $(this).bind('click', function () {
+      var msgId = $(this).attr('small');
+      var msgImage = $(this).attr('small-image');
+      var msgImageUrl = $(this).attr('small-image-url');
+      var width = $(this).attr('w');
+
+      var $smallDiv = $('div[small-div="'+$(this).attr('small')+'"]');
+      $smallDiv.hide();
+
+      var $bigDiv = $('div[big-div="'+$(this).attr('small')+'"]');
+
+      var bigHtml = '<ul class="feed_img_list big">\
+                     <span class="tools">\
+                     <a href="javascript:;" big-image="'+msgId+'"><i class="ico-pack-up"></i>收起</a>\
+                     <a href="'+msgImageUrl+'" target="_blank"><i class="ico-show-big"></i>查看大图</a>\
+                     </span>\
+                     <li><img id="msg_image_'+msgImage+'" title="点击缩小" src="'+msgImageUrl+'" class="imgsmall" ';
+      if (width > 557) {
+        bigHtml += 'width="557"';
+      }
+      bigHtml += ' maxwidth="557" /></li></ul>';
+
+      $bigDiv.html(bigHtml);
+      $bigDiv.show();
+
+      $('#msg_image_' + msgImage).bind({
+        mousemove: function (e) {
+          var xx = e.clientX || 0;
+
+          var w31 = 0;
+          if (width > 557) {
+            w31 = Math.floor(557 / 3);
+          } else {
+            w31 = Math.floor(width / 3);
+          }
+
+          var one = 593;
+          var two = one + w31;
+          var three = two + w31;
+          var four = three + w31;
+          if (one < xx && xx < two) {
+            if (imgUrl[msgId][msgImage].length > 1 && imgUrl[msgId][msgImage].index != 1) {
+              $(this).attr('class', 'pre');
+            } else {
+              $(this).attr('class', 'imgsmall');  
+            }
+          } else if (two < xx & xx < three) {
+            $(this).attr('class', 'imgsmall');
+          } else if (three < xx && xx < four) {
+            if (imgUrl[msgId][msgImage].length > 1 && imgUrl[msgId][msgImage].index != imgUrl[msgId][msgImage].length) {
+              $(this).attr('class', 'next');
+            } else {
+              $(this).attr('class', 'imgsmall');
+            }
+          }
+        },
+        click: function () {
+          var type = $(this).attr('class');
+          switch (type) {
+            case 'pre':
+              preImg(this, msgId, msgImage);
+              break;
+            case 'imgsmall':
+              var e = { data: { msgid: msgId } }
+              smallImg(e);
+              break;
+            case 'next':
+              nextImg(this, msgId, msgImage);
+              break;
+          }
+        }
+      });
+
+      var data = {msgid: msgId}
+      $('a[big-image="'+msgId+'"]').bind('click', data, smallImg);
+
+    });
+  });
+
+  var preImg = function (obj, msgId, msgImage) {
+    var index = parseInt(imgUrl[msgId][msgImage].index) - 1;
+    var img = getImageInfo(msgId, index);
+    $('a[small-image="'+img.attach_id+'"]').click();
+  };
+
+  var smallImg = function (event) {
+    var msgid = event.data.msgid;
+    var $bigDiv = $('div[big-div="'+msgid+'"]');
+    $bigDiv.hide();
+    var $smallDiv = $('div[small-div="'+msgid+'"]');
+    $smallDiv.show();
+  };
+
+  var nextImg = function (obj, msgId, msgImage) {
+    var index = parseInt(imgUrl[msgId][msgImage].index) + 1;
+    var img = getImageInfo(msgId, index);
+    $('a[small-image="'+img.attach_id+'"]').click();
+  };
+
+  var getImageInfo = function (msgId, index) {
+    var img = {};
+    for (var i in imgUrl[msgId]) {
+      if (imgUrl[msgId][i].index != index) {
+        continue;
+      }
+      img = imgUrl[msgId][i];
+      break;
+    }
+
+    return img;
+  };
+
+}());
+</script>

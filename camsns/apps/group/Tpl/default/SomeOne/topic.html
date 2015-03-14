@@ -1,0 +1,81 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/Common.js"></script>
+<link  href="../Public/layout.css" rel="stylesheet" type="text/css"/>
+<link  href="../Public/group.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+   <!-- 用户组件列表 begin -->
+  <!-- 用户组件列表 end -->
+  
+  <div class="main"> <!-- 右侧内容 begin  -->
+  <div class=page_title> <!-- page_title begin -->
+  	<div class="left" style="width:80px;">
+    	<span class="headpic50"><a href="__TS__/space/{$uid}"><img src="{$uid|getUserFace}"/></a></span>
+    </div>
+    <div class="left" style="width:583px;">
+    	<h2> {$uid|getUserName}的群组 </h2>
+        
+      </div>
+  <div class="c"></div>
+</div><!-- page_title end -->
+  
+  
+  <div class="tab-menu"><!-- 切换标签 begin  -->
+      <ul>
+      <li><a href="__APP__/SomeOne/index/uid/{$uid}" ><span>{$uid|getUserName}的群组</span></a></li>
+      <li><a href="__APP__/SomeOne/topic/uid/{$uid}" class="on"><span>{$uid|getUserName}的话题</span></a></li>
+      <li><a href="__APP__/Index/add"><span><div class="ico_add">&nbsp;</div>创建新群</span></a></li>
+      </ul>
+  </div><!-- 切换标签 end  -->
+  <div class="MenuSub">
+  	<a href="__URL__/topic/uid/{$uid}" <if condition="!$type"> class="cGray"  </if> >全部</a>|
+  	<a href="__URL__/topic/uid/{$uid}/type/post" <if condition="$type eq 'post'"> class="cGray"  </if>>{$uid|getUserName}发表的话题</a>|
+  	<a href="__URL__/topic/uid/{$uid}/type/reply" <if condition="$type eq 'reply'"> class="cGray" </if>>{$uid|getUserName}回复的话题</a>
+  </div>
+  
+  
+  <div class="groupBox">
+  
+    
+  <div class="boxL" style="width:650px;"><!-- 好友日志 begin  -->
+  		<div class="box1">
+  		<ul class="newtopic">
+       	  <li>
+   	    	<div class="c1">话题</div>
+            <div class="c2">小组</div>
+            <div class="c3">作者</div>
+            <div class="c4">回应/浏览</div>
+            <div class="c5">最后回应</div>
+       	  </li>
+       	  <volist name="topicList['data']" id="list">
+          <li>
+   	    	<div class="c1">
+   	    	
+   	    		<a href="__APP__/Topic/topic/gid/{$list['gid']}/tid/{$list['id']}">{$list['title']|msubstr=0,20}</a>
+   	    	</div>
+            <div class="c2"><a href="__APP__/Group/index/gid/{$list['gid']}">{$list['gid']|getgroupinfo='name'}</a></div>
+            <div class="c3"><a href="__TS__/space/{$list['uid']}"><img src="{$list['uid']|getUserFace}" width="20px" height="20px"/></a> <a href="__TS__/space/{$list['uid']}">{$list['uid']|getUserName}</a></div>
+            <div class="c4">{$list['replycount']}/{$list['viewcount']}</div>
+            <div class="c5">{:date('m-d H:i',$list['replytime'])}</div>
+       	  </li>
+       	 </volist>
+         
+        </ul>
+    </div>
+       <div class="page">{$newTopic.html}</div>
+  </div><!-- 好友日志 end  -->
+  
+  </div>  </div><!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+
+<include file="__THEME__/public_footer" />
+
+</body>
+</html>
+

@@ -1,0 +1,116 @@
+<include file="__THEME__/header" />
+<link href="__APP__/css/photo.css" rel="stylesheet" type="text/css" />
+<div id="page-wrap">
+<div id="main-wrap">
+<div class="content no_bg">
+  <include file="../Public/_mainNav" />
+  <div class="main no_l">
+    <div class="mainbox">
+      <include file="../Public/_isHotList" />
+      <div class="mainbox_appC">
+
+        <div class="tab-menu">
+          <ul>
+            <li><a href="{:U('/Upload/index')}"><span>普通上传</span></a></li>
+            <li><a href="{:U('/Upload/flash')}"><span>批量上传</span></a></li>
+            <if condition="$setting['open_camera'] eq 1">
+            <li><a href="{:U('/Upload/camera')}"><span>在线拍照</span></a></li>
+            </if>
+            <li><a href="{:U('/Index/photos')}"><span>返回我的图片</span></a></li>
+          </ul>
+        </div>
+        
+        <div class="photoBox">
+          <form method="post" action="{:U('/Upload/save_upload_photos')}" name="save_upload_photos" onsubmit="return check_form()" enctype="application/x-www-form-urlencoded">
+            <div class="msg" style="margin-top:30px; margin-bottom:30px;"><strong style="font-size:14px;"><img src="__APP__/images/fzcg_dh.gif" width="17" height="13" /> 图片上传成功！</strong></div>
+            <div class="msg">
+              <php>if($publish_weibo == 1){</php>
+              <div ><strong>
+              <input name="publish_weibo" type="radio" value="1" checked='checked' />
+              发布微博通知大家
+              <input name="publish_weibo" type="radio" value="0" />
+              不发布微博 </strong>
+              </div>              
+              <php>}</php>
+              <div id="photos_content">
+                <p>{$uid|getUserName}上传了{$upnum}张新图片至<a href="{:U('/Index/album',array('id'=>$album['id']))}">{$album.name}</a></p>
+                <div class="left mr5">
+                 <div class="edit_list" id="edit_photos">
+                  <ul>
+                    <volist name="photos" id="li">
+                    <li class="bg04">
+                        <div class="box">
+                            <div class="c1"><div class="photo100"><a href="#"><img src="{$li.savepath|get_photo_url}{$li.savename}" alt="{$li.name}" width="150" height="150" /></a></div></div>
+                            <div class="c2">
+                                <dl>
+                                    <dt>
+                                    <input value="{$li.name}" name="name[{$li.id}]" type="text" class="text" id="attach_{$li.id}" style="width:146px;" />
+                                    </dt>
+                                    <dd><label><input name="album_cover" type="radio" value="{$li.id}" <if condition=" $li['id'] eq $album['coverImageId']">checked='checked'</if> /> 设为该{$ts['app']['app_alias']}封面</label></dd>
+                                    <dd>转移到：
+                                        <select name="move_to[{$li.id}]" onchange="change_flag=true;">
+                                            <volist name="albumlist" id="al">
+                                                <option value="{$al.id}" <if condition=" $al['id'] eq $album['id']">selected='selected'</if>>{$al.name|getShort=###,10}</option>
+                                            </volist>
+                                        </select>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <dl>
+                              <div style="clear:both"></div>
+                            </dl>
+<div class="clear"></div>
+                        </div>
+                    </li>
+                    </volist>
+                 </ul>
+                </div>
+              </div>
+              <div class="ml10">
+                <input type="hidden" name="albumId" value="{$album.id}" />
+                <input type="hidden" name="upnum" value="{$upnum}" />
+              </div>
+              <div class="clear"></div>
+            </div>
+                <input type="submit" class="btn_b" value="完成上传" />
+                <div class="c"></div>
+                </div>
+          </form>
+        </div>
+        <div class="c"></div>
+      </div>
+    </div>
+    <!-- 右侧内容 end  --> 
+    
+  </div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+
+var pb_strConfirmCloseMessage;
+var pb_blnCloseWindow = false;
+pb_strConfirmCloseMessage ="你的图片还没有保存，如果离开本页，上传的图片会丢失！";
+ShowConfirmClose(true);
+
+function ConfirmClose() {
+	window.event.returnValue = pb_strConfirmCloseMessage;
+	pb_blnCloseWindow = true;
+}
+
+function ShowConfirmClose(blnValue) {
+	if(blnValue) {
+		document.body.onbeforeunload = ConfirmClose;
+	} else {
+		document.body.onbeforeunload = null;
+	}
+}
+
+function check_form(){
+	ShowConfirmClose(false);
+	return true;
+}
+
+</script>
+
+<include file="__THEME__/public_footer" />

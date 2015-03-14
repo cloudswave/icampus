@@ -1,0 +1,67 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/weiba.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+    
+<div id="page-wrap">
+	   <div id="main-wrap">
+	   	   	<div class="boxShadow"> 
+             <include file="_weiba_header" />
+	   	   	   <div class="mb10 clearfix">
+                 <include file="_right" />
+                 <div id="col5" class="st-index-main">
+                    <div class="extend-foot">
+                      <!-- 微吧首页中部广告 -->
+                      {:Addons::hook('show_ad_space', array('place'=>'weiba_middle'))}
+                        <div class="weiba-box recommend-weiba clearfix">
+                          <div class="weiba-pic-title">
+                            <a href="{:U('weiba/Index/weibaList')}" class="right">更多微吧</a><h3>微吧推荐</h3>
+                          </div>
+                                <ul>
+                                  <volist name="weiba_recommend" id="vo">
+                                  <li>
+                                    <a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}" class="face"><img src="{$vo.logo}"  width="100" height="100"/><span class="name">{$vo.weiba_name}</span><span class="l-bg"></span></a>
+                                  </li>
+                                  </volist>
+                                </ul>
+                        </div>
+                        <div class="weiba-box clearfix">
+                           <div class="weiba-pic-title"><a class="right" href="{:U('weiba/Index/postList')}">更多帖子</a><h3>热帖推荐</h3></div>
+                           <div class="hot-posts-list clearfix">
+                              <ul>
+                                <volist name="post_recommend" id="vo">
+                                  <li>
+                                     <i class="hot-post-number{$key+1}"></i>
+                                     <div class="hot-post-content">
+                                     <div class="name">
+                                        <span class="right num"><i class="arrow-weiba"></i>{$vo.reply_count}</span>
+                                        <a class="weiba-name" href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}">[{$vo.weiba|getShort=5}]</a>
+                                        <a class="tit" target="_blank" href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}">{$vo.title|getShort=14}<php>if(strstr($vo['content'],'<img')){</php><i class="ico-img"></i><php>}</php></a>
+                                        <php>if($vo['top']==2){</php><i class="ico-bar-top mr5">置顶</i><php>}</php>
+                                        <php>if($vo['digest']==1){</php><i class="ico-bar-fine mr5">精华</i><php>}</php>
+                                     </div>
+                                     <div class="post-pic">
+                                     	<volist name="vo.image" id="img">
+                                        <a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}"><img src="{$img}" style="width:100px;height:100px;" /></a>
+                                        </volist>
+                                     </div>
+                                     <div class="date">
+                                         <span class="right">{$vo.replyuser.space_link} / {$vo.last_reply_time|friendlyDate}</span>
+                                         <span>{$vo.user.space_link}    {$vo.post_time|friendlyDate}  发布</span>
+                                     </div>
+                                    </div>
+                                  </li>
+                                </volist>
+                              </ul>
+                           </div>
+                        </div>
+
+                        
+
+                     </div>
+                 </div>
+           	 </div>
+         </div>
+	   </div>
+</div>
+
+<include file="__THEME__/public_footer" />

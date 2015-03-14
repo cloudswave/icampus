@@ -1,0 +1,49 @@
+<include file="__THEME__/public_header" />
+
+<style>
+	.shop_title ul li {float:left;text-align:center;line-height:40px;background:#F8F8F8}
+	.shop_div ul li {float:left;text-align:center;line-height:40px;}
+	.myshop_1 {width:35%;}
+	.myshop_2 {width:20%;}
+	.myshop_3 {width:15%;}
+	.myshop_4 {width:15%;}
+	.myshop_5 {width:15%;}
+</style>
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+    
+<div id="page-wrap">
+	   <div id="main-wrap">
+	   	   <div class="boxShadow"> 	 
+             <include file="_shop_header" />
+	   	   	<div class="mb10 clearfix">
+				<div style="padding:10px;">
+					<div style="width:100%;height:100px;background:#FFF">
+						<div class="shop_title">
+							<ul>
+								<li class="myshop_1">商品名称</li>
+								<li class="myshop_2">兑换时间</li>
+								<li class="myshop_3">兑换份数</li>
+								<li class="myshop_4">消耗积分</li>
+								<li class="myshop_5">领取状态</li>
+							</ul>
+						</div>
+						<div class="shop_div">
+						<volist name="myshop.data" id="vo">
+							<ul>
+								<li class="myshop_1"><a href="index.php?app=shop&mod=Index&act=shop_item&sid={$vo.sid}">{$vo.shop_name}</a></li>
+								<li class="myshop_2">{$vo.dateline|date="Y-m-d",###}</li>
+								<li class="myshop_3">{$vo.shop_num}份</li>
+								<li class="myshop_4">{$vo.credit}积分</li>
+								<li class="myshop_5">{$vo.get}</li>
+							</ul>
+						</volist>
+						</div>
+						<div id="page" class="page" style="float:left;width:100%;">{$myshop.html}</div>
+					</div>
+				</div>
+           	</div>
+          </div>
+	   </div>
+</div>
+
+<include file="__THEME__/public_footer" />

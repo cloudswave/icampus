@@ -1,0 +1,15 @@
+<div id="container" class="mb10 photo-list-masonry clearfix"></div>
+
+<script type="text/javascript" src="__APP__/js/jquery.masonry.min.js"></script>
+<script type="text/javascript" src="__APP__/js/photo.js"></script>
+<script type="text/javascript">
+var option = {
+	container: 'container',
+	loadcount: '{$loadCount}',
+	loadmax: '{$loadMax}',
+	loadId: '{$loadId}',
+	loadlimit: '{$loadLimit}',
+	type: '{$type}'
+};
+photo.init(option);
+</script>

@@ -1,0 +1,34 @@
+<div class="tab-menu">
+<ul>
+<php>if( in_array(ACTION_NAME, array('my','admin','addBlog','personal')) ) {</php>
+  <li class="current">
+    <a href="{:U('blog/Index/my')}">
+        <php>$name = empty($name) ? '我' : $name;</php>
+        <span>{$name}的{$ts['app']['app_alias']}</span>
+    </a>
+  </li>
+<php>}else {</php>
+  <php>if(ACTION_NAME=='search'){</php>
+   <li class="current">
+    <a href="{:U('blog/Index/search')}" >
+        <span>搜索{$ts['app']['app_alias']}</span>
+    </a>
+  </li>
+  <php>}</php>
+  <li <php>if(ACTION_NAME=='index'){</php>class="current"<php>}</php>>
+    <a href="{:U('blog/Index/index')}"  >
+        <span>热门{$ts['app']['app_alias']}</span>
+    </a>
+  </li>
+  <li <php>if(ACTION_NAME=='news'){</php>class="current"<php>}</php>>
+    <a href="{:U('blog/Index/news')}"  >
+        <span>最新{$ts['app']['app_alias']}</span></a>
+    </li>
+  <li <php>if(ACTION_NAME=='followsblog'){</php>class="current"<php>}</php>>
+    <a href="{:U('blog/Index/followsblog')}"  >
+        <span>我关注的人的{$ts['app']['app_alias']}</span>
+    </a>
+  </li>
+<php>}</php>
+</ul>
+</div>

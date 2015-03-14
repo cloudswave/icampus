@@ -1,0 +1,155 @@
+<include file="__THEME__/header" />
+<include file="__THEME__/editor" />
+<link rel="stylesheet" href="__APP__/event.css" type="text/css" media="screen" charset="utf-8" />
+<script  type="text/javascript" src="__APP__/js/rcalendar.js" ></script>
+<script type="text/javascript" src="__APP__/js/event.js"></script>
+<div class="content_holder">
+<div class="content no_bg boxShadow">
+  <!-- 内容 begin  -->
+  <include file="../Public/_mainNav" />
+
+  <div class="main no_l">
+    <!-- 画布 begin  -->
+    <div class="mainbox clearfix">
+      <include file="../Public/_isHotList" />
+      <div class="mainbox_appC">
+        <div class=page_title>
+          <h2>发起活动</h2>
+        </div>
+        <!-- page_title end -->
+        <div class="groupBox">
+            <div class="box1">
+              <form method="post" action="{:U('event/Index/doAddEvent')}"  enctype="multipart/form-data"  model-node='event_post' >
+              <div class="elist">
+                <dl class="add_event">
+                  <dd>
+                    <label><span class="txt_impt">*</span>活动名称：</label>
+                    <div class="c2">
+                      <input name="title" type="text" class="text" id="title" onfocus="this.className='text2'" onblur="this.className='text'" maxlength="60" />
+                    </div>
+                    <div class="c"></div>
+                  </dd>
+                  <dd>
+                    <label><span class="txt_impt"></span>活动城市：</label>
+                    <div class="c2">
+                      <input type="hidden" id="current" value=""/>
+                      <input type="text" name="city" class="text" onfocus="this.className='text2'" onblur="this.className='text'" size="30" id="selectarea" readonly />
+                      <input type="button" class="btn_b" value="选择地区" onclick="selectArea()" />
+                    </div>
+                    <div class="c"></div>
+                  </dd>
+                  <dd>
+                    <label> <span class="txt_impt">*</span>活动地点：</label>
+                    <div class="c2">
+                      <input name="address" type="text" class="text" id="address" onfocus="this.className='text2'" onblur="this.className='text'"  maxlength="30"/>
+                    </div>
+                    <div class="c"></div>
+                  </dd>
+                  <dd>
+                    <label> <span class="txt_impt">*</span>活动分类：</label>
+                    <div class="c2">
+                      <select name="type" id="type" class="text">
+                        <option value="0" selected>请选择活动分类</option>
+                        <?php foreach($type as $k=>$cate){ ?>
+                        <option value="{$k}">{$cate}</option>
+                        <?php } ?>
+                        </volist>
+                      </select>
+                    </div>
+                    <div class="c"></div>
+                  </dd>
+                  <dd>
+                    <label> <span class="txt_impt"></span>活动经费：</label>
+                    <div class="c2">
+                      <select name="cost" class="text">
+                        <option value="0" selected="selected">免费</option>
+                        <option value="1">AA制</option>
+                        <option value="2">50元以下</option>
+                        <option value="3">50-200元</option>
+                        <option value="4">200-500元</option>
+                        <option value="5">500-1000元</option>
+                        <option value="6">1000元以上</option>
+                      </select>
+                      资费说明：
+                      <input name="costExplain" type="text" class="text" id="textfield2" onfocus="this.className='text2'" onblur="this.className='text'" size="30" />
+                    </div>
+                    <div class="c"></div>
+                  </dd>
+                  <dd>
+                    <label> <span class="txt_impt">*</span>活动时间：</label>
+                    <div class="c2">
+                      <input name="sTime" type="text" class="text" id="sTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />
+                      -
+                      <input name="eTime" type="text" class="text" id="eTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />
+                    </div>
+                    <div class="c"></div>
+                  </dd>
+                  <dd>
+                    <label> <span class="txt_impt">*</span>截止报名：</label>
+                    <div class="c2">
+                      <input name="deadline" type="text" class="text" id="deadline" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />
+                    </div>
+                    <div class="c"></div>
+                  </dd>
+                  <dd>
+                    <label> <span class="txt_impt"></span>活动人数：</label>
+                    <div class="c2">
+                      <input name="limitCount" type="text" class="text" id="limitCount" onfocus="this.className='text2'" onblur="this.className='text'" onKeyUp="this.value=this.value.replace(/\D/g,'')" maxlength="5" value="0" />
+                      <span class="cGray2"> 活动人数上限，设0表示无限制</span>
+                    </div>
+                    <div class="c"></div>
+                  </dd>
+                  <dd>
+                    <label><span class="txt_impt">*</span>活动介绍：</label>
+                    <div class="c2">{:W('Editor',array('contentName'=>'explain','value'=>''))}</div>
+                    <div class="c"></div>
+                  </dd>
+                  <dd>
+                    <label><span class="txt_impt"></span>联系方式：</label>
+                    <div class="c2">
+                      <input name="contact" type="text" class="text" id="contact" onfocus="this.className='text2'" onblur="this.className='text'" size="30" />
+                      <br />
+                      <span class="cGray2">填写联系人电话，如：张小姐，1346665XXXX </span></div>
+                    <div class="c"></div>
+                  </dd>
+                  <dd>
+                    <label><span class="txt_impt"></span>活动选项：</label>
+                    <div class="c2">
+                      <div>
+                        <input type="checkbox" name="friend" id="choice1" value="1" />
+                        只允许我关注的人参加该活动 </div>
+                      <div>
+                        <input type="checkbox" name="allow" id="choice2" value="1" />
+                        活动参加人员需要审批 </div>
+                    </div>
+                    <div class="c"></div>
+                  </dd>
+                  <dd>
+                    <label><span class="txt_impt"></span>活动海报：</label>
+                    <div class="c2">
+                      <input name="cover" type="file" />
+                    </div>
+                    <div class="c"></div>
+                  </dd>
+                  <dd>
+                    <label>&nbsp;</label>
+                    <div class="c2">
+                      <input name="button" type="submit" class="btn_b" id="button" value="发起活动" event-node="submit_btn" editor="true"/>
+                    </div>
+                    <div class="c"></div>
+                  </dd>
+                </dl>
+              </div>
+              </form>
+            </div>
+          </div>
+          <!-- end  -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- 画布 end  -->
+
+<!-- 内容 end -->
+<include file="__THEME__/footer" />

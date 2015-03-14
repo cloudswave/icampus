@@ -1,0 +1,26 @@
+
+<include file="../Public/_header" />
+
+<div class="so_main">
+
+    <div class="form2">
+		<form method="post" action="{:Addons::adminUrl('clearHistory')}">
+			<dl class="lineD">
+				<dt>清除历史：</dt>
+				<dd>
+						<select class="select" id="ago" name="ago">
+							<option value="weekago">清除一周前历史</option>
+							<option value="monthago">清除一月前历史</option>
+							<option value="3monthago">清除三月前历史</option>
+						</select>
+				</dd>
+			</dl>
+			<div class="page_btm">
+				<input type="submit" class="btn_b" value="确定" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<include file="../Public/_footer" />
+

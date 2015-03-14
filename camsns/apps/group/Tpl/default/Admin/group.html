@@ -1,0 +1,108 @@
+<include file="__THEME__/admin_header" />
+<script type="text/javascript" src="__APP__/Js/json2select.js"></script>
+<div class="so_main"><include file="_tab" />
+<div class="form2">
+<form method="post" action="{:U('group/Admin/index')}">
+<dl class="lineD">
+	<dt>公开群加入方式：</dt>
+	<dd><label><input name="open_invite" type="radio"
+		value="0"<eq name="setting['open_invite']" value="0">
+	checked </eq>/> 任何人均可加入</label><br />
+	<label><input name="open_invite" type="radio" value="1"<eq
+		name="setting['open_invite']" value="1"> checked </eq>/> 需管理员批准后方可加入</label><br />
+	<label><input name="open_invite" type="radio" value="2"<eq
+		name="setting['open_invite']" value="2"> checked </eq>/> 邀请加入</label></dd>
+</dl>
+<dl class="lineD">
+	<dt>私密群加入方式：</dt>
+	<dd><!--<label><input name="close_invite" type="radio"
+		value="0"<eq name="setting['close_invite']" value="0">
+	checked </eq>/> 任何人均可加入</label><br />-->
+	<label><input name="close_invite" type="radio" value="1"<eq
+		name="setting['close_invite']" value="1"> checked </eq>/> 需管理员批准后方可加入</label><br />
+	<label><input name="close_invite" type="radio" value="2"<eq
+		name="setting['close_invite']" value="2"> checked </eq>/> 邀请加入</label></dd>
+</dl>
+<dl class="lineD">
+	<dt>群微博：</dt>
+	<dd><label><input name="openWeibo" type="radio" value="1"<eq
+		name="setting['openWeibo']" value="1"> checked </eq>/> 开启</label> <label><input
+		name="openWeibo" type="radio" value="0"<eq
+		name="setting['openWeibo']" value="0"> checked </eq>/> 关闭</label> <span
+		class="cGray2"> （需要在全局设置开启群微博）</span></dd>
+</dl>
+<dl class="lineD">
+	<dt>群帖子：</dt>
+	<dd><label><input name="openBlog" type="radio" value="1"<eq
+		name="setting['openBlog']" value="1"> checked </eq>/> 开启</label> <label><input
+		name="openBlog" type="radio" value="0"<eq
+		name="setting['openBlog']" value="0"> checked </eq>/> 关闭</label> <span
+		class="cGray2"> （需要在全局设置开启群帖子）</span></dd>
+</dl>
+<dl class="lineD">
+	<dt>群文档：</dt>
+	<dd><label><input name="openUploadFile" type="radio"
+		value="1" onclick="doSwitch(1,'openUploadFile')"<eq
+		name="setting['openUploadFile']" value="1"> checked </eq>/> 开启</label> <label><input
+		name="openUploadFile" type="radio" value="0"
+		onclick="doSwitch(0,'openUploadFile')"<eq
+		name="setting['openUploadFile']" value="0"> checked </eq>/> 关闭</label> <span
+		class="cGray2"> （需要在全局设置开启文件上传）</span></dd>
+</dl>
+<dl class="lineD openUploadFile">
+	<dt>上传文件权限：</dt>
+	<dd><label><input name="whoUploadFile" type="radio"
+		value="3"<eq name="setting['whoUploadFile']" value="3">
+	checked </eq>/> 群内成员</label> <label><input name="whoUploadFile" type="radio"
+		value="2"<eq name="setting['whoUploadFile']" value="2">
+	checked </eq>/> 仅管理员</label></dd>
+</dl>
+<dl class="openUploadFile">
+	<dt>下载文件权限：</dt>
+	<dd><label><input name="whoDownloadFile" type="radio"
+		value="3"<eq name="setting['whoDownloadFile']" value="3">
+	checked </eq>/> 群内成员</label> <label><input name="whoDownloadFile"
+		type="radio" value="2"<eq name="setting['whoDownloadFile']"
+		value="2"> checked </eq>/> 仅管理员</label> <label><input
+		name="whoDownloadFile" type="radio" value="0"<eq
+		name="setting['whoDownloadFile']" value="0"> checked </eq>/> 任何人</label></dd>
+</dl>
+<!-- 
+  	  <dl class="lineD">
+        <dt>相册功能：</dt>
+        <dd>
+          <label><input name="openAlbum" type="radio" value="1" onclick="doSwitch(1,'openAlbum')"<eq name="setting['openAlbum']" value="1"> checked </eq>/> 开启</label>
+          <label><input name="openAlbum" type="radio" value="0" onclick="doSwitch(0,'openAlbum')"<eq name="setting['openAlbum']" value="0"> checked </eq>/> 关闭</label>
+        </dd>
+      </dl>
+      <dl class="lineD openAlbum">
+      <dt>创建相册权限：</dt>
+        <dd>
+          <label><input name="whoCreateAlbum" type="radio" value="3"<eq name="setting['whoCreateAlbum']" value="3"> checked </eq>/> 群内成员</label>
+          <label><input name="whoCreateAlbum" type="radio" value="2"<eq name="setting['whoCreateAlbum']" value="2"> checked </eq>/> 仅管理员</label>
+        </dd>
+      </dl>
+      <dl class="openAlbum">
+      <dt>上传图片权限：</dt>
+        <dd>
+          <label><input  name="whoUploadPic" type="radio" value="3"<eq name="setting['whoUploadPic']" value="3"> checked </eq>/> 群内成员</label>
+          <label><input  name="whoUploadPic" type="radio" value="2"<eq name="setting['whoUploadPic']" value="2"> checked </eq>/> 仅管理员</label>
+        </dd>
+      </dl>
+       -->
+<div class="page_btm"><input type="hidden" name="editSubmit"
+	value="1"> <input type="submit" class="btn_b" value="确定" /></div>
+</form>
+</div>
+</div>
+<script>
+	function doSwitch(i, name){
+		if (i == 0) {
+			$("."+name).css('display','none');
+		} else if (i == 1) {
+			$("."+name).css('display','block');
+		}
+	}
+	doSwitch({$setting['openUploadFile']|intval}, 'openUploadFile');
+</script>
+<include file="_footer" />

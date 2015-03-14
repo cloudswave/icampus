@@ -1,0 +1,156 @@
+<link rel="stylesheet" href="__APP__/blog.css" type="text/css" media="screen" charset="utf-8" />
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+<include file="__THEME__/header" />
+  <include file="__THEME__/apps" />
+  <div class="main no_l"><!-- 画布 begin  -->
+<script type="text/javascript" charset="utf-8">
+var g_selected = 0;
+var selected = new Array();
+  /*
+   *  方法:Array.baoremove(dx)
+   *  功能:删除数组元素.
+   *  参数:dx删除元素的下标.
+   *  返回:在原数组上修改数组.
+   */
+  Array.prototype.baoremove = function(dx)
+  {
+    if(isNaN(dx)||dx>this.length){return false;}
+    this.splice(dx,1);
+  }
+
+function selectCheck(v_obj,i)
+{
+   if (v_obj.checked == true)
+   {
+     selected[i-1] = v_obj.value;
+     g_selected++;
+   }
+   else
+   {
+     selected.baoremove(i-1);
+     g_selected--;
+   }
+}
+g_selectedall = false;
+  function selectAll(){
+    selected.splice( 0,selected.length );
+
+    if( false == g_selectedall ){
+      $("input[type='checkbox']").each(function(i) {
+       selected[i]=$( this ).val();
+       $(this).attr("checked", true); 
+      });
+      g_selected++;
+      g_selectedall = true;
+    }else{
+      $("input[type='checkbox']").each(function() {
+        $(this).attr("checked", false); 
+      });
+      g_selectedall = false;
+      g_selected = 0;
+    }
+
+  }
+
+function check()
+{
+ if (g_selected > 0)
+ {
+   return true;
+ }
+ else
+ {
+  Alert("请选择待导入的文章");
+ return false;
+ }
+
+}
+
+function deleteSubscribe(){
+  //.post方法传递的参数不能是数组。用.ajax进行ajax传递
+  $.ajax( {
+        'type':'post',
+        'url':APP+"/Index/doDeleteSubscribe",
+        'data': "sourceId="+selected,
+        success:function( msg ){
+            if( msg != -1 ){
+                for( var a=0; a<selected.length;a++ ){
+                    //清除网页显示
+                    $( '#sub'+selected[a] ).remove();
+                }
+
+                //制零数据
+                selected.splice( 0,selected.length );
+                g_selected = 0;
+                g_selectedall = false;
+            }else{
+                Alert( "取消关联失败" );
+            }
+        }
+      });
+ }
+</script>
+    
+  <div class=page_title> <!-- page_title begin -->
+  <h2><img src="__APP__/images/ico_app01.gif" />导入日志</h2>
+  <div class="c"></div>
+</div><!-- page_title end -->
+  <!-- 切换标签 end  -->
+  <div class="BlogBox">
+  <div class="LogList"><!-- 好友日志 begin  -->
+    <form action="__URL__/importList" method="post" accept-charset="utf-8">
+      <div class="MenuSub"><a href="__URL__/my">返回日记首页</a></div>
+      <ul>
+        <li class="cGray2" style="margin:0px;">
+        可以将你的站外日志中的文章导入到自己日记.暂只支持sina、163、百度和MSN。日志地址为日志首页的访问地址      	  </li>
+        <li class="fB" style="margin:0px;">你的日志地址：</li>
+        <li style="margin:0px;">
+        <input name="url" type="text" class="text" onFocus="this.className='text2'" onBlur="this.className='text'" size="50"/>
+        </li>
+        <li style="margin:0px;">
+        <input name="button2" type="submit" class="btn_b" id="button2" value="开始导入" />
+        </li>
+      </ul>
+    </div>
+    </form>
+    <!-- 好友日志 end  -->
+  </div>
+  
+  <div class="BlogBox">
+  <div class="LogList"><!-- 好友日志 begin  -->
+  <div class="cGray2" style="padding:20px 0px;">可以将你的站外日志中的文章导入到自己日志；每当系统检测到你的站外日志有更新时，得到你的确认后，将自动同步到你的日记里。 </div>
+  <div><strong>你所导入的站外日志地址：</strong></div>
+  <form action="__URL__/doUpdateImport" method="post" onsubmit="return check()">
+  		<ul>
+       	  <li class="cGray2 btmlineD" style="margin:0px;">
+              <div class="left" style="width:40px;"><a href="###" onclick="selectAll()">全选</a></div>
+            <div class="left" style="width:400px;">日志地址</div>
+              <div class="left" style="width:150px;"></div>
+          </li>
+          
+          <neq name="subscribe" value="">
+          <volist name="subscribe" id="vo">
+            <li id="sub{$vo['id']}" class="btmlineD" style="margin:0px;">
+            <div class="left" style="width:40px;"><input onclick="selectCheck( this,{$i} )" name="id[]" type="checkbox" value="{$vo['id']}" /></div>
+            <div class="left cBlue" style="width:400px;">{$vo['link']}</div>
+          <div class="left" style="width:150px;">
+          </div>
+          </li>
+          </volist>
+          </neq>
+          <li style="margin:0px;">
+			    <input name="" type="submit" class="btn_b" value="手动更新所选" />&nbsp;<input name="" type="button" class="btn_w" onclick="deleteSubscribe()" value="取消关联所选" />
+          </li>
+   	    </ul>
+        </form>
+      </div>
+  <!-- 好友日志 end  -->
+  </div>
+ 
+  </div><!-- 画布 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />

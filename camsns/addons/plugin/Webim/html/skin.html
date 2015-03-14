@@ -1,0 +1,68 @@
+<include file="../Public/_header" />
+
+<style type="text/css">
+	#notice{
+		margin-top: 5px;
+		padding: 10px;
+		text-align: center;
+		background: #FFFAF0;
+		border: 1px solid #FFD700;
+	}
+	#themes{
+		overflow: hidden;
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		margin-top: 20px;
+	}
+	#themes li{
+		float: left;
+		padding: 10px;
+	}
+	#themes li.current{
+		background: yellow;
+	}
+</style>
+
+<div class="so_main">
+
+    <form method="post" action="{:Addons::adminUrl('saveSkin')}">
+
+        <form method="post" action="{:Addons::adminUrl('saveConfig')}">
+            <dl class="lineD">
+                <dt></dt>
+                <dd>
+					<ul id='themes'>
+						<volist name="themes" id="t">
+							{$t}   
+						</volist>
+					</ul>
+                </dd>
+            </dl>
+	
+	<input type="hidden" value="{$theme}" name="theme" id="theme" />
+	<div class="page_btm">
+		<input type="submit" class="btn_b" value="确定" />
+	</div>
+	</form>
+
+</div>
+
+<script type="text/javascript">
+/**
+ * 改变选中样式
+ * @param string key 选中样式Key值
+ * @param object this 点击按钮对象
+ * @return void
+ */
+var fChange = function(key, obj)
+{
+    $('#themes').find('li').removeClass('current');
+    $(obj).parent().addClass('current');
+    $('#theme').val(key);
+    return false;
+}
+</script>
+
+<include file="../Public/_footer" />
+

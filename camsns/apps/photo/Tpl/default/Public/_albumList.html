@@ -1,0 +1,43 @@
+<div class="falbumlist">
+  <ul>
+   <?php if(ACTION_NAME=='albums' && $weibo): ?>
+      <li>
+        <div class="box">
+          <div class="c1"><span class="photo140"><a href="{:U('photo/Index/weiboalbum',array(uid=>$weibo['userId'],id=>$li['id']))}"><img src="{$weibo.id|get_album_cover=###,$weibo}" alt="{$weibo.name}" /></a></span></div>
+          <div class="c2">
+            <dl>
+              <dt>
+              <span class="right">
+                </span><a href="{:U('photo/Index/weiboalbum',array(uid=>$weibo['userId'],id=>$weibo['id']))}" class="OverH" alt="{$weibo.name}"><strong>{$weibo.name}</strong></a></dt>
+                <dd>图片：{$weibo.photoCount}</dd>
+				<if condition=" $mid neq $weibo['userId']"><dd>作者：<a href="{:U('public/Profile/index',array(uid=>$weibo[userId]))}">{$weibo.userId|getUserName}</a></dd></if>
+				<dd>{$weibo.mTime|friendlyDate}更新</dd>
+            </dl>
+          </div>
+        </div>
+      </li>
+	<?php endif; ?>
+	<volist name="data.data" id="li">
+      <li>
+        <div class="box">
+          <div class="c1"><span class="photo140"><a href="{:U('/Index/album',array(uid=>$li['userId'],id=>$li['id']))}"><img src="{$li.id|get_album_cover=###,$li}" alt="{$li.name}" /></a></span></div>
+          <div class="c2">
+            <dl>
+              <dt> <span class="right"></span><a href="{:U('/Index/album',array(uid=>$li['userId'],id=>$li['id']))}" class="OverH" alt="{$li.name}"><strong>{$li.name}</strong></a></dt>
+              <dd>图片：{$li.photoCount}</dd>
+              <if condition=" $mid neq $li['userId']"><dd>作者：<a href="{:U('public/Profile/index',array(uid=>$li[userId]))}">{$li.userId|getUserName}</a></dd></if>
+              <dd>{$li.mTime|friendlyDate}更新</dd>
+              <php>if(in_array($li['privacy'],array('2','3','4'))&&$mid!=$uid){</php><dd>
+                
+                <img src="__APP__/images/photo_ico_bgk.gif" width="13" height="12" />&nbsp;
+                
+                </dd><php>}</php>
+              <dd><if condition=" $mid eq $li['userId'] "> <a href="{:U('/Manage/album_edit',array(uid=>$li[userId],id=>$li['id']))}">编辑该{$ts['app']['app_alias']}</a></if></dd>
+            </dl>
+          </div>
+        </div>
+      </li>
+    </volist>
+  </ul>
+</div>
+<div class="page">{$data['html']}</div>

@@ -1,0 +1,15 @@
+.level-title{font-size:14px;margin:0 0 20px 0;}
+.level-title h3{font-weight:bold;margin:0 0 20px 0;}
+.level-title .f14{line-height:25px;margin:0 0 30px 0;}
+.level-content th{background:#f8f8f8;font-weight:normal;color:#999;font-size:14px;}
+.level-content th,.level-content td{line-height:34px;text-align:center;border:1px solid #eee;}
+.ico-level1{background:url(./level/level1.png) no-repeat;width:33px;height:9px;display:inline-block;text-align:center;}
+.ico-level2{background:url(./level/level2.png) no-repeat;width:33px;height:9px;display:inline-block;text-align:center;}
+.ico-level3{background:url(./level/level3.png) no-repeat;width:33px;height:9px;display:inline-block;text-align:center;}
+.ico-level4{background:url(./level/level4.png) no-repeat;width:33px;height:9px;display:inline-block;text-align:center;}
+.ico-level5{background:url(./level/level5.png) no-repeat;width:33px;height:9px;display:inline-block;text-align:center;}
+.ico-level6{background:url(./level/level6.png) no-repeat;width:33px;height:9px;display:inline-block;text-align:center;}
+.ico-level7{background:url(./level/level7.png) no-repeat;width:33px;height:9px;display:inline-block;text-align:center;}
+.ico-level8{background:url(./level/level8.png) no-repeat;width:33px;height:9px;display:inline-block;text-align:center;}
+.ico-level9{background:url(./level/level9.png) no-repeat;width:33px;height:9px;display:inline-block;text-align:center;}
+.ico-level10{background:url(./level/level10.png) no-repeat;width:33px;height:9px;display:inline-block;text-align:center;}

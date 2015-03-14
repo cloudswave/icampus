@@ -1,0 +1,192 @@
+<div class="row">
+    <div class="col-sm-2"><p class="right">时间：</p></div>
+    <div class="col-sm-10">
+        <div class="row">
+            <div class="col-sm-4">
+                <select class="form-control" id="year"></select>
+            </div>
+            <div class="col-sm-4">
+                <select class="form-control" id="month"></select>
+            </div>
+            <div class="col-sm-4">
+                <select class="form-control" id="day"></select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-sm-2"><p class="right">地点：</p></div>
+    <div class="col-sm-10">
+        <div class="row">
+            <div class="col-sm-3">
+                <select class="form-control" id="area1"></select>
+            </div>
+            <div class="col-sm-3">
+                <select class="form-control" id="area2"></select>
+            </div>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="area4" placeholder="详细地点选填" value="{$schedule.area4|htmlspecialchars}"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-sm-2"><p class="right">事务：</p></div>
+    <div class="col-sm-10">
+        <textarea class="form-control" style="height: 5em;" id="event">{$schedule.event|htmlspecialchars}</textarea>
+    </div>
+</div>
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-sm-9"></div>
+    <div class="col-sm-3">
+        <php>
+            if($schedule['id']) {
+                $button_text = '编辑日程';
+            } else {
+                $button_text = '发布日程';
+            }
+        </php>
+        <div class="btn btn-primary right" id="submit" data-id="{$schedule.id}">{$button_text}</div>
+    </div>
+</div>
+
+<script>
+    //用于显示时间
+    $(function(){
+        var showingYear = '{$schedule.year}';
+        var showingMonth = '{$schedule.month}';
+        var showingDay = '{$schedule.day}';
+
+        function getYears() {
+            var result = [];
+            for(var i=2014;i<2030;i++) {
+                result.push(i);
+            }
+            return result;
+        }
+
+        function getMonths() {
+            var result = [];
+            for(var i=0;i<12;i++){
+                result.push(i+1);
+            }
+            return result;
+        }
+
+        function getDays(year,month) {
+            var d = new Date(year, month, 0);
+            var count = d.getDate();
+            var result = [];
+            for(var i=0;i<count;i++){
+                result.push(i+1);
+            }
+            return result;
+        }
+
+        function generateOptions(list,unit) {
+            var result = "";
+            for(var i=0;i<list.length;i++){
+                var e = list[i];
+                result += '<option value="'+e+'">'+e+unit+'</option>';
+            }
+            return result;
+        }
+
+        function showYears() {
+            $('#year').html(generateOptions(getYears(),'年'));
+            if(showingYear) {
+                $('#year').val(showingYear); showingYear=false;
+            }
+            $('#year').trigger('change');
+        }
+
+        function showMonths() {
+            $('#month').html(generateOptions(getMonths(),'月'));
+            if(showingMonth){ $('#month').val(showingMonth); showingMonth=false;}
+            $('#month').trigger('change');
+        }
+
+        function showDays() {
+            var year = $('#year').val();
+            var month = $('#month').val();
+            $('#day').html(generateOptions(getDays(year,month),'日'));
+            if(showingDay) {
+                $('#day').val(showingDay); showingDay=false;
+            }
+            $('#day').trigger('change');
+        }
+
+        $('#year').change(function(){
+            showMonths();
+        });
+        $('#month').change(function(){
+            showDays();
+        });
+        showYears();
+    });
+    //用于显示地区
+    $(function(){
+        var showingArea1 = '{$schedule.area1}';
+        var showingArea2 = '{$schedule.area2}';
+
+        function generateOptions(list) {
+            var html = "";
+            for(var i=0;i<list.length;i++){
+                var e=list[i];
+                html += '<option value="'+ e.id+'">'+ e.title+'</option>';
+            }
+            return html;
+        }
+
+        function showArea1() {
+            $.post('{:U("/Index/getAreaList")}',{},function(a,b,c){
+                $('#area1').html(generateOptions(a));
+                if(showingArea1) { $('#area1').val(showingArea1); showingArea1=false;}
+                $('#area1').trigger('change');
+            },'json');
+        }
+
+        function showArea2() {
+            var area1 = $('#area1').val();
+            $.post('{:U("/Index/getAreaList")}',{area:area1},function(a,b,c){
+                $('#area2').html(generateOptions(a));
+                if(showingArea2){ $('#area2').val(showingArea2); showingArea2=false;}
+            },'json');
+        }
+
+        $('#area1').change(function(){
+            showArea2();
+        });
+        showArea1();
+    })
+    //点击发布日程按钮
+    $(function(){
+        $('#submit').click(function(){
+            var id = $(this).attr('data-id');
+            var year = $('#year').val();
+            var month = $('#month').val();
+            var day = $('#day').val();
+            var area1 = $('#area1').val();
+            var area2 = $('#area2').val();
+            var area4 = $('#area4').val();
+            var event = $('#event').val();
+            $.post('{:U("/Index/doEditSchedule")}',{id:id,year:year,month:month,day:day,area:area2,area4:area4,event:event},function(a,b,c){
+                if(a.status) {
+                    ui.success(a.data);
+                    setTimeout(function(){
+                        if(id) {
+                            location.href = '{:U("/Index/index")}';
+                        } else {
+                            location.href = location.href;
+                        }
+                    }, 1000);
+                } else {
+                    ui.error(a.data);
+                }
+            },'json');
+        })
+    })
+</script>

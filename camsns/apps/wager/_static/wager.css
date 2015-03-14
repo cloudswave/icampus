@@ -1,0 +1,101 @@
+/* hand war */
+.header { width:960px; margin:0 auto;}
+.z_tit { width:960px; margin:0 auto; padding:0 0 5px 0;}
+.maincon { clear:both; width:980px; margin:0 auto;}
+.maincon .l_con { width:840px; float:left;}
+.maincon .r_con { width:120px; float:left; padding:16px 0 20px 0; text-align:center;}
+
+.maincon .r_con img { border:0px; margin-top:10px; cursor:pointer;}
+
+.m_photo16_off a img{ width:16px; height:16px; padding:1px; border:1px solid #ccc; line-height:0px; margin-right:3px; float:left; background-color:#fff;}
+.m_photo16_off a:hover img{border:1px solid #EDA000;}
+.m_photo16_off {width:16px; height:16px; padding:1px; border:1px solid #ccc; line-height:0px; margin-right:5px; float:left;}
+.togather_ts {width:206px;height:100px;position:absolute;margin:18px 0 0 0px;visibility: hidden;}
+.togather_ts .con{ width:188px; height:67px; padding:8px 8px; border:1px solid #02CC02; border-top:0px; background:url(images/bg_jieban.gif) 169px 3px no-repeat;background-color:#FFFFE1; line-height:23px;}
+.togather_ts .con .link a{ color:#EDA000; text-decoration:underline;}
+.togather_ts .con .link a:hover{ color:#fff; background-color:#EDA000; text-decoration:none;}
+.togather_ts .con .p_name a{ font-family:Verdana, Arial, ; color:#EDA000; text-decoration:none;}
+.togather_ts .con .p_name a:hover{ font-family:Verdana, Arial, ; color:#fff; background-color:#EDA000;}
+.author_name { line-height:25px;}
+.author_name a { color:#EDA000; text-decoration:none;}
+.author_name a:hover { color:#fff; background-color:#EDA000; text-decoration:none;}
+
+.coin_t{ font-family:Verdana, Arial, "宋体"; font-size:14px; font-weight:bold; color:#FF6600;}
+.coin_t2{ font-family:Verdana, Arial, "宋体"; font-size:14px; font-weight:bold; color:#999;}
+
+.z_tit .l_tit{ width:182px; padding:8px 0 5px 0; float:left;}
+.z_tit .r_info{ width:282px; height:32px; float:right; background:url(images/tinfo_bg.gif) no-repeat; margin:8px 0 0 0; text-align:center; line-height:32px;}
+.z_tit .r_info .p_name { margin-right:3px;}
+.z_tit .r_info .p_name a{ font-family:Verdana, Arial, ; color:#EDA000; text-decoration:none;}
+.z_tit .r_info .p_name a:hover{ font-family:Verdana, Arial, ; color:#fff; background-color:#EDA000;}
+
+.beforehand { position:absolute; left:-999999px; top:-999999px; overflow:hidden;}
+
+.maincon .l_con .top_a { height:113px;}
+.maincon .l_con .top_a .a1{ width:178px; float:left; padding:24px 0 0 108px;} /* w:306 */
+.maincon .l_con .top_a .a1 .p_logo { width:56px; height:56px; background:url(images/50p_bg.gif) no-repeat; float:left; padding:3px;}
+.maincon .l_con .top_a .a1 .p_info { width:136px; float:left;}
+.maincon .l_con .top_a .a1 .p_info .p_name { height:36px; overflow:hidden; line-height:22px; font-family:Arial, "宋体"; color:#EDA000; word-break:break-all; word-wrap:break-word;}
+.maincon .l_con .top_a .a1 .p_info .p_name a{ font-size:14px; color:#EDA000;}
+.maincon .l_con .top_a .a1 .p_info .p_name a:hover{ font-size:14px; color:#EDA000;}
+.maincon .l_con .top_a .a1 .p_info .p_coin { font-size:14px;}
+.maincon .l_con .top_a .a2_vsmode{ width:272px; float:left; background:url(images/a2_bg2.gif) 0px 24px no-repeat;}
+.maincon .l_con .top_a .a2_vsmode .h2{ height:39px; padding:44px 0 0 75px;font-family:Verdana, Arial, "宋体"; font-size:14px; font-weight:bold; color:#FF6600;}
+.maincon .l_con .top_a .a2_vsmode .h3{ width:226px; height:28px; text-align:center; color:#B54800; font-size:14px; padding-top:5px;font-weight:bold;}
+.maincon .l_con .top_a .a2{ width:272px; float:left; background:url(images/a2_bg.gif) 0px 24px no-repeat;}
+.maincon .l_con .top_a .a2 .h1{ width:226px; text-align:center; height:24px; font-size:14px; line-height:22px;}
+.maincon .l_con .top_a .a2 .h1 .t1{ color:#FF0000; font-family:Arial, "宋体"; font-size:14px;font-weight:bold;}
+.maincon .l_con .top_a .a2 .h1 .t2{ color:#FF9900; font-family:Arial, "宋体"; font-size:14px;font-weight:bold;}
+.maincon .l_con .top_a .a2 .h1 .t3{ color:#666; font-family:Arial, "宋体"; font-size:14px;font-weight:bold;}
+.maincon .l_con .top_a .a2 .h2{ height:39px; padding:17px 0 0 72px;} /* w:56 */
+.maincon .l_con .top_a .a2 .h2 .input { width:128px; border:1px solid #FF941C; font-family:Verdana, Arial, "宋体"; font-size:14px; font-weight:bold; color:#FF6600;}
+.maincon .l_con .top_a .a2 .h3{ width:226px; height:28px; text-align:center; color:#B54800; font-size:14px; padding-top:5px;font-weight:bold;}
+.maincon .l_con .top_a .a3{ width:282px; float:left; padding:24px 0 0 0;}
+.maincon .l_con .top_a .a3 .p_logo { width:56px; height:56px; background:url(images/50p_bg.gif) no-repeat; float:left; padding:3px;}
+.maincon .l_con .top_a .a3 .p_info { width:220px; float:left;}
+.maincon .l_con .top_a .a3 .p_info .p_name { height:36px; overflow:hidden; line-height:22px; font-family:Arial, "宋体"; color:#EDA000; word-break:break-all; word-wrap:break-word;}
+.maincon .l_con .top_a .a3 .p_info .p_name a{ font-size:14px; color:#EDA000;}
+.maincon .l_con .top_a .a3 .p_info .p_name a:hover{ font-size:14px; color:#EDA000;}
+.maincon .l_con .top_a .a3 .p_info .p_coin { font-size:14px;}
+
+.maincon .l_con .vs_a{ clear:both;}
+.maincon .l_con .vs_a .vs_l{ width:360px; float:left;}
+.maincon .l_con .vs_a .vs_m{ width:114px; float:left;}
+.maincon .l_con .vs_a .vs_m .vs_pic{ width:114px; padding-top:25px; text-align:center;}
+.maincon .l_con .vs_a .vs_m .vs_history { width:88px; margin:0 auto; padding-top:10px;}
+.maincon .l_con .vs_a .vs_m .vs_history .list_tit{}
+.maincon .l_con .vs_a .vs_m .vs_history .list{ clear:both; height:29px; background:url(images/vs_h_bg.gif) no-repeat; overflow:hidden;}
+.maincon .l_con .vs_a .vs_m .vs_history .list_v{ clear:both; height:29px; background:url(images/vs_h_bg_v.gif) no-repeat;}
+.maincon .l_con .vs_a .vs_m .vs_history .list .i1 { width:15px; height:15px; background:url(images/vs_i1.gif) no-repeat;}
+.maincon .l_con .vs_a .vs_m .vs_history .list .i2 { width:15px; height:15px; background:url(images/vs_i2.gif) no-repeat;}
+.maincon .l_con .vs_a .vs_m .vs_history .list .i3 { width:15px; height:15px; background:url(images/vs_i3.gif) no-repeat;}
+.maincon .l_con .vs_a .vs_m .vs_history .list .v1 { margin:6px 0 0 8px;}
+.maincon .l_con .vs_a .vs_m .vs_history .list .v2 { margin:6px 0 0 36px;}
+.maincon .l_con .vs_a .vs_m .vs_history .list .v3 { margin:6px 0 0 64px;}
+.maincon .l_con .vs_a .vs_r{ width:360px; float:left;}
+
+.bot_info { clear:both; width:980px; margin:10px auto; border-top:1px dashed #FFCC00; }
+.challenge_a {width:490px; float:left; padding:10px 0;}
+.challenge_a .oneline{ clear:both; padding-top:3px;}
+.challenge_a .tit {  font-weight:bold; padding:8px 0 18px 18px; font-size:14px; color:#B54800;}
+.challenge_a p{ padding-left:18px; height:30px;}
+.challenge_a a{ color:#EDA000; text-decoration:none;}
+.challenge_a a:hover { color:#fff; background-color:#EDA000; text-decoration:none;}
+.history_a{ width:490px; float:left; padding:10px 0;}
+/*.history_a{ clear:both; width:980px; padding:10px 0; margin:10px auto; border-top:1px dashed #FFCC00; }*/
+.history_a .tit {  font-weight:bold; padding:8px 0 18px 18px; font-size:14px; color:#B54800;}
+.history_a .list { clear:both; padding:0 10px 30px 10px;}
+.history_a .list .li { width:85px; float:left; padding-left:5px; height:35px; overflow:hidden;}
+
+.vs_fans { width:470px; margin:0 auto;}
+.vs_fans .oneline{ clear:both; padding-top:3px;}
+.vs_fans .oneline .p_tit { width:70px; text-align:right; padding-right:5px; float:left; font-size:14px; color:#666; line-height:25px;}
+.vs_fans .oneline .p_rcon{ width:395px; float:left; text-align:left;}
+.vs_fans .oneline .p_rcon input { font-size:12px;}
+.vs_fans .oneline .p_rcon .ts{line-height:22px; color:#666666;}
+.vs_fans .oneline .p_rcon img { padding-right:5px;}
+
+.popup-box .pop-ctn{ background-color:#fff;}
+.popup-box .pop-ctn p.hd{ text-align:left; font-size:16px; background-color:#F4F3F0;padding:10px 0 10px 17px;}
+.popup-box .pop-ctn p.bd{padding:10px 0;}
+.popup-box .pop-btn{ background-color:#F4F3F0;}

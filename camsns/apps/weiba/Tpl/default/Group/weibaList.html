@@ -1,0 +1,53 @@
+<include file="__THEME__/public_header" />
+
+<link href="__APP__/group.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+    
+<div id="page-wrap">
+	   <div id="main-wrap">
+	   	   <div class="boxShadow"> 	 
+             <include file="_weiba_header" />
+           
+	   	   	   <div class="mb10 clearfix">
+
+                 <include file="_right" />
+
+                 <div id="col5" class="st-index-main">
+                    <div class="extend-foot">
+                        <div class="group-list mb20 clearfix">
+                            <ul>
+                            <volist name="weibaList.data" id="vo">
+                              <li>
+                                <dl>
+                                     <dt><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}"><img src="{$vo.logo}" width="100" height="100" /></a></dt>
+                                     <dd>
+                                        <a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}">{$vo.weiba_name}</a>
+                                        <p>成员：1859</p>
+                                        <p>分类：前端行业设计技术</p>
+                                        <p>简介：前端开发设计群，聊聊行业、设计技术等等。。。</p>
+                                     </dd>
+                                </dl>
+                                <dl>
+                                     <dt><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}"><img src="{$vo.logo}" width="100" height="100" /></a></dt>
+                                     <dd>
+                                        <a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}">{$vo.weiba_name}</a>
+                                        <p>成员：1859</p>
+                                        <p>分类：前端行业设计技术</p>
+                                        <p>简介：前端开发设计群，聊聊行业、设计技术等等。。。</p>
+                                     </dd>
+                                </dl>
+                              </li>  
+                            </volist>
+                            </ul>
+                            <div id="page" class="page" style="">
+                                {$weibaList.html}
+                            </div>
+                       </div> 
+                     </div>
+                 </div>
+           	 </div>
+          </div>
+	   </div>
+</div>
+
+<include file="__THEME__/public_footer" />

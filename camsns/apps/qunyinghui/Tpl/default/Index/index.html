@@ -1,0 +1,76 @@
+<include file="__THEME__/public_header" />
+
+<div id="page-wrap">
+	   <div id="main-wrap">
+	   	   	   <div class="mb20 boxShadow clearfix club-app-title">
+              <h4><img src="__THEME__/image/qyh.jpg" />&nbsp;群英汇</h4>
+             {:W('UserCategory', array('uid'=>$mid, 'tpl'=>'userCategory', 'url'=>U('qunyinghui/Index/index'), 'cid'=>$cid))}</div>
+	   	   	   <div class="mb10 user-all clearfix">
+	   	   	   	  <ul model-node="club_list">
+                    <volist name="data" id="vo">
+                      <li class="boxShadow">
+                        <div class="user-pic pic">
+                          <a href="{$vo.space_url}"><img style="width:180px;height:180px;" src="{$vo.avatar_big}" />
+                          <php>if($vo['uid'] != $GLOBALS['ts']['mid']):</php>
+                          <div class="pic-more"></div>{:W('FollowBtn', array('fid'=>$vo['uid'], 'uname'=>$vo['uname'], 'follow_state'=>$vo['followState'], 'type'=>'normal'))}
+                          <php>endif;</php>
+                          </a>
+                        </div>
+                        <div class="user-info">
+                          <p class="user-name">
+                            {$vo.space_link}
+                            <volist name="vo['GroupData'][$vo['uid']]" id="v2">
+                            <img style="width:auto;height:auto;display:inline;cursor:pointer;vertical-align:-3px;" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
+                            </volist>
+                          </p>
+                          <p class="user-aut" title="{$vo.intro}">{$vo.intro|getShort=###,25,'...'}</p>
+                          <p class="user-att clearfix">
+                            <a href="{:U('public/Profile/index', array('uid'=>$vo['uid']))}"><span>微博</span><strong>{$vo.weibo_count|default=0}</strong></a>
+                            <a href="{:U('public/Profile/following', array('uid'=>$vo['uid']))}"><span>关注</span><strong>{$vo.following_count|default=0}</strong></a>
+                            <a href="{:U('public/Profile/follower', array('uid'=>$vo['uid']))}" class="border-no"><span>粉丝</span><strong>{$vo.follower_count|default=0}</strong></a>
+                          </p>
+                        </div>
+                      </li>
+                    </volist>                 
+	   	   	   	  </ul>
+	   	   	   </div>
+             <div class="page">{$html}</div>
+	   </div>
+</div>
+
+<input type="hidden" value="{$cid}" id="user_category_id" />
+
+<script type="text/javascript">
+M.addModelFns({
+  club_list: {
+    load: function() {
+      $(this).find("li").each(function(i, n) {
+        if(i != 0 && (i + 1) % 5 == 0) {
+          $(this).css('margin-right', 0);
+        }
+      });
+    }
+  }
+});
+
+// 认证用户组用户筛选
+M.addEventFns({
+  authenticate: {
+    click: function() {
+      var checked = $(this).attr('checked');
+      var url = U('club/Index/index');
+      if(checked) {
+        url += '&cid=' + $('#user_category_id').val() + '&authenticate=1';
+        // 刷新页面，显示数据
+        window.location.href = url;
+      } else {
+        url += '&cid=' + $('#user_category_id').val() + '&authenticate=0';
+        // 刷新页面，显示数据
+        window.location.href = url;
+      }
+    }
+  }
+});
+</script>
+
+<include file="__THEME__/public_footer" />

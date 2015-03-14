@@ -1,0 +1,40 @@
+<div id="col3" class="st-index-right">
+   <div class="right-wrap">
+    <php>if($verifyInfo){</php>
+        <div class="official-aut mb20 border-b">
+            <p class="aut-bg">
+                <img src="__THEME__/image/authentication.png" />
+                <php>if(!$isMidVerify):</php>
+                <a href="{:U('public/Account/authenticate')}" class="btn-att-white ml10"><span>申请认证</span></a>
+                <php>endif;</php>
+            </p>
+            <p class="aut-info">{$verifyInfo}</p>
+        </div>
+    <php>}</php>
+    {:W('MedalList',array('uid'=>$user_info[$uid]['uid']))}
+    <php>if($sidebar_following_list['data']){</php>
+        <div class="right-box mb20 clearfix border-b">
+            <h3><a href="{:U('public/Profile/following',array('uid'=>$user_info[$uid]['uid']))}" class="right f12">更多</a><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的关注({$userData.following_count|default=0})</h3>
+            <ul>
+                <volist name="sidebar_following_list['data']" id="vo">
+                    <li><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><img src="{$user_info[$vo['fid']]['avatar_small']}" /></a><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><span>{$user_info[$vo['fid']]['uname']|getShort=4}</span></a></li>
+                </volist>
+            </ul>
+        </div>
+    <php>}</php>
+    <php>if($sidebar_follower_list['data']){</php>
+        <div class="right-box mb20 clearfix border-b">
+            <h3><a href="{:U('public/Profile/follower',array('uid'=>$user_info[$uid]['uid']))}" class="right f12">更多</a><php>if($user_info[$uid]['uid']==$mid){</php>我<php>}else{</php>TA<php>}</php>的粉丝({$userData.follower_count|default=0})</h3>
+            <ul>
+                <volist name="sidebar_follower_list['data']" id="vo">
+                    <li><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face"><img src="{$user_info[$vo['fid']]['avatar_small']}" uid="{$vo['fid']}" event-node="face_card" /></a><a href="{:U('public/Profile/index',array('uid'=>$vo['fid']))}" class="face" uid="{$vo['fid']}" event-node="face_card"><span>{$user_info[$vo['fid']]['uname']|getShort=4}</span></a></li>
+                </volist>
+            </ul>
+        </div>
+    <php>}</php>
+    <!-- 主页右下广告 -->
+    <div style="width:230px;overflow:hidden;">
+    {:Addons::hook('show_ad_space', array('place'=>'profile_right'))}    
+    </div>
+    </div>
+</div>

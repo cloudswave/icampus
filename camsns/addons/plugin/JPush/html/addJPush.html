@@ -1,0 +1,113 @@
+<style type="text/css">
+.s-txt {width:200px;}
+.code-textarea {width:500px;height:200px;}
+.pic-main {margin:0 0 0 0;width: 600px;}
+.pic-main ul {width:600px;list-style:none;}
+.pic-main li {float:left;width:200px;height:33px;text-align:center;line-height:33px}
+
+.pic-size {height:150px;} 
+
+.ico-top, .ico-btm {background: url("__THEME__/admin/image/ico_top_btm.gif") no-repeat scroll 0 0 transparent;height:14px;width:12px;}
+.ico-top, .ico-btm {display: inline-block;vertical-align: middle;}
+.ico-top {background-position: -12px 0;}
+.ico-btm {background-position: -24px 0;}
+.ico-top:hover {background-position: 0 0;}
+.ico-btm:hover {background-position: -35px 0;}
+
+.ico-close-small {
+  background: url("__THEME__/image/del.png") no-repeat 0 0;width:18px;height:18px;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: 0;
+  background-position: 0 -26px;
+  width: 9px;
+  height: 8px;
+  cursor: pointer;
+  _vertical-align:3px;
+  _background:url("__THEME__/image/del.gif") no-repeat 0 0;
+}
+a.ico-close-small:hover {
+  background-position: 0 -82px;
+  width: 9px;
+  height: 8px;
+  cursor: pointer;
+  _vertical-align: 3px;
+}
+.ml8 {
+  margin-left: 8px;
+}
+</style>
+
+<php>$jpushAction = 'doAddPush';</php>
+<form id="msgForm" method="post" action="{:Addons::adminUrl($jpushAction)}" autocomplete="off" onsubmit="return checkPushForm()">
+  <div class="form2">
+    <dl class="lineD">
+      <dt><font color="red">  </font>标题：</dt>
+      <dd>
+	      <input type="hidden" class="s-txt" name="id" value="{$data.id}" />
+        <input type="hidden" name="getPushResult" value="1"/>
+        <input type="text" class="s-txt" name="n_title" value="{$data.n_title}" style="width:600px"/>
+        <p>可空</p>
+      </dd>
+    </dl>
+    <dl class="lineD">
+      <dt><font color="red"> * </font>内容：</dt>
+      <dd>
+      <textarea   name="n_content" rows="5"   style="width:600px">{$data.n_content}</textarea>
+      </dd>
+    </dl>
+    <dl class="lineD">
+      <dt>额外字段：</dt>
+      <dd>
+	        <textarea   name="n_extras" rows="5"  style="width:600px">{$data.n_extras}</textarea>
+          <p>格式为{"go_url":"http://baidu.com"},<font color="red"> 填写{"go_url":"http://baidu.com"}后app将打开百度链接 </font></p>
+      </dd>
+    </dl>
+    <dl class="lineD">
+      <dt>用户别名alias：</dt>
+      <dd>
+          <textarea   name="push_user_alias"  rows="5" style="width:600px">*</textarea>
+          <p>逗号隔开格式为如：1,2,3，填“*”则广播所有用户</p>
+      </dd>
+    </dl>
+
+    <div class="page_btm">
+      <input type="button" value="推送" class="btn_b" onclick="submitForm()" />
+    </div>
+  </div>
+</form>
+
+<script type="text/javascript">
+/**
+ * 验证表单数据正确性
+ * @return boolean 数据是否正确
+ */
+var checkPushForm = function()
+{
+  // 判断标题数据正确性
+  if($.trim($('textarea[name="n_content"]').val()) == '') {
+    ui.error('内容不能为空');
+    return false;
+  }
+  return true;
+};
+
+
+var submitForm= function()
+{
+
+ if(!checkPushForm()){
+    return false;
+ }
+ $.post("{:Addons::adminUrl($jpushAction)}", $('#msgForm').serialize(), function(res) {
+      if(res.status == 1) {
+        ui.success(res.info);
+       //setTimeout("location.reload()",'1000');
+      } else {
+        ui.error(res.info);
+      }
+      return false;
+    }, 'json');
+    return false;
+};
+</script>

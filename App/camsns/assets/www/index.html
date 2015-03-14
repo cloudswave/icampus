@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta name="viewport" content="width=320; user-scalable=no" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Minimal AppLaud App</title>
+
+	  <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	  <script type="text/javascript" charset="utf-8" src="JPushUtil.js"></script>
+	  <script src="jquery-1.7.2.min"></script>
+	  <script type="text/javascript" charset="utf-8">
+      
+            $(document).ready(function(){
+            
+            
+      
+      });
+      
+      var setAlias=function(){
+          alert("ok");
+          window.plugins.JPushUtil.SetAlias("ethanzhu",function(data){alert("success");},function(e){alert(e);});
+      };
+      
+      
+        var onDeviceReady = function() {
+           
+            document.getElementById("devready").innerHTML = "OnDeviceReady fired.";
+            
+        };
+
+        function init() {
+            document.addEventListener("deviceready", onDeviceReady, true);
+        }   
+</script>  
+
+  </head>
+  <body onload="init();" id="stage" class="theme">
+    <h2>Minimal AppLaud App</h2>
+
+	<p>Your app goes here.</p>
+	<p>
+    <span id="devready">onDeviceReady not fired.</span>
+    </p>
+    
+    <input type="button" onclick="setAlias()" value="set"/>
+
+  </body>
+</html>

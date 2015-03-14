@@ -1,0 +1,291 @@
+@charset "utf-8";
+/*
+赵杰 专辑
+*/
+.btn_create_photo{background:url(../images/add_btn_s.png) no-repeat left top;display:block;width:160px;height:52px}
+.photo_tit{ font-family: "微软雅黑","黑体",Arial,Helvetica,Sans-Serif;font-size: 22px;}
+.photoBox {width:100%;_width:99%;overflow:hidden}
+.albumlist .photo140 { background-image: url(../images/photo_bg.gif); background-repeat: no-repeat; background-position: 0px 0px; display: block; width: 135px; height: 113px; text-align: left; padding-top: 7px; padding-left: 8px; margin-right: auto; margin-left: auto}
+.albumlist .photo140 a { height: 100px; width: 120px; overflow: hidden; text-align: center; display: block}
+.albumlist .photo140 img { }
+.albumlist ul { padding: 0px; margin-top: 10px; margin-right: auto; margin-bottom: 0px; margin-left: auto; width: 98%}
+.albumlist ul li { margin-bottom: 10px; overflow: hidden; line-height: 20px; width: 380px; float: left; margin-right: 10px}
+.albumlist ul li .box { clear: both; height:120px; overflow: hidden; line-height: 20px; border: 1px solid #ccc; background-color: #fff; width: 373px; margin: 2px; padding-top: 5px; padding-bottom: 5px}
+.albumlist ul li .c1 { float: left; width: 160px}
+.albumlist ul li .c2 { width: 210px; float: left}
+.albumlist ul li dl { margin: 0px; padding: 0px}
+.albumlist ul li dl dt { font-size: 14px; line-height: 30px}
+.albumlist ul li dl dd { font-size: 12px; color: #666; line-height: 20px}
+.view { clear: both; overflow: hidden; width: 100%; padding-top: 10px}
+.view .c1 { text-align:center; margin-top:10px;margin-top:20px\0;}
+.view .c1 .info { font-size: 12px; line-height: 30px; padding-left:5px; background-color:#eee; color:#666}
+.view .c2 {  text-align: center; margin:0 auto;  height:70px;}
+.view .c2 li{ display: inline-block;*display:inline}
+.view .c2 img { margin:5px; padding: 3px; border: 1px solid #DFDEE6; display: block;*display: inline}
+
+/*滚动小图*/
+
+.viewRC { clear: both; overflow: hidden; width: 100%; margin-top: 10px}
+.viewRC .c1 {}
+.viewRC .c2 { width: 120px; float: right;}
+.viewRC .c2 a { border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D8DFEA; line-height: 20px; display: block; padding-left: 5px}
+.viewRC .c2 div { height: 22px}
+.viewRC .c2 a:hover { background-color: #336699; color: #fff; text-decoration: none}
+/*好友的图片*/
+
+.fphotolist { width: 810px; clear:both}
+.fphotolist .photo130 { width: 130px; text-align: left; margin-right: auto; margin-left: auto; overflow: hidden}
+.fphotolist .photo130 a { overflow: hidden; text-align: center; display: block}
+.fphotolist .photo130 img { }
+.fphotolist ul { padding: 0px; margin-top: 10px; margin-right: auto; margin-bottom: 0px; margin-left: auto; width: 98%}
+.fphotolist ul li { margin-bottom: 10px; overflow: hidden; line-height: 20px; width: 380px; float: left; margin-right: 10px}
+.fphotolist ul li .box { clear: both; height:120px; overflow: hidden; line-height: 20px; border: 1px solid #ccc; background-color: #fff; width: 373px; margin: 2px; padding-top: 5px; padding-bottom: 5px}
+.fphotolist ul li .c1 { float: left; width: 130px; padding-top: 5px; padding-right: 10px; padding-bottom: 5px; padding-left: 10px}
+.fphotolist ul li .c2 { width: 210px; float: left}
+.fphotolist ul li dl { margin: 0px; padding: 0px}
+.fphotolist ul li dl dt { line-height: 30px}
+.fphotolist ul li dl dt a { text-decoration: underline}
+.fphotolist ul li dl dd { font-size: 12px; color: #999; line-height: 25px}
+/* 好友的最新专辑*/
+
+.falbumlist ul li .box { margin-bottom:10px}
+.falbumlist ul li .c1 { }
+.falbumlist ul li .c2 {height:150px;}
+.falbumlist ul li dl { margin: 0px; padding: 0px}
+.falbumlist ul li dl a { }
+.falbumlist ul li dl dt { font-size: 14px; line-height: 30px;height:30px;width:146px;overflow:hidden;word-wrap: break-word;white-space:nowrap}
+.falbumlist ul li dl dt span{ font-size: 12px; color:#666}
+.falbumlist ul li dl dd { font-size: 12px; color: #999999; line-height: 20px;width:140px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}
+/*圈有我的图片*/
+.mark { clear: both; overflow: hidden; display:table; display:inline-block; width: 100%; padding-top: 10px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 1px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px}
+.mark li { float: left; overflow: hidden; width: 137px; text-align: center; padding-right: 20px; margin-bottom: 10px}
+.mark li .name { overflow: hidden; line-height: 20px; height: 20px; position: relative; width: 137px}
+.mark li .name .c1 { }
+.mark li .name .c2 { visibility: hidden}
+.mark li .name2 { overflow: hidden; line-height: 20px; height: 20px; background-color: #F2EEFF; position: relative; width: 137px}
+.mark li .name2 .c1 { }
+.mark li .name2 .c2 { position: absolute; right: 2px; visibility: visible; top: 4px}
+.mark li img { padding: 3px; border: 1px solid #ccc; margin-bottom: 5px; background-color: #fff}
+/*圈有好友的图片*/
+.fmark { clear: both; overflow: hidden; display:table; display:inline-block; width: 100%; padding-top: 10px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 1px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px}
+.fmark li { float: left; overflow: hidden; width: 137px; text-align: center; padding-right: 20px; margin-bottom: 10px}
+.fmark li .name { overflow: hidden; line-height: 20px; height: 20px; position: relative; width: 137px}
+.fmark li img { padding: 3px; border: 1px solid #ccc; margin-bottom: 5px; background-color: #fff}
+/*编辑专辑*/
+.edit_box { margin-left: 10px; margin-bottom: 30px; padding-top: 10px}
+.edit_box .li {padding:0 0 5px 0;clear: both}
+.edit_box .li .c1 { width: 65px; float: left; line-height: 20px}
+.edit_box .li .c2 { margin-left:65px;}
+.edit_list { }
+.edit_list h3 { font-size: 12px; font-weight: normal; margin-left: 10px}
+.edit_list .photo100 {text-align: left; overflow: hidden}
+.edit_list .photo100 a { overflow: hidden; text-align: center; display: block}
+.edit_list .photo100 img { }
+.edit_list ul { padding: 0px; margin-top: 10px; margin-right: auto; margin-bottom: 0px; margin-left: auto}
+.edit_list ul li { margin-bottom: 10px; overflow: hidden; line-height: 20px; float: left; margin-right: 5px; width: 180px;}
+.edit_list ul li .box { clear: both;  line-height: 20px; border: 1px solid #ccc; background-color: #fff;  margin: 2px; padding: 10px;  }
+.edit_list ul li .c1 { height:150px; width:150px; margin-bottom:10px}
+.edit_list ul li .c2 {  height:100px }
+.edit_list ul li dl { margin: 0px; padding: 0px}
+.edit_list ul li dl dt { height: 35px}
+.edit_list ul li dl dd { font-size: 12px}
+
+.bg04{ background-color:#F5F5F5;}
+/*专辑的图片排序*/
+.order {line-height:27px;height:27px;padding:10px 0 0}
+.orderlist { clear: both; overflow: hidden; display:table; display:inline-block; width: 100%; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #BBC1CC; padding-top: 10px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 1px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px}
+.orderlist li { cursor:move; float:left; height:195px; overflow:hidden; position:relative; text-align:center; width:180px;padding: 0px 9px 20px}
+.orderlist li img { border:1px solid #ccc; cursor:move; padding:4px; vertical-align:middle}
+.orderlist span.username{display:block;padding:5px 0 0 }
+/*上传图片样式*/
+.upload { margin-top: 20px}
+.msg {  margin-top: 10px; margin-right: 10px; margin-left: 10px}
+.msg p { line-height: 20px; padding: 0px; margin-top: 5px; margin-right: 0px; margin-bottom: 5px; margin-left: 0px}
+.upload .clue {width: 39%; float: left; margin-top: 20px; padding-top: 5px}
+.upload .clue p { padding-left: 15px; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; margin: 0px; line-height: 20px; color: #666666}
+.upload .clue_btm { height: 5px; display: block; width: 100%}
+.upload ul { float: left; width: 450px}
+.upload li { clear: both; overflow: hidden; display:table; display:inline-block; width: 100%; margin-bottom: 10px}
+.upload li .c1 { width: 85px; float: left; line-height: 20px;}
+.upload li .c2 { margin-left:85px;}
+.upload li .c2 .rank {  }
+.upload .edit_list { width: 810px; clear:both}
+.upload .edit_list h3 { font-size: 12px; font-weight: normal; margin-left: 10px}
+.upload .edit_list .photo130 { width: 130px; text-align: left; margin-right: auto; margin-left: auto; overflow: hidden; height: 130px}
+.upload .edit_list .photo130 a { overflow: hidden; text-align: center; display: block}
+.upload .edit_list .photo130 img { }
+.upload .edit_list ul { padding: 0px; margin-top: 10px; margin-right: auto; margin-bottom: 0px; margin-left: auto; width: 98%}
+.upload .edit_list ul li { margin-bottom: 10px; overflow: hidden; line-height: 20px; width: 380px; float: left; margin-right: 10px}
+.upload .edit_list ul li .box { clear: both; display:table; overflow: hidden; line-height: 20px; border: 1px solid #ccc; background-color: #fff; width: 373px; margin: 2px; padding-top: 5px; padding-bottom: 5px}
+.upload .edit_list ul li .c1 { float: left; width: 130px; padding-top: 5px; padding-right: 10px; padding-bottom: 5px; padding-left: 10px}
+.upload .edit_list ul li .c2 { width: 210px; float: left}
+.upload .edit_list ul li dl { margin: 0px; padding: 0px}
+.upload .edit_list ul li dl dt { height: 35px; padding-top: 5px}
+.upload .edit_list ul li dl dd { font-size: 12px; height: 30px}
+.passwor_div { width: 288px; font-size:14px; margin: 30px auto; padding:50px 0px; background:url(../images/rz_bg.gif) no-repeat 0px bottom; line-height:30px}
+.passwor_div td { font-weight: bold; color:#F00; font-size: 14px}
+
+
+/*推荐专辑*/
+.RecommendedAlbums{}
+.RecommendedAlbums li{ height:85px;}
+.RecommendedAlbums .c1{ float:left; width:75px; height:75px; background:url(../images/photo_bg_small.gif) no-repeat 0 0; padding:2px; overflow:hidden}
+.RecommendedAlbums .c1 img{  width:66px; overflow:hidden}
+/*.RecommendedAlbums .c1 img{ width:65px; height:65px;}*/
+.RecommendedAlbums .c2{ float:left;}
+.RecommendedAlbums .c2 dt{ line-height:25px;}
+.RecommendedAlbums .c2 dd{line-height:20px;}
+
+/*推荐专辑(新)*/
+.list_topalbums{}
+.list_topalbums li{background:url(../images/photo-box.png) no-repeat 0 0;height:270px;display:block;_background:url(../images/photo-box.gif) no-repeat 0 0;padding:10px 20px 10px 10px;}
+.albums_img{}
+.albums_info{margin-left:73px;}
+.albums_info dl{*display:inline}
+.list_topalbums .albums_info dd{line-height:20px;}
+.list_topalbums .tit{margin:0 auto;padding:5px 0;border-bottom:#ddd solid 1px;height:5px;text-align:center}
+.list_topalbums .btm{margin:0 auto;padding:5px 0;border-top:#fff solid 1px;height:5px;text-align:center}
+.list_topalbums .ico_up,  .mod-recalbums .ico_up{
+    border-color: #9ABBC8 transparent transparent;
+    border-style: solid dashed dashed;
+    border-width: 4px 4px 0;
+    display: inline-block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    margin: 0 0 0 3px;
+    vertical-align: middle;
+    width: 0;
+}
+.list_topalbums .ico_down, .mod-recalbums .ico_down{
+    border-color: transparent transparent #9ABBC8;
+    border-style: dashed dashed solid;
+    border-width: 0 4px 4px;
+    border-width:0 5px 5px \9;
+    display:inline-block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    margin: 0 auto;
+    vertical-align: middle;
+    width: 0;
+    }
+/*推荐专辑(新广场下)*/
+.list_Recalbums{background-color:#eee;border-radius:3px}
+.list_Recalbums li{padding:10px 0 10px 10px;border-top:#fff solid 1px;border-bottom:#bbb solid 1px;_width:100%}
+.list_Recalbums .albums_info dt{line-height:25px;}
+.list_Recalbums .albums_info dd{line-height:20px;}
+.list_Recalbums .tit, .mod-recalbums .tit{margin:0 auto;padding:5px 0;border-bottom:#bbb solid 1px;height:5px;text-align:center;_width:105%}
+.list_Recalbums .btm, .mod-recalbums .btm{margin:0 auto;padding:5px 0;border-top:#fff solid 1px;height:5px;text-align:center;}
+ .mod-recalbums .tit, .mod-recalbums .btm{*height:auto;*padding:0}
+.list_Recalbums .ico_up{
+	border-color: #9ABBC8 transparent transparent;
+    border-style: solid dashed dashed;
+    border-width: 4px 4px 0;
+    display: inline-block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    margin: 0 0 0 3px;
+    vertical-align: middle;
+    width: 0;
+}
+.list_Recalbums .ico_down{border-color: transparent transparent #bbb;
+    border-style: dashed dashed solid;
+    border-width: 0 4px 4px;
+    display:inline;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    margin: 0 auto;
+    vertical-align: middle;
+	width:4px
+    }
+
+/*需要密码才能访问*/
+.main-pwd .page_title .headpic50 a img{ border: 1px solid #ccc; padding:2px;}
+
+/*创建相册弹窗*/
+.pop_create_album{width:460px;text-align:left;padding:15px;}
+.pop_create_album dt,.pop_create_album dd{padding:10px 0 0 0;*zoom:1;}
+.pop_create_album label{width:60px;display:block;float:left;line-height:28px;}
+.pop_create_album .s-txt{width:380px;}
+.pop_create_album .s-textarea{width:380px;height:60px;}
+
+
+/*ts3相册样式*/
+/*相册列表*/
+.photo-list-masonry .box{padding:1px;box-shadow:0 2px 0 0 #EBEBEB;margin:0 0 20px 0;width:195px;border:1px solid #ddd;_overflow: hidden;}
+.photo-list-masonry .box p{padding:10px;line-height:16px}
+
+.photo-recom{width:230px;}
+.photo-recom li{background:url(../images/photo-box.png) no-repeat 0 0;height:270px;display:block;_background:url(../images/photo-box.gif) no-repeat 0 0;padding:10px 20px 10px 10px;}
+.photo-recom li a.pic{position:relative;display: block;width:200px;height:200px;margin:0 0 5px 0;}
+.photo-recom .face{background:#000;height:30px;line-height:30px;opacity:0.8;filter:alpha(opacity=80);-moz-opacity:0.8;position:absolute;bottom:0;left:0;width:100%;}
+.photo-recom .face span{color:#fff;padding:0 0 0 10px;}
+.photo-recom p{line-height:20px;color:#999;}
+
+
+.my-photo-info{margin:0 0 20px 0;}
+.my-photo-info dl{height:50px;}
+.my-photo-info dt{float:left;}
+.my-photo-info dd{margin:0 0 0 58px;}
+.my-photo-info dd p{line-height:30px;}
+
+.my-photo-list fieldset a{margin:-16px 0 0 0;cursor:pointer;} 
+.my-photo-list fieldset a span{background:#fff;padding:0 0 0 5px;display:inline-block;}
+.my-photo-list ul{margin:0 -19px 0 0;overflow: hidden;*zoom:1;}
+.my-photo-list li{float:left;width:168px;padding:0 19px 30px 0;*padding:0 16px 30px 0;}
+.my-photo-list li a,.my-photo-list li a:hover{color:#333;font-weight:bold;}
+.my-photo-list li .t{margin:10px 0 0 0;color:#999;text-align:center;height:15px;overflow:hidden;}
+.my-photo-list h3{font-size:14px;color:#414448;margin:0 0 20px 0;font-weight:bold;}
+.my-photo-list-b li .pic{background:url(../images/photo-box.png) no-repeat 0 -304px;width:168px;height:168px;display:block;_background:url(../images/photo-box.gif) no-repeat 0 -304px;margin:0 0 5px 0;position:relative;}
+.my-photo-list-b li .pic a{width:152px;display:block;margin:6px;position:relative;}
+.my-photo-list-b li .pic a img{display:block;}
+.my-photo-list-b li .pic-date{height:35px;overflow:hidden;}
+.my-photo-list-b li p{margin:0 0 5px 0;color:#999;}
+.my-photo-list-b .bg{width:60px;height:20px;line-height:20px;text-align:center;background:#000;position:absolute;bottom:0;right:0;color:#fff;opacity:0.6;filter:alpha(opacity=60);-moz-opacity:0.6;}
+.my-photo-title{margin:0 0 20px 0;border-bottom:1px solid #ddd;}
+.my-photo-title h3{padding:0 0 10px 0;font-size:14px;font-weight:bold;}
+.my-photo-edit{padding:0 0 10px 0;}
+
+.photo-null p{font-size:14px;color:#999;line-height:20px;text-align:center;}
+
+/*上传图片*/
+.uoload-photo-title{margin:0 0 20px 0;}
+.upload-photo-content{height:600px;border:1px solid #ddd;position:relative;}
+.upload-box{width:200px;position:absolute;left:40%;top:40%;}
+.upload-box .f16{font-size:16px;font-family:"微软雅黑";margin:0 0 15px 0;color:#ccc;}
+.upload-box .f21{font-size:21px;font-family:"微软雅黑";margin:15px 0 0 0;color:#ccc;}
+
+/*相册详情*/
+.photo-detail p{padding:0 0 10px 0;color:#999;}
+.photo-detail p a{margin:0 10px 0 0;}
+.photo-detail p.f14{color:#333;font-size:14px;}
+.photo-other{margin:0 0 30px 0;}
+
+.photo-other .pic-list ul{margin:0 -5px 0 0;*margin:0 -4px 0 0;overflow: hidden;*zoom:1;}
+.photo-other .pic-list li{float:left;padding:0 5px 10px 0;*padding:0 4px 10px 0;*font-size:0;}
+.photo-other .pic-list li a{border:2px solid #fff;padding:1px;display:block;width:70px;height:70px;}
+.photo-other .pic-list li a:hover,.photo-other .pic-list li a.current{border:2px solid #414448;}
+.photo-other h3,.photo-recom h3{font-size:14px;margin:0 0 20px 0;}
+.photo-other h3 span{font-size:12px;}
+
+/*图标*/
+.ico-del{background-position:-359px 0;width:12px;height:12px;vertical-align:middle;margin:0 5px 0 0;}
+.ico-cover{background-position:-359px -33px;width:12px;height:12px;vertical-align:middle;margin:0 5px 0 0;}
+.ico-modify{background-position:-359px -66px;width:12px;height:12px;vertical-align:middle;margin:0 5px 0 0;}
+.ico-artwork{background-position:-359px -99px;width:12px;height:12px;vertical-align:middle;margin:0 5px 0 0;}
+
+
+.photo-page{text-align:center;}
+.photo-page .arrow-left,.photo-page .arrow-right{background:url(../images/arrow-photo-lr.png) no-repeat;width:12px;height:16px;cursor:pointer;display:inline-block;_background:url(../images/arrow-photo-lr.gif) no-repeat;}
+.photo-page .arrow-left{background-position:0 0;margin:0 47px 0 0;}
+.photo-page .arrow-right{background-position:-13px 0;}
+.photo-page a:hover{background-position:0 -16px;}
+.photo-page .arrow-right:hover{background-position:-13px -16px;}
+
+.photo-list{margin:20px 0 0 0;width:660px;overflow:hidden;*zoom:1;}
+
+
+

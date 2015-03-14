@@ -1,0 +1,53 @@
+<div class="left" style="padding:8px 0 0 0;cursor:hand;width:40px;cursor:pointer;"  onclick='showAndHideMenu("Sync", this, "", "");'>
+      同步
+  </div>
+  <div id="Sync" style="display:none;position:absolute;right:60px;top:30px;z-index:1001;">
+      <div class="topic_app"></div>
+      <div class="pop_inner">       
+       
+  <volist name="sync" id="v">
+      <label>
+          <input type='checkbox' name='sync[]' value='{$v}' style="vertical-align:middle;_vertical-align:-1px;" <php>if($login_bind[$v]){</php>checked=true<php>}</php> id='{$v}_sync' onclick='loginSelectSync(this)' />
+          <span>{$alias[$v]}</span>
+      </label>
+  </volist>
+   </div>
+</div>
+<script>
+function showAndHideMenu (id, e, on, off){  
+    try{  
+        var sbtitle=document.getElementById(id);  
+        if(sbtitle){  
+            if(sbtitle.style.display=='block'){  
+                sbtitle.style.display='none';  
+                $(e).removeClass(off).addClass(on);
+            }else{  
+                sbtitle.style.display='block';
+                $(e).removeClass(on).addClass(off);
+            }  
+        }  
+    }catch(e){}  
+}
+    //同步设置
+    function loginSelectSync(o) {
+        if(o.checked) {
+            $(o).removeAttr('checked');
+            $.get( U('public/Widget/displayAddons') ,{addon:"WeiboSyn",hook:"weibo_ajax_bind_publish_weibo",type:$(o).val(),'do':'ajax_bind'},function(txt) {
+            	if(txt == '1'){
+                    $(o).attr('checked',true);
+                }else{
+					ui.box.show(txt, '绑定帐号');
+                }
+            });
+        } else {
+            $(o).attr('checked', true);
+            $.post(U('public/Widget/addonsRequest'), {
+                addon : "WeiboSyn",
+                hook : "weibo_unbind_publish_weibo",
+                type : $(o).val()
+            }, function(txt) {
+                $(o).removeAttr('checked');
+            });
+        }
+    }
+</script>

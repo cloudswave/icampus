@@ -1,0 +1,12 @@
+@charset "utf-8";
+.no_bg{ background:none}
+.page_title p { line-height: 30px; margin: 0px; padding: 0px; }
+.tab_lw { height: 30px; background-color: #F3F3F3; }
+.tab_lw a { font-size: 14px; display: block; float: left; background-color: #F9F9F9; margin-top: 5px; margin-right: 5px; margin-bottom: 0px; margin-left: 5px; padding-top: 5px; padding-right: 5px; padding-bottom: 2px; padding-left: 5px; }
+.tab_lw a.on { font-weight: bold; font-size: 14px; color: #333333; background-color: #FFFFFF; border-top-width: 1px; border-right-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: solid; border-left-style: solid; border-top-color: #CCCCCC; border-right-color: #CCCCCC; border-left-color: #CCCCCC; margin-bottom: -2px; }
+.giftblock { border: 1px solid #CCC; }
+.giftblock ul { width: 100%; }
+.giftblock ul li { border:1px solid #FFFFFF; float:left; line-height:160%; overflow:hidden; text-align:center; white-space:nowrap; height: 150px; margin: 5px 12px;_margin:5px 10px; display: block; width: 90px; padding-top: 5px; }
+.giftblock ul li.on { border:1px solid #FC3; float:left; line-height:160%; margin:5px; overflow:hidden; text-align:center; white-space:nowrap; height: 150px; background-color: #FFFFCC; width: 85px; }
+.gift_list { background-color: #F5F5F5; clear: both; padding: 10px; margin-top: 20px;}
+.gift_list .gift_box { background-color: #FFF; border: 1px solid #CCC; padding: 5px; margin-bottom:10px; overflow:hidden;}

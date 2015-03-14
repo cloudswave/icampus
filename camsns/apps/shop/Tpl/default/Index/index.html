@@ -1,0 +1,37 @@
+<include file="__THEME__/public_header" />
+<script src="{:APP_PUBLIC_URL}/shop.js"></script>
+<div id="page-wrap">
+	<div id="main-wrap">
+		<div class="boxShadow">
+             <include file="_shop_header" />
+			<div class="mb10 clearfix">
+				<div style="margin:10px;">
+				<php>
+				if(!empty($shop_list['data'])){
+					$flag=1;
+				</php>
+				<volist name="shop_list.data" id="vo">
+					<php>if($flag==1||$flag % 4 == 1){</php>
+					<div id="shop_item_{$vo.sid}" onmouseover="mousemove(this.id)" style="height:330px;width:227px;float:left;border:1px solid #FFF;margin-bottom:10px">
+					<php>}else{</php>
+					<div id="shop_item_{$vo.sid}" onmouseover="mousemove(this.id)" style="height:330px;width:227px;float:left;margin-left:10px;border:1px solid #FFF;margin-bottom:10px">
+					<php>}$flag++;</php>
+						<p><div style="padding:5px"><img src="{$vo.shop_ico}" width="217" height="217" /></div></p>
+						<p><div style="padding:5px;line-height:30px;font-weight:bold;font-size:14px;">{$vo.shop_name}</div></p>
+						<p style="padding:0px 5px 10px 5px" id="last_time_p_{$shop_data.sid}">还有<span id="last_time_{$vo.sid}"><script>showlast(<php>echo $vo['endtime']-time()</php>,'last_time_'+{$vo.sid})</script></span>到期</p>
+						<p style="padding:5px;line-height:30px;font-size:14px;"><a href="index.php?app=shop&mod=Index&act=shop_item&sid={$vo.sid}"><img src="{:APP_PUBLIC_URL}/images/convert.png" style="float:right" /></a><span style="float:left">需要<span style="font-size:16px;font-weight:700;color:#F00;font-family:Arail">{$vo.credit}</span>{$vo.credit_type}</span></p>
+					</div>
+				</volist>
+				<php>
+				}else{
+					echo "<div class='show_box'>暂时还没有商品上架哦！</div>";
+				}
+				</php>
+					<div style="clear:both;"></div>
+				</div>
+            </div>
+        </div>
+	</div>
+</div>
+
+<include file="__THEME__/public_footer" />

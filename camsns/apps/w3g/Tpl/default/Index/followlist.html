@@ -1,0 +1,134 @@
+<include file="../Public/header" />
+<div id="content" interface="followlist">
+    <!-- 个人信息 -->
+    <div id="i_info">
+        <div id="i_info_top">
+            <div id="i_info_top_ava">
+                <!-- 头像 -->
+                <img src="{$profile['avatar_big']}" width=80 height=80>
+            </div>
+            <div id="i_info_top_box">
+                <div id="i_info_top_name">
+                    <!-- 账号昵称 -->
+                    {$profile['uname']}
+                </div>
+                <div id="i_info_top_signature">
+                    <php>if($profile['uid']==$_SESSION['mid']){</php>
+                        <div id="iitsb">
+                            {$profile['intro']}
+                        </div>
+                    <php>}</php>
+                    <!-- <div id="i_info_sendmsg" class="i_info_button">发私信</div> -->
+                <php>if($profile['uid'] != $mid) { </php>
+                    <!-- <a>{$profile['follow_state']['value']}</a> -->
+                    <div id="post-msg-to-uid" class="i_info_button i_info_msg" data-uname="{$profile['uname']}">发私信</div>
+                    <php>if(!$profile['follow_state']['following']){</php>
+                        <div id="i_info_follow" class="i_info_button" sort="topgz" linkto="{:U('w3g/Index/doFollow',array('from'=>'weibo','type'=>'follow','user_id'=>$profile['uid']))}">关注</div>
+                    <php>}else {</php>
+                        <div id="i_info_follow" class="i_info_button i_info_followed" sort="topgz" linkto="{:U('w3g/Index/doFollow',array('from'=>'weibo','type'=>'unfollow','user_id'=>$profile['uid']))}">取消关注</div>
+                    <php>}</php>
+                <php>}</php>
+                </div>
+            </div>
+        </div>
+        <php>
+            if($profile['uid'] != $mid){
+                $iicb='i_info_counts_box';
+            }else{
+                $iicb='i_info_counts_box_i';
+            }
+        </php>
+        <div id="i_info_counts" act="{$_GET['act']}">
+            <div id="i_info_counts_box_weibo" class="{$iicb}" linkto="{:U('w3g/Index/weibo','uid='.$profile['uid'])}">
+                <div class="i_info_counts_title">微博</div>
+                <div class="i_info_counts_num">{$profile.count_info.feed_count}</div>
+            </div>
+            <div id="i_info_counts_box_guanzhu" class="{$iicb}" uid="{$profile.uid}" linkto="{:U('w3g/Index/following','uid='.$profile['uid'])}">
+                <div class="i_info_counts_title">关注</div>
+                <div class="i_info_counts_num">{$profile.count_info.following_count}</div>
+            </div>
+            <div id="i_info_counts_box_fensi" class="{$iicb}" linkto="{:U('w3g/Index/followers','uid='.$profile['uid'])}">
+                <div class="i_info_counts_title">粉丝</div>
+                <div class="i_info_counts_num">{$profile.count_info.follower_count}</div>
+            </div>
+            <php>if($profile['uid']==$_SESSION['mid']){</php>
+            <div id="i_info_counts_box_shoucang" class="{$iicb}" linkto="{:U('w3g/Index/favorite')}">
+                <div class="i_info_counts_title">收藏</div>
+                <div class="i_info_counts_num">{$profile.count_info.favorite_count}</div>
+            </div>
+            <php>}</php>
+        </div>
+    </div>
+    <!-- 个人信息结束 -->
+        <!-- 代码块（1）我的粉丝 -->
+        <volist name="userlist" id="userlist">
+            <div class="fensi_box" uid="{$userlist.user.uid}">
+                <div class="fensi_box_ava">
+                    <img src="{$userlist.user.avatar_small}" width=50 height=50>
+                </div>
+                <div class="fensi_box_info">
+                    <div class="fensi_box_info_name">{$userlist.user.uname}</div>
+                    <div class="fensi_box_info_intro">{$userlist.user.intro}</div>
+                </div>
+                <php>if($userlist[user][follow_state][value] === '加关注'){
+                        if($userlist[user][uid]!=$_SESSION[mid]){
+                </php>
+                    <div class="fensi_box_guanzhu_button fensi_box_guanzhu_button_1" isfollower="{$userlist[user][follow_state][follower]}" sort="fs_list" type="follow" linkto="{:U('w3g/Index/doFollow',array('from'=>'user_followers','type'=>'follow','key'=>$keyword,'user_id'=>$userlist[user][uid],'page'=>$page))}">
+                        {$userlist.user.follow_state.value}
+                    </div>
+                <php>}}else{</php>
+                    <div class="fensi_box_guanzhu_button" sort="fs_list" type="unfollow" isfollower="{$userlist[user][follow_state][follower]}" linkto="{:U('w3g/Index/doFollow',array('from'=>'user_followers','type'=>'unfollow','key'=>$keyword,'user_id'=>$userlist[user][uid],'page'=>$page))}">
+                        {$userlist.user.follow_state.value}
+                    </div>
+                <php>}</php>
+            </div>
+        </volist>
+        <!-- 代码块（1）结束 -->
+    <!-- 分页 -->
+    <php>$url = $type=='user_following'?$count=$bcount:$count=$count</php>
+    <php>$url = $type=='user_following'?'w3g/Index/following':'w3g/Index/followers'</php>
+    <div id="pager_box">
+        <php>if(empty($_GET['page']) || $_GET['page']==1){</php>
+            <a href="javascript:;" link="" id="prev" class="pager_child pager_p_n_none ">上一页</a>
+        <php>}else{</php>
+            <a href="javascript:;" link="{:U($url,array('uid'=>$profile['uid'],'page'=>$page-1))}" id="prev" class="pager_child pager_p_n ">上一页</a>
+        <php>}</php>
+        <select id="page_sel" class="pager_child">
+            <php>
+                $_GET['page']!=0?$get=$_GET['page']:$get=1;
+                $_count = ceil($count/10);
+                if($get<6){
+                    for($i=0;$i<($_count);$i++){
+                        $get==$i+1?$selected='selected="selected"':$selected='';
+                        if($i>9){
+                            break;
+                        }
+            </php>
+            <option value="{:U($url)}&page={$i+1}&uid={$profile['uid']}" <php>echo $selected;</php>>第{$i+1}页</option>
+            <php>   }
+                }elseif($get>=6){
+                    for($i=($get-5);$i<$get;$i++){
+                        $get==$i+1?$selected='selected="selected"':$selected='';
+            </php>
+            <option value="{:U($url)}&page={$i+1}&uid={$profile['uid']}" <php>echo $selected;</php>>第{$i+1}页</option>
+            <php>   }</php>
+            <php>   for($i=$get;$i<($get+5);$i++){
+                        $get==$i+1?$selected='selected="selected"':$selected='';
+                        if($i>$_count-1){
+                            break;
+                        }
+            </php>
+            <option value="{:U($url)}&page={$i+1}&uid={$profile['uid']}" <php>echo $selected;</php>>第{$i+1}页</option>
+            <php>   }</php>
+            <php>}</php>
+            
+        </select>
+        <php>if($get == ($_count)) {</php>
+            <a href="javascript:;" link="" id="next" class="pager_child pager_p_n_none">下一页</a>
+        <php>}else{</php>
+            <a href="javascript:;" link="{:U($url,array('uid'=>$profile['uid'],'page'=>$page+1))}" id="next" class="pager_child pager_p_n">下一页</a>
+        <php>}</php>
+    </div>
+    <!-- 列表结束################################################################################################ -->
+
+<include file="../Public/footer" />

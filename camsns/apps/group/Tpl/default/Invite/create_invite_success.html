@@ -1,0 +1,45 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/Common.js"></script>
+<link  href="../Public/layout.css" rel="stylesheet" type="text/css"/>
+<link  href="../Public/group.css" rel="stylesheet" type="text/css"/>
+<div class="content_holder">
+<div class="content">
+  <!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l">
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox"> <include file="../Public/_groupInfo" />
+      <div class="mainbox_C">
+        <div class=page_title>
+          <!-- page_title begin -->
+          <div class="left" style="width:30px;"><img src="../Public/images/ico_app05.gif" /></div>
+          <div class="left" style="width:638px;">
+            <h2>邀请成功</h2>
+          </div>
+          <div class="left alR lh30" style="width:100px;"> <a href="javascript:history.go(-1)">&lt;&lt;返回上一页</a></div>
+          <div style="clear:left;"></div>
+        </div>
+        <!-- page_title end -->
+        <!-- 切换标签 end  -->
+        <div class="groupBox">
+          <div class="boxL" style="width:100%;">
+            <div class="box1">
+              <div class="msg"> 成功地给{$sendCount}位好友发送了邀请！ </div>
+              <div style="width:300px;"> <br/>
+                <div class="alC">
+                  <input type="button" class="btn_b" value="进入该群" onClick="javascript:window.location='{:U('/Group/',array('gid'=>$groupinfo['id']))}';" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end  -->
+        </div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" /> 

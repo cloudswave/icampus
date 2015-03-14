@@ -1,0 +1,53 @@
+<include file="_header" />
+<div id="container" class="so_main">
+  <div class="page_tit">{$ts['app']['app_alias']}</div>
+  <include file="_tab" />
+  <form action ="{:U('blog/Admin/doChangeBase')}" method="post" >
+    <div class="form2 no_line">
+      <dl class="lineD">
+        <dt>
+          每页显示日志条数：
+        </dt>
+        <dd>
+          <input name="limitpage" class="txt" value ="{$limitpage}" />
+          <p>设置日志列表页每页显示条数。默认为10条记录。</p>
+        </dd>
+      </dl>
+
+      <dl class="lineD">
+        <dt>
+          日志缩略字数：
+        </dt>
+        <dd>
+          <input name="titleshort" class="txt" value ="{$titleshort}" />
+          <p>设置日志的列表上日志内容的缩略字数。默认100个字符</p>
+        </dd>
+      </dl>
+
+      <dl class="lineD">
+        <dt>
+          日志缩略后后缀：
+        </dt>
+        <dd>
+          <input name="suffix" class="txt" value ="{$suffix}" />
+          <p>设置日志缩略后的后缀。默认为"..."</p>
+        </dd>
+      </dl>
+
+      <dl class="lineD">
+        <dt>
+          保留归档月份：
+        </dt>
+        <dd>
+          <input name="fileawaypage" class="txt" value ="{$fileawaypage}" />
+          <p>设置归档显示月份。默认为6个月。推荐6－8个月为佳</p>
+        </dd>
+      </dl>
+
+      <div class="page_btm">
+        <input type="submit" class="btn_b" value="确定" />
+      </div>
+    </div>
+  </form>
+</div>
+<include file="_footer" />

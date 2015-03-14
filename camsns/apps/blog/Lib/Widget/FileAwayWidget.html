@@ -1,0 +1,9 @@
+<div class="right-list">
+<h3>{$title}</h3>
+<ul>
+  <li><i class="ico-piece"></i><div class="info"><a  <?php if( empty( $_GET['date'] )) echo "class='current'"; ?> href="{:U('blog/Index/my')}">{$alldate}</a></div></li>
+  <volist name="date" id="vo">
+    <li><i class="ico-piece"></i><div class="info"><a  <?php if( $_GET['date'] == $key ) echo "class='current' ";?> href="{:U('blog/Index/my', array('date'=>$key))}">{$vo['content']} {$vo['count']} </a></div></li>
+  </volist>
+</ul>
+</div>

@@ -1,0 +1,39 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/common.js"></script>
+<link  href="../Public/layout.css" rel="stylesheet" type="text/css"/>
+<link  href="../Public/group.css" rel="stylesheet" type="text/css"/>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+  <div class="main"> <!-- 右侧内容 begin  -->
+  <div class=page_title> <!-- page_title begin -->
+  	<div class="left" style="width:80px;">
+    	<span class="headpic50"><a href="__APP__/Group/index/gid/{$groupinfo['id']}"><img src="__ROOT__/thumb.php?w=80&h=80&url={$groupinfo['logo']|group_get_photo_url}" alt="{$groupinfo.name}" /></span>
+    </div>
+    <div class="left" style="width:583px;">
+    	<h2> {$groupinfo['name']} </h2>
+      </div>
+    <div class="left alR lh30" style="width:170px;">
+       <a href="JavaScript:window.history.back()">&lt;&lt;返回上一页</a></div>
+  <div class="c"></div>
+</div><!-- page_title end -->
+
+  <div class="groupBox">
+  <div class="boxL" style="width:100%;">
+    <div class="box1">
+    <div class="msg">
+        <h2 class="f14px mb10"><img src="../Public/images/fzcg_xxx.gif" />抱歉，你不是该群成员，无权进行此操作</h2>
+          <input name="button" type="submit" class="btn_b" id="button" value="加入该群" onclick="javascript:joingroup({$groupinfo.id})"/>
+          <input name="button2" type="submit" class="btn_w" id="button2" value="返 回" onclick="JavaScript:window.history.back();" />
+        </div>
+        
+    </div>
+    </div>
+  <!-- end  -->
+  </div>
+  
+  </div><!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />

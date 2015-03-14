@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+/* CSS Document 
+ * Design By niuwentao
+ * Ver: Sociax Team
+ */
+
+/*tab菜单*/
+.tab-menu{/*background:#fff;*/border-bottom:#ccc solid 1px;margin:0 0 10px;height:30px;_border:none 0;_background:url(../image/tab-menu-line.gif) repeat-x left bottom;}
+.tab-menu ul{float:left;height:30px;border-bottom:none 0;border-left:none 0;}
+.tab-menu ul li{float:left;height:30px;margin:0 5px 0 0;line-height:30px;}
+.tab-menu ul li a:link,.tab-menu ul li a:visited{color:#666;display:block;float:left;line-height:30px;height:30px;padding:0 15px;text-align:center;background:#e9ecee;_height:16px;_line-height:16px;_padding:7px 15px;}
+.tab-menu ul li a:hover {text-decoration:none;}
+.tab-menu .current a:link,.tab-menu .current a:visited{border:none 0;background:#fff;color:#333;line-height:30px;padding:0 15px;height:30px;border:1px solid #ccc;overflow:hidden;border-bottom:none;_height:16px;_line-height:16px;_padding:7px 15px;}
+/*.tab-menu .current a .current{background-position:0 -101px;width:8px;height:5px;margin:0 0 0 5px}*/
+.tab-menu .current span{font-weight:700;} 
+.tab-menu .ico-more{border-color: #535353 transparent transparent;}
+.tab-menu .open a:link,.tab-menu .open a:visited{border:1px solid #ccc;background:#fff;}
+
+/*tab菜单*/
+.mod-tab-menu{height: 28px;padding:0 0 10px 0;}
+.tab-menu-app{height:28px;border:#E4E4E4 solid 1px;border-left:none 0;-webkit-border-radius: 2px;-moz-border-radius: 2px;border-radius: 2px;}
+.tab-menu-app ul{float:left;height:28px}
+.tab-menu-app ul li{float:left;position:relative}
+.tab-menu-app ul li a:link, .tab-menu-app ul li a:visited{float:left;display:block;height:16px;padding:7px 10px 5px;padding:8px 10px 4px\9;background:#F7F7F7;color:#535353;border-left:#E4E4E4 solid 1px;}
+.tab-menu-app ul li a:hover{text-decoration:none;}
+.tab-menu-app ul li.current a:link, .tab-menu-app ul li.current a:visited{padding:7px 10px 5px;padding:7px 10px 5px\9;background:#0F8CA8;color:#fff;}
+.tab-menu-app .ico-new-task{font-size:10px;position:absolute;right:0;top:-8px;text-align:center;line-height:16px;color:#fff;width:19px}
+.menu-app-mg{margin:0 20px 15px}
+.mod-tab-menu span.left{height:16px;line-height:16px;padding:7px 10px 3px;display:block}
+.tab-position{margin:0 20px 10px}
+.tab-menu .btn-blue{float:right;height:22px;padding:0;min-width:0;}
+.tab-menu .btn-blue span{padding:3px 10px;}
+
+.tab-menu .arrange{float: right;padding:5px 0 0;}
+
+/*tab菜单*/
+.tab-menu-profile{border:0;overflow:hidden;*zoom:1;}
+.tab-menu-profile li{float:left;margin:0 10px 0 0;background:#f3f5f1;width:80px;height:30px;line-height:30px;text-align:center;}
+.tab-menu-profile li a:link,.tab-menu-profile li a:visited{display:inline-block;font-size:14px;color:#333;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;}
+/*.tab-menu-profile .current{background:#0F8CA8;font-weight:bold;}*/
+.tab-menu-profile .current a:link,.tab-menu-profile .current a:visited{color:#fff;}
+

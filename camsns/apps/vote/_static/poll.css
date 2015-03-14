@@ -1,0 +1,70 @@
+@charset "utf-8";
+
+.vote_joinum{background: url(images/bg_vote.gif) no-repeat 0 0; float: right;
+height: 50px;margin: 4px 0px 0;padding: 0px 0px 0px 10px; color:#999999}
+.vote_joinum div{background: url(images/bg_vote.gif) no-repeat right -50px;float: left;height: 50px;line-height: 18px;padding: 0 10px 0px 0px;
+text-align: center}
+.vote_joinum strong{line-height:30px; color:#EE741A; display:block; font-size:16px}
+
+.LogList {}
+.LogList ul li {float:left;line-height:20px;padding:10px 0;width:100%;border-bottom: 1px dashed #D8D8D8; overflow:hidden}
+.LogList ul li .user {text-align: center; width: 50px; float: left;margin:0}
+.LogList ul li .user .username {height:18px;line-height:18px;padding:5px 0 0;display:block;overflow: hidden;text-overflow: ellipsis}
+.LogList ul li .user .userPic {float:none}
+.LogList ul li .user dt{height:21px;line-height:21px;overflow:hidden;}
+.LogList ul li .user dt .name{height:18px;line-height:18px;padding:5px 0 0 0;display:block;}
+.LogList .userPic {margin:0}
+.LogList ul li .info{margin:0 70px 0 60px;}
+.LogList ul li .info p{line-height:20px}
+.LogList ul li .info .ck{margin:-1px 3px 0 0;_margin:-3px 3px 0 0;vertical-align:middle}
+.LogList ul li .info .title{font-size:14px;height:24px;line-height:24px;overflow:hidden;}
+.LogList ul li .info dd{word-break:break-all;}
+.LogList ul li .c3 {float:left; width:115px; text-align:right; overflow: hidden}
+.LogList ul li .btna {font-weight:normal; display: inline-block; padding-top: 2px; padding-right: 10px; padding-bottom: 2px; padding-left: 10px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-color: #0084F0; border-right-color: #005193; border-bottom-color: #005193; border-left-color: #0084F0; background-color: #005FAB; color: #FFFFFF}
+.poll {height: 20px; background-color: #F0F0F0; margin-right: auto; margin-left: auto; width: 180px}
+.poll .vbg {height: 20px; background-image: url(images/poll.gif)}
+.poll .vbg span {background-image: url(images/poll.gif); background-repeat: no-repeat; float: left; display: block; width: 2px; height: 20px}
+.poll .v1 {background-position: right 0px}
+.poll .v1 span {background-position: 0px 0px}
+.poll .v2 {background-position: right -20px}
+.poll .v2 span {background-position: 0px -20px}
+.poll .v3 {background-position: right -40px}
+.poll .v3 span {background-position: 0px -40px}
+.poll .v4 {background-position: right -60px}
+.poll .v4 span {background-position: 0px -60px}
+.poll .v5 {background-position: right -80px}
+.poll .v5 span {background-position: 0px -80px}
+.poll .v6 {background-position: right -100px}
+.poll .v6 span {background-position: 0px -100px}
+.poll .v7 {background-position: right -120px}
+.poll .v7 span {background-position: 0px -120px}
+.poll .v8 {background-position: right -140px}
+.poll .v8 span {background-position: 0px -140px}
+.poll .v9 {background-position: right -160px}
+.poll .v9 span {background-position: 0px -160px}
+.poll .v10 {background-position: right -180px}
+.poll .v10 span {background-position: 0px -180px}
+.circs {clear: both; line-height: 18px; border-top-width: 1px; border-top-style: dashed; border-top-color: #CCCCCC; padding-top: 5px; padding-bottom: 20px; color: #333333}
+.circs h3 {font-size: 12px; line-height: 25px; color: #999}
+.circs li {line-height: 20px;color: #999;overflow:hidden;*zoom:1;}
+.pollCritique {clear: both}
+.pollCritique .list {clear: both; margin-bottom: 20px}
+.pollCritique .list .tit {background-color: #F7F7F7; border-top-width: 1px; border-top-style: solid; border-top-color: #D8DFEA; line-height: 20px; padding-right: 5px; padding-left: 5px}
+.pollCritique .list .con {padding-top: 5px; padding-bottom: 5px}
+
+.btmlineD{border-bottom:1px dashed #DADADA}
+.topline{border-top:1px solid #DADADA}
+
+/*投票弹窗样式*/
+.pop_vote_edit{width:420px;padding:0 0 10px 0;text-align:center;}
+.pop_vote_edit dt,.pop_vote_edit dd{padding:10px 10px 0}
+.pop_vote_edit .text{width:250px}
+.pollBox{width:100%;_width:99%;overflow:hidden;*zoom:1;}
+.pollBox .layer_vote{overflow: hidden;padding:0;*zoom:1;background-color:#fff;width:100%;_width:99%}
+.pollBox .layer_vote .list_vote li{*zoom:1}
+.pollBox .layer_vote .list_vote .lineS_top .del{vertical-align:middle}
+.pollBox .txt_vote{width:400px;border:1px solid #BDC7D8;font-size:12px;padding:5px}
+
+/*mod-Recommend*/
+.mod_recommend h2{clear: both;display: block;font-size: 16px;padding: 10px 0;font-weight:bold;color:#333;}
+.mod_recommend ul li{height:18px;line-height:18px;padding:0 0 10px}

@@ -1,0 +1,14 @@
+<p>
+  <php>if($is_owner==1) {</php>
+    <a href="{:U('wap/Index/weibo')}">微博[{$profile['count_info']['weibo_count']}]</a> 
+    <a href="{:U('wap/Index/following')}">关注[{$profile['count_info']['following_count']}]</a> 
+    <a href="{:U('wap/Index/followers')}">粉丝[{$profile['count_info']['follower_count']}]</a> 
+    <a href="{:U('wap/Index/atMe')}">@我的<gt name="profile['count_info']['unread_atme']" value="0"><font color=red>({$profile['count_info']['unread_atme']})</font></gt></a>
+	<a href="{:U('wap/Index/replyMe')}">评论我的<gt name="profile['count_info']['unread_comment']" value="0"><font color=red>({$profile['count_info']['unread_comment']})</font></gt></a>
+    <a href="{:U('wap/Index/favorite')}">我的收藏[{$profile['count_info']['favorite_count']}]</a>
+  <php>}else {</php>
+    <a href="{:U('wap/Index/weibo', array('uid'=>$_GET['uid']))}">微博[{$profile['count_info']['weibo_count']}]</a> 
+    <a href="{:U('wap/Index/following', array('uid'=>$_GET['uid']))}">关注[{$profile['count_info']['following_count']}]</a> 
+    <a href="{:U('wap/Index/followers', array('uid'=>$_GET['uid']))}">粉丝[{$profile['count_info']['follower_count']}]</a> 
+  <php>}</php>
+</p>

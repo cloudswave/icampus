@@ -1,0 +1,68 @@
+<div class="search-box boxShadow mb20 extend-foot">
+    <ul class="search-tab">
+        <li <php>if($curType==2){</php>class="current"<php>}</php>><a href="{:U('public/Search/index',array('t'=>2,'a'=>'public','k'=>$keyword))}">微博</a></li>
+        <li <php>if($curType==1){</php>class="current"<php>}</php>><a href="{:U('public/Search/index',array('t'=>1,'a'=>'public','k'=>$keyword))}">用户</a></li>
+        <li <php>if($curType==3){</php>class="current"<php>}</php>><a href="{:U('public/Search/index',array('t'=>3,'a'=>'public','k'=>$keyword))}">标签</a></li>
+    </ul>
+    <div class="search-content clearfix">
+        <div class="search-input">
+        <form action="{:U('public/Search/index')}" name="Search" id="Search" method="get">
+        	<input name="app" value="public" type="hidden" id="app"/>
+            <input name="mod" value="Search" type="hidden" id="mod"/>
+            <input type="hidden" name="t" value="{$curType}" id="t"/>
+        	<input type="hidden" name="a" value="public" id="a"/>
+            <input type="text" value="{$keyword}" id="keyword" name="k"><a href="javascript:void(0);" onclick="$('#Search').submit();return false;" class="btn-search"><span>搜索</span></a>
+        </form>
+        </div>
+        <php>if($keyword){</php>
+            <span class="ml15">共搜到{$searchResult.count}条结果</span>
+        <php>}</php>
+    </div>
+</div>
+<script>
+function doHighlight(a,b){
+    highlightStartTag="<span style='color:red'>";
+    highlightEndTag="</span>";
+    var c="";
+    var i=-1;
+    var d=b.toLowerCase();
+    var e=a.toLowerCase();
+    while(a.length>0){
+        i=e.indexOf(d,i+1);
+        if(i<0){
+            c+=a;
+            a="";
+        }else{
+            if(a.lastIndexOf(">",i)>=a.lastIndexOf("<",i)){
+                if(e.lastIndexOf("/script>",i)>=e.lastIndexOf("<script",i)){
+                    c+=a.substring(0,i)+highlightStartTag+a.substr(i,b.length)+highlightEndTag;
+                    a=a.substr(i+b.length);e=a.toLowerCase();
+                    i=-1;
+                }
+            }
+        }
+    }
+    return c;
+};
+
+$.fn.highlight=function(z){
+    $(this).each(
+        function(){
+            $(this).html(doHighlight($(this).html(),z))
+        });
+    return this;
+}
+
+$(document).ready(function(){
+var key3 = eval('('+'{$jsonKey}'+')');
+var curType = '{$curType}';
+   if(curType == 3){
+        $('.u_tag').highlight(key3);
+    }else{
+        // for(one in key3){
+            $('.contents').highlight(key3);
+            //$('.ask_title').highlight(key3[one]);
+       // }
+    }
+}); 
+</script>

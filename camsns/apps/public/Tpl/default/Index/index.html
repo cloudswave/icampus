@@ -1,0 +1,126 @@
+<include file="__THEME__/public_header" />
+<style type="text/css">
+    @media screen and (max-width: 770px){
+#col3 {
+ display: none;
+}
+}
+
+</style>
+
+
+    <div id="page-wrap">
+        <div id="feedback" class="feedback-fixed"><a href="{:U('public/Index/feedback')}" target="_blank">{:L('PUBLIC_FEEDBACK')}</a></div>
+        <div id="main-wrap">
+            <div id="st-index-grid">
+                <!--左边 -->
+                <include file="__THEME__/public_left" />
+                <div id="col8" class="st-section content-bg boxShadow">
+                    <!--右边-->
+                    <include file="__THEME__/public_right" />
+                    <div id="col5" class="st-index-main">
+                    {:Addons::hook('home_index_left_top')}
+                    <div class="extend-foot">
+                    <!--发布框-->
+                    {:W('SendWeibo',array('title'=>$title, 'topicHtml'=>$initHtml))}
+                    <!--feednav-->
+                    {:Addons::hook('show_ad_space', array('place'=>'home_middle'))}
+                    <div class="feed-nav">
+                    <!--tab menu-->
+                    <div class="tab-menu">
+                        <div class="feed-group">
+                        <php>if(isset($_GET['feed_type']) || !empty($_GET['feed_key'])){</php>
+                         <i class="arrow-nav-t" event-node='feed_tab_btn' title="{:L('PUBLIC_FOLD')}"></i>
+                        <php>}else{</php>
+                        <i class="arrow-nav-b" event-node='feed_tab_btn' title="{:L('PUBLIC_UNFOLD')}"></i>
+                        <php>}</php>
+                        </div>
+                        <ul>
+                            <switch name="type">
+                                <case value="following">
+                                <li class="current" model-node="myfollow"><span><a href="javascript:void(0);" title="{$groupname}">{$groupname|getShort=###, 4}<i class="arrow-down"></i></a></span></li> 
+                                <li><span><a href="{:U('public/Index/index',array('type'=>'all'))}">{:L('PUBLIC_ACTIVITY')}</a></span></li>
+                                <eq name="isChannelOpen" value="true"><li><span><a href="{:U('public/Index/index',array('type'=>'channel'))}">我关注的频道<i class="arrow-down"></i></a></span></li></eq>
+                                </case>
+                                <case value="all">
+                                <li><span><a href="{:U('public/Index/index')}">{:L('PUBLIC_ACTIVITY_STREAM')}<i class="arrow-down"></i></a></span></li>
+                                <li class="current"><span><a href="{:U('public/Index/index',array('type'=>'all'))}">{:L('PUBLIC_ACTIVITY')}</a></span></li>
+                                <eq name="isChannelOpen" value="true"><li><span><a href="{:U('public/Index/index',array('type'=>'channel'))}">我关注的频道<i class="arrow-down"></i></a></span></li></eq>
+                                </case>
+                                <case value="channel">
+                                <li><span><a href="{:U('public/Index/index')}">{:L('PUBLIC_ACTIVITY_STREAM')}<i class="arrow-down"></i></a></span></li>
+                                <li><span><a href="{:U('public/Index/index',array('type'=>'all'))}">{:L('PUBLIC_ACTIVITY')}</a></span></li>
+                                <eq name="isChannelOpen" value="true"><li class="current" model-node="mychannel"><span><a href="javascript:;" title="{$channelname}">{$channelname|getShort=###,6}<i class="arrow-down"></i></a></span></li></eq>
+                                </case>
+                            </switch>
+                        </ul>
+                    </div>
+                    <div class="mod-feed-tab" id="mod-feed-tab" <php>if(!isset($_GET['feed_type']) && empty($_GET['feed_key'])){</php> style="display:none"<php>}</php> >
+                        <ul class="inner-feed-nav">
+                            <li <eq name='feed_type' value=''>class="current"</eq>>
+                                <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>''))}">{:L('PUBLIC_ALL_STREAM')}</a></li>
+                            <li <eq name='feed_type' value='post'>class="current"</eq>>
+                            <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'post'))}">{:L('PUBLIC_ORIGINAL_STREAM')}</a></li>
+                            <li <eq name='feed_type' value='repost'>class="current"</eq>>
+                            <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'repost'))}">{:L('PUBLIC_SHARE_STREAM')}</a></li>
+                            <li <eq name='feed_type' value='postimage'>class="current"</eq>>
+                            <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postimage'))}">{:L('PUBLIC_IMAGE_STREAM')}</a></li>
+                            <li <eq name='feed_type' value='postfile'>class="current"</eq>>
+                            <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postfile'))}">{:L('PUBLIC_FILE_STREAM')}</a></li>
+                            <li <eq name="feed_type" value="postvideo">class="current"</eq>>
+                            <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postvideo'))}">视频</a></li>
+                        </ul>
+                    </div>
+                    </div>
+                    {:Addons::hook('home_index_left_feedtop')}
+                    <!--feed list-->
+                    {:W('FeedList',array('type'=>$type,'feed_type'=>$feed_type,'feed_key'=>$feed_key,'fgid'=>t($_GET['fgid'])))}
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+<div class="layer-group-list" style="display:none" model-node='layer_group_list'>
+<div class="inner">
+<ul>
+    <li><a href="{:U('public/Index/index')}">{:L('PUBLIC_ACTIVITY_STREAM')}</a></li>
+    <volist name='followGroup' id ='f'>
+    <li><a href="{:U('public/Index/index',array('fgid'=>$f['follow_group_id']))}" class='group_title' gid='{$f['follow_group_id']}'>{$f.title}</a></li>
+    </volist>
+    <li class="line"></li>
+    <php> if(count($followGroup) < 10): </php>                                
+    <li><a href="javascript:void(0)" event-node='addFollowgroup'>{:L('PUBLIC_CREATE_GROUP')}</a></li>
+    <php>endif;</php>
+    <li><a href="javascript:void(0)" event-node="editFollowgroup">{:L('PUBLIC_MANAGE_GROUP')}</a></li>
+</ul>
+</div>
+</div>
+
+<div class="layer-channel-group-list" style="display:none" model-node="layer_channel_group_list">
+    <div class="inner">
+        <ul>
+            <li><a href="{:U('public/Index/index',array('type'=>'channel'))}">我关注的频道</a></li>
+            <volist name='channelGroup' id ='f'>
+            <li><a href="{:U('public/Index/index',array('type'=>'channel','fgid'=>$f['channel_category_id']))}" class="group_title" gid="{$f['channel_category_id']}">{$f.title}</a></li>
+            </volist>
+        </ul>
+    </div>
+</div>
+
+<include file="__THEME__/public_footer" />
+</div>
+
+<script>
+
+$('ul.feed_file_list').each(function() {
+    
+    $(this).find('li').each(function(i) {
+        if(i % 2 == 0) {
+            $(this).css("background","#fafafa");
+        }
+    });
+});
+</script>
+<script type="text/javascript" src="__THEME__/js/home/module.home.js"></script>
+<script type="text/javascript" src="__THEME__/js/module.weibo.js"></script>

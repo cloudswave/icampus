@@ -1,0 +1,21 @@
+<ul>
+<volist name="vote_users.data" id="vo">
+  <php>if( true === $vo['following'] || true === $vo['admin'] || true == $vo['Show'] ){</php>
+  <li>
+    <div class="left" style="width:20px;">
+      <php>if( true == $vo['following'] ){</php>
+      <img src="__APP__/images/haoyou.gif">
+      <php>}</php>
+      <php>if( $mid == $vo['uid'] ){</php>
+      <img src="__APP__/images/arrow_y.gif">
+      <php>}</php>
+      &nbsp;
+	</div>
+    <div style="margin:0 0 0 20px;"><a href="{:U('public/Profile/index',array('uid'=>$vo[uid]))}">{$vo.uid|getUserName}</a> {$vo.cTime|friendlyDate}&nbsp;&nbsp;{$ts['app']['app_alias']}给“{$vo.opts}”</div>
+  </li>
+  <php>}</php>
+</volist>
+</ul>
+<php>if($vote_users['nowPage']<$vote_users['totalPages']){</php>
+   <div class="moreFoot"><a href='javascript:void(0)' onclick="voteUsers({$vote_users.nowPage}+1)" style="border-width:0;" id="vote_user_more">查看更多 <span class="more"></span></a></div>
+<php>}</php>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>微校园-我的应用</title>
+
+<?php require_once "apps/head.txt";?>
+    <script type="text/javascript">
+        require([
+            "dojo/dom",
+            "dojo/_base/declare",
+            "dojox/mobile/parser",
+            "dojox/mobile",
+            "dojox/mobile/compat",
+            "dojox/mobile/Button",
+            "dojox/mobile/ScrollableView"
+        ],function(dom){
+            function submitcheck()
+            {
+                var username=dom.byId("username");
+                var password=dom.byId("password");
+                alert(username.value);
+                alert(password.value);
+                if(username.value!="")
+                {
+                    if(password.value!="")
+                    {
+                        return true;
+                    }
+                }
+                alert(password.value);
+                return false;
+
+            }
+        });
+        
+    </script>
+</head>
+<body style="visibility:hidden;">
+   <div id="home" data-dojo-type="dojox.mobile.View" data-dojo-props='selected:true'>
+        <h1 data-dojo-type="dojox.mobile.Heading">图书馆登录</h1>
+        <div data-dojo-type="dojox.mobile.RoundRect" data-dojo-props='shadow:true'>
+         <form action="index.php?app=library&mod=Index&act=login" method="post">
+            <table style="width:100%">
+                <tr>
+                    <td style="text-align:right"><span class="bold">用户名</span></td>
+                    <td style="text-align:left"><input id="username" name="username" data-dojo-type="dojox.mobile.TextBox" intermediateChanges="true" maxLength="10" selectOnClick="true"></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right"><span class="bold">密   码</span></td>
+                    <td style="text-align:left"><input id="password" name="password" data-dojo-type="dojox.mobile.TextBox" intermediateChanges="true" maxLength="20" selectOnClick="true"></td>
+                </tr>
+                <tr>
+                    <td style="text-align:center" colspan="2">
+                              <input id="mblBlueButton" type="submit" class="mblBlueButton" data-dojo-type="dojox.mobile.Button" value="登录" onClick="return submitcheck()"></td>
+                </tr>
+            </table>
+        </form>
+      </div>
+    </div>
+</body>
+</html>

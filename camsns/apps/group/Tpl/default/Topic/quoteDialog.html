@@ -1,0 +1,43 @@
+<div style="z-index:10000;width:750px;">
+<div id="quotes" class="g_quotes" style="width:580px;height:120px;overflow:auto;text-align:left;margin:20px auto auto 105px;">
+   <h5>引用：</h5>
+   <em>原帖由 <space uid="postInfo[uid]" class="fn" target="_blank">@{uname}</space> 于{$postInfo['ctime']|friendlyDate}发表</em>
+   {$postInfo['content']|html_entity_decode=###, ENT_QUOTES, 'UTF-8'}
+</div>
+<form method="post" action="{:U('group/Topic/post')}" onsubmit="return submitReply()">
+<table width="100%" style="margin-top:15px; text-align:left">
+	<tr>
+		<td align="right" valign="top" width="14%"><strong>回复内容：</strong></td>
+		<td align="left">
+		  {:W('Editor',array('contentName'=>'content','value'=>$post['content']))}
+		</td>
+	</tr>
+	<tr>
+		<td height="40" width="14%">
+		</td>
+		<td><input type="hidden" value="{$id}" name="qid" id="qid">
+			<input type="hidden" value="{$gid}" name="gid">
+			<input type="hidden" value="1" name="quote">
+			<input type="hidden" value="{$postInfo['tid']}" name="tid">
+			<input type="submit" onclick="submitReply();" value="发表" id="reply_buttom" class="btn_b"></td>
+	</tr>
+</table>
+</form>
+</div>
+<script>
+function submitReply() {
+	$('#reply_buttom').val('提交中...');
+
+		/*var content = $('#content').val();
+	
+		if(checkContent(content) == 0) {
+			alert('回复内容不能为空');
+			return false;
+		}else{
+			$('#reply_buttom').attr('disabled',true);
+		    $('#reply_buttom').val('数据正在提交...');
+			quoteSubmit();
+		}
+		return false;*/
+}
+</script> 

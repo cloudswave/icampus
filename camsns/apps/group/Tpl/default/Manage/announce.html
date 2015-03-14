@@ -1,0 +1,59 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__APP__/Js/common.js"></script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<script>
+function clearnotice() {
+	if(confirm('你确定要清空群的公告吗？')){
+		document.noticeform.announce.value = '';
+		document.noticeform.submit();
+	}
+}
+function checknotice() {
+	var length = getLength(document.noticeform.announce.value);
+	if (length > 200) {
+		ui.error('公告不能超过200个字')
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+<div class="content_holder">
+<div class="content no_bg boxShadow"> 
+  <!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l"> 
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_C mainC_pad" style="margin-right:0;"> <include file="../Public/manage_group_top" />
+        <div class="groupBox">
+          <div style="width:100%;">
+            <form action="{:U('group/Manage/announce',array('gid'=>$gid))}" method="post" name="noticeform" onSubmit="return checknotice();">
+              <div class="msg" id="msg" style="display:none;">修改成功</div>
+              <h2 class="tit_h2">发布公告(最多可输入200个汉字)</h2>
+              <div class="alR">
+                <textarea name="announce" rows="5" class="text" style="width:99%;height:90px;overflow:auto"  onBlur="this.className='text'" onFocus="this.className='text2'">{$groupinfo['announce']}</textarea>
+                <div class="alR mt10">
+                  <input type="hidden" name="gid" value="{$gid}">
+                  <input type="hidden" name="editsubmit" value="1">
+                  <input name="button" type="submit" class="btn_b" id="button" value="发布" />
+                  <input name="button2" type="button" class="btn_w" id="button2" value="清除" onClick="clearnotice();"/>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- end  --> 
+        </div>
+        <div class="c"></div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  --> 
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" />
+</body>
+</html>

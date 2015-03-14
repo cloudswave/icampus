@@ -1,0 +1,9 @@
+<php>if($user){</php>
+    <ul id="topicUser_{$type}">
+      <volist name="topic_user" id="v1">
+       <li id="user_{$user[$v1]['uid']}" value="{$user[$v1]['uid']}"><a href="{$user[$v1]['space_url']}" class="face" event-node="face_card" uid="{$user[$v1]['uid']}"><img src="{$user[$v1]['avatar_middle']}" /><span>{$user[$v1]['uname']|getShort=4}</span></a></li>
+      </volist>
+    </ul>
+    <php>}else{</php>
+        <p>暂时还没有相关用户</p>
+<php>}</php>

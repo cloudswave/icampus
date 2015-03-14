@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{&SITE_TITLE}</title>
+<link href="__PUBLIC__/admin/css/layout.css" rel="stylesheet"
+	type="text/css" />
+<script type="text/javascript" src="../Public/Js/jquery-1.2.6.js"></script>
+
+<script type="text/javascript">
+      $( function(){
+          $( "select[name='sorder']" ).val("{$sorder}");
+          $( "select[name='eorder']" ).val("{$eorder}");
+          $( "select[name='limit']" ).val("{$limit}");
+          });
+var ctrl = function(name){
+  this.elements = document.getElementsByName('id[]');
+  this.length = this.elements.length;
+}
+ctrl.prototype = {
+reverse:function(){
+          for(i=0;i<this.length;i++){
+            this.elements[i].checked= !this.elements[i].checked;
+          }
+        },
+all:function(){
+      for(i=0;i<this.length;i++){
+        this.elements[i].checked = true;
+      }
+    },
+unAll:function(){
+        for(i=0;i<this.length;i++){
+          this.elements[i].checked = false;
+        }
+      },
+toggle:function(obj){
+         this[obj.checked ? 'all' : 'unAll']();
+       },
+del:function(id,act){
+
+      if(!id){
+        id = [];
+        for(i=0;i<this.length;i++){
+          this.elements[i].checked && id.push(this.elements[i].value);
+        }
+        id = id.join(',');
+
+      }
+      if( confirm( "是否要删除文件？") ){
+
+      	if(!id){ alert('请选择删除的文件');return false;}
+        $.post( '__URL__/delete/',{id:id,act:act},function(text ){
+
+        		window.location.reload();
+            });
+      }
+    }
+    ,
+
+recover:function(id,act){
+	 if(!id){
+        id = [];
+        for(i=0;i<this.length;i++){
+          this.elements[i].checked && id.push(this.elements[i].value);
+        }
+        id = id.join(',');
+
+      }
+      if( confirm( "你确定要还原文件？") ){
+      	if(!id){ alert('请确定要还原的内容？');return false;}
+        $.post( '__URL__/recover/',{id:id,act:act},function(text ){
+        		window.location.reload();
+            });
+      }
+}
+}
+var c = null;
+    </script>
+</head>
+<body>
+<div id="container">
+<div class="tab">
+<ul>
+	<li><a href="__URL__/index/">全局设置</a></li>
+	<li><a href="__URL__/manage/">批量管理</a></li>
+	<li><a href="__URL__/recycle/" class="on">回收站管理</a></li>
+</ul>
+</div>
+<table class="tableborder" width="100%">
+	<tbody>
+		<tr class="top">
+			<td class="border"></td>
+		</tr>
+		<tr>
+			<th class="header">&nbsp;</th>
+		</tr>
+		<tr>
+			<td class="tab">
+			<ul>
+				<li><a href="__URL__/recycle/type/group">群组回收站</a></li>
+				<li><a href="__URL__/recycle/type/file" class="on">文件回收站</a></li>
+				<li><a href="__URL__/recycle/type/topic">帖子回收站</a></li>
+				<li><a href="__URL__/recycle/type/post">帖子回复回收站</a></li>
+				<li><a href="__URL__/recycle/type/album">相册回收站</a></li>
+				<li><a href="__URL__/recycle/type/photo">图片回收站</a></li>
+			</ul>
+			</td>
+		</tr>
+		<tr class="bottom">
+			<td class="border" colspan="5">&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+
+<form action="__URL__/recycle" method="post">
+<table class="tableborder" width="100%">
+	<tbody>
+		<tr class="top">
+			<td class="border" colspan="2"></td>
+		</tr>
+		<tr>
+			<th class="header" colspan="2">查询</th>
+		</tr>
+		<tr class="label">
+			<th>说明</th>
+			<th>条件</th>
+		</tr>
+
+		<tr class="cell">
+			<td class="altbg1"><b>查询类别:</b> <br />
+			<span class="smalltxt">类别（群，帖子，相册，文件）</span></td>
+			<td class="altbg2">文件</td>
+		</tr>
+
+		<tr class="cell">
+			<td class="altbg1"><b>文件名称</b> <br />
+			<span class="smalltxt">根据文件名称,支持模糊查询。</span></td>
+			<td class="altbg2"><input name="title" class="txt"
+				value="{$title}" /></td>
+		</tr>
+
+		<tr class="cell">
+			<td class="altbg1"><b>结果排序</b> <br />
+			</td>
+			<td class="altbg2"><select name="field">
+				<option value="ctime"<eq name="field" value="ctime">selected</eq>
+				>时间排序</option>
+				<option value="id"<eq name="field" value="id">selected</eq>
+				>发布id排序</option>
+
+			</select> <select name="asc">
+				<option value="desc"<eq name="asc" value="desc">selected</eq>
+				>降序</option>
+				<option value="asc"<eq name="asc" value="asc">selected</eq>
+				>升序</option>
+			</select> <select name="limit">
+				<option value="10"<eq name="limit" value="10">selected</eq>
+				>每页显示10条</option>
+				<option value="20"<eq name="limit" value="20">selected</eq>
+				>每页显示20条</option>
+				<option value="30"<eq name="limit" value="30">selected</eq>
+				>每页显示30条</option>
+				<option value="100"<eq name="limit" value="100">selected</eq>
+				>每页显示100条</option>
+			</select></td>
+		</tr>
+		<tr>
+			<td class="footer" colspan="2"><input type="hidden" name="type"
+				value="file" /> <input type="submit" class="submit" value="确定" />
+			</td>
+		</tr>
+	</tbody>
+</table>
+</form>
+<table class="tableborder" width="100%">
+	<tbody>
+		<tr class="top">
+			<td class="border" colspan="6"></td>
+		</tr>
+		<tr>
+			<th class="header" colspan="6">标题</th>
+		</tr>
+		<tr class="label">
+			<th><input type="checkbox" class="checkbox"
+				onclick="c.toggle(this)" />删除</th>
+			<th>编号</th>
+			<br>
+			<th>名称</th>
+			<th>创建者</th>
+		</tr>
+		<volist name="fileData['data']" id="file" key="key">
+		<tr class="cell altbg1" id="file['id']">
+			<td><input type="checkbox" class="checkbox" name="id[]"
+				value="{$file['id']}" /></td>
+			<td>{$key}</td>
+			<td>{$file.name}</td>
+			<td>{$file.uid|getUserName}</td>
+
+
+		</tr>
+		</volist>
+		<tr>
+			<td class="footer" colspan="7">{$fileData['html']}</td>
+		</tr>
+		<tr>
+			<td class="footer" colspan="6">
+			<button type="button" onclick="c.all()">全选</button>
+			<button type="button" onclick="c.unAll()">全不选</button>
+			<button type="button" onclick="c.reverse()">反选</button>
+			<button type="button" onclick="c.del('','file')">删除</button>
+			<button type="button" onclick="c.recover('','file')">还原文件</button>
+			</td>
+		</tr>
+		<tr class="bottom">
+			<td class="border" colspan="6">&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<script type="text/javascript">
+      c = new ctrl('id[]');
+    </script>
+</body>
+</html>

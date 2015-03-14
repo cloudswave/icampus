@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<title>我的课表</title>
+
+	<?php require_once "apps/head.txt";?>
+
+	<script type="text/javascript">
+		require([
+			"dojox/mobile/parser",
+			"dojox/mobile",
+			"dojox/mobile/compat",
+			"dojox/mobile/TabBar"
+		]);
+	</script>
+
+	<style>
+		#list1 li{
+			width: 13%;
+		}
+		#list1 li table{
+			line-height: normal;
+		}
+		#list1 li:nth-child(even){
+			background-color: #97979B;
+		}
+		td {
+			font-size: 17px;
+			color: #ACACAF;
+			text-decoration: none;
+		}
+	</style>
+</head>
+<body style="visibility:hidden;">
+	<div id="group1" data-dojo-type="dojox.mobile.View">
+		<h1 data-dojo-type="dojox.mobile.Heading">我的课表</h1>
+		<ul data-dojo-type="dojox.mobile.TabBar" data-dojo-props='barType:"segmentedControl"' id="list1">
+			<li data-dojo-type="dojox.mobile.TabBarButton" data-dojo-props='moveTo:"view1", selected:true'>一</li>
+			<li data-dojo-type="dojox.mobile.TabBarButton" data-dojo-props='moveTo:"view2"'>二</li>
+			<li data-dojo-type="dojox.mobile.TabBarButton" data-dojo-props='moveTo:"view3"'>三</li>
+			<li data-dojo-type="dojox.mobile.TabBarButton" data-dojo-props='moveTo:"view4"'>四</li>
+			<li data-dojo-type="dojox.mobile.TabBarButton" data-dojo-props='moveTo:"view5"'>五</li>
+			<li data-dojo-type="dojox.mobile.TabBarButton" data-dojo-props='moveTo:"view6"'>六</li>
+			<li data-dojo-type="dojox.mobile.TabBarButton" data-dojo-props='moveTo:"view7"'>天</li>
+		</ul>
+
+		<div id="view1" data-dojo-type="dojox.mobile.View">
+			<ul data-dojo-type="dojox.mobile.EdgeToEdgeList">
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									RFID原理与应用(1班)
+C-1306 10-15周  
+覃颖等
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+			</ul>
+		</div>
+		<div id="view2" data-dojo-type="dojox.mobile.View">
+			<ul data-dojo-type="dojox.mobile.EdgeToEdgeList">
+
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#"></a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									Android程序设计(1班)
+C-1407 6-17周  
+蔡政英等
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									电路与模拟电子技术(1班)
+J-3419 1-12周  
+王苏建等
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#"></a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									就业指导课(二)(11班)
+G-3302 2-4周  
+盛静等
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+			</ul>
+		</div>
+		<div id="view3" data-dojo-type="dojox.mobile.View">
+			<ul data-dojo-type="dojox.mobile.EdgeToEdgeList">
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#">电路与模拟电子技术(1班)
+J-3419 1-12周  
+王苏建等</a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#"></a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#">RFID原理与应用(1班)
+C-1306 9-14周  
+覃颖等</a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#"></a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#"></a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+			</ul>
+		</div>
+		<div id="view4" data-dojo-type="dojox.mobile.View">
+			<ul data-dojo-type="dojox.mobile.EdgeToEdgeList">
+
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#">无线传感器网络(1班)
+B3-212 1-13周  
+徐守志等</a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#">嵌入式系统设计（ARM）(1班)
+J-3313 1-13周  
+田卫新等</a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#"></a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#"></a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#"></a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+			</ul>
+		</div>
+		<div id="view5" data-dojo-type="dojox.mobile.View">
+			<ul data-dojo-type="dojox.mobile.EdgeToEdgeList">
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#">电路与模拟电子技术(1班)
+J-3419 1-12周  
+王苏建等</a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#">电路与模拟电子技术(1班)
+J-3419 1-12周  
+王苏建等</a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#">嵌入式系统设计（ARM）(1班)
+J-3619 1-12周  
+田卫新等</a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#"></a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#"></a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+			</ul>
+		</div>
+
+
+		<div id="view6" data-dojo-type="dojox.mobile.View">
+			<ul data-dojo-type="dojox.mobile.EdgeToEdgeList">
+
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#">形势与政策(三)(29班)
+G-2502 14-14周  
+朱国庆等</a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#">形势与政策(三)(29班)
+G-2502 14-14周  
+朱国庆等</a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#"></a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#"></a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#"></a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+			</ul>
+		</div>
+		<div id="view7" data-dojo-type="dojox.mobile.View">
+			<ul data-dojo-type="dojox.mobile.EdgeToEdgeList">
+
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#">形势与政策(三)(29班)
+G-2502 14-14周  
+朱国庆等</a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#">形势与政策(三)(29班)
+G-2502 14-14周  
+朱国庆等</a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#"></a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#"></a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li data-dojo-type="dojox.mobile.ListItem" style="font-size: 10px;" data-dojo-props='variableHeight:true'>
+									<table>
+						<tbody>
+							<tr>
+								<td>
+									<a class="lnk" href="#"></a><br>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div data-dojo-type="dojox.mobile.View" id="hello">
+		<h1 data-dojo-type="dojox.mobile.Heading">
+			Hello
+		</h1>
+		<ul data-dojo-type="dojox.mobile.EdgeToEdgeList">
+			<li data-dojo-type="dojox.mobile.ListItem" data-dojo-props='moveTo:"group1"'>
+				Hello
+			</li>
+			<li data-dojo-type="dojox.mobile.ListItem" data-dojo-props='moveTo:"group1"'>
+				Carrier
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+@charset "utf-8";
+/*
+blog
+*/
+.BlogBox {}
+.LogList { }
+.LogList ul { padding:10px 0 0px}
+.LogList ul li {  overflow: hidden;*zoom:1; line-height: 20px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px}
+.LogList ul li p{margin: 0px;}
+.LogList ul li p a { }
+.blog_con { }
+.blog_con p { text-indent: 2em; margin: auto}
+.tit_log{ background-color: #f9fbfd; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: #c5daec; padding-bottom: 5px; padding-left: 5px; padding-right: 5px;*zoom:1}
+.tit_log h1{ font-size:14px; line-height:35px;}
+.tit_log span{ line-height: normal; padding-top:5px;}
+.imported-article { background-color:transparent; background-image:url(images/blogmini.gif); background-repeat:no-repeat; background-position:0pt 3px;_background-position:0pt 1px; font-weight:normal; width:200px; display: block; font-size: 12px; line-height: 18px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #cccccc; margin-top: 5px; margin-right: 0pt; margin-bottom: 0pt; margin-left: 0pt; padding-top: 0px; padding-right: 0pt; padding-bottom: 5pt; padding-left: 19px}
+.draft { width: 640px; float: left}
+.draft ul { padding: 0px; margin-top: 10px; margin-right: auto; margin-bottom: 0px; margin-left: auto}
+.draft ul li { clear: both; display:table; overflow: hidden; width: 100%; line-height: 20px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 10px}
+.draft ul li .c1 { width: 6%; float: left; text-align: center; overflow: hidden}
+.draft ul li .c1 input { margin: 0px; padding: 0px}
+.draft ul li .c2 { width: 70%; float: left}
+.draft ul li .c3 { width: 24%; float: left; text-align: center}
+/*.mod_create h4{line-height:30px;padding:0 0 0 50px;font-size:14px; } */
+
+/*发表日志样式*/
+.edit { }
+.edit .c1 {line-height: 20px; font-weight: bold; font-size: 12px;width:90%;}
+.edit .c2 { float: left; width: 86%; overflow: visible}
+.bg_msg { background-image: url(images/rz_bg.gif); background-repeat: no-repeat; background-position: 0px 0px; width: 288px; padding:10px 0 0 0; font-size:14px; margin: 30px auto}
+.bg_msg_btm { background:url(images/rz_bg.gif) no-repeat 0px bottom; padding:0 0 10px 0; line-height:30px}
+.bg_msg_btm td { font-weight: bold; color:#F00; font-size: 14px}
+
+.LogList .edit select{padding:3px}
+
+/*弹窗样式*/
+.pop_add_blogclass{width:420px;padding:0 0 10px 0}
+.pop_add_blogclass dt,.pop_add_blogclass dd{padding:10px 0 0 0}
+.pop_add_blogclass label{padding:0 10px 0 0}
+.pop_add_blogclass dt .text{width:250px}

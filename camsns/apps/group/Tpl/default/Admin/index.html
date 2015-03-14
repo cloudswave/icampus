@@ -1,0 +1,112 @@
+<include file="__THEME__/admin_header" />
+<script type="text/javascript" src="__APP__/Js/json2select.js"></script>
+<div class="so_main"><include file="_tab" />
+<div class="form2">
+<form method="post" action="{:U('group/Admin/index')}">
+<dl class="lineD">
+	<dt>创建群组：</dt>
+	<dd><label><input name="createGroup" type="radio"
+		value="1"<neq name="setting['createGroup']" value="0">checked</neq>>开启</label>
+	<label><input name="createGroup" type="radio" value="0"<eq
+		name="setting['createGroup']" value="0">checked</eq>>关闭</label></dd>
+</dl>
+<dl class="lineD">
+	<dt>是否审核：</dt>
+	<dd><label><input name="createAudit" type="radio"
+		value="1"<neq name="setting['createAudit']" value="0">checked</neq>>是</label>
+	<label><input name="createAudit" type="radio" value="0"<eq
+		name="setting['createAudit']" value="0">checked</eq>>否</label></dd>
+</dl>
+<!-- 
+<dl class="lineD">
+	<dt>积分限制：</dt>
+	<dd><input type="text" name="userCredit"
+		value="{$setting['userCredit']}" /> <label> <select
+		name="creditType" id="ct">
+		<php>
+		foreach($credit_types as $ct){ if($setting['creditType']==$ct['name'])
+		{
+		</php>
+		<option value="{$ct['name']}" selected="selected">{$ct['alias']}</option>
+		<php>
+		} else {
+		</php>
+		<option value="{$ct['name']}">{$ct['alias']}</option>
+		<php>
+		}}
+		</php>
+	</select> </label>
+	<p>创建者的积分必须大于设定积分才允许设置。默认为100经验。0则无任何限制。</p>
+	</dd>
+</dl>
+ -->
+<dl class="lineD">
+	<dt>最多创建群组数：</dt>
+	<dd><input type="text" name="createMaxGroup"
+		value="{$setting['createMaxGroup']}"></dd>
+</dl>
+<!-- <dl class="lineD">
+	<dt>设置热门标签推荐：</dt>
+	<dd><textarea name="hotTags" cols="50" rows="4">{$setting['hotTags']}</textarea>
+	<p>(提示：多个标签用|号分开)</p>
+	</dd>
+</dl> -->
+<dl class="lineD">
+	<dt>最多加入群组数：</dt>
+	<dd><input type="text" name="joinMaxGroup"
+		value="{$setting['joinMaxGroup']}"></dd>
+</dl>
+<dl class="lineD">
+	<dt>群微博：</dt>
+	<dd><label><input name="weibo" type="radio" value="1"<eq 
+		name="setting['weibo']" value="1"> checked </eq>/> 开启</label> <label><input
+		name="weibo" type="radio" value="0"<eq
+		name="setting['weibo']" value="0"> checked </eq>/> 关闭</label></dd>
+</dl>
+<dl class="lineD">
+	<dt>群帖子：</dt>
+	<dd><label><input name="discussion" type="radio" value="1"<eq 
+		name="setting['discussion']" value="1"> checked </eq>/> 开启</label> <label><input
+		name="discussion" type="radio" value="0"<eq
+		name="setting['discussion']" value="0"> checked </eq>/> 关闭</label></dd>
+</dl>
+<dl class="lineD">
+	<dt>文件上传：</dt>
+	<dd><label><input name="uploadFile" type="radio" value="1" <eq 
+		name="setting['uploadFile']" value="1"> checked </eq> onclick="doSwitch(1,'uploadFile')" /> 开启</label> <label><input
+		name="uploadFile" type="radio" value="0" <eq
+		name="setting['uploadFile']" value="0"> checked </eq> onclick="doSwitch(0,'uploadFile')" /> 关闭</label></dd>
+</dl>
+<dl class="uploadFile">
+	<dt>单个文件大小：</dt>
+	<dd><input type="text" name="simpleFileSize"
+		value="{$setting['simpleFileSize']}"> MB</dd>
+</dl>
+<dl class="uploadFile">
+	<dt>文件存储空间大小：</dt>
+	<dd><input type="text" name="spaceSize"
+		value="{$setting['spaceSize']}"> MB</dd>
+</dl>
+<dl class="uploadFile">
+	<dt>上传文件类型：</dt>
+	<dd><input type="text" name="uploadFileType"
+		value="{$setting['uploadFileType']}">
+	<p>若有多个用|分割</p>
+	</dd>
+</dl>
+<div class="page_btm"><input type="hidden" name="editSubmit"
+	value="1"> <input type="submit" class="btn_b" value="确定" /></div>
+</form>
+</div>
+</div>
+<script>
+	function doSwitch(i, name){
+		if (i == 0) {
+			$("."+name).css('display','none');
+		} else if (i == 1) {
+			$("."+name).css('display','block');
+		}
+	}
+	doSwitch({$setting['uploadFile']|intval}, 'uploadFile');
+</script>
+<include file="_footer" />

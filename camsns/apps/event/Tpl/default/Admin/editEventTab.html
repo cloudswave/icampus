@@ -1,0 +1,60 @@
+<div  style="width:250px;padding:20px;text-align:center;">
+<div class="mb10" style="overflow:hidden;*zoom:1;">
+    <label style="line-height:24px;height:24px;padding:0;margin:0;float:left;text-align:right;width:90px;">类型：</label><input id="name" class="txt" value ="{$name}" style="text-align:left;float:left;"/>
+    <if condition="$id"><input type="hidden" id="id" class="txt" value ="{$id}" /></if>
+</div>
+<div >
+    <input type="button" class="btn_b" onclick="editType($('#name').val() )" value="确定" />
+</div>
+</div>
+<script>
+function editType( name ){
+  if(name.replace(/\s+/g,"").length == 0){
+	 ui.error("分类名称不能为空");
+	 return false;
+  }  
+  if($( '#name' ).val().length >19) {
+    ui.error("分类名称不能超过19个字");
+    return false;
+  }
+  <if condition="$id">
+  var id = '{$id}';
+  $.post( '__URL__&act=doEditType',{name:name,id:id},function( res ){
+	  if(res == -2){
+		ui.error("分类名称不能为空");
+		return false;
+	  }
+	  if(res == 0){
+		ui.error("分类名称已存在，请重新填写");
+		return false;
+	  }
+      if( res == 1){
+          ui.box.close();
+          ui.success('修改成功');
+          $('#name_'+id).html('<a href="{:U('/Admin/eventlist')}&type='+id+'">'+name+'</a>');
+      }else{
+          ui.error( "修改失败" );
+      }
+  });
+  <else />
+  $.post( '__URL__&act=doAddType',{name:name},function( id ){
+  if(id == -2){
+	ui.error("分类名称不能为空");
+	return false;
+  }
+  if(id == 0){
+  	ui.error("分类名称已存在，请重新填写");
+  	return false;
+  }else{
+      if( id == 1 ){
+          ui.box.close();
+          ui.success('添加成功');
+          window.location.reload(true);      
+      }else{
+          ui.error( "添加分类失败" );
+      }
+  }
+  });
+  </if>
+}
+</script>

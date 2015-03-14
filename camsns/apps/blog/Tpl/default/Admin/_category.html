@@ -1,0 +1,130 @@
+<include file="_header" />
+<script type="text/javascript">
+      function addCategory( name ){
+        $.post( "index.php?app=blog&mod=Index&act=addCategory",{name:name},function( id ){
+            if( id != -1 ){
+                var html = "<tr class=\"cell altbg1\" id = \"category"+id+"\">\
+                    <td><input type=\"checkbox\" class=\"checkbox\" name=\"id[]\" value=\""+id+"\" /></td>\
+                    <td>"+id+"</td>\
+                    <td ><input type=\"input\" name=\"name["+id+"]\" class=\"txt\" id=\"c"+id+"\" value=\""+name+"\" /></td>\
+                    <td><button type=\"button\" onclick=\"c.del("+id+")\">删除</button></td>\
+                    </tr>\
+                ";
+                $( 'tr['+'id=\'category\']' ).before( html );
+            }else{
+              alert( "添加分类失败" );
+            }
+            });
+      }
+
+
+        var ctrl = function(name){
+            this.elements = document.getElementsByName('id[]');
+            this.length = this.elements.length;
+        }
+
+        ctrl.prototype = {
+            reverse:function(){
+                for(i=0;i<this.length;i++){
+                    this.elements[i].checked= !this.elements[i].checked;
+                }
+            },
+            all:function(){
+                for(i=0;i<this.length;i++){
+                    this.elements[i].checked = true;
+                }
+            },
+            unAll:function(){
+                for(i=0;i<this.length;i++){
+                    this.elements[i].checked = false;
+                }
+            },
+            toggle:function(obj){
+                this[obj.checked ? 'all' : 'unAll']();
+            },
+            del:function(id){
+                if(id==undefined){
+                    id = [];
+                    for(i=0;i<this.length;i++){
+                        this.elements[i].checked && id.push(this.elements[i].value);
+                    }
+                    id = id.join(',');
+                }
+                //alert( id );
+        //ajax删除id
+        $.post( 'index.php?app=blog&mod=Index&act=doDeleteCategory',{id:id},function( text ){
+            //返回1，是只是选择了一个id,返回2，选择了多个
+            if( text == 1 ){
+                 $( 'tr['+'id=\'category'+id+'\']' ).remove();
+              }else if( text == 2 ){
+                  var id_list = id.split( ',' );   
+                  for (var j=0 ; j< id_list.length ; j++   ){
+                      $( 'tr['+'id=\'category'+id_list[j]+'\']' ).remove();
+                  }
+              }else{
+                alert( '删除失败' );
+              }
+            });
+            },
+            edit:function(id){
+                alert('您选择了id为:'+id);
+            }
+        }
+        var c = null;
+</script>
+
+<div id="container" class="so_main">
+<form action="__URL__/doEditCategory/" method="post">
+  <div class="Toolbar_inbox">分类管理</div>
+  <div class="list">
+    <table width="100%" cellspacing="0" cellpadding="0" border="0">
+      <tbody>
+        <tr class="label">
+          <th width="30"><input type="checkbox" class="checkbox" onclick="c.toggle(this)" /></th>
+          <th class="line_l">id</th>
+          <th class="line_l">分类名</th>
+          <th class="line_l">操作</th>
+        </tr>
+        <php>
+      foreach( $category_list as $key=>$vo ){
+      </php>
+      
+      <tr id = 'category{$key}'>
+        <td><input type="checkbox" class="checkbox" name="id[]" value="{$key}" /></td>
+        <td>{$key}</td>
+        <td ><input type='input' name="name[{$key}]" class="txt" id="c{$key}" value="{$vo['name']}" /></td>
+        <td><button type="button" onclick="c.del('{$key}')">删除</button></td>
+      </tr>
+      <php>}</php>
+      </tbody>
+    </table>
+    </div>
+    <div class="list_btm"><a href="###" onclick="c.all()">全选</a> - 
+          <a href="###" onclick="c.unAll()">全不选</a> - 
+          <a href="###" onclick="c.reverse()">反选</a> - 
+          <a href="###" onclick="c.del()">删除</a>
+          <button type="submit" >保存日志分类</button></div>
+    <script type="text/javascript">
+      c = new ctrl('id[]');
+      $( "#allorder option[@value='{$allorder}']" ).attr( 'selected','selected' );
+    </script>
+  </form>
+  <table class="tableborder" width="100%">
+    <tbody>
+      <tr class="top">
+        <td class="border" colspan="4"></td>
+      </tr>
+      <tr></tr>
+      <tr class="label"></tr>
+      <tr class="cell">
+        <td class="altbg1"><span class="smalltxt">添加日志分类</span></td>
+        <td class="altbg2"><input id="newCategory"name="limitpage" class="txt" value ="" /></td>
+        <td class="altbg2"><span class="footer">
+          <input type="submit" class="button" onclick="addCategory($( '#newCategory' ).val() )" value="确定" />
+        </span></td>
+        <td class="altbg2">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+<include file="_footer" />

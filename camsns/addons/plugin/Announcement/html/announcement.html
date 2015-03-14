@@ -1,0 +1,12 @@
+<php>if($announcement){</php>
+<div class="hot-topic  mb20 border-b">
+    <h3>系统公告</h3>
+        <ul>
+        	<volist name="announcement" id="pv">
+        		<li>
+        			<p><i class="icon-notice left" style="margin:2px 0 0 0;"></i><a target="_blank" href="{:U('public/Index/announcement','id='.$pv['id'])}" style="margin: 0 0 0 5px;">{$pv.title|getShort=16,'...'}</a></p>
+        		</li>
+        	</volist>
+        </ul>
+</div>
+<php>}</php>

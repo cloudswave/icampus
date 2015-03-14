@@ -1,0 +1,135 @@
+<include file="_header" />
+
+  <script type="text/javascript" charset="utf-8">
+	
+	    function getChecked() {
+	  	    var ids = new Array();
+	  	    $.each($('table input:checked'), function(i, n){
+	  	        ids.push( $(n).val() );
+	  	    });
+	  	    return ids;
+	  	}
+	
+	  	function checkon(o){
+	  	    if( o.checked == true ){
+	  	        $(o).parents('tr').addClass('bg_on') ;
+	  	    }else{
+	  	        $(o).parents('tr').removeClass('bg_on') ;
+	  	    }
+	  	}
+	
+	  	function checkAll(o){
+	  	    if( o.checked == true ){
+	  	        $('input[name="checkbox"]').attr('checked','true');
+	  	        $('tr[overstyle="on"]').addClass("bg_on");
+	  	    }else{
+	  	        $('input[name="checkbox"]').removeAttr('checked');
+	  	        $('tr[overstyle="on"]').removeClass("bg_on");
+	  	    }
+	  	}
+
+	      var ctrl = function(){
+	  	  }
+	      ctrl.prototype = {
+	  		del:function(id){
+  		        var id = id ? id : getChecked();
+  		        id = id.toString();
+  		        if(id=='' || id==0){
+                    alert('请选择要删除的分类');return false;
+                }
+  		        if( confirm("是否删除分类？") ){
+  		          $.post( '__URL__&act=doDeleteType',{id:id},function(text ){
+  		              if( text == 1 ){
+  		                  ui.success( "删除多个分类分类成功" );
+  		                  var id_list = id.split( ',' );   
+  		                  for (var j=0 ; j< id_list.length ; j++   ){
+  		                      $('#list_'+id_list[j]).remove(); 
+  		                  }
+  		              }else if( text == 2 ){
+  		                  ui.success( "删除成功" );
+  		                  $('#list_'+id).remove();
+                      }else if( text == 0 ){
+                    	  ui.error( "请先转移或清空分类下的活动" );
+  		              }else{
+  		                  ui.error( "删除失败" );
+  		              }
+  		          });
+  		        }
+  		    },
+  		    add_tab:function(id){
+                ui.box.load('__URL__&act=editEventTab&id='+id,'增加类型');
+  		    },
+  		    edit_tab:function(id){
+                ui.box.load('__URL__&act=editEventTab&id='+id,'编辑类型');
+  		    },
+  		  	
+  		    edit:function(id,act){
+  		      if( act == 'recommend' ){
+  		          v= "推荐";
+  		          v2 = "取消推荐";
+  		          act2 = 'cancel';
+  		        
+  		      }else{
+  		          v = "取消推荐";
+  		          v2 = "推荐";
+  		          act2 = 'recommend';
+  		      }
+  		      if( confirm( '是否'+v ) ){
+  		        $.post('__URL__&act=doChangeIsHot',{id:id,type:act},function( text ){
+  		              if( text == 1 ){
+  		              ui.success( "操作成功" );
+  		              $('#button'+id).html('<a href="javascript:void(0);" onclick="c.edit('+id+',\''+act2+'\')">'+v2+'</a>');
+  		           }else{alert(text);
+  		              ui.error( "设置失败" );
+  		           }
+  		        });
+  		      }
+  		    }
+  		}
+        var c = null;
+  </script>
+
+<div class="so_main">
+  <include file="_tab" />
+
+    <div class="Toolbar_inbox">
+        <a href="javascript:void(0);" class="btn_a" onclick="c.add_tab()"><span>添加分类</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除分类</span></a>
+    </div>
+
+    <div class="list">
+      <form action="{:U('/Admin/doEditType')}" method="POST">
+        <table id="event_list" width="100%" border="0" cellspacing="0" cellpedit_tabing="0">
+          <tr>
+            <th style="width:30px;">
+                <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                <label for="checkbox"></label>
+            </th>
+            <th class="line_l">ID</th>
+            <th class="line_l">分类名</th>
+            <th class="line_l">{$ts['app']['app_alias']}数</th>
+            <th class="line_l">操作</th>
+          </tr>
+          <volist name="type_list" id='vo'>
+          <tr id="list_{$vo.id}">
+            <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+            <td>{$vo.id}</td>
+            <td id="name_{$vo.id}"><a href="{:U('/Admin/eventlist',array('type'=>$vo['id']))}">{$vo.name}</a></td>
+            <td>{$count[$vo['id']]|intval}</td>
+            <td><a href="javascript:c.edit_tab({$vo['id']})">编辑</a> <a href="javascript:c.del({$vo['id']})">删除</a></td>
+          </tr>
+          </volist>
+        </table>
+      </form>
+    </div>
+ 
+    <div class="Toolbar_inbox">
+        <a href="javascript:void(0);" class="btn_a" onclick="c.add_tab()"><span>添加分类</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除分类</span></a>
+    </div>
+    
+</div>
+<include file="_footer" />
+<script type="text/javascript">
+c = new ctrl('id[]');
+</script>

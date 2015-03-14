@@ -1,0 +1,55 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<title>{$title}</title>
+
+	<link href="dojox/mobile/themes/common/domButtons/DomButtonRedBadge.css" rel="stylesheet"/>
+	<?php require_once "apps/head.txt";?>
+
+	<script type="text/javascript">
+		require([
+			"dojo/_base/connect",
+			"dojo/dom",
+			"dojo/dom-class",
+			"dojo/ready",
+			"dijit/registry",
+			"dojox/mobile/ListItem",
+			"dojox/mobile/parser",
+			"dojox/mobile",
+			"dojox/mobile/compat"
+			
+		]);
+	</script>
+	<style type="text/css">
+	#item1, #item2, #item3 {
+		font-weight: normal;
+		font-size: 12px;
+	}
+	.subject {
+		font: bold 16px Helvetica;
+	}
+	.textBox {
+		overflow: hidden;
+	}
+	</style>
+</head>
+<body style="visibility:hidden;">
+	<div id="mashups" data-dojo-type="dojox.mobile.View">
+		<h1 data-dojo-type="dojox.mobile.Heading">您当前已借阅书籍</h1>
+		<ul id="list" data-dojo-type="dojox.mobile.RoundRectList" data-dojo-props='append:true,variableHeight:true'>
+			 <volist name="books" id="item">
+					<li data-dojo-type="dojox.mobile.ListItem" data-dojo-props='href:"http://210.42.38.33/bookinfo.aspx?{$item[5]}"'>
+					<div class='textBox'><div class='subject'>{$item[0]}</div>{$item[4]}&nbsp;&nbsp;&nbsp;&nbsp;{$item[2]}<span style='color:red'>&nbsp;&nbsp;&nbsp;&nbsp;到期：{$item[1]}</span></div>
+				
+				</li>
+			</volist>
+		</ul>
+	</div>
+</body>
+</html>

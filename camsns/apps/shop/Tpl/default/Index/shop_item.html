@@ -1,0 +1,117 @@
+<include file="__THEME__/public_header" />
+<style>
+	body{font-family:Microsoft YaHei;}
+	#shop_info p {line-height:25px;font-size:14px;}
+	#shop_info p.title {line-height:35px;font-size:32px;margin-bottom:10px;}
+	#title {font-size:24px;border-bottom:1px solid #888;line-height:35px;}
+	#title a {display:block;width:120px;text-align:center;background:#888;color:#FFF}
+	#content {line-height:30px;font-size:14px;margin-top:20px;}
+	.shop_user {width:200px;padding:7px;float:left}
+	.shop_user div p{line-height:25px;}
+	.side_h2 {font-size:16px;font-weight:bold;margin-bottom:20px;}
+	.side_h2 h2 {margin-bottom:20px;}
+	.hot_shop {margin-bottom:10px;}
+	.hot_shop div p{font-size:14px;line-height:20px;font-weight:normal}
+	.hot_shop .hot_shop_ico {float:left;margin-right:10px;}
+	.hot_convert {margin-bottom:10px;}
+	.hot_convert div p{font-size:14px;line-height:25px;font-weight:normal}
+	.hot_convert .hot_convert_ico {float:left;margin-right:10px;}
+	#submit{width:120px;height:40px;margin-left:30px;margin-top:0px;background:#FFF;position:absolute;font-size:24px;background:url("{:APP_PUBLIC_URL}/images/convert1.png")}
+	#submit:hover{cursor:pointer}
+</style>
+<script>
+var SID={$shop_data.sid};
+</script>
+<script src="{:APP_PUBLIC_URL}/shop.js"></script>
+<div id="page-wrap">
+	<div id="main-wrap">
+		<div class="boxShadow">
+             <include file="_shop_header" />
+			<div class="mb10 clearfix">
+				<div style="margin:10px;">
+					<div style="width:680px;float:left">
+						<div style="width:220px;height:220px;float:left">
+							<img src="{$shop_data.shop_ico}" width="220" height="220" />
+						</div>
+						<div id="shop_info" style="width:420px;float:right;margin-right:10px;height:180px;">
+							<p class="title">{$shop_data.shop_name}</p>
+							<p>还有{$shop_data.shop_num}件，已有{$convert_num}位微友兑换</p>
+							<p>只要<span style="font-size:24px;color:#F00;font-family:Arail">{$shop_data.credit}</span>{$shop_data.credit_type}</p>
+							<p id="last_time_p_{$shop_data.sid}">还有<span id="last_time_{$shop_data.sid}"><script>showlast(<php>echo $shop_data['endtime']-time()</php>,'last_time_{$shop_data.sid}')</script></span>到期</p>
+						</div>
+						<div style="float:right;width:420px;margin-right:10px;height:40px;font-size:32px;position:relative">
+							<input type="text" id="shop_num" style="width:50px;height:40px;font-size:32px;" value="1"> 份
+							<img src="{:APP_PUBLIC_URL}/images/convert1.png" id="submit" border=0 /> 
+						</div>
+						<div style="width:680px;float:left;margin-top:30px;">
+							<div id="title">
+								<a>礼品介绍</a>
+							</div>
+							<div id="content">{$shop_data.use_cont}</div>
+						</div>
+						<div style="width:680px;float:left;margin-top:30px;">
+							<div id="title">
+								<a style="width:180px;">其他兑奖的微友</a>
+							</div>
+							<div id="content">
+							<volist name="shop_user" id="vo">
+								<php>if($vo['uid']!=$mid){</php>
+								<div id="fri_{$vo.uid}" onmouseover="friend_card(this.id)" class="shop_user">
+									<div style="float:left"><img src="{$vo.avatar.avatar_middle}" width="50" height="50" /></div>
+									<div style="float:right;width:140px;">
+										<p><a href="index.php?app=public&mod=Profile&act=index&uid={$vo.uid}">{$vo.uname}</a></p>
+										<php>if($vo['fstatus']==1){</php>
+											<p>已关注</p>
+										<php>}else{</php>
+											<p id="follow_{$vo.uid}"><a onclick="follow({$vo.uid})">+关注他</a></p>
+										<php>}</php>
+									</div>
+									<div style="clear:both"></div>
+								</div>
+								<php>}</php>
+							</volist>
+							</div>
+						</div>
+					</div>
+					<div style="width:259px;float:right;border-left:1px solid #F8F8F8;">
+						<div style="width:450px;height:850px;margin:10px;">
+							<div class="side_h2">
+								<h2>其他热门礼品</h2>
+								<volist name="other_shop.data" id="vo">
+								<div class="hot_shop">
+									<div class="hot_shop_ico">
+										<img src="{$vo.shop_ico}" width="50" height="50" />
+									</div>
+									<div>
+										<p>{$vo.shop_name}</p>
+										<p style="font-size:12px;">已有<span style="font-size:14px;font-weight:bold;color:#F00">{$vo.people}</span>人兑换</p>
+										<p style="margin-right:0px;"><a href="index.php?app=shop&mod=Index&act=shop_item&sid={$vo.sid}">去兑换</a></p>
+									</div>
+								</div>
+								</volist>
+							</div>
+							<div class="side_h2">
+								<h2>兑换排行榜</h2>
+								<volist name="hot_convert.data" id="vo">
+								<div class="hot_convert">
+									<div class="hot_convert_ico">
+										<img src="{$vo.uinfo.avatar.avatar_middle}" width="50" height="50" />
+									</div>
+									<div>
+										<p><a href="index.php?app=public&mod=Profile&act=index&uid={$vo.uid}">{$vo.uinfo.uname}</a></p>
+										<p style="font-size:12px;">兑换了<span style="font-size:14px;color:#F00;font-family:arail">{$vo.connum}</span>件礼品</p>
+									</div>
+								</div>
+								</volist>
+							</div>
+						</div>
+					</div>
+					<div style="clear:both"></div>
+				</div>
+				<div style="width:100%;height:20px;"></div>
+            </div>
+        </div>
+	</div>
+</div>
+
+<include file="__THEME__/public_footer" />

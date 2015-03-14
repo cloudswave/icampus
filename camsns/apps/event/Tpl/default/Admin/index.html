@@ -1,0 +1,91 @@
+<include file="_header" />
+  <div id="container" class="so_main">
+    <include file="_tab" />
+      <form action ="{:U('/Admin/doChangeBase')}" method="POST" >
+        <div class="form2 no_line">
+          <dl class="lineD">
+            <dt>
+              每页显示{$ts['app']['app_alias']}数：
+            </dt>
+            <dd>              
+              <input name="limitpage" class="txt" value ="{$limitpage}" />
+              <p>设置{$ts['app']['app_alias']}列表页每页显示条数。默认为10条记录。</p>
+            </dd>
+          </dl>
+          <!--<dl class="lineD">
+            <dt>
+                                      上传图片限制：
+            </dt>
+            <dd>              
+              <input class="radio" type="radio" name="membel" value="1" <php>if( isset( $membel ) || $membel ){</php> checked  <php>}</php>/>
+               管理员 
+              <input class="radio" type="radio" name="membel" value="0" <php>if( !isset( $membel ) || false == $membel ){</php> checked  <php>}</php>/>
+                成员
+              <p>限制哪部分的人群可以上传图片。</p>
+            </dd>
+          </dl>-->        
+          <!-- <dl class="lineD">
+            <dt>
+                                      上传图片大小限制：
+            </dt>
+            <dd>              
+              <input name="limitphoto" class="txt" value ="{$limitphoto}" />MB
+              <p>受php配置中对上传文件最小的限制影响，以最小的为标准，0为跟随php限制。</p>
+            </dd>
+          </dl> -->
+          <!-- <dl class="lineD">
+            <dt>
+                                      上传图片格式限制：
+            </dt>
+            <dd>              
+              <input name="limitsuffix" class="txt" value ="{$limitsuffix}" />
+              <p>上传图片大小限制,以 ｜ 号分割,默认jpeg|gif|jpg|png。</p>
+            </dd>
+          </dl> -->
+          <dl class="lineD">
+            <dt>
+              开启创建活动：
+            </dt>
+            <dd>
+              <label><input class="radio" type="radio" name="canCreate" value="1" <php>if($canCreate){</php> checked  <php>}</php>/>
+                开启</label>
+              <label><input class="radio" type="radio" name="canCreate" value="0" <php>if(!$canCreate){</php> checked  <php>}</php>/>
+                关闭</label>
+              <p>是否开启创建活动。默认“开启”。</p>
+            </dd>
+          </dl>
+          <dl class="lineD">
+            <dt>
+              积分限制：
+            </dt>
+            <dd>                                     
+              <label>
+              <select name="credit_type" id="ct">
+                  <php>foreach($credit_types as $ct){
+                       if($credit_type==$ct['name']) { </php>
+                       <option value="{$ct['name']}" selected="selected">{$ct['alias']}</option>
+                  <php> } else { </php> 
+                        <option value="{$ct['name']}">{$ct['alias']}</option>
+                  <php> }} </php>                   
+              </select>
+              </label>
+              <input name="credit" class="txt" value ="{$credit}" /> 
+              <p>创建者的积分必须大于设定积分才允许发起活动。默认为100经验。0则无任何限制。</p>
+            </dd>
+          </dl>
+          <dl>
+            <dt>
+              注册时间限制：
+            </dt>
+            <dd>              
+              <input name="limittime" class="txt" value ="{$limittime}" />小时
+              <p>创建者的注册时间必须大于设定的注册时间才允许发起活动。默认24小时。0则不限制。</p>
+            </dd>
+          </dl>
+          <div class="page_btm">
+            <input type="submit" class="btn_b" value="确定" />
+          </div>
+        </div>
+      </form>
+  </div>
+<include file="_footer" />

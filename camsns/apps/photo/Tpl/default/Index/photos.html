@@ -1,0 +1,51 @@
+ <include file="__THEME__/header" />
+<link href="__APP__/css/photo.css" rel="stylesheet" type="text/css" />
+<div class="content_holder">
+<div class="content no_bg boxShadow">
+  <!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l">
+    <div class="mainbox"> <!-- 右侧内容 begin  -->
+      <include file="../Public/_isHotList" />
+      <div class="mainbox_appC">
+          <!-- 看别人的图片时显示  -->
+          <if condition=" $mid neq $uid">
+            <div class="person_info">
+              <div class="userPic"> <a href="{:U('public/Profile/index',array(uid=>$user[uid]))}"><img src="{$uid|getUserFace}" /></a> </div>
+              <div style="padding-left: 70px;">
+                <h2>{$userName}的图片</h2>
+                <p><a href="{:U('public/Profile/index',array(uid=>$uid))}">{$userName}的空间</a> ┊ <a onclick="ui.sendmessage({$uid})" href="javascript:void(0)">发私信</a></p>
+              </div>
+            </div>
+          </if>
+        <div class="tab-menu">
+          <!-- 切换标签 begin  --> 
+          <ul>
+		  <if condition=" $mid neq $uid">
+              <li class="current"><a href="{:U('/Index/photos',array('uid'=>$uid))}"><span>{$uid|getUserName}的全部图片</span></a></li>
+              <else />
+              <li class="current"><a href="{:U('/Index/photos',array('uid'=>$mid))}"><span>我的全部图片</span></a></li>
+			  </if>
+          </ul>
+        </div>
+        <!-- 切换标签 end  -->
+        <div class="photoBox"> 
+          <!-- page_title begin --> 
+          <div class="mod-feed-tab mb20">
+             <ul class="inner-feed-nav">
+                 <li class="current"><a href="#">{$userName}的全部图片({$photos.count})</a></li>
+                 <li><a href="{:U('/Index/albums',array(uid=>$uid))}">{$userName}的{$ts['app']['app_alias']}</a></li><!--  ┊ <a href="__URL__/marked/uid/{$uid}">圈有{$userName}的图片</a>  -->
+             </ul>
+          </div>         
+          <include file="../Public/_photoList" />
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <!-- 右侧内容 end  --> 
+  </div>
+  <!-- 内容 end --> 
+</div>
+</div>
+<include file="__THEME__/public_footer" /> 
+<script src="__APP__/js/preview.js" type="text/javascript"></script>

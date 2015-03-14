@@ -1,0 +1,75 @@
+<div class="pollBox">
+  <div class="LogList">
+    <ul class="search">
+      <volist name="data" id="vo">
+        <li class="lineD_btm" id="event_{$vo['id']}">
+          <div class="left"><span><a href="{:U('event/Index/eventDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}"><img src="{$vo['cover']}" width="100" height="100"/></a></span></div>
+          <div class="right rmenu" style="width: 60px;">
+            <php> if( $vo['eTime']>time()){ </php>                    
+              <span class="cGreen lh35" id="event_satus_{$vo['id']}">                   
+	            <?php if( $vo['admin'] ){ ?>
+              <a href="javascript:endEvent( '{$vo['id']}' )">提前结束</a>
+              <a href="javascript:location.href='{:U('/Index/edit',array('id'=>$vo['id']))}';">编辑活动</a>
+              <a href="javascript:delEvent( '{$vo['id']}' )">删除活动</a>
+                <?php } ?>                    
+              </span>
+              <span class="list_joinIn_{$vo['id']}">
+              <php> if( $vo['follow'] ){ </php>
+              <php> if( $vo['canJoin'] ){ </php>
+                  <php> if( $vo['limitCount'] >0 ){ </php>
+                    <a href="javascript:EventAction( {$vo['id']},{$vo['opts']['allow']},'joinIn')">我要参加</a>
+                  <php> }else{ </php>
+                  <span class="cGreen lh35 pl5">名额已满</span>
+                <php> } </php>
+            <php> }else if( false == $vo['admin'] ){ </php>
+                    <?php if( $vo['opts']['allow'] == 1 && $vo['hasMember'] != 1){ ?>
+                       <a href="javascript:EventDelAction( {$vo['id']},{$vo['opts']['allow']},'joinIn' )">取消申请</a>
+                  <?php }else{ ?>
+                       <a href="javascript:EventDelAction( {$vo['id']},null,'joinIn' )">取消参加</a>
+                  <?php } ?>
+              <php> } </php>
+              <php> } </php>
+            <php> if( $vo['canAtt'] ){ </php>
+                    <span class="list_attention_{$vo['id']}">
+                    <a href="javascript:EventAction( {$vo['id']},null,'attention')">我要关注</a>
+                    </span>
+            <php> }else if( false == $vo['admin'] && true == $vo['canJoin']){ </php>
+                    <span class="list_attention_{$vo['id']}">
+                    <a href="javascript:EventDelAction( {$vo['id']},null,'attention')">取消关注</a>
+                    </span>
+            <php> } </php>
+              </span>
+            <php> }else{ </php>
+              <span class="cGreen lh35 pl5">活动结束</span>
+            <php> } </php>
+          </div>
+          <div style="margin:0 70px 0 115px;">
+            <h3><a href="{:U('//eventDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}">{$vo['title']}</a> <span class="cGray2">[{$vo['type']}]</span></h3>
+            <p><span class="cGray2">活动时间：</span>[{$vo['time']}] </p>
+            <p><span class="cGray2">活动地点：</span>{$vo['address']} {$vo['area']}</p>
+            <p><span class="cGray2">发起人：</span>{$vo['user_info']['space_link']}</p>
+            <php> if( false == empty( $vo['users'] ) ){ </php>
+            <!--<p><span class="cGray2">参与者：</span>
+            <php>$vo['users'];</php>
+              <php> 
+              $_i=0;
+              //dump($vo['users']);
+              foreach( $vo['users'] as $so ) {
+                $_i++;
+                if($_i++ <17){
+              </php>
+              <a href="{:U('public/Profile/',array('uid'=>$so['uid']))}" >{$so['uid']|getUserName}</a> &nbsp;
+              <php> }}</php>
+              <php>if(count($vo['users']) > 8){</php>
+              <a href="{:U('//member', array('id'=>$vo['id'],'action'=>'join'))}">更多>></a>
+              <php>}</php>
+            </p>-->
+            <php> } </php>
+            <p><span class=" mr10"><?php if($vo['opts']['allow'] && $vo['uid'] == $mid) echo "待审人数（".$vo['verifyCount']."）";?> 参加人数（{$vo['joinCount']}） 关注人数（{$vo['attentionCount']}）</span></p>
+          </div>
+        </li>
+      </volist>
+    </ul>
+    <div id="Pagination" class="page">{$html}</div>
+  </div>
+</div>

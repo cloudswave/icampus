@@ -1,0 +1,86 @@
+<include file="__THEME__/header" />
+<include file="__THEME__/editor" />
+<script type="text/javascript" src="__APP__/Js/addBlog.js"></script>
+<div class="content_holder">
+<div class="content no_bg">
+  <include file="../Public/_blog_header" />
+  <div class="main no_l">
+    <div class="mainbox">
+        <include file="../Public/_right_post" />
+        <div class="mainbox_appC">
+        <div class=page_title> 
+            <h2>修改{$ts['app']['app_alias']}</h2>
+        </div>
+        <div class="BlogBox">
+		<form name="addBlog" action="{$link}" method="post" model-node='event_edit' onsubmit="return check()">
+      <div class="LogList">
+        <ul class="edit">
+          <li style="padding:0;">
+            <label>标题: &nbsp;</label>
+            <div class="c1">
+              <select name="category" id="select" onchange="javascript:changeCategory($(this))" class="text mr5">
+                <php>foreach( $blog_category as $value ){</php>
+                <option value="{$value['id']}" <eq name="category['id']" value="$value['id']">selected=selected</eq> title="{$value['name']}">{$value['name']|getShort=8}</option>
+                <php>}</php>
+                <optgroup id="group">
+                <option value="0">+添加分类</option>
+                </optgroup>
+              </select> 
+              <input id="title" name="title" type="text" class="text" style="width:363px;" onBlur="this.className='text'" onFocus="this.className='text2'" maxlength="25" value="{$title}" />
+            </div>
+          </li>
+          <li style="padding:0;">
+            <label>内容: &nbsp;</label>
+            <div class="c1">{:W('Editor',array('contentName'=>'content','value'=>$content,'height'=>'350'))}</div>
+          </li>
+          <li style="padding:0;">
+              <label>访问: &nbsp;</label>
+              <div class="c1">
+              <select name="private" class="text">
+              <option value="0" <eq name="private" value="0">selected="selected"</eq>>所有人可见</option>
+              <option value="2" <eq name="private" value="2">selected="selected"</eq>>仅我的粉丝可见</option>
+              <option value="4" <eq name="private" value="4">selected="selected"</eq>>仅自己可见</option>
+              </select>
+              </div>
+          </li>
+          <li style="padding:0;">
+            <php>if( !empty( $saveId ) ){</php>
+            <li style="padding:0;"><div class="c1"></div></li>
+            <php>}</php>
+            <neq name ="attach" value="">
+              <div class ="attach" style="display:none;">
+                <volist name ="attach" id="vo"></volist>
+                <input class="attach{$vo['id']}" type="hidden" name="attach[]" value="{$vo['id']}|{$vo['name']}"><p>
+                  <span class="attach{$vo['id']}"> [附件] {$vo['name']}</span>
+                  <span class="attach{$vo['id']}"><a class="attach{$vo['id']}" href="javascript:void(0)" onclick="deleteAttach({$vo['id']})">删除</a></span></p>
+                </volist>
+              </div>
+            </neq>
+			
+          <li style="padding:0;">
+  			    <label>&nbsp;</label>
+              <div class="c1" style="height:30px;">
+                <input id="id" name="id" type="hidden" value="{$id}">
+                <input id="uid" name="uid" type="hidden" value="{$uid}">
+                <input id="friendid" name="mention" type="hidden" value="">
+                <input type="submit" class="btn_b" value="发 表" event-node="submit_btn" editor="true"/>
+                <php>if( !empty( $saveId ) ){</php>
+                <input id="saveButton" type="button" onclick="javascript:autosave()"class="btn_b" value="存至草稿箱"/> <span id="autoSave" style="display:none;"></span>
+                <input id="saveId" name="saveId" type="hidden" value="{$saveId}"/>
+                <php>}else{</php>
+                <input id="saveButton" type="button" onclick="javascript:history.back(-1)"class="btn_w" value="取消"/>
+                <php>}</php>
+              </div>
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div>
+    <div class="c"></div>
+</div>
+</div>
+    <div class="c"></div>
+  </div>
+</div>
+</div>
+<include file="__THEME__/public_footer" />

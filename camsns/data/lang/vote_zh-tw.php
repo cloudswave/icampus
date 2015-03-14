@@ -1,0 +1,20 @@
+<?php
+return array(
+'ADVANCE_SETTING'=>'',
+'A_MONTH'=>'',
+'A_WEEK'=>'',
+'A_YEAR'=>'',
+'CANCEL'=>'',
+'CAN_MULTI_SELECT'=>'',
+'CLOCK'=>'',
+'CONFIRM'=>'',
+'CUSTOM'=>'',
+'DEAD_LINE'=>'',
+'HALF_YEAR'=>'',
+'LEAST_TWO_OPTIONS'=>'',
+'OPTION'=>'',
+'OPTIONS_MOST'=>'',
+'SINGLE'=>'',
+'VOTE_SETTING'=>'',
+'VOTE_TOPIC'=>''
+);

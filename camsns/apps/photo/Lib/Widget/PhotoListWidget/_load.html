@@ -1,0 +1,6 @@
+<volist name="data" id="vo">
+<div class="box" id="{$vo['id']}">
+	<a href="{:U('photo/Index/photo',array('id'=>$vo['id'],'aid'=>$vo['albumId'],'uid'=>$vo['userId']))}"><img src="{$vo['savepath']|get_photo_url=###,200,'auto',false}" width="{$vo.width}" height="{$vo.height}" /></a>
+	<p class="f9">来自<a href="{:U('photo/Index/albums',array('uid'=>$vo['userId']))}">{$vo.userId|getUserName}</a>：<a href="{:U('photo/Index/album',array('uid'=>$vo['userId'],'id'=>$vo['albumId']))}">{$vo.albumName}</a>{$vo.info}</p>
+</div>
+</volist>

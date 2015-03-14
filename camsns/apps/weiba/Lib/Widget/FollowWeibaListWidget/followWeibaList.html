@@ -1,0 +1,16 @@
+
+	   <div class="rank-box1">
+	     <h3>我关注的微吧<span class="f9">(共{$weibaListCount|default=0}个)</span></h3>
+	     <ul>
+	        <volist name="weibaList" id="vo">
+	            <li>
+	                <dl>
+	                   <dt><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}"><img src="{$vo.logo}" /></a></dt>
+	                   <dd><p><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}">{$vo.weiba_name}</a></p><p>粉丝数：{$vo.follower_count|default=0}　帖子数：{$vo.thread_count|default=0}</p></dd>
+	                </dl>
+	            </li>
+	        </volist>
+	        
+
+	   </ul>
+	   </div>  

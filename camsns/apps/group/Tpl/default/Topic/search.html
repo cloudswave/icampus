@@ -1,0 +1,64 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/Common.js"></script>
+<link  href="../Public/layout.css" rel="stylesheet" type="text/css"/>
+<link  href="../Public/group.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+     <!-- 用户组件列表 begin -->
+  <!-- 用户组件列表 end -->
+  
+  <div class="main"> <!-- 右侧内容 begin  -->
+  <div class="page_title btmline"> <!-- page_title begin -->
+  	<div class="left" style="width:80px;">
+    	<span class="headpic50"><a href="__APP__/Group/index/gid/{$groupinfo['id']}"><img src="__ROOT__/thumb.php?w=50&h=50&url={$groupinfo['logo']|group_get_photo_url}"/></a></span>
+    </div>
+    <div class="left" style="width:583px;">
+    	<h2><a href="__APP__/Group/index/gid/{$groupinfo.id}">{$groupinfo.name}</a> &gt; <a href="__APP__/Topic/index/gid/{$groupinfo.id}/">话题区</a></h2>
+        <p><a href="__APP__/Topic/index/gid/{$groupinfo.id}">返回话题列表</a></p>
+      </div>
+    <div class="left alR lh30" style="width:170px;">
+       <a href="JavaScript:window.history.back()">&lt;&lt;返回上一页</a></div>
+  <div class="c"></div>
+</div><!-- page_title end -->
+  <!-- 切换标签 end  -->
+  <div class="groupBox">
+  	  <form method="post" action="__URL__/search/gid/{$gid}">
+	  <div class="search_log">
+	  <div class="search_log_box">
+	  	<div class="c1">搜索话题：</div>
+		<div class="c2">
+			<input type="text" class="TextH20" id="title" onFocus="this.className='Text2'" onBlur="this.className='TextH20'" size="40" name="keywords" value="{$keywords}"/>
+			<input type="hidden" name="searchSubmit" value="1">
+			<input type="submit" value="搜索"  class="btn_b"/><br /><input value="cort" name="type" type="radio" <eq name="type" value="cort">checked</eq> />标题或内容  
+			<input name="type" type="radio" value="name" <eq name="type" value="name">checked</eq> />作者</div>
+	  </div>
+	  </form>
+	  <div class="search_log_list">
+	  	<div class="lh30 btmline">共找到{$topiclist.count}个相关的专题</div>
+		<ul>
+		
+		<volist name="topiclist['data']" id="topic">
+		<li class="btmline">
+			<h3><a href="__APP__/Topic/topic/gid/{$topic['gid']}/tid/{$topic['tid']}" target="_blank">{$topic['title']}</a></h3>
+			<p>{$topic['content']}</p>
+			<p class="cGray2"><a href="__TS__/space/{$topic['uid']}" title="{$topic['uid']|getUserName}"><img src="{$topic['uid']|getUserFace}" align="absmiddle" height="20" width="20" /></a> <a href="__TS__/space/{$topic['uid']}" title="{$topic['uid']|getUserName}">{$topic.name}</a>  发表于 <em>{$topic.addtime|friendlyDate}</em></p>
+		</li>
+		</volist>
+		
+		</ul>
+		<div id="pages">{$$topiclist['htmls']}</div>
+	  </div>
+	  </div>
+  <!-- end  -->
+  </div>  </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div><!-- 内容 end -->
+
+<include file="__THEME__/public_footer" />
+
+</body>
+</html>

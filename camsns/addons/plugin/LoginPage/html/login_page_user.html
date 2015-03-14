@@ -1,0 +1,46 @@
+<form action="{:Addons::adminUrl('login_page_user')}" method="post">
+<div class="form2">
+  	    <dl class="lineD">
+      <dt>模块标题：</dt>
+      <dd>
+      <input type="text" name="user_title" value="{$usertitle}" />
+    </dd>
+    </dl>
+    <dl class="lineD">
+              <dt>数据源：</dt>
+      <dd>
+      <input type="radio" name="user_source" value="1" <php>if($usersource==1){</php>checked="checked"<php>}</php> />粉丝最多的用户
+      <input type="radio" name="user_source" value="2" <php>if($usersource==2){</php>checked="checked"<php>}</php> />指定用户
+      <input type="radio" name="user_source" value="3" <php>if($usersource==3){</php>checked="checked"<php>}</php> />认证用户
+      <input type="radio" name="user_source" value="4" <php>if($usersource==4){</php>checked="checked"<php>}</php> />最新注册的用户</dd>
+    </dl>
+    <dl class="lineD" id="userdl" style="display:<php>if($usersource!=2){</php>none<php>}</php>">
+      <dt>指定用户：</dt>
+      <dd>
+      {:W('SearchUser', array('uids'=>$users, 'name'=>'users','follow'=>0, 'max'=>0,'noself'=>0))}  
+    </dd>
+    </dl>
+    <dl class="lineD">
+              <dt>页面展示条数：</dt>
+      <dd>
+     <input type="text" style="width:50px" maxlength="3" class="s-txt" value="{$usernum}" name="user_num">条
+    </dd>
+    </dl>
+    <div class="page_btm">
+    <input type="text" style="display:none">
+      <input type="submit" id="form_submit" value="保存" class="btn_b">
+      
+    </div>
+  	</div></form>
+  	
+ <script>
+ $(function (){
+	 $('input[name="user_source"]').click(function (){
+		 if ($(this).val()==2){
+			 $('#userdl').show();
+		 }else{
+			 $('#userdl').hide();
+		 }
+	 });
+ });
+ </script>

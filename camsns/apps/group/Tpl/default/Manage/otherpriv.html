@@ -1,0 +1,62 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/common.js"></script>
+<link  href="../Public/group.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="content_holder">
+<div class="content boxShadow">
+  <!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l">
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox"> <include file="../Public/_groupInfo" />
+      <div class="mainbox_C">
+  
+   <include file="../Public/manage_group_top" />
+   
+  <div class="groupBox">
+  <div class="boxL" style="width:100%;">
+    <div class="box1">
+    <form method="post" action="__URL__/otherpriv">
+  	<h4>设置以下成员具有邀请权限：</h4>
+  	
+    	<ul class="pb10">
+          <li class="li"><label><input name="invitepriv" type="radio" id="radio" value="0" <eq name="groupinfo['invitepriv']" value="0">checked="checked" </eq> /> 所有成员</label></li>
+          <li class="li"><label><input type="radio" name="invitepriv" id="radio2" value="1" <eq name="groupinfo['invitepriv']" value="1">checked="checked" </eq> /> 仅管理员</label></li>
+        </ul><br />
+
+     <h4>设置以下成员具有创建相册专辑的权限</h4>
+        <ul class="pb10">
+          <li class="li"><label><input name="createalbumpriv" type="radio" id="radio" value="0" <eq name="groupinfo['createalbumpriv']" value="0">checked="checked" </eq> /> 
+          所有成员</label></li>
+          <li class="li"><label><input type="radio" name="createalbumpriv" id="radio2" value="1" <eq name="groupinfo['createalbumpriv']" value="1">checked="checked" </eq> /> 
+          仅管理员</label></li>
+        </ul><br />
+
+     <h4>设置以下成员具有上传照片的权限</h4>
+        <ul class="pb10">
+          <li class="li"><label><input name="uploadpicpriv" type="radio" id="radio" value="0" <eq name="groupinfo['uploadpicpriv']" value="0">checked="checked" </eq> /> 
+          所有成员</label></li>
+          <li class="li"><label><input type="radio" name="uploadpicpriv" id="radio2" value="1" <eq name="groupinfo['uploadpicpriv']" value="1">checked="checked" </eq>/> 
+          仅管理员</label></li>
+        </ul>
+        <input type="hidden" value="1" name="editsubmit">
+         <input type="hidden" value="{$gid}" name="gid">
+        <input name="button" type="submit" class="btn_b mt5" id="button" value="保存" />
+        </form>
+    </div>
+    
+    </div>
+  <!-- end  -->
+  </div> <div class="c"></div>
+  </div>
+      <div class="c"></div>
+    </div> 
+  
+   </div><!-- 右侧内容 end  -->
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" />
+</body>
+</html>

@@ -1,0 +1,11 @@
+<volist name="user" id="vo">
+	<dl model-node="related_dl">
+		<dt><a event-node="face_card" uid="{$vo.userInfo.uid}" href="{$vo.userInfo.space_url}" title="{$vo.userInfo.uname}" class="face"><img src="{$vo.userInfo.avatar_small}" /></a></dt>
+        <dd>
+            <div class="right">{:W('FollowBtn', array('fid'=>$vo['userInfo']['uid'], 'uname'=>$vo['userInfo']['uname'], 'follow_state'=>$vo['followState'], 'refer'=>'following_right'))}</div>
+            <p><span><a event-node="face_card" uid="{$vo.userInfo.uid}" target="_blank" href="{$vo.userInfo.space_url}">{$vo.userInfo.uname|getShort=###,7}</a></span></p>
+            <p><a class="f3"<php>if(!empty($vo['info']['extendMsg'])):</php> event-node="show_extend_msg"<php>endif;</php>>{$vo.info.msg}<php>if(!empty($vo['info']['extendMsg'])):</php><i class="arrow-down-grey"></i><php>endif;</php></a></p>
+        </dd>
+        <dd class="att-box"><i class="arrow-y"></i><p>{$vo.info.extendMsg}</p></dd>
+    </dl>
+</volist>

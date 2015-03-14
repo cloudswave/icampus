@@ -1,0 +1,12 @@
+<link rel="stylesheet" href="__APP__/blog.css" type="text/css" media="screen" charset="utf-8" />
+<link href="__PUBLIC__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+
+<div class=page_tit>
+    <h2><img src="{$ts['app']['icon_url']}" />{$ts['app']['app_alias']}</h2>
+    <ul class="tit_tab">
+        <php>$_header_tab_on_my = in_array(ACTION_NAME, array('my','admin','addBlog')) || (ACTION_NAME == 'show' && $isOwner == '1') ? '1' : '0';</php>
+        <li><a href="{:U('blog/Index/index')}" <eq name="_header_tab_on_my" value="0">class="on"</eq>>{$ts['app']['app_alias']}首页</a></li>
+        <li><a href="{:U('blog/Index/my')}" <eq name="_header_tab_on_my" value="1">class="on"</eq>>我的{$ts['app']['app_alias']}</a></li>
+    </ul>
+    <div class="c"></div>
+</div>

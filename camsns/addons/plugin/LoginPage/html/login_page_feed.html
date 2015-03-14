@@ -1,0 +1,45 @@
+<form action="{:Addons::adminUrl('login_page_feed')}" method="post">
+<div class="form2">
+  	    <dl class="lineD">
+      <dt>模块标题：</dt>
+      <dd>
+      <input type="text" name="feed_title" value="{$feedtitle}" />
+    </dd>
+    </dl>
+    <dl class="lineD">
+              <dt>数据源：</dt>
+      <dd>
+      <input type="radio" name="feed_source" value="1" <php>if($feedsource==1){</php>checked="checked"<php>}</php> />最新发表的微博
+      <input type="radio" name="feed_source" value="2" <php>if($feedsource==2){</php>checked="checked"<php>}</php> />指定用户的微博
+      <input type="radio" name="feed_source" value="3" <php>if($feedsource==3){</php>checked="checked"<php>}</php> />认证用户的微博</dd>
+    </dl>
+    <dl class="lineD" id="feeduserdl" style="display:<php>if($feedsource!=2){</php>none<php>}</php>">
+      <dt>指定用户：</dt>
+      <dd>
+      {:W('SearchUser', array('uids'=>$feeduser, 'name'=>'feed_user','follow'=>0, 'max'=>0,'noself'=>0))}  
+    </dd>
+    </dl>
+    <dl class="lineD">
+              <dt>页面展示条数：</dt>
+      <dd>
+     <input type="text" style="width:50px" maxlength="3" class="s-txt" value="{$feednum}" name="feed_num">条
+    </dd>
+    </dl>
+    <div class="page_btm">
+    <input type="text" style="display:none">
+      <input type="submit" id="form_submit" value="保存" class="btn_b">
+      
+    </div>
+  	</div></form>
+  	
+ <script>
+ $(function (){
+	 $('input[name="feed_source"]').click(function (){
+		 if ($(this).val()==2){
+			 $('#feeduserdl').show();
+		 }else{
+			 $('#feeduserdl').hide();
+		 }
+	 });
+ });
+ </script>

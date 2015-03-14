@@ -1,0 +1,225 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__APP__/Js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<script>
+var get_checked_id = function()
+{
+    var ids = new Array();
+    $.each($('#posts_list input:checked'), function(i, n){
+        var id = $(n).val();
+        if (id > 0) {
+            ids.push( id );
+        }
+    });
+    return ids;
+}
+
+var check_all_post = function(e)
+{
+	var $post_list_input = $('#posts_list input[name="topic_id[]"]');
+	if( e.checked == true ){
+		$post_list_input.attr('checked','true');
+    }else{
+    	$post_list_input.removeAttr('checked');
+    }
+}
+
+var admin_set = function(op)
+{
+	var tids = get_checked_id();
+	if (tids == '') {
+		ui.error('请选择帖子');
+		return false;
+	}
+	if (op == 'del' && !confirm('删除后无法恢复, 确认删除?'))
+		return false;
+		
+	$.ajax({
+		type: "POST",
+		url:  "__URL__&{:C('VAR_ACTION')}="+op,
+		data: 'gid=<?php echo $gid; ?>&tid=' + tids + '&type=thread&ajax=1',
+		dataType:"json",
+		success: function(data)
+		{
+			// 取消勾选
+			$.each($('#posts_list input:checked'), function(i, n){
+		        $(n).removeAttr('checked');
+		    });
+
+			if (data.flag == 1) {
+				ui.success(data.msg);
+				tids = tids.toString().split(',');
+				switch (op) {
+					case 'del':
+						for (i = 0 ; i < tids.length ; i++) {
+							$('#posts_list input[name="topic_id[]"][value="' + tids[i] + '"]').parent().parent().remove();
+						}
+						break;
+					default:
+						setTimeout(function(){location.reload();},1000);
+						break;
+				}
+			} else {
+				ui.error(data.msg);
+			}
+		}
+	});
+}
+// 帖子分类操作
+function addCategoryTab(action){
+	var $form = $('#addcategory');
+	if(action == 'close'){
+		$("input", $form).css('display','none');
+		$("a", $form).css('display','inline');
+	}else{
+		$("input", $form).css('display','inline');
+		$("a", $form).css('display','none');
+	}
+}
+function add_category(){
+	var $form = $('#addcategory');
+	var title = $("input[name='title']", $form).val();
+	if(title.length == 0){
+		ui.error('请输入分类标题！');
+	}else if(getLength(title) > 10){
+		ui.error('分类标题字数不能超过10个字符！');
+	}else{
+		var options = {
+				success: function(txt) {
+					if(txt == -2){
+						ui.error('分类名不能为空');
+					}else if(txt == -1){
+						ui.error('该分类已经存在！');
+					}else if(txt > 0){
+						ui.success('创建分类成功');
+						setTimeout("location.reload()",500);
+					}else{
+						ui.error('创建分类失败！');
+					}
+				}
+			};
+		$form.ajaxSubmit(options);
+	}
+	return false;
+}
+</script>
+<div class="content_holder">
+<div class="content no_bg boxShadow"><!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+<div class="main no_l">
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox"> 
+      <include file="../Public/_groupInfo" />
+      <div id="col5" class="st-index-main">
+      	 <div class="extend-foot">
+  <!--  简单头部 -->
+  <include file="../Public/top" />
+  <div class="mod-feed-tab" id="bbs_category">
+  	<ul class="inner-feed-nav">
+		<li <php>if (is_numeric($cid) && $cid <= 0) {</php>class="current"<php>}</php>><a href="{:U('group/Topic/index', array('gid'=>$gid))}">全部</a></li>
+		<li <php>if ('my' === $cid) {</php>class="current"<php>}</php>><a href="{:U('group/Topic/index', array('gid'=>$gid,'cid'=>'my'))}">我的帖子</a></li>
+		<li <php>if ('dist' === $cid) {</php>class="current"<php>}</php>><a href="{:U('group/Topic/index', array('gid'=>$gid,'cid'=>'dist'))}">精华帖子</a></li>
+		<volist name="category_list" id="_category">
+		<li <if condition="$cid eq $_category['id']">class="current"</if>><a href="{:U('group/Topic/index', array('gid'=>$gid,'cid'=>$_category['id']))}">{$_category.title}</a></li>
+		</volist>
+	</ul>	          	  
+  </div>
+
+  <div style="text-align:right; padding:5px 0;line-height:26px;">
+				          	  <if condition="$isadmin">
+		          		  <if condition="is_numeric($cid) && $cid"><span class="right"><a href="{:U('group/Topic/deleteCategory', array('gid'=>$gid,'cid'=>$cid))}" onclick="return confirm('确定删除当前分类？')"><span style="color:#FF0000;">×</span>删除分类</a>&nbsp;&nbsp;</span></if>
+				          	  <form action="{:U('group/Topic/addCategory')}" id="addcategory" onsubmit="return add_category();" method="post">
+							    <a href="javascript:void(0);" onclick="addCategoryTab()">+创建分类</a>&nbsp;&nbsp;
+								<input type="text" name="title" value="" class="text mb5 alM" style="height:16px;margin:0;display:none;">
+								<input type="hidden" name="gid" value="{$gid}" class="alM" style="display:none;" />
+								<input type="submit" value="保存" class="btn_b" style="display:none;">
+								<input type="button" onclick="addCategoryTab('close')" value="取消" class="btn_w" style="margin:0 5px 0 0;display:none;">
+						  	  </form>
+							  </if>
+</div>
+  <div class="groupBox">
+  		  <if condition="$search_key">
+            <div class="pt10">
+	          <div class="Search_bg">
+	            <div>
+	          	  <form method="post">
+		                <input type="text" name="k"  value="{$search_key}" class="text txt_g"/>
+                        <input type="submit" value="搜帖子" class="btn_b" />
+		          </form>
+		        </div>
+	          </div>
+            <!--搜索结果-->
+            <div style="*zoom:1;overflow:hidden;padding:10px 0 0">   
+                <div class="right"><a href="{:U('group/Topic/add',array('gid'=>$gid))}" class="btn_b">发新帖子</a></div>
+                <div class="lh35"><div class="cGray2 clearL lh30">找到 <span class="cRed">{$search_key}</span> 相关结果约：({$topiclist.count})条</div></div>
+            </div> 
+            <!--//搜索结果-->
+            </div>
+          <else />
+	          <div class="lh35">	            
+	            <span class="right"><a href="{:U('group/Topic/add',array('gid'=>$gid))}" class="btn_b">发新帖子</a></span><em class="cGray2">共{$topiclist['count']}条帖子</em>
+	          </div>
+          </if>
+          <ul class="postsList" id="posts_list">
+            <php>if ($topiclist['data']) {</php>
+            <li class="tit lineS_top">
+              <div class="c1">标题</div>
+              <div class="c2">浏览</div>
+              <div class="c3">回复</div>
+              <div class="c4">作者</div>
+              <div class="c5">回复时间</div>
+            </li>
+            <volist name="topiclist['data']" id="list">
+            <li class="lineS_btm">
+              <div class="c1 OverH">
+                <if condition="$isadmin">
+                <input name="topic_id[]" type="checkbox" value="{$list.id}" class="checkbox" />
+                </if>
+                <php>if($list['dist']){</php><span class="jh" title="精华">精</span><php>}</php>
+                <php>if($list['lock']){</php><span class="sd" title="锁定">锁</span><php>}</php>
+                <php>if($list['top']){</php><span class="zd" title="置顶">顶</span><php>}</php>
+                <a href="{:U('/Topic/topic',array('gid'=>$gid,'tid'=>$list['id']))}" title="{$list['title']}" style="float:left">
+               	    {$list['ctitle']}{$list['title']|getShort=###, 15-get_str_length($list['ctitle']), '...'}</a>
+                	<if condition="$list['attach'] && 'N;' neq $list['attach']"><img src="__APP__/images/ico_acc.gif" alt="附件" title="附件" class="alM" /></if>                
+              </div>
+              <div class="c2">{$list['viewcount']}</div>
+              <div class="c3">{$list['replycount']}</div>
+              <div class="c4"><space uid="list['uid']" class="fn" target="_blank">{uname}</space></div>
+              <div class="c5">{$list['replytime']|friendlyDate}</div>
+            </li>
+            </volist>
+            <if condition="$isadmin">
+            <li>
+              <label><input type="checkbox" value="" onclick="check_all_post(this)" class="checkbox" style="_vertical-align:3px;*margin:0 2px 0 0;" />全选</label>&nbsp;&nbsp;
+              <a href="javascript:;" onclick="admin_set('del');">删除</a>&nbsp;&nbsp;
+              <a href="javascript:;" onclick="admin_set('top');">置顶</a> /
+              <a href="javascript:;" onclick="admin_set('untop');">取消置顶</a>&nbsp;&nbsp;
+              <a href="javascript:;" onclick="admin_set('dist');">设置精华</a> /
+              <a href="javascript:;" onclick="admin_set('undist');">取消精华</a>&nbsp;&nbsp;
+              <a href="javascript:;" onclick="admin_set('lock');">锁定</a> /
+              <a href="javascript:;" onclick="admin_set('unlock');">取消锁定</a>
+            </li>
+            </if>
+            <php>} else if ($search_key) {</php>
+              <li >没有包含“{$search_key}”的帖子</li>
+            <php>} else {</php>
+              <li>还没有帖子</li>
+            <php>}</php>
+          </ul>
+          <div class="page">{$topiclist['html']}</div>
+        </div>
+     </div>
+  </div>
+    <div class="c"></div>
+  
+  </div>
+    </div><!-- 右侧内容 end  -->
+
+</div>
+</div>
+<!-- 内容 end -->
+
+<script type="text/javascript" src="__THEME__/js/jquery.form.js"></script>
+
+<include file="__THEME__/public_footer" />

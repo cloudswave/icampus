@@ -1,0 +1,35 @@
+<dl class="comment_list" model-node="comment_list">        
+<dt><a href="{$userInfo.space_url}"><img width="30" height="30" src="{$userInfo.avatar_tiny}"></a></dt>        
+<dd>
+<p class="cont">
+	{$userInfo.space_link}
+	<volist name="userInfo['groupData'][$userInfo['uid']]" id="v2">
+            <img style="width:auto;height:auto;display:inline;cursor:pointer" src="{$v2['user_group_icon_url']}" title="{$v2['user_group_name']}" />&nbsp;
+        </volist>
+	：<em>{$content}<span class="time">({:L('PUBLIC_JUST')})</span></em>
+</p>
+<p class="info right">
+	<span>
+		<php>if($iscommentdel){</php>
+		<a href="javascript:void(0);" event-node="comment_del" event-args="comment_id={$comment_id}">{:L('PUBLIC_STREAM_DELETE')}</a>
+		<i class="vline">|</i>
+		<php>}</php>
+		<a href="javascript:void(0);" event-args='row_id={$row_id}&app_uid={$app_uid}&to_comment_id={$comment_id}&to_uid={$userInfo.uid}&to_comment_uname={$userInfo.uname}' 
+	event-node="reply_comment">{:L('PUBLIC_STREAM_REPLY')}</a>
+	</span>
+</p>
+</dd>
+<span id="floor_{$comment_id}" class="floor">{$storey}楼</span>
+</dl>
+
+<script type="text/javascript">
+$(function () {
+	var row_id = "{$row_id}";
+	var comment_id = "{$comment_id}";
+	var len = parseInt($('#commentlist_' + row_id).find('dl.comment_list').eq(1).find('span.floor').html()) + 1;
+	if (isNaN(len)) {
+		len = 1;
+	}
+	$('#floor_'+comment_id).html(len+'楼');
+});
+</script>

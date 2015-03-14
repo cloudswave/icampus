@@ -1,0 +1,85 @@
+<style type="text/css">
+.ico-top, .ico-btm {background: url("__THEME__/admin/image/ico_top_btm.gif") no-repeat scroll 0 0 transparent;height:14px;width:12px;}
+.ico-top, .ico-btm {display: inline-block;vertical-align: middle;}
+.ico-top {background-position: -12px 0;}
+.ico-btm {background-position: -24px 0;}
+.ico-top:hover {background-position: 0 0;}
+.ico-btm:hover {background-position: -35px 0;}
+</style>
+
+<div class="Toolbar_inbox">
+  <a href="{:Addons::adminPage('addJPush')}" class="btn_a"><span>自定义通知</span></a>
+</div>
+<div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <th class="line_l">编号</th>
+      <th class="line_l">标题</th>
+      <th class="line_l" width="50%">内容</th>
+      <th class="line_l">额外字段</th>
+      <th class="line_l">推送结果</th>
+      <th class="line_l">推送用户别名</th>
+      <th class="line_l">推送时间</th>
+      <th class="line_l">操作</th>
+    </tr>
+    <volist name="list.data" id="vo">
+    <tr overstyle='on' id="ad_space_{$vo.id}" rel="{$vo.id}">
+      <td>{$vo.sendno}</td>
+      <td>{$vo.n_title}</td>
+      <td>{$vo.n_content}</td>
+      <td>{$vo.n_extras}</td>
+      <td>{$vo.errmsg}</td>
+      <td>{$vo.push_user_alias}</td>
+      <td>{$vo.created}</td>
+      <td>
+    <a href="javascript:;" onclick="del('{$vo.id}')">删除</a>
+      </td>
+    </tr>
+    </volist>
+  </table>
+</div>
+<div class="Toolbar_inbox">
+  <a href="{:Addons::adminPage('addJPush')}" class="btn_a"><span>自定义通知</span></a>
+</div>
+
+<script type="text/javascript">
+/**
+ * 鼠标移动表格效果
+ * @return void
+ */
+$(document).ready(function() {
+  $("tr[overstyle='on']").hover(
+    function () {
+      $(this).addClass("bg_hover");
+    },
+    function () {
+      $(this).removeClass("bg_hover");
+    }
+  );  
+});
+
+
+
+var del= function(id)
+{
+  // 验证数据
+  if(id == '') {
+    ui.error('请选择即将要删除的通知');
+    return false;
+  }
+  // 删除操作
+ $.post("{:Addons::adminUrl('doDel')}", {id:id}, function(res) {
+      if(res.status == 1) {
+        ui.success(res.info);
+    setTimeout("location.reload()",'1000');
+      } else {
+        ui.error(res.info);
+      }
+      return false;
+    }, 'json');
+    return false;
+};
+
+
+
+</script>

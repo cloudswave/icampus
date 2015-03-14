@@ -1,0 +1,98 @@
+@charset "utf-8";
+/*
+活动样式
+*/
+.w578{width:578px}
+/*.content, .mainbox_C{min-height:550px; _height:550px}*/
+.page_title .rmenu{}
+.page_title .rmenu a{display: block; line-height: 20px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #ccc; padding-left: 5px}
+.page_title .rmenu a:hover{color: #fff; background-color: #005FAB; text-decoration: none}
+.boxL{padding:20px 0 0 0}
+.box1{padding-bottom: 20px; overflow: hidden;*zoom:1}
+.box1 h3{font-size: 14px; font-weight: normal; line-height: 30px; padding-left: 5px; border-bottom: 1px solid #A4C4DD;margin:0 0 20px 0}
+.box1 h4{font-size: 12px; font-weight: bold; line-height: 30px}
+.zd{font-size: 12px; background-color: #0066CC; display: inline-block; color: #fff; padding-top: 1px; padding-right: 3px; padding-bottom: 1px; padding-left: 3px; margin-right: 5px; line-height: 140%}
+.jh{font-size: 12px; background-color: #FF9900; display: inline-block; color: #fff; padding-top: 1px; padding-right: 3px; padding-bottom: 1px; padding-left: 3px; margin-right: 5px; line-height: 140%}
+/*小名片*/
+.card_name .info{line-height: 18px;margin: 0 15px 8px;width: 330px;height:auto}
+/*活动信息*/
+/*.info{height: 260px}*/
+.info .img{height: 200px; width: 200px; margin-right: 20px; float: left; text-align: center; overflow: hidden}
+.info .list{float: left; width: auto}
+.info .list ul{margin: 0px; padding: 0px; width: 100%}
+.info .list ul li{clear: both; line-height: 180%}
+.info .list ul li .c1{float: left; width: 66px; color: #999}
+.info .list ul li .c2{float: left; width: auto}
+/*全部活动式*/
+.search li{*zoom:;overflow:hidden;padding: 5px; margin-bottom: 5px}
+.search li h3{font-size: 18px;font-family:"微软雅黑";margin:0 0 15px 0;}
+.search li p{margin:0 0 10px 0; padding: 0px}
+.search li .rmenu{}
+.search li .rmenu a{display: block; line-height: 20px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #CCCCCC; padding-left: 5px}
+.search li .rmenu a:hover{color: #fff; background-color: #F37B03; text-decoration: none}
+.rSort{float: right; width: 200px}
+.rSort h4{font-weight: bold; line-height: 25px; font-size: 12px}
+.rSort ul{width: auto}
+.rSort ul li{line-height: 18px}
+.rSort ul li.on a{color: #FF0000; text-decoration: underline; padding-left: 8px; background-image: url(../images/ico-xiaosanjiao.gif); background-repeat: no-repeat; background-position: 0px center}
+/*参加成员列表*/
+.flist li{padding:5px}
+.flist li h3{font-size:14px; font-weight:bold; line-height:25px }
+.flist li p{line-height:20px; margin:0px; padding:0px }
+/*右边列表样式*/
+.boxR{border-bottom-color:#A4C4DD; border-bottom-style:solid; border-bottom-width:1px; border-left-color:#A4C4DD; border-left-style:solid; border-left-width:1px; border-right-color:#A4C4DD; border-right-style:solid; border-right-width:1px; border-top-color:#A4C4DD; border-top-style:solid; border-top-width:0px; clear:both; margin-bottom:10px; padding-bottom:5px; overflow: hidden}
+.boxR h3{background-color:#E7EFF5; border-top-color:#A4C4DD; border-top-style:solid; border-top-width:1px; font-size:12px; font-weight:bold; line-height:30px; margin:0px; padding:0px 0px 0px 5px }
+.boxR p{line-height:18px; margin:0px; padding:5px 0px 5px 5px }
+.ListBox{clear:both; overflow:hidden; width: 100%}
+.ListBox li{background-image:none; display:block; float:left; height:auto; margin-top:8px; text-align:center; width:60px }
+.ListBox li span{display:block; margin-left:auto; margin-right:auto }
+.ListBox li a{display:block; line-height:20px; margin:0px; padding:0px }
+.ListBox li em{color:#666666; display:block; line-height:16px; text-align:center }
+/*活动成员*/
+.pic50box{overflow: hidden; clear: both}
+.pic50box li{width: 80px; float: left; text-align: center; display: block; background-image: none; margin-top: 8px; height: auto}
+.pic50box li span{display: block}
+.pic50box li a{display: block; line-height: 20px; margin: 0px; padding: 0px}
+/*相册样式*/
+.piclist{width: 640%; margin: 0px; padding: 0px}
+.piclist li{float: left; width: 159px; text-align: center; margin-top: 5px}
+.piclist li img{padding: 2px; border: 1px solid #CCCCCC; margin-bottom: 5px; background-color: #fff}
+/*发起活动*/
+.elist{margin:10px auto 0; padding:0}
+.add_event{width: 100%}
+.add_event dd{clear: both; line-height: 20px; margin-bottom: 10px; display: table; width: 100%}
+.add_event dd label{float: left; width: 17%; text-align: right}
+.add_event dd .txt_impt{vertical-align:-3px;color:#f00;padding:0 5px 0 0}
+.add_event dd .c2{float: left; width: 80%;padding:0 0 0 10px}
+
+.sidebar{float: right; width: 175px}
+.sidebar p{margin: 0 8px; padding: 5px 0}
+.FSort{margin-bottom: 10px;}
+.FSort .tit {font-size: 13px; font-weight: bold; height: 28px; line-height: 28px; margin: 0; padding: 0 0 0 14px}
+.FSort ul{margin: 5px 2px 0; padding: 0}
+.FSort li{margin: 0;width: 100%;line-height: 25px;}
+.FSort li.on{display: inline-block; line-height: 25px; width: 100%}
+.FSort li.on a{font-weight:bold}
+.FSort .btm{clear: both; font-size: 0; height: 5px; line-height: 0}
+.text22{border: 1px solid #BDC7D8; font-size: 12px; height: 22px; line-height: 24px; margin: 0; padding: 0; vertical-align: middle}
+/*推荐专辑*/
+.Recommended li{clear:both; margin:0 0 10px 0;overflow:hidden;}
+.Recommended li .c1{float:left; margin:0 10px 0 0;width:50px;height:50px;}
+.Recommended li .c1 img{margin:4px 0 0 0;width:50px;height:50px;}
+.Recommended li .c2{float:left}
+.Recommended li .c2 dt,.Recommended li .c2 dd{line-height:18px;}
+/*选择城市弹窗*/
+.pop_select_city{width:420px;padding:20px 0;text-align:left;overflow:hidden;*zoom:1}
+.pop_select_city dt,.pop_select_city dd{padding:10px 20px 0}
+.pop_select_city dt{padding:0 20px 10px}
+.pop_select_city dd span{margin:0 5px 0 0}
+.pop_select_city .ullist{list-style-type:none;white-space:nowrap;overflow:hidden;*zoom:1}
+.pop_select_city dd .ullist{list-style-type:none;white-space: nowrap;overflow:hidden;*zoom:1}
+.pop_select_city .ullist li{margin:5px 5px 5px 0;float:left;}
+.pop_select_city .ullist li a{padding:0 3px;display:inline-block;word-break:break-all;}
+.pop_select_city .ullist .on a{border-radius:3px;background-color:#999;padding:0 3px;color:#fff}
+/*---分享微博弹窗---*/
+.pop_share_weibo{padding:0 0 10px 0;width:400px;text-align:left;overflow:hidden;*zoom:1}
+.pop_share_weibo dd,.pop_share_weibo dt{padding:10px 20px 0;overflow:hidden;*zoom:1}
+.pop_share_weibo dt span{/*color:#008000*/}
+.pop_share_weibo .btn_big_disable{width:60px;height:26px;background-position:left top}

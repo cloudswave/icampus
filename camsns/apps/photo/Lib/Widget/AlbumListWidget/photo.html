@@ -1,0 +1,68 @@
+<div class="photo-other clearfix">
+  <h3><span class="right">第{$checkNum|default=0}/{:count($list)}张</span>此相册的其它图片</h3>
+  <div class="pic-list">
+    <ul id="photo_preview">
+      <volist name="list" id="vo">
+      <li page="{:ceil($i / 9)}" <php>if($pageKey != ceil($i / 9)) { echo 'style="display:none;"'; }</php>><a <eq name="vo.id" value="$_GET['id']">class="current"</eq> href="{:U('photo/Index/photo',array('id'=>$vo['id'],'aid'=>$vo['albumId'],'uid'=>$uid))}" class="pic"><img src="{$vo.savepath|get_photo_url=###,100,100}" width="70" height="70"/></a></li>
+      </volist>
+    </ul>
+    <php>if(count($list) > 9):</php>
+    <div class="photo-page"><a onclick="photoPreview.prePage()" class="arrow-left"></a><a onclick="photoPreview.nextPage()" class="arrow-right"></a></div>
+    <php>endif;</php>
+  </div> 
+</div>
+
+<script type="text/javascript">
+/**
+ * 照片预览
+ * @param string ulId UL的ID
+ * @param integer num 显示个数
+ * @return void
+ */
+var photoPreview = (function (ulId, num, pageKey) {
+  var $ul = $('#' + ulId),
+      $lis = $ul.find('li'),
+      that ={},
+      page = pageKey || 1;
+
+  /**
+   * 向前翻页
+   * @return void
+   */
+  var prePage = function () {
+    if (page === 1) {
+      return false;
+    }
+    page -= 1;
+    hideAllLi();
+    $('li[page="' + page + '"]').show();
+  };
+
+  /**
+   * 向后翻页
+   * @return void
+   */
+  var nextPage = function () {
+    if (Math.ceil($lis.length / num) === page) {
+      return false;
+    }
+    page += 1;
+    hideAllLi();
+    $('li[page="' + page + '"]').show();
+  };
+
+  /**
+   * 隐藏全部的LI标签
+   * @return void
+   */
+  var hideAllLi = function () {
+    $lis.hide();
+  };
+
+  // 绑定事件
+  that.prePage = prePage;
+  that.nextPage = nextPage;
+
+  return that;
+}('photo_preview', 9, {$pageKey}));
+</script>

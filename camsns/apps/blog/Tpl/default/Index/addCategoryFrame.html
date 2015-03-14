@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ymPrompt/ymPrompt_Ex.js"></script>
+
+<style type="text/css">
+    <!--
+    .pop {
+        text-align: left;
+        width: 100%;
+        font-size: 12px;
+    }
+    .left { float: left; }
+    .pop .tit {
+        background-image: url(__APP__/images/pop_tit.jpg);
+        background-repeat: repeat-x;
+        line-height: 27px;
+        border: 1px solid #3a84c3;
+        margin: 1px;
+        font-weight: bold;
+        color: #FFFFFF;
+        padding-left: 5px;
+    }
+    .pop .con{
+        padding: 5px;
+        margin-bottom: 5px;
+        font-size: 12px;
+    }
+    .pop .con .msg {
+        background-color: #fffff5;
+        border: 1px solid #ffe361;
+        color: #FF0000;
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+    .pop .btm{
+        text-align: right
+
+;
+        padding: 5px;
+        clear: both;
+        border-top-width: 1px;
+        border-top-style: solid;
+        border-top-color: #CCCCCC;
+    }
+    .gd {
+        overflow: auto;
+        border: 1px solid #C6DDEE;
+        height: 140px;
+        line-height: 25px;
+        padding: 5px;
+        width: 95%;
+    }
+    .btn2{
+	background-color:#4291C3;
+	border-top-width:0px;
+	border-right-width:0px;
+	border-bottom-width:0px;
+	border-left-width:0px;
+	border-top-style:none;
+	border-right-style:none;
+	border-bottom-style:none;
+	border-left-style:none;
+	background-image:url(__APP__/images/btn_3.gif);
+	background-repeat:no-repeat;
+	background-position:0px 0px;
+	height:22px;
+	width:56px;
+	font-size:12px;
+	margin-right:5px;
+	color: #FFFFFF;
+    }
+    .btn3{
+        background-color:#4291C3;
+        border-top-width:0px;
+        border-right-width:0px;
+        border-bottom-width:0px;
+        border-left-width:0px;
+        border-top-style:none;
+        border-right-style:none;
+        border-bottom-style:none;
+        border-left-style:none;
+        background-image:url(__APP__/images/btn_33.gif);
+        background-repeat:no-repeat;
+        background-position:0px 0px;
+        height:22px;
+        width:56px;
+        font-size:12px;
+        color: #000000;
+    }
+body {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+    -->
+</style>
+
+<script type="text/javascript">
+    <!--
+    //指定当前组模块URL地址
+    var	URL		=	'__URL__';
+    var	APP		=	'__APP__';
+    var	PUBLIC	=	'__PUBLIC__';
+    var	ROOT	=	'__ROOT__';
+    //-->
+</script>
+<script type="text/javascript" charset="utf-8">
+/*
+ * addCategory 
+ * 添加分类
+ * @param category $category 
+ * @access public
+ * @return void
+ */
+function addCategory(category){
+    if( category != "" ){
+      $.post( APP+"/Index/addCategory",{name:category},function( txt ){
+        if( txt != -1 ){
+          select = $( '#select' );
+          select.append( select.children().clone().val(txt).html(category));
+          ymPrompt.close();
+          }else{
+          Alert( '添加失败' );
+        }
+   })
+    
+  }else{
+    Alert( '添加失败' );
+  }
+}
+</script>
+<body>
+
+<div class="pop">
+    <div class="con">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="height:120px;">
+            <tr>
+              <td width="20%">请输入分类名:</td>
+                <td width="80%" valign="top" id="tishi"><input id="category" name="category" class="Text" /></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div class="btm" id="f_button">
+        <input name="input" type="button" class="btn_b" value="确 定"  onclick="addCategory($( '#category' ).val())"/>
+        <input name="input2" type="button" class="btn_w" value="取 消" onclick="ymPrompt.close();" />
+    </div>
+</div>
+</body>

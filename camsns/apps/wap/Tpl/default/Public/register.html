@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta name="viewport" content="width=device-width; initial-scale=1.0; minimum-scale=1.0; maximum-scale=2.0"/>
+<meta name="MobileOptimized" content="240"/>
+<title>{$ts['site']['site_name']} WAP版</title>
+<link href="../Public/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="top">欢迎注册 {$ts['site']['site_name']}</div>
+<div class="addtbox"> 
+    <form action="{:U('wap/Public/doRegister')}" method="post">
+        电子邮箱：<br />
+        <input type="text" name="email" value="{$email}" /><br />
+        昵称：<br />
+        <input type="text" name="uname" value="{$uname}" /><br />
+        密码：<br />
+        <input type="text" name="password" value="{$password}" /><br />
+        确认密码：<br />
+        <input type="text" name="re_password" value="{$re_password}" /><br />
+        <input type="submit" name="submit" value="注册" /> 
+    </form>
+</div>
+<div><a href="{:U('wap/Public/wapToNormal')}">访问普通版</a></div>
+</body>
+</html>

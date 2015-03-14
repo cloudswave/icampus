@@ -1,0 +1,7 @@
+<span id='{$diggId}{$feed_id}' rel='{$digg_count}'>
+<php>if(!isset($diggArr[$feed_id])):</php>
+   	<a href="javascript:;" onclick="core.digg.addDigg({$feed_id})">赞<if condition='!empty($digg_count)'>({$digg_count})</if></a>
+<php>else:</php>
+   <a href="javascript:;" onclick="core.digg.delDigg({$feed_id})">已赞<if condition='!empty($digg_count)'>({$digg_count})</if></a>
+<php>endif;</php>
+</span>

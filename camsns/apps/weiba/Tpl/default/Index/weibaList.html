@@ -1,0 +1,50 @@
+<include file="__THEME__/public_header" />
+
+<link href="__APP__/weiba.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+    
+<div id="page-wrap">
+	   <div id="main-wrap">
+	   	   <div class="boxShadow"> 	 
+             <include file="_weiba_header" />
+           
+	   	   	   <div class="mb10 clearfix">
+
+                 <include file="_right" />
+
+                 <div id="col5" class="st-index-main">
+                    <div class="extend-foot">
+                        <div class="weiba-type">
+                                                                分类：<a href="{:U('weiba/Index/weibaList')}" <php>if(!$cid){</php>class="current"<php>}</php>>全部</a>
+                           <volist name="weibacate" id="c">
+                            <a href="{:U('weiba/Index/weibaList',array('cid'=>$key))}" <php>if($cid==$key){</php>class="current"<php>}</php>>{$c}</a>
+                        	</volist>
+                        </div>
+                        <div class="weiba-sort f9 clearfix">
+                            <span>共有{$weibaList.count}个微吧</span>
+                        </div>
+                        <div class="weiba-list mb20 clearfix">
+                            <volist name="weibaList.data" id="vo">
+                                <dl>
+                                     <dt><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}"><img src="{$vo.logo}" /></a></dt>
+                                     <dd>
+                                     <php>if($mid){</php>
+                                        <div class="right"><!-- <a class="btn-cancel"><span>关注</span></a> -->
+                                        {:W('FollowWeiba',array('weiba_id'=>$vo['weiba_id'],'follow_state'=>array('following'=>$vo['following'])))}</div>
+                                        <php>}</php>
+                                        <p class="weiba_name"><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}">{$vo.weiba_name}</a></p><p class="f9 mb10">粉丝数：{$vo.follower_count}<span class="pl5 pr5">/</span>帖子数：{$vo.thread_count}</p><p class="f3">{$vo.intro}</p>
+                                     </dd>
+                                  </dl>  
+                            </volist>
+                            <div id="page" class="page" style="">
+                                {$weibaList.html}
+                            </div>
+                       </div> 
+                     </div>
+                 </div>
+           	 </div>
+          </div>
+	   </div>
+</div>
+
+<include file="__THEME__/public_footer" />

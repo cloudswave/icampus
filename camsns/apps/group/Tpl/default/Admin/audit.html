@@ -1,0 +1,169 @@
+<include file="__THEME__/admin_header" />
+<script>
+var gid = '{$group.star_group_id}';
+var gtitle  = '{$group.star_group_title}';
+var gstatus = '<if condition="$group['top_group_id']">{$group.top_group_title} - </if>{$group.star_group_title}';
+
+function addGroupTab(type,action){
+	var form = '#addgroup_'+type;
+	if(action == 'close'){
+		$(form+" input").css('display','none');
+		$(form+" a[href='javascript:void(0);']").css('display','inline');
+	}else{
+		$(form+" input").css('display','inline');
+		$(form+" a[href='javascript:void(0);']").css('display','none');
+	}
+}
+function add_group(type){
+	var form = '#addgroup_'+type;
+	var title = $(form+" input[name='title']").val();
+	if(title.length == 0){
+		ui.error('请输入分组标题！');
+	}else if(title.length>10){
+		ui.error('分组标题字数不能超过10个字符！');
+	}else{
+		var options = {
+				success: function(txt) {
+					if(txt == -2){
+						ui.error('上级分组不存在！');
+					}else if(txt == -1){
+						ui.error('该分组已经存在！');
+					}else if(txt>0){
+						ui.success('创建分组成功');
+						setInterval("location.reload()",500);
+					}else{
+						ui.error('创建分组失败！');
+					}
+				} 
+			};		
+		$(form).ajaxSubmit( options );
+	}
+	return false;
+}
+
+function group_order(type){
+	var $form = $('#group_order_'+type);
+	var options = {
+			success: function(txt) {
+				if(txt == 1){
+					ui.success('保存排序成功');
+					$('input[type="submit"]',$form).fadeOut();
+				}else{
+					ui.error('保存失败！');
+				}
+			} 
+		};		
+	$form.ajaxSubmit( options );
+	return false;
+}
+
+function getChecked() {
+    var ids = new Array();
+    $.each($('table input:checked'), function(i, n){
+    	id = $(n).val();
+    	if (id > 0) {
+        	ids.push(id);
+    	}
+    });
+    return ids;
+}
+
+function checkon(o){
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function checkAll(o){
+    if( o.checked == true ){
+        $('input[name="checkbox2"]').attr('checked','true');
+        $('tr').addClass("bg_on");
+    }else{
+        $('input[name="checkbox2"]').removeAttr('checked');
+        $('tr').removeClass("bg_on");
+    }
+}
+
+var c = {
+		del:function(gid){
+	    	var gid = gid ? gid : getChecked();
+			gid = gid.toString();
+			if(gid=='' || gid==0){
+				ui.error("请选择要驳回的群组");return false;
+			}
+	        ui.box.load( U('group/Admin/dismissed') + '&gid=' + gid,'驳回');
+	   },
+	   audit:function(id){
+	    	var id = id ? id : getChecked();
+	        id = id.toString();
+	        if(id == '' || id == 0){
+	        	ui.error("请选择要通过审核的群组");return false;
+	        }
+	        if(confirm("是否通过选中的<?php echo $GLOBALS['ts']['app']['app_alias']; ?>？")){
+	          $.post( U('group/Admin/doAudit'),{gid:id},function(text){
+	              if( text == 1 ){
+	                  ui.success( "通过多个<?php echo $GLOBALS['ts']['app']['app_alias']; ?>" );
+	                  var id_list = id.split( ',' );   
+	                  for (var j=0 ; j< id_list.length ; j++   ){
+	                      $('#list_'+id_list[j]).remove(); 
+	                  }
+	              }else if( text == 2 ){
+	                  ui.success( "<?php echo $GLOBALS['ts']['app']['app_alias']; ?>通过成功" );
+	                  $('#list_'+id).remove();
+	              }else{
+	                  ui.error( "<?php echo $GLOBALS['ts']['app']['app_alias']; ?>通过失败" );
+	              }
+	          });
+	        }
+	    }
+}
+</script>
+<div class="so_main"><include file="_tab" /> <!--列表模块-->
+<div class="Toolbar_inbox">
+<div class="page right">{$audit_list.html}</div>
+<a href="javascript:void(0);" class="btn_a" onclick="c.audit()"><span>通过审核</span></a>
+<a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>驳回群组</span></a>
+</div>
+<div class="list">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th style="width: 30px;"><input type="checkbox"
+			id="checkbox_handle" onclick="checkAll(this)" value="0"> <label
+			for="checkbox"></label></th>
+		<th class="line_l">ID</th>
+		<th class="line_l">LOGO</th>
+		<th class="line_l">名称</th>
+		<th class="line_l">简介</th>
+		<th class="line_l">创建者</th>
+		<th class="line_l">创建时间</th>
+		<th class="line_l">操作</th>
+	</tr>
+	<volist id="_group" name="audit_list['data']">
+	<tr id="list_{$_group.id}">
+		<td><input type="checkbox" name="checkbox2" id="checkbox2"
+			onclick="checkon(this)" value="{$_group.id}" /></td>
+		<td>{$_group.id}</td>
+		<td><img
+			src="{$_group['logo']|logo_path_to_url}" width="100" height="100"></td>
+		<td>{$_group.name}</td>
+		<td>{$_group.intro}</td>
+		<td><space uid="_group.uid" class="fn" target="_blank">{uname}</space></td>
+		<td>{$_group.ctime|friendLydate}</td>
+		<td>
+			<a href="javascript:void(0)"
+			onclick="c.audit('{$_group.id}')">通过</a> <a href="javascript:void(0)"
+			onclick="c.del({$_group.id})">驳回</a>
+		</td>
+	</tr>
+	</volist>
+</table>
+</div>
+<div class="Toolbar_inbox">
+<div class="page right">{$list.html}</div>
+<a href="javascript:void(0);" class="btn_a" onclick="c.audit()"><span>通过审核</span></a>
+<a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>驳回群组</span></a>
+</div>
+</div>
+<include file="_footer" />

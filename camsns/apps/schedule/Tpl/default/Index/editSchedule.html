@@ -1,0 +1,63 @@
+<include file="__THEME__/public_header"/>
+
+<div id="page-wrap">
+    <div id="main-wrap">
+        <div class="boxShadow">
+
+            <!--顶部留白-->
+            <p class="clearfix">&nbsp;</p>
+
+            <div class="bs" style="font-size:16px; width: 930px; min-height: 1000px;">
+                <div class="row">
+                    <!--左侧头像-->
+                    <div class="col-sm-3">
+                        <p style="font-size: 3em;">&nbsp;</p>
+                        <img src="{$user['avatar_big']}" style="width: 158px; margin-left:43px; border: 5px solid rgba(0, 0, 0, 0.3);border-left-width: 4px;border-right-width: 4px;border-top-width: 12px;border-bottom-width: 12px;" />
+                    </div>
+                    <!--编辑日程-->
+                    <div class="col-sm-9">
+                        <div class="page-header">
+                            <h1>&nbsp;&nbsp;&nbsp;编辑日程</h1>
+                        </div>
+                        <p style="font-size: 2em;">&nbsp;</p>
+                        <include file="../Public/schedule"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="col" class="extend clearfix">
+    </div>
+</div>
+
+<script>
+    //删除日程按钮
+    $(function(){
+        $('.delete-schedule').click(function(){
+            //确认删除
+            if(!confirm('您确实要删除吗？')) {
+                return;
+            }
+            //提交删除
+            var url = $(this).attr('data-url');
+            $.post(url, {}, function(a,b,c){
+                if(a.status) {
+                    ui.success(a.data);
+                    setTimeout(function(){location.href = location.href},1000);
+                } else {
+                    ui.error(a.data);
+                }
+            },'json');
+        });
+    })
+    //编辑日程按钮
+    $(function(){
+        $('.edit-schedule').click(function(){
+            var url = $(this).attr('data-url');
+            location.href = url;
+        })
+    })
+</script>
+
+<include file="__THEME__/public_footer"/>

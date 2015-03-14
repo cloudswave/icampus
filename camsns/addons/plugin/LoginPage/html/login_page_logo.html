@@ -1,0 +1,38 @@
+<form action="{:Addons::adminUrl('login_page_logo')}" method="post">
+<div class="form2">
+  	    <dl id="dl_name" class="lineD">
+      <dt>上传logo：</dt>
+      <dd>
+      <div>
+      <input type="file" name="attach" onchange="admin.upload('login_logo',this)" urlquery='attach_type=feed_image&upload_type=image&thumb=1'>
+   <div id='show_login_logo'><php>if($logo){</php><img src="{$logosrc}" class="pic-size"><php>}</php></div>
+   <input name="login_logo" id="form_login_logo" type="hidden" value="{$logo}" class="s-txt" style="width:200px;" />
+   <input name="jumpUrl" type="hidden" value="{:Addons::adminPage('login_page_logo')}"></div>
+    </dd></dl>
+      	    <dl id="dl_name" class="lineD">
+      <dt>顶部logo右侧文字：</dt>
+      <dd>
+      <input type="text" name="login_top_title" value="{$logintoptitle}" />
+    </dd></dl>
+    <dl id="dl_name" class="lineD">
+      <dt>登录框站点名称：</dt>
+      <dd>
+      <input type="text" name="login_site_title" value="{$loginsitetitle}" />
+    </dd></dl>
+        <dl id="dl_name" class="lineD">
+      <dt>是否开启微吧推荐：</dt>
+      <dd>
+      <input type="radio" name="weiba_recommend" value="1" <php>if($weibarecommend==1 || !$weibarecommend){</php>checked="checked"<php>}</php> />是
+      <input type="radio" name="weiba_recommend" value="2" <php>if($weibarecommend==2){</php>checked="checked"<php>}</php> />否
+    </dd></dl>
+        <dl id="dl_name" class="lineD">
+      <dt>右侧底部广告框：</dt>
+      <dd>
+      {:W('Editor',array('height'=>'200','contentName'=>'login_foot_content','value'=>$loginfootcontent))} 
+    </dd></dl>
+    <div class="page_btm">
+    <input type="text" style="display:none">
+      <input type="submit" id="form_submit" value="保存" class="btn_b">
+      
+    </div>
+  	</div></form>

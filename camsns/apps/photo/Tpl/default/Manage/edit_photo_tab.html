@@ -1,0 +1,55 @@
+<dl class="pop_create_album">
+  <dt>
+    <label>图片标题：</label>
+    <input type="text" name="name" id="name" class="s-txt" value="{$photo.name}">
+  </dt>
+  <dd>
+    <label>所属{$ts['app']['app_alias']}：</label>
+		{:W('AlbumSelect',array('uid'=>$mid,'selected'=>intval($_GET['aid']),'form_id'=>'albumId'))}
+  </dd>
+
+  <input type="hidden" name="photoId" id="photoId" value="{$photo.id}" />
+  <dd>
+     <label>&nbsp;</label>
+     <a onclick="do_update_photo()" class="btn-green-small">确定</a>
+  </dd>
+</dl>
+	
+<script>
+var albumIdold = $('#albumId').val();
+/**
+ * 编辑图片操作
+ * @return void
+ */
+var do_update_photo = function () {
+  var id = $('#photoId').val();
+  var name = $('#name').val();
+  var albumId = $('#albumId option:selected').val();
+  if (!name || getLength(name.replace(/\s+/g,"")) == 0) {
+    ui.error('图片名字不能为空！');
+        return false;
+  }
+  $.post(U('photo/Manage/do_update_photo'), {id:id,name:name,albumId:albumId}, function(data) {
+      if (data.result == 1) {
+      if (albumId != albumIdold) {
+        if (nextid == id || nextid == '') {
+          location.href = U('photo/Index/album') + '&id=' + album_id + '&uid=' + _UID_;
+        } else {
+          location.href = U('photo/Index/photo') + '&id=' + nextid + '&aid=' + album_id + '&uid=' + _UID_;
+        }
+        return false;
+      } else {
+        $('.photoName').html(data.message);
+      }
+      ui.box.close();
+      ui.success('修改成功！');
+      setTimeout(function () {
+        location.reload();
+      }, 1500);
+    } else {
+      ui.box.close();
+      ui.error('图片信息无变化！');
+    }
+  }, 'json');
+};
+</script>

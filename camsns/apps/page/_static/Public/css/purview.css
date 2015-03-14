@@ -1,0 +1,82 @@
+.contents{width:980px;text-align:left;margin:0 auto 10px auto;}
+.content_pur_left {overflow:hidden;width:680px;}
+.pur_pic{background-color:#FFFFFF;margin:10px auto;padding:5px 0;text-align:center;width:130px;}
+.pur_pic img {display:block;margin:0 auto;width:120px;}
+.pur_l {float:left;padding-right:10px;text-align:left;width:150px;}
+.menu_L{margin:0 10px;padding:10px 0;}
+.menu_L li{padding-left:10px;margin-bottom:11px;line-height:21px;height:21px;}
+.menu_L li.on{background-color:#FFF;border:solid 1px #CCC;font-weight:bold;text-decoration:none;}
+.menu_L li a.U{font-size:12px;line-height:13px;color:#333;height:0px;padding-left:7px;text-decoration:underline;background-image:url(../images/menu_a.gif);background-repeat:no-repeat;background-position:0px 0px;line-height:21px;}
+.menu_L li a.R{font-size:12px;margin-right:5px;font-weight:normal;}
+
+
+
+.tree_L{background-color:#FFF; padding-bottom:10px;min-height:450px;height:auto !important; height:450px; overflow:visible; border:1px solid #ddd; font-size:12px;}
+.tree_L .b_lin{ clear:both; border-top:1px dashed #ddd; margin:10px 5px 0 5px; padding-top:10px;width:95%;}
+.tree_tit{ border-bottom:1px solid #ddd;line-height:26px; padding-left:10px;font-size:14px; background:url("../images/diy_tab_titbg.jpg") repeat-x scroll 0 0 transparent; margin:1px; text-align:left}
+.tree ul{clear:both; }
+.tree_tit_C{ padding:10px; padding-top:0;}
+.t_s_close,.t_s_open{ display:block; padding-left:15px; font-weight:bold; margin:5px 10px; background:url(../images/icons_up.jpg) no-repeat 0 3px; cursor:pointer; text-align:left}
+.t_s_open{background:url(../images/icons_down.jpg) no-repeat 0 3px;}
+ul,li,ol{ list-style:none;}
+.clear{ clear:both}
+#container {clear:both;width:98%;}
+
+
+.tree_tit_C li{ background: url(../images/file.gif) no-repeat 0 5px; padding-left:20px; line-height:25px; margin-left:10px; text-align:left;}
+.tree_tit_C li a{ text-decoration:none}
+.lap_mod span a{ display:inline-block;text-align:left;width:65px; padding:0 5px;}
+.lap_mod {left:168px; top:20px;}
+.add, a.add, a.add:visited{ float:none;}
+
+
+/*�Ű��Ԥ����ʽ*/
+.pic_box{ border-top:1px dashed #DDD;float:left;margin:0 auto;padding:0;text-align:center;width:100%; margin-top:10px;}
+.pic_box_img{ display:inline-block;margin:15px 20px;}
+.pic_box_img a.btn_sea{ width:50px;}
+.pic_box_img img{border:1px solid #ddd;padding:5px; margin-bottom:10px;}
+.tree .tree-default li{ line-height:180%}
+#pageTemp,#tree0{ border:1px solid #ddd;font-size:12px;padding:4px;text-align:left;}
+
+/*�б����*/
+.list_box {clear:both;font-size:12px;}
+.list_box dl{clear:both;margin:0;padding:0;width:100%;}
+.list_box dt{border-bottom:1px solid #ddd;color:#666;display:block;height:25px;line-height:25px;margin:0;padding:5px 5px 0 5px;}
+.list_box dd{border-bottom:1px dashed #DDDDDD;clear:both;color:#999999;line-height:28px;margin:0;padding:0 5px;white-space:nowrap;}
+.cc{float:left;text-align:center;overflow:hidden;}
+.cl{float:left;overflow:hidden;}
+.cr{float:left;overflow:hidden;text-align:right;}
+
+/*����ͷ���л�*/
+.add_bes{margin:0 auto;position:relative;width:980px; font-size:12px;}
+.add_bes span{bottom:0;position:absolute;right:0;}
+
+
+/*�̼� �ֲ����*/
+#container, #container_s { padding:9px 20px 0px 0px;}
+.diy_adm_tab,.diy_adm_tab tr,.diy_adm_tab td,.diy_adm_tab th{ border:1px solid #ddd; border-collapse:collapse;}
+.diy_adm_tab td,.diy_adm_tab th{ padding:3px 10px; line-height:18px;}
+.diy_adm_tab th{ background:url(../images/diy_tab_titbg.jpg) repeat-x;}
+
+/*�̼� Ƶ������*/
+.channel_tag{width:185px; border:1px solid #B5CFD9; text-align:left;}
+.channel_tag h3{color:#0A5EA6;font-size:14px;line-height:30px;background:url(../images/table_hb.gif) repeat-x 0 -9px;
+border-bottom:1px solid #B5CFD9;text-indent:5px;}
+.chl_tags{ padding:10px 3px 10px 5px; font-size:12px; }
+.chl_tags a,.tab_adm_a a{ padding:0 3px; white-space:pre; height:25px;line-height:25px; display:inline-block;}
+.chl_tags a:hover,.tab_adm_a a:hover{ background:#069; color:#fff; text-decoration:none}
+
+/*�������*/
+.add_tab td{ padding:5px 3px ;}
+
+/*ר���б�*/
+.zhu_list{ display:inline-block}
+.zhu_list ul li{ font-size:12px;width:260px; text-align:left; float:left; background:#fefefe; border:1px solid #ddd; margin-right:10px; padding:10px; margin-bottom:10px; height:120px; overflow:hidden}
+.zhu_list ul li a{ color:#333}
+.zhu_list li img{border:1px dashed #09F; padding:2px;}
+.mr5{ margin-right:5px;}
+.mt5{ margin-top:5px;}
+.fN{ font-weight:normal}
+.fB{ font-weight:bold}
+.f14{ font-size:14px;} 
+.zhu_list ul li a.co{ color:#069}

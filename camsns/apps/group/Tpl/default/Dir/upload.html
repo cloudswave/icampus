@@ -1,0 +1,70 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__APP__/Js/common.js"></script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l"> 
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox"> <include file="../Public/_groupInfo" />
+      <div class="mainbox_appC"> 
+        <!--  简单头部 --> 
+        <include file="../Public/top" />
+        <div class="groupBox mLR15">
+          <div class="boxL" style="width:100%;_width:99%;">
+            <if condition=" $_SESSION['uploadSuccess'] ">
+              <div class="msg">
+                <h2 class="f14px mb10"><img src="__APP__/images/fzcg_dh.gif" />文件上传成功！</h2>
+                <p>回到<a href="{:U('group/Dir/index', array('gid'=>$gid))}">文件共享区</a>，或者继续<a href="{:U('group/Dir/upload', array('gid'=>$gid))}">上传文件</a></p>
+              </div>
+              <else />
+              <form method="post" id="upload_attach" action="{:U('group/Dir/upload', array('gid'=>$gid))}" enctype="multipart/form-data" onSubmit="return checkForm()">
+                <div class="lh35 cGray2">上传文件</div>
+                <dl class="postsList">
+                  <dd>
+                    <label>文件路径</label>
+                    <div class="c1">
+                      <input name="uploadfile" type="file" id="file" /> (仅支持：{$uploadType} 最大上传文件：{$config['simpleFileSize']}M)
+                    </div>
+                    </dd>
+                  <dd style="height:auto;">
+                    <label>文件注释：</label>
+                    <div class="c1">
+                      <textarea id="note" name="note" cols="50" rows="3"></textarea>
+                    </div>
+                  </dd>
+                  <dd>
+                    <div class="c1">
+                      <input type="hidden" name="uploadsubmit" value="1">
+                      <input name="submit" type="submit" class="btn_b" value="上 传"/>
+                      &nbsp;
+                      <input type="button" class="btn_w" onclick="unSetAttach()" value="重 置" />
+                    </div>
+                  </dd>
+                </dl>
+              </form>
+            </if>
+          </div>
+        </div>
+        <!-- end  --> 
+      </div>
+    </div>
+    <!-- 右侧内容 end -->
+    <div class="c"></div>
+  </div>
+</div>
+</div>
+<script>
+	function checkForm() {
+		if($('#file').val() == '') {alert('请选择上传文件');return false;}
+		return true;
+	}
+
+  // 附件取消问题
+  function unSetAttach() {
+    document.getElementById("upload_attach").reset();
+    $("#file").attr("value", "");
+    $("#note").attr("value", "");
+  }
+</script> 
+<include file="__THEME__/public_footer" /> 

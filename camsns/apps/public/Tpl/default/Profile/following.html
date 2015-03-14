@@ -1,0 +1,87 @@
+<include file="__THEME__/public_header" />
+<div id="page-wrap">
+    <div id="main-wrap">
+      <div class="profile-title  boxShadow">
+                <include file="_top"/> 
+            </div>
+    	      <div id="col" class="st-grid boxShadow minh content-bg">
+                <php>if($userPrivacy['space'] != 1){</php>
+            <div id="" class="boxShadow">
+                <div class="extend border minh">
+                <!-- tag-menu -->
+                <include file="_follow_tab" />
+				        <div class="search-main clearfix">
+                    <php>if($following_list['data']){</php>
+                    <!--搜索列表-->
+	               	<div class="sperson-feedlist<php> echo t($_GET['show']);</php> clearfix">
+                        <volist name="following_list.data" id="_following">
+                            <php> $img = !empty($_GET['show']) ? $user_info[$_following['fid']]['avatar_big']:$user_info[$_following['fid']]['avatar_middle']; </php>
+                    	<dl model-node="following_list_item" class="feed_list">
+                            <dt class="face"><a href="{$user_info[$_following['fid']]['space_url']}"><img src="{$img}" event-node='face_card' uid='{$_following['fid']}' width="50" height="50"></a></dt>
+                            <dd class="person-info">
+                                <div class="info-right right">
+                                <!--关注分组begin-->
+                                  <if condition="$mid && $mid eq $uid">
+                                        {:W('FollowGroup', array('uid'=>$_following['uid'], 'fid'=>$_following['fid'], 'follow_group_status' => $follow_group_status[$_following['fid']], 'tpl'=>'btn'))}
+                                  </if>
+                                <!--关注分组end-->                                   
+                                <span class="right">
+									<php>if($mid){</php>
+                                    <if condition="$mid neq $_following['fid']">
+                                        {:W('FollowBtn', array('fid'=>$_following['fid'], 'uname'=>$user_info[$_following['fid']]['uname'], 'refer'=> $uid == $mid ? 'following_list' : '', 'follow_state'=>$follow_state[$_following['fid']], 'type'=>'normal'))}
+                                    </if>
+                                    <php>}</php>
+                                </span>
+                                
+
+                            </div>
+                                <div class="info-left">
+                           	  <p class="hd"><a class="follow_uname" href="{$user_info[$_following['fid']]['space_url']}" event-node='face_card' uid='{$_following['fid']}' style="font-size:14px">{$user_info[$_following['fid']]['uname']}</a>
+                              <volist name="userGroupData[$_following['fid']]" id="vo">
+                                <img style="width:auto;height:auto;display:inline;cursor:pointer;vertical-align:-3px" src="{$vo['user_group_icon_url']}" title="{$vo['user_group_name']}" />&nbsp;
+                              </volist>
+                              <php> if($mid == $uid):</php>
+                           	  {:W('Remark',array('uid'=>$_following['fid'],'remark'=>$_following['remark']))}
+                              <php> endif;</php>
+                           	  </p>
+                              <p class="area"><span><if condition="$user_info[$_following['fid']]['sex'] eq 1"><i class="ico-male"></i><else /><i class="ico-female"></i></if>&nbsp;{$user_info[$_following['fid']]['location']}</span></p>
+                                <p class="action">
+                                    {:L('PUBLIC_FOLLOWING')}：<a href="{:U('public/Profile/following', array('uid'=>$_following['fid']))}">{:(int)$user_count[$_following['fid']]['following_count']}</a>
+                                    <i class="vline">|</i>
+                                    {:L('PUBLIC_FOLLOWERS')}：<a href="{:U('public/Profile/follower', array('uid'=>$_following['fid']))}">{:(int)$user_count[$_following['fid']]['follower_count']}</a>
+                                    <i class="vline">|</i>
+                                    {:L('PUBLIC_WEIBO')}：<a href="{$user_info[$_following['fid']]['space_url']}">{:(int)$user_count[$_following['fid']]['weibo_count']}</a>
+                                </p>
+                                <php>if($user_info[$_following['fid']]['intro']){</php>
+                                    <p class="info">
+                                        {:L('PUBLIC_PROFILESET_INTRO')}：{$user_info[$_following['fid']]['intro']}
+                                    </p>
+                                <php>}</php>
+                                <php>if($user_tag[$_following['fid']]){</php>
+                              	<p class="tags">{:L('PUBLIC_TAG')}：<volist name="user_tag[$_following['fid']]" id="u_t_v"><a href="{:U('public/Search/index',array('t'=>3,'a'=>'public','k'=>$u_t_v))}">{$u_t_v}</a>&nbsp;&nbsp;&nbsp;</volist></p>
+                                <php>}</php>
+                              </div>                                                           
+                          </dd>
+                        </dl>
+                        </volist>
+                    </div>
+                    <!--搜索列表/end-->
+                    <!--页码-->
+                    <div id="page" class="page">{$following_list.html}</div>
+                    <!--页码/end-->
+                    <php>}elseif($follow_key !== '' && !is_null($follow_key)){</php>
+                        <div class="loading">抱歉，暂时没有找到与 “{$follow_key}” 相关的结果</div>
+                    <php>}else{</php>
+                        <div class="loading">TA还没有关注任何人</div>
+                    <php>}</php>
+                </div>
+                </div>
+                <php>}else{</php>
+                    <p class="extend">-_-。sorry！根据对方隐私设置，您无权查看TA的主页</p>
+                <php>}</php>
+            </div>
+            
+    	</div>
+    </div>
+</div>
+<include file="__THEME__/public_footer" />

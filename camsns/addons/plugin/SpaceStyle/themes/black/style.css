@@ -1,0 +1,114 @@
+/* 
+    Document   : 1
+    Created on : 2012-2-10, 12:46:29
+    Author     : alan QQ:8510001
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.fakesay.com
+*/
+
+/*---导航菜单样式---*/
+body{background:#66a5b1;width:100%;}
+#body_page{background: url(body_bg1.jpg) no-repeat center 0;width:100%;}
+
+.page_home,.body_bg{background:#66a5b1 url(body_bg1.jpg) no-repeat top center}
+.content-bg{background:url(content_bg.png)}
+/*---导航菜单样式---*/
+#header{background:#347b90;}
+#header .head-bd .nav .current a.app,#header .head-bd .nav a.app:hover{background:#00718b;}
+#header .head-bd .person a.username:hover{background:#00718b;}
+
+.header_holder,.header_bg{z-index:9999;width:100%;min-width:1000px;background:url(head_bg.png) repeat-x 0 0 transparent;left:0;top:0;-moz-opacity:1;opacity:1}
+/*.header_holder0{z-index:9999;width:100%;min-width:1000px;background:url(head_bg.png) repeat-x 0 0 transparent;left:0;top:0;-moz-opacity:1;opacity:1}
+.header_holder2{z-index:9999;width:100%;min-width:1000px;background:url(head_bg.png) repeat-x 0 0 transparent;left:0;top:0}
+.header_holder3{z-index:9999;width:100%;min-width:1000px;background:url(head_bg.png) repeat-x 0 0 transparent;left:0;top:0}
+.header_holder4{z-index:9999;width:100%;min-width:1000px;background:url(head_bg.png) repeat-x 0 0 transparent;left:0;top:0}*/
+.header .nav ul li.hover .dropmenu,.header .person li.hover .dropmenu{background-color: #fff;border: 1px solid #00576c;border-top:none}
+.header .nav ul li.hover .dropmenu a:hover,.header .person li.hover .dropmenu a:hover{background-color: #d3dee0;text-decoration: none;display:block}
+.header .nav ul li.hover .dropmenu .app_list dd a:hover {background-color:#d3dee0}
+.header .nav ul li a.fb14:hover,.header .person li a.fb14:hover{background-color:#00718B;text-decoration:none;white-space:nowrap;display: block}
+
+.user_app .user_follow strong{color:#00576C}
+.user_app .user_follow span{margin:0}
+.user_app .celerity_menu a:link,.user_app .celerity_menu a:visited {color:#00576C}
+.user_app .celerity_menu a:hover {background-color:#7FABB7;color:#00576C}
+.user_app .celerity_menu a.on,.user_app .celerity_menu a.on:visited {background-color:#0C5E74;color:#fff}
+.user_app_box .app_line_w{background:none}
+.user_app .userinfo .user_name h2, .user_app .userinfo .user_name h2 a{color:#00576C}
+.wrap_index_r .app_line{border-bottom: 0 none;padding: 10px 0 0;}
+.user_app .app_line, .tab_square .app_line{background:url(app_line.jpg) repeat-x left top}
+.lineS_btm{border-bottom:#7FABB7 solid 1px}
+.app_lineL {background:none;border-left:#7FABB7 solid 1px}
+
+/*---链接样式--- */
+a{ color:#00576c; text-decoration:none }
+a:hover { color:#00576c; text-decoration:none }
+.btn_b, a.btn_b, a.btn_b:hover, a.btn_b:visited {color: #FFFFFF}
+a.add_atn,a.add_atn:visited{color:#fff}
+.btn_w, a.btn_w, a.btn_w:hover, a.btn_w:visited {color: #333}
+.feed_list .feed_quote .q_con .comment a:link,.feed_list .feed_quote .q_con .comment a:visited{color:#7498C0}
+.feed_list .feed_quote .q_con .comment a:hover{color:#BA2636}	
+
+/*按钮*/
+.btn-grey{background-position:0 -260px;width:80px;height:30px;line-height:30px;text-align:center;font-size:14px;color:#666;}
+.btn-green-big,.btn-green-big:hover{background:#347B90;color:#fff;width:80px;height:30px;line-height:30px;text-align:center;border:none;font-size:12px;border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;-khtml-border-radius:2px;}
+.s-login .login-bd .btn-login{font-family:"微软雅黑";font-size:20px;color:#fff;width:140px;height:46px;line-height:46px;margin:-2px 0 0 0;text-align:center;background:#347B90;border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;-khtml-border-radius:2px;*margin:2px 0 0 0;}
+.btn-grey-small{background-position:0 -164px;width:80px;height:24px;color:#666;line-height:24px;text-align:center;cursor:pointer;}
+.btn-register{background:#347B90;width:80px;height:30px;font-size:14px;color:#fff;display:block;text-align:center;line-height:30px;border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;-khtml-border-radius:2px;}
+/*.btn-register:hover{background-position:0 -388px;width:140px;height:46px;font-size:16px;color:#fff;display:block;text-align:center;line-height:46px;}*/
+.btn-green-small,.btn-green-small:hover{background:#347B90;width:50px;height:24px;line-height:24px;font-size:12px;color:#fff;text-align:center;border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;-khtml-border-radius:2px;} 
+.btn-att-green,.btn-att-green:hover{background:#347B90;width:80px;height:14px;line-height:14px;padding:5px 0;font-size:12px;color:#fff;text-align:center;border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;-khtml-border-radius:2px;}
+.btn-copy{background-position:0 -316px;width:140px;height:46px;line-height:46px;}
+.btn-copy span{font-size:16px;color:#fff;text-align:center;display:block;}
+.btn-cancel:hover,.btn-cancel:hover span,.channel-layer .btn-cancel.current,.channel-layer .btn-cancel.current span,.channel-tab-menu .btn-cancel.current,.channel-tab-menu .btn-cancel.current span,.profession-type .btn-cancel.current,.profession-type .btn-cancel.current span{background:#347B90;font-size:12px;color:#fff;text-align:center;border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;-khtml-border-radius:2px;}
+.btn-cancel:hover .ico-add-black{background-position:0 -73px}
+a.btn-att-green,.btn-green-big span,.btn-green-small span,.btn-cancel:hover span,.btn-green-small a{color:#fff;}
+.btn-cancel:hover span a.tag{color:#fff;margin:0 5px 0 0;}
+
+/*个人设置*/
+.nav-left dd.current{background:#347B90;}
+.nav-left dd a:hover{background:#347B90;color:#fff;}
+.person-info .person-info-t .area span{color:#00576c;}
+
+/*tab菜单*/
+.tab-menu-app ul li.current a:link, .tab-menu-app ul li.current a:visited{padding:7px 10px 5px;padding:7px 10px 5px\9;background:#347B90;color:#fff;}
+.club-tab-menu dt a.current:link,.club-tab-menu dt a.current:visited,.club-tab-menu dt a:hover{background:#347B90;color:#fff;font-size:14px;}
+
+/*意见反馈*/
+.feedback-fixed a:hover{background:#347B90;text-decoration:none;color:#fff;}
+
+/*群英荟*/
+.club-type a.current:link,.club-type a.current:visited{margin:0 10px 10px 0;color:#347B90;}
+
+/*搜索页面*/
+.search-input{border:1px solid #347B90;background:#fff;position:relative;width:528px;float:left;}
+.search-input #mod-search .search-box{background:#fff;border:1px solid #347B90;_border:none;_border-top:1px solid #347B90;}
+.search-input .btn-search{background:#347B90;width:80px;height:28px;position:absolute;right:0;}
+.search-content p{font-size:20px;margin:3px 20px 0 0;font-family:"微软雅黑";color:#347B90;}
+
+/*注册页面*/
+.profession-title em{font-family:Times New Roman;font-size: 20px;font-weight: 700;margin: 0 5px;color:#347B90;vertical-align:-2px;}
+
+/*推荐频道弹窗*/
+/*.channel-layer .content a.current{background:#347B90;}*/
+
+/*微博新消息*/
+.feed_lists a.notes{height:18px;line-height:18px;display:block;padding:5px 0;margin:10px 0 5px 0;text-align:center;background-color:#f3f3f3;color:#00576c;border:1px solid #e5e5e5;}
+
+/*微吧、任务、勋章头部导航*/
+.app-tab-menu li a.current:link,.app-tab-menu li a.current:visited{background:#347B90;color:#fff;font-weight:bold;position: relative;}
+.triangle{border-color: #347B90 transparent transparent transparent;border-style: solid;border-width: 6px 6px 0px 6px;width: 0;height: 0;position:absolute;left:40%;bottom:-6px;line-height:0;font-size:0;_border-left-color:#f8f8f8;_border-right-color:#f8f8f8;_filter: chroma( color =#f8f8f8);}
+
+/*排行榜转发按钮*/
+.btn-forward-rank,.btn-forward-rank:hover{width:240px;text-align:center;height:46px;line-height:46px;background:#347B90;display:inline-block;color:#fff;font-family:"微软雅黑";font-size:16px;}
+
+/*签到*/
+.sign-in{background:#347B90;width:230px;height:47px;position:relative;margin:0 0 10px 0;border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;}
+.sign-in .date,.sign-in-h .date,.sign-in .week,.sign-in-h .week{color:#00718b;}
+
+/*微吧分类*/
+.weiba-type a:hover,.weiba-type a.current{background:#347B90;color:#fff;padding:3px 7px;}

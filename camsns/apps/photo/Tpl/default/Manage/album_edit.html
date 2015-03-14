@@ -1,0 +1,107 @@
+<include file="__THEME__/header" />
+<link href="__APP__/css/photo.css" rel="stylesheet" type="text/css" />
+<div class="content_holder">
+<!-- 头部 end -->
+<div class="content no_bg">
+<include file="../Public/_mainNav" />
+  <div class="main no_l">
+    <div class="mainbox">
+      <include file="../Public/_isHotList" />
+      <div class="mainbox_appC">
+	<div class="page_title"> <!-- page_title begin -->
+		  <h2>编辑{$ts['app']['app_alias']}</h2>
+	</div><!-- page_title end -->
+	<div class="photoBox">
+		<div class="lineS_btm lh30"><span class="photo_tit"><strong>{$album.name}</strong></span> <a href="{:U('/Manage/album_order',array(id=>$album['id']))}">{$ts['app']['app_alias']}图片排序</a> | <a href="{:U('/Manage/delete_album',array('id'=>$album[id]))}" onclick="return confirm('删除该{$ts['app']['app_alias']}的同时，将删除其所有图片，确定删除？');">删除该{$ts['app']['app_alias']}</a> | <a href="{:U('/Index/album',array(id=>$album['id'],uid=>$mid))}">返回该{$ts['app']['app_alias']}</a></div>
+		<form method="post" action="{:U('/Manage/do_update_album')}" name="do_update_album" onsubmit="return check_form(this);">
+		<div class="edit_box">
+
+  			<div class="li">
+				<div class="c1">{$ts['app']['app_alias']}名称：</div>
+				<div class="c2"><input name="album_name" type="text" class="text" id="album_name" style="width:150px;" onblur="this.className='text'" onfocus="this.className='text2';change_flag=true;" value="{$album.name}" /></div>
+			</div>
+
+			<div class="li">
+				<div class="c1">访问权限：</div>
+				<div class="c2">
+				<select name="album_privacy" id="privacy" onchange="javascript:changePrivacy(this);change_flag=true;" class="text">
+					<option value="1" <if condition="$album['privacy'] eq 1">selected="selected"</if>>所有人可见</option>
+					<option value="2" <if condition="$album['privacy'] eq 2">selected="selected"</if>>仅主人的粉丝可见</option>
+					<option value="3" <if condition="$album['privacy'] eq 3">selected="selected"</if>>仅自己可见</option>
+					<option value="4" <if condition="$album['privacy'] eq 4">selected="selected"</if>>凭密码访问</option>
+				</select>				
+				</div>
+			</div>
+		
+			<div class="li" id="need_password" style="display:none;">
+				<div class="c1">设置密码：</div>
+				<div class="c2">
+				<input name="album_privacy_data" value="{$album.privacy_data}" type="text" class="text" id="textfield3" style="width:150px;" onblur="this.className='text'" onfocus="this.className='text2'" />
+				</div>
+			</div>
+            <div class="clear" style="margin-left:65px">
+				<br />
+				<input type="hidden" name="albumId" value="{$album.id}" />
+				<input type="submit" class="btn_b" value="保存" />
+			</div>
+		</div>
+		</form>
+	</div>
+    <div class="clear"></div>  
+	</div>
+    </div>
+  <div class="c"></div>
+</div>
+</div>
+</div>
+<include file="__THEME__/public_footer" />
+<script type="text/javascript">
+/** 离开页面提醒 **/
+	var change_flag = false;	//修改标识
+	var pb_strConfirmCloseMessage	=	"你的修改还没有保存，如果离开本页，修改不会生效！";
+	function ConfirmClose() {
+		window.event.returnValue = pb_strConfirmCloseMessage;
+	}
+	function ShowConfirmClose(blnValue) {
+		if(blnValue) {
+			document.body.onbeforeunload = ConfirmClose;
+		} else {
+			document.body.onbeforeunload = null;
+		}
+	}
+	//如果页面被修改则弹出提醒
+	if(change_flag){
+	//	ShowConfirmClose(true);
+	}
+/** 离开页面提醒 **/
+
+//初始化密码框
+if($('#privacy').val()==4){
+	$('#need_password').show();
+}
+
+//显示密码框
+function changePrivacy(obj){
+	if(obj.value==4){
+		$('#need_password').show();
+	}else{
+		$('#need_password').hide();
+	}
+}
+
+//表单验证
+function check_form(obj){
+	var name = $.trim($("#album_name").val());
+	if(obj.album_name.value=='' || getLength(name.replace(/\s+/g,"")) == 0){
+		ui.error('{$ts['app']['app_alias']}名字不能为空');
+		return false;
+	}
+	if (name.length > 12) {
+		ui.error('名称不能超过12个字');
+		return false;
+	}
+
+	//提交表单不弹出提醒
+	return true;
+};
+</script>

@@ -1,0 +1,55 @@
+<include file="__THEME__/header" />
+<include file="__THEME__/editor_new" />
+<script type="text/javascript" src="__APP__/Js/addBlog.js"></script>
+<div class="content_holder">
+<div class="content">
+  <div class="main no_l">
+    <div class="mainbox">
+        <include file="../Public/_right" />
+      
+        <div class="mainbox_C">
+        <div class=page_title> 
+            <h2>
+                <!-- <span class="f12px fn right"><a href="javascript:history.back( -1 )">&lt;&lt;返回上一页</a></span> -->
+                发表{$ts['app']['app_alias']}
+            </h2>
+        </div>
+        <div class="BlogBox">
+          <form name="addBlog" action="__URL__&act=doAddBlog" method="post" onsubmit="return check();">
+            <div class="LogList">
+              <ul class="edit">
+                <li style="padding:0;">
+                  <div class="c1" style="line-height:30px;">标题: &nbsp;</div>
+                  <div class="c2">
+                    <select name="category" id="select" onchange="javascript:changeCategory($(this))" class="text mr5">
+                      <php>foreach( $category as $value ){</php>
+                      <option value="{$value['id']}">{$value['name']}</option>
+                      <php>}</php>
+                      <option value="0">&nbsp;</option>
+                      <optgroup id="group">
+                      <option value="0">+添加分类</option>
+                      </optgroup>
+                    </select>
+                    <input id="title" name="title" type="text" class="text" style="width:60%;" onBlur="this.className='text'" onFocus="this.className='text2'" maxlength="25" />
+                  </div>
+                </li>
+                <li style="padding:0;">
+                  <div class="c1">内容: &nbsp;</div>
+                  <div class="c2"><textarea id="content" name="content" style="height:350px"></textarea></div>
+                </li>
+                <li style="padding:0;">
+                  <div class="c1">&nbsp;</div>
+                  <div class="c2" style="height:30px;"><input type="submit" class="btn_b" value="发表" /></div>
+                </li>
+              </ul>
+            </div>
+          </form>
+        </div>
+        <div class="c"></div>
+      </div>
+    </div>
+    <div class="c"></div>
+  </div>
+</div>
+</div>
+<include file="../Public/public_footer" />

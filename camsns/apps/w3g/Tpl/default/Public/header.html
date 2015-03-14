@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Cache-Control" content="no-cache"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<title> {$headtitle}</title>
+	<base href="__APP__/" />
+	<script type="text/javascript" src="js/l_l.min.js"></script>
+	<script type="text/javascript">
+		var SITE_URL  = '<php> echo SITE_URL;</php>';
+		//载入函数
+	  	var U = function(url, params) {
+		var website = SITE_URL+'/index.php';
+		url = url.split('/');
+		if(url[0]=='' || url[0]=='@')
+			url[0] = APPNAME;
+		if (!url[1])
+			url[1] = 'Index';
+		if (!url[2])
+			url[2] = 'index';
+		website = website+'?app='+url[0]+'&mod='+url[1]+'&act='+url[2];
+		if(params) {
+			params = params.join('&');
+			website = website + '&' + params;
+		}
+		return website;
+		};
+		LazyLoad.js(["js/zepto.min.js", "js/z.touch.js","js/z.ajax.js","js/z.r.js?v={$site.sys_version}","js/z.js?v={$site.sys_version}"], function(){
+			console.log('%cThinkSNS %c3G版\n%cwww.thinksns.com','color:#2980B9;font-size: 28px;','color:#1ABC9C; font-size: 28px;','color:#2980B9');
+		});
+	</script>
+	<link rel="stylesheet" href="css/touch.css?v={$site.sys_version}">
+	<link rel="stylesheet" href="css/demo.css?v={$site.sys_version}">
+</head>
+
+<body uid="{$_SESSION['mid']}">
+<!-- 所有菜单 -->
+	<div id="menu_box">
+		<div id="default_menu_box_option">
+			<!-- <div id="open_write_twitter" class="menu_box_option">写微博</div> -->
+			<div id="open_hf_twitter" class="menu_box_option">回复</div>
+			<div id="open_zf_twitter" class="menu_box_option">转发</div>
+			<div id="open_yw" class="menu_box_option">详情</div>
+			<div id="open_zz" class="menu_box_option">作者</div>
+			<div id="digit" class="menu_box_option">赞</div>
+		</div>
+		<div id="more_menu_box_option">
+			<div id="open_more" class="menu_box_option">更多</div>
+			<!-- <div id="open_menu" class="menu_box_option">菜单</div> -->
+			<div id="open_square" class="menu_box_option">广场</div>
+			<div id="back2_default_menu_box_option" class="menu_box_option">返回</div>
+		</div>
+	</div>
+	<!-- 微博输入框 -->
+	<!-- //发布微博限制字数 -->
+	<php>
+		$admin_Config = model('Xdata')->lget('admin_Config');
+		$weibo_nums = $admin_Config['feed']['weibo_nums'];
+	</php>
+	<div id="post_twitter">
+		<div class="header">
+			<div id="post_tip" class="logo_post">发表微博</div>
+			<!-- <input type="button" id="post_twitter_button_file" value="附件" tabindex="6"> -->
+			<div id="post_twitter_button_file"></div>
+			<div id="ifSorC">
+				<div id="ifShareFeed" class="no_check">转发到微博</div>
+				<div id="ifAsComment" class="no_check">评论给原作者</div>
+			</div>
+		</div>
+	   	<div id="ptibox" nums="{$weibo_nums}">
+			<form id="post_form" type="fb" action="{:U('w3g/Index/doComment')}" method="post" enctype="multipart/form-data" ava="{$profile}"/>
+				<input type="hidden" name="feed_id" value="{$_GET['feed_id']}" />
+	   			<input type="hidden" name="comment_id" value="{$_GET['comment_id']}"/>
+				<textarea name="content" id="post_twitter_input"></textarea>
+			</form>
+	   	</div>
+   		<div id="file_list"></div>
+		<div id="post_twitter_button">
+			<input type="button" id="close_post_twitter" value="取消" tabindex="6">
+			<input type="button" id="post_twitter_button_submit" value="发表" tabindex="6">
+		</div>
+	</div>
+	<!-- 发表私信 -->
+	<div id="post_message" style="display:none;">
+		<div class="header">
+			<div id="post_message_tip" class="logo_post">发送私信</div>
+		</div>
+	   	<div id="pmbox">
+			<!-- <div id="post_message_tip">发送私信：</div> -->
+				<input id="post_msg_to" type="text" placeholder="发送给"></input>
+				<div id="pm2l"></div>
+				<textarea name="content" id="post_message_input" placeholder="私信内容"></textarea>
+	   	</div>
+			<div id="post_message_button">
+				<input type="button" id="close_post_message" value="取消" tabindex="6">
+				<input type="button" id="post_message_button_submit" value="发表" tabindex="6">
+			</div>
+	</div>
+	<!-- 收藏提示 -->
+	<div id="favorited"></div>
+	<!-- 右上角菜单 -->
+	<div id="sys_menu" class="sys_menu_normal">
+		<div id="sys_menu_top"></div>
+		<div id="sys_menu_wtire" class="sys_menu_option">写微博</div>
+		<div id="sys_menu_i" class="sys_menu_option">我的主页</div>
+		<div id="sys_menu_msg" class="sys_menu_option" linkto="at">消息盒子</div>
+		<div id="sys_menu_square" class="sys_menu_option">微博广场</div>
+		<div id="sys_menu_sendmsg" class="sys_menu_option">发私信</div>
+		<div id="sys_menu_search" class="sys_menu_option">搜索</div>
+		<div id="sys_menu_quit" class="sys_menu_option">退出</div>
+	</div>
+	<!-- 局部遮罩 -->
+	<div id="part_shadow"></div>
+	<!-- 全局遮罩 -->
+	<div id="shadow"></div>
+	<div id="no"></div>
+	<div id="tip">
+		<img id="tip_load" src="img/link2load.gif">
+		<p id="tip_p" class="tip_p_fl">
+			Here is ThinkSNS-3G tips:)
+		</p>
+		<div id="tip_ik">
+			<p id="tip_ikp">
+				我知道了
+			</p>
+		</div>
+	</div>
+	<div id="tip_shadow"></div>
+	<!-- 头部顶栏 -->
+	<div id="header">
+		<div id="logo"
+			 <php>if(strpos($_SERVER['HTTP_USER_AGENT'],'MSIE 6.0') !== false):</php>style="_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='{$site.logo}', sizingMethod='crop');_background:none;"<php>else:</php>style="background:url({$site.logo}) no-repeat;"<php>endif;</php>
+		></div>
+		<div id="menu_button" class="menu_button_normal"></div>
+	</div>
+	<!-- 加载提示 -->
+	<div id="load_tip">
+		<img id="load_tip_img" src="img/load_tip.gif">
+	</div>
+	<!-- 查看图片大图 -->
+	<div id="feed_img_view">
+		<div id="feed_img_view_bar">
+			<div id="feed_img_view_close"></div>
+			<div id="feed_img_view_zan"></div>
+		</div>
+		<div id="feed_img_view_img_box">
+		</div>
+		<div id="feed_img_view_bg"></div>
+	</div>
+	<!-- 用户消息提醒 -->
+	<div id="msg_tip_box">
+		<div id="msg_tip">
+			<p id="msg_tip_p">0</p>
+			<img id="msg_tip_img" src="img/msg_tip.png">
+		</div>
+		<div id="msg_tip_shadow"></div>
+	</div>
+	<!-- 搜索弹出层  -->
+<div id="search_box">
+	<div class="header">
+		<div id="post_message_tip" class="logo_post" style="height: 20px;">搜索</div>
+	</div>
+	<div id="search_sort">
+		<div id="sscw" class="ssc ssc_check" stype="weibo">微博</div>
+		<div id="sscu" class="ssc" stype="user">用户</div>
+		<div id="ssct" class="ssc" stype="">话题</div>
+	</div>
+	<div id="search_input_box">
+		<input type="text" name="sibi" id="sibi">
+	</div>
+	<div id="search_button">
+		<input type="button" id="close_search_box" value="取消" tabindex="6">
+		<input type="button" id="post_search_submit" value="搜索" tabindex="6">
+	</div>
+</div>
+<div id="refresh_list">
+	<p id="refresh_list_p">下拉可以刷新</p>
+</div>

@@ -1,0 +1,22 @@
+<div  class="find-type">
+<div class="app-title clearfix">
+		<div class="search-input">
+            <div id="mod-search">
+                <form name="search_poster" id="search_poster" method="post" action="{:U('poster/Index/index')}">
+                     <input type="hidden" name="type" value="search"/>
+                    <dl>
+                    <dt class="clearfix"><!--<i class="ico-search"></i>--><input autocomplete="off" id="searchposter_input" class="s-txt left"  type="text" value="<php>if(!empty($searchkey)){</php>{$searchkey}<php>}else{</php>校园搜索<php>}</php>" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='校园搜索';" name='title'><a href="javascript:void(0)" class="btn-search" onclick="if(getLength($('#searchposter_input').val()) && $('#searchposter_input').val()!=='校园搜索'){ $('#search_poster').submit(); return false;}"><span>搜索</span></a></dt>
+                    </dl>
+                </form>
+            </div>
+          </div>
+		<h4 class="left"><img src="{$ts['app']['small_icon_url']}" />&nbsp;&nbsp;{$ts['app']['app_alias']}</h4>
+		<div class="app-tab-menu clearfix" style="margin:10px 0 0 20px;">
+            
+			<ul>
+				<li><a href="{:U('//')}" <php>if(in_array((ACTION_NAME),array('index')) || !in_array((ACTION_NAME),array('index'))&&$mid!=$uid)echo 'class="current"';</php>>{$ts['app']['app_alias']}首页<php>if(in_array((ACTION_NAME),array('index')) || !in_array((ACTION_NAME),array('index'))&&$mid!=$uid){</php><span class="triangle"></span><php>}</php></a><i class="line"></i></li>
+                <li><a href="{:U('//personal')}" <php>if(!in_array((ACTION_NAME),array('index')) && $mid==$uid)echo 'class="current"';</php>>我的{$ts['app']['app_alias']}<php>if(!in_array((ACTION_NAME),array('index')) && $mid==$uid){</php><span class="triangle"></span><php>}</php></a></li>
+			</ul>
+		</div>
+	</div>
+</div>

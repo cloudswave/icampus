@@ -1,0 +1,113 @@
+<div class="pop-message" id='post_message' style="*width:470px">
+  <table class="pop table-pop">
+    <tbody>
+      <tr>
+        <td class="textR">{:L('PUBLIC_RECEIVER')}：</td>
+        <td>{:W('SearchUser',array('uids'=>$touid,'max'=>1,'editable'=>$editable))}</td>
+      </tr>
+      <tr>
+        <td class="textR">{:L('PUBLIC_INVITE_CONTENT')}：</td>
+        <td>
+          <textarea id="message_content" onblur="this.className='s-textarea'" onfocus="this.className='s-textarea-focus'" class="s-textarea"></textarea>
+          <div class="acts">
+            <a class="face-block" href="javascript:;" event-node="message_insert_face"><i class="face"></i>表情</a>
+            <a class="image-block" href="javascript:;"><i class="image"></i>图片
+              <form style='display:inline;padding:0;margin:0;border:0;outline:none;' >
+                <input type="file" name="attach" limit="2" inputname='attach' onchange="core.plugInit('uploadFile',this,'','image')" urlquery='attach_type=message_image&upload_type=image&thumb=1&width=100&height=100&cut=1' hidefocus="true">
+              </form>
+            </a>
+            <a class="file-block" href="javascript:;"><i class="file"></i>附件
+                  <form style='display:inline;padding:0;margin:0;border:0' >
+                   <input limit="2" type="file" name="attach" inputname='attach' onchange="core.plugInit('uploadFile',this,'','all')" urlquery='attach_type=message_file&upload_type=file' hidefocus="true">
+                  </form>
+            </a>
+            <!-- <div id="message_face_div"></div> -->
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><a class="btn-green-small" onclick="doPostMessage();" id="postbut" href="javascript:;"><span>{:L('PUBLIC_SEND')}</span></a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script type="text/javascript">
+M.addEventFns({
+  message_insert_face: {
+    click: function () {
+      var target = $('#message_content')[0];
+      var parentDiv = $('#message_face_div')[0];
+      core.plugInit('face', this, $('#message_content'), parentDiv);
+    }
+  }
+});
+// 重新监听事件
+M(document.getElementById('post_message'));
+shortcut('ctrl+return', doPostMessage , {target:'post_message'});
+/**
+ * 按钮状态
+ * @param string type 状态类型，2种
+ * @return void
+ */
+var butstate = function(type){
+	if(type == 'open') {
+		$('#postbut').removeAttr('disabled');
+		$('#postbut').val("发送");
+	}
+	if(type == 'close') {
+		$('#postbut').attr('disabled','true');
+		$('#postbut').val('Loading......');
+	}
+};
+/**
+ * 发送私信操作
+ * @return void
+ */
+function doPostMessage() {
+	// 发送私信的用户
+    var message_to = $('#search_uids').val();
+    if("undefined" == typeof(message_to)) {
+        ui.error("收信人不能为空");
+        return false;
+    }
+    // 限制发送用户的个数
+    if(message_to.split(",").length > 12){
+    	// ui.error('私信最多只能同时发送给10个人')
+    	return false;
+    }
+    
+    var message_title = $('#message_title').val();
+    var message_content = $('#message_content').val();
+    // 验证发送信息正确性
+    if(message_to == "") {
+    	ui.error("收信人不能为空");
+    	//butstate('open');
+    	return false;
+    }
+    if(message_title == "") {
+    	ui.error("标题不可为空");
+    	//butstate('open');
+    	return false;
+    }
+    if(message_content == "") {
+    	ui.error("内容不可为空");
+    	//butstate('open');
+    	return false;
+    }
+    var attach_ids = $.trim($('#attach_ids').val());
+    // 发送按钮状态
+    butstate('close');
+    // 发送私信链接
+    $.post("{:U('public/Message/doPost')}", {to:message_to, content:message_content, attach_ids:attach_ids}, function(res) {
+        if(res.status == 1){
+            ui.success("发送成功");
+            ui.box.close();
+        } else {
+            ui.error(res.data);
+            butstate('open');
+        }
+    }, 'json');
+};
+</script>

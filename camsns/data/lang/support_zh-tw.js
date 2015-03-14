@@ -1,0 +1,3 @@
+LANG['SSC_ACTIVE_ERROR']='激活失敗';
+LANG['SSC_ACTIVE_SUCCESS']='激活成功';
+LANG['SSC_REQUIRED']='加*項爲必填項';

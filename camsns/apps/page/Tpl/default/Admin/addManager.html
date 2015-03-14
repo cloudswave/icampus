@@ -1,0 +1,17 @@
+<div id="manager" class="manager">
+<form id="form3" method="post" action="{:U('page/Admin/doAddManager')}">
+  <table width="321" border="0" cellpadding="0" cellspacing="3" align="left" class="mt10">
+      <tr>
+      <td align="left">{:W('SearchUser', array('uids'=>$managers, 'name'=>'manager','follow'=>0, 'max'=>0,'noself'=>0))} </td>
+    </tr>
+    <tr>
+      <td height="30" align="left">
+        <input type="text" name="pageid" id="pageid" value="{$pageid}" style="display:none;"/>
+        <input type="submit" class="btn_b ml10" value="保存" /></td>
+    </tr>
+  </table>
+</form></div>
+<script>
+//重新监听事件
+M(document.getElementById('manager'));
+</script>

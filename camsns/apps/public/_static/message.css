@@ -1,0 +1,61 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+/*消息列表*/
+.massage-main{padding:20px;background:#fff}
+.massage-main .tab-menu{margin:0 0 5px}
+.massage-main .page{margin:0 20px}
+/*.private-lists{padding:10px 0 0}*/
+.private-list{border-bottom:#eee solid 1px;margin:0;/*position:relative;*/background:#fff;padding:20px 10px;cursor:pointer;*zoom:1;/*for Ie6,Ie7*/}
+.private-list dt.face{float:left;margin:0 10px 0 0;width:50px;height:50px}
+.private-list dd.info{margin:0 0 0 60px;font-size:14px;line-height:22px;}
+.private-list dd.info a.right{font-size:12px;color:#5F93D3;}
+.private-list dd.info img{vertical-align:middle;}
+/*.private-list dd.info .date{font-size:12px;padding:5px 0 0;color:#999}*/
+.private-list dd.info .date a{color:#5F93D3}
+.private-list dd.info .date span{float:right}
+/*.private-list .ico-close{position:absolute;right:30px;top:15px}*/
+.private-list .hover{ visibility:hidden;_visibility:visible;/*for Ie6*/}
+.private-list:hover .hover{visibility:visible}
+.private-list:hover .hover a{color:#5F93D3}
+.private-list:hover, .private-lists .current{background:#F6F6F6;border-bottom:#f6f6f6 solid 1px}
+.private-list .ico-new{margin:0 0 0 5px}
+.private-lists .note{text-align:center;padding:10px;}
+
+/*消息回复列表*/
+.reply-lists{padding:0 0 20px 0}
+.reply-lists .arrow-left{position:absolute;left:55px;top:30px}
+/*.reply-lists .my-reply .arrow-right{background-color:#fff;position:absolute;right:55px;top:30px}*/
+.reply-lists .my-reply .arrow-right{background-color:#fff;float:right;background-position:0 0;margin:10px 5px 0 0;}
+.reply-lists .my-reply dt.face{float:right;/*margin:0 0 0 10px*/}
+.reply-lists .my-reply dd.info{margin:0 60px;background:#fff;}
+.system-list{background:#fff}
+.system-list:hover{background:#F6F6F6;cursor:pointer}
+.system-list dd.face{float:left;width:100px;padding:5px 0 0;}
+.system-list dd p.name{margin:0 0 0 40px;}
+.system-list dd a.face{float: left;}
+.system-list dd.info{margin:0 40px 0 100px;overflow:hidden;_width:590px;}
+.reply-list{margin:10px 0;/*position:relative;*/}
+.reply-list dt.face{float:left;width:50px;height:50px;/*margin:0 10px 0 0*/}
+.reply-list dd.info{margin:0 60px;padding:10px;background:#FAFAFA;border:#EBEBEB solid 1px;line-height:22px;color:#535353;/*for Ie6.Ie7*/}
+.reply-list dd.info .date{color:#C9C9C9;padding:5px 0 0;}
+.reply-list dd.info .date span{float:right}
+.reply-list dd.info .date span a:link, .reply-list dd.info .date span a:visited{color:#96B0E3}
+
+/*消息回复区*/
+.replay-section{padding:5px 0 20px 0;border-bottom:#eee solid 1px;margin:0 0 5px}
+.replay-section .hd {*zoom:1}
+.replay-section .hd span{float:right}
+.replay-section .hd strong{padding:0 5px;color:#f60;font-weight:700}
+.replay-section .hd a{padding:0 0 0 5px}
+
+.replay-article{padding:20px 0 0 60px;*zoom:1;/*for Ie6,Ie7*/}
+.replay-article dt{padding:0 0 5px}
+.replay-article dd.info{height:50px;}
+/*.replay-article dd .face{float:right;width:50px;height:50px;margin:0 0 0 10px}*/
+.replay-article dd .s-textarea, .replay-article dd .s-textarea-focus{height:44px;width:628px;overflow-y:auto;_float:left;/*for Ie6*/}
+.replay-article dd.action{padding:10px 60px 0 0;}
+.replay-article dd.action .btn-green{float:right}
+.replay-article dd.action .faces{float:left;background:url(../image/icon.png) no-repeat 0 0;display:inline-block;width:16px;height:16px;margin:0 10px 0 0;cursor:pointer}
+
+.moreFoot{ background:#F5F6F7;border-top: 1px solid #EBEBEB;color: #999;height: 31px;line-height: 31px;padding: 3px 0;text-align: center;}

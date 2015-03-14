@@ -1,0 +1,26 @@
+<a class="templete_enter" href="javascript:;"  onclick="oSpaceStyle.fShowBox();"  title="模板偏好设置"></a>
+<div id="change_style_box" style="display:none;"></div>
+<script type="text/javascript">
+var oSpaceStyle = {
+	iInit: 0,
+	$SpaceStyleBox: $('#change_style_box'),
+	fInit: function() {
+		if (this.iInit > 0) {
+			return ;
+		}
+		this.iInit = 1;
+		$SpaceStyleBox = this.$SpaceStyleBox;
+		$.get(U('public/Widget/addonsRequest'), {'addon':'SpaceStyle','hook':'changeStyleBox'}, function(txt) { 
+			$SpaceStyleBox.html(txt);
+			$SpaceStyleBox = null;
+		});
+	},
+	fShowBox: function() {
+		this.fInit();
+		this.$SpaceStyleBox.css('display', '');
+	},
+	fHideBox: function() {
+		this.$SpaceStyleBox.css('display', 'none');
+	}
+};
+</script>

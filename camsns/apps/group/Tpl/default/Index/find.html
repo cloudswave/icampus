@@ -1,0 +1,53 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__APP__/Js/common.js"></script>
+<script type="text/javascript" src="__APP__/Js/group.interesting.js"></script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<script>
+var display_interesting_group = 'main';
+$(document).ready(function(){
+	change_interesting_group(1);
+});
+</script>
+<div class="content no_bg"><!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox">
+      <include file="../Public/_isHotList" />
+      <div class="mainbox_appC">
+        <div class="group_box mLR15" id="interesting_group_list">
+        </div>
+        <!--/你可能敢兴趣的群 --> 
+        <!--微群分类-->
+        <div class="group_box mLR15">
+          <div class="searchBox">
+            <form action="{:U('group/Index/search')}" method="POST" onsubmit="javascript:if(this.k.value.length <= 0){return false;}">
+          	  <div><input name="k" type="text" class="text_group left" /><input type="submit" class="btn_group" value=""/></div>
+            </form>
+            <p class="sch_hot mt10"><if condition="$reTags"><strong>热门：</strong>
+            <volist name="reTags" id="tag"><a href="{:U('group/Index/search', array('k'=>urlencode($tag)))}">{$tag}</a></volist>
+            </if></p>
+          </div>
+          <ul class="gsort">
+            <volist name="category_tree" id="category_top">
+            <li>
+              <a name="group_category"></a>
+              <h3><a href="{:U('group/Index/search', array('cid'=>$category_top['a']))}" class="MIB_linkar">{$category_top['t']}</a><span>({$category_top['count']})</span></h3>
+              <div class="group_classtext MIB_linkbr">
+              <volist name="category_top['d']" id="category_son">
+                <a href="{:U('group/Index/search', array('cid'=>$category_son['a']))}">{$category_son['t']}</a>
+              </volist>
+              </div>
+            </li>
+            </volist>
+          </ul>
+        </div>
+        <!--/微群分类-->
+
+        <div class="c"></div>
+      </div>
+    </div>
+    <!-- 内容 end --> 
+  </div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" /> 

@@ -1,0 +1,51 @@
+<div class="mainbox_appR">
+	<if condition="$config['createGroup']">
+      <div class="mod_create mb20">
+          <a href="{:U('group/Index/add')}" class="btn-create">创建群组</a>
+      </div>
+    </if>
+        <!--微群分类-->
+    <php>if(!empty($category_tree)){</php>
+    <div class="right-list clearfix">
+      <h3>群组分类</h3>
+      <ul class="rankBlog">
+        <volist name="category_tree" id="category_top">
+        <li>
+          <h3><a href="{:U('group/Index/search', array('cid'=>$category_top['a']))}" class="MIB_linkar">{$category_top['t']}</a><span>({$category_top['count']})</span></h3>
+        </li>
+        </volist>
+      </ul>
+    </div>
+    <php>}</php>
+    <!--排行榜-->
+    <div class="mod-ranking clearfix">
+      <php>if (!empty($hot_group_list)) {</php>
+      <h3>群组排行榜</h3>
+      <dl class="fans_toplist">
+      <dt><span class="right">成员数</span>群组</dt>
+        <volist name="hot_group_list" id="hot_group">
+          <php>if($key>2){ $class='no'; }else{ $class='no top'.($key+1); }</php>
+          <dd>
+            <span>{$hot_group['membercount']}</span>
+            <em class="num ico-num{$key+1}"></em>
+            <a href="{:U('group/Group/index', array('gid'=>$hot_group['id']))}">
+              <img src="{$hot_group['logo']|logo_path_to_url}" width="25" height="25" class="userPhoto">
+            </a>
+            <a target="_self" class="username" href="{:U('group/Group/index', array('gid'=>$hot_group['id']))}">{$hot_group['name']|getShort=6,'...'}</a>
+          </dd>
+        </volist>
+      </dl>
+      <php>} // end if</php>
+    </div>
+    <php>if (!empty($hot_tags_list)) {</php>
+    <!--热门标签-->
+    <div class="mod_tag clearfix">
+      <h2>热门群标签</h2>
+      <ul class="topic_list">
+        <volist name="hot_tags_list" id="hot_tag">
+          <li><a href="{:U('group/Index/search', array('k'=>urlencode($hot_tag['tag_name'])))}">{$hot_tag['tag_name']}</a></li>
+        </volist>
+      </ul>
+    </div>
+    <php>} // end if</php>
+</div>

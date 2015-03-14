@@ -1,0 +1,44 @@
+<div class="mainbox_appR">
+<div class="mod_create mb20">
+    <a href="{:U('blog/Index/addBlog')}" title="发表{$ts['app']['app_alias']}" class="btn-create">写日志</a>
+    <!--<h4><a href="{:U('blog/Index/my')}">进入我的日志首页</a></h4>-->
+</div>
+
+<div class="right-list">
+    <h3>推荐{$ts['app']['app_alias']}</h3>
+    <php>if(empty($relist)){</php>暂无推荐{$ts['app']['app_alias']}<php>}</php>
+        <ul>    
+        <volist name="relist" id="vo">
+            <li><i class="ico-piece"></i><div class="info"><a href="{:U('blog/Index/show', array('id'=>$vo['id'], 'mid'=>$vo['uid']))}">{$vo.title}</a></div></li>
+        </volist>
+        </ul>    
+</div>
+
+<eq name="ACTION_NAME" value="my">
+<div class="right-list clearfix">
+    <h3>日志分类（<span><a href="{:U('blog/Index/admin')}" style="padding-left: 0px;" >管理</a></span>）</h3>
+    <ul>
+    <li><a href="{:U('blog/Index/my')}" class="current">所有分类</a></li>
+    <php>foreach( $category as $key=>$value ) {</php>
+    <li><i class="ico-piece"></i><div class="info"><a href="{:U('blog/Index/my', array('cateId'=>$value['id']))}">{$value['name']} ( {$value['count']} )</a></div></li>
+    <php>}</php>
+    </ul>
+</div>
+{:W( 'FileAway', $file_away)}
+</eq>
+</div>
+<script>
+
+// function jSubmit(){
+//       if (document.createEvent) { // w3c
+//                     var evObj = document.createEvent('MouseEvents');
+//                     evObj.initEvent('submit', true, false);
+//                     document.addBlog.dispatchEvent(evObj);
+//                 }
+//                 else if (document.createEventObject) { // ie
+//                     document.addBlog.fireEvent('onsubmit');
+//                 }
+
+//                 document.addBlog.submit();
+// }
+</script>

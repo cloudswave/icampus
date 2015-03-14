@@ -1,0 +1,131 @@
+<include file="__THEME__/public_header" />
+<script type="text/javascript">
+function addDigg(feed_id){
+   $.post("{:U('public/Feed/addDigg')}", {feed_id:feed_id}, function(res){
+       if(res==1){
+	       var num = $('#digg'+feed_id).attr('rel');
+    	   num++;
+    	   $('#digg'+feed_id).html('已赞('+num+')');
+	   }else {
+	       ui.error('操作失败，如没有登录请先登录再操作');
+       }
+   });
+}
+</script>
+<div id="page-wrap">
+    <div id="main-wrap">
+        <div class="profile-title  boxShadow">
+                <include file="_top"/> 
+        </div>
+        <div id="col" class="st-grid boxShadow content-bg minh">
+            <php>if($feed['userPrivacy']['space'] != 1){</php>
+            <include file="_sidebar"/>
+
+                <div id="col5" class="st-index-main">
+                <div class="extend minh">
+                    <!--feed list-->
+                    <div class="feed_lists">
+                        <!--feed list-->
+                        <dl class="feed_list feed_list_hover detail">
+                            <dd class="content" id="feed{$feed['feedInfo'].feed_id}">                                
+                              <p class="clearfix">
+                                    <span event-node="show_admin" event-args="feed_id={$feed['feedInfo']['feed_id']}&uid={$feed['feedInfo']['uid']}&feed_del={:CheckPermission('core_admin','feed_del')}&channel_recommend={:CheckPermission('channel_admin','channel_recommend')}&isrefresh=1" href="javascript:;" class="right f12 hover f9" style="display:none;cursor:pointer">管理</span>
+                                {$feed['feedInfo'].body|format=true}
+                                </p>
+                                <p class="info">
+                                <span class="right">
+	<span id="digg{$feed['feedInfo'].feed_id}" rel="{$feed['feedInfo'].digg_count}">
+	<php>if(!isset($feed['diggArr'][$feed['feedInfo']['feed_id']])) { </php>
+	   <a href="javascript:void(0)" onclick="addDigg({$feed['feedInfo'].feed_id})" >赞<if condition="!empty($feed['feedInfo'][digg_count])">({$feed['feedInfo'].digg_count})</if></a>
+	<php> } else { </php>
+	   已赞<if condition="!empty($feed['feedInfo'][digg_count])">({$feed['feedInfo'].digg_count})</if>
+	<php> } </php></span>
+	<i class="vline">|</i>                                
+                                    <php>$cancomment_old = empty($feed['feedInfo']['app_row_id'])  ? 0 : 1;</php>
+                                    <php>$cancomment = intval(CheckPermission('core_normal','feed_comment'));</php>
+                                    <eq name="feed['feedInfo'].actions.repost" value='true'>
+                                        <php>if(CheckPermission('core_normal','feed_share') && in_array('repost',$feed['check']['weibo_premission'])){</php>
+                                              <php>$sid = !empty($feed['feedInfo']['app_row_id'])? $feed['feedInfo']['app_row_id'] : $feed['feedInfo']['feed_id'];</php>
+                                                {:W('Share',array('sid'=>$sid,'stable'=>$feed['feedInfo']['app_row_table'],'initHTML'=>'','current_table'=>'feed','current_id'=>$feed['feedInfo']['feed_id'],'nums'=>$feed['feedInfo']['repost_count'],'appname'=>$feed['feedInfo']['app'],'cancomment'=>$cancomment,'feed_type'=>$feed['feedInfo']['type'],'is_repost'=>$feed['feedInfo']['is_repost']))}
+                                                <i class="vline">|</i>
+                                        <php>}</php>
+                                    </eq>
+                                    <eq name="feed['feedInfo'].actions.favor" value='true'>
+                                        {:W('Collection',array('type'=>'btn','sid'=>$feed['feedInfo']['feed_id'],'stable'=>'feed','sapp'=>$feed['feedInfo']['app']))}
+                                    </eq>
+                                    <php>if(in_array('comment',$feed['check']['weibo_premission'])):</php>
+                                    <i class="vline">|</i>  
+                                    <a href="javascript:void(0)">{:L('PUBLIC_STREAM_COMMENT')}
+                                    <neq name='feedInfo.comment_count' value='0'>({$feed['feedInfo']['comment_count']})</neq></a>
+                                    <php> endif; </php>
+                                </span>
+                            <a class="date" href="javascript:;">{$feed['feedInfo'].publish_time|friendlyDate}</a>
+                            <span>{$feed['feedInfo']['from']}</span>
+                            <em class="hover">
+                            <php>if($feed['feedInfo']['uid'] != $GLOBALS['ts']['mid']){</php>
+                            <php>if(CheckPermission('core_normal','feed_report')){</php>
+                            <a href="javascript:void(0)" event-node='denounce' event-args="aid={$feed['feedInfo'].feed_id}&type=feed&uid={$feed['feedInfo'].uid}">{:L('PUBLIC_STREAM_REPORT')}</a>
+                            <php>}</php>
+                            <php>}</php>
+                            <i class="vline"></i>
+                            <eq name="feed['feedInfo'].actions.delete" value='true'>
+                            <!-- 做普通删除权限 和 管理删除权限 判断 & 只有微博可以被删除  -->
+                            <php>if(($feed['feedInfo']['uid'] == $GLOBALS['ts']['mid']) ) {</php>
+                            <a href="javascript:void(0)" event-node ='delFeed' event-args="feed_id={$feed['feedInfo'].feed_id}&uid={$feed['feedInfo'].uid}&isrefresh=1">{:L('PUBLIC_STREAM_DELETE')}</a>
+                            <php>}</php>
+                            </eq>
+                            </em>
+                              </p>
+                              <div class="praise-detail-list clearfix" style="display:none">
+                                <i class="arrow arrow-t"></i>
+                                <ul>
+                                   <li><a href=""><img src="{$user_info[$uid]['avatar_big']}" width="30" height="30"/></a><a href="" class="ico-close1"></a></li>
+                                   <li><a href=""><img src="{$user_info[$uid]['avatar_big']}" width="30" height="30"/></a></li>
+                                   <li><a href=""><img src="{$user_info[$uid]['avatar_big']}" width="30" height="30"/></a></li>
+                                   <li><a href=""><img src="{$user_info[$uid]['avatar_big']}" width="30" height="30"/></a></li>
+                                   <li><a href=""><img src="{$user_info[$uid]['avatar_big']}" width="30" height="30"/></a></li>
+                                   <li><a href=""><img src="{$user_info[$uid]['avatar_big']}" width="30" height="30"/></a></li>
+                                   <li><a href=""><img src="{$user_info[$uid]['avatar_big']}" width="30" height="30"/></a></li>
+                                   <li><a href=""><img src="{$user_info[$uid]['avatar_big']}" width="30" height="30"/></a></li>
+                                   <li><a href=""><img src="{$user_info[$uid]['avatar_big']}" width="30" height="30"/></a></li>
+                                   <li><a href=""><img src="{$user_info[$uid]['avatar_big']}" width="30" height="30"/></a></li>
+                                   <li><a href=""><img src="{$user_info[$uid]['avatar_big']}" width="30" height="30"/></a></li>
+                                   <li><a href=""><img src="{$user_info[$uid]['avatar_big']}" width="30" height="30"/></a></li>
+                                   <li><a href=""><img src="{$user_info[$uid]['avatar_big']}" width="30" height="30"/></a></li>
+                                   <li><a href=""><img src="{$user_info[$uid]['avatar_big']}" width="30" height="30"/></a></li>
+                                   <li><a href=""><img src="{$user_info[$uid]['avatar_big']}" width="30" height="30"/></a></li>
+                                   <li><a href=""><img src="{$user_info[$uid]['avatar_big']}" width="30" height="30"/></a></li>
+                                </ul>
+                                <div class="praise-page">
+                                    <a href=""> < </a>
+                                    <a href=""> > </a>
+                                </div>
+                              </div>
+                              <p class="border">
+                                	<!--<i class="arrow arrow-t"></i>-->
+                              </p>
+                            </dd>
+                        </dl>
+                    </div>
+                    <!--feed list-->
+
+					<div  class="feed_lists">
+						<dl class="feed_list feed_comment">
+							<dd class="content">
+                  <div class="repeat clearfix pading">
+                    <php> $cancomment = CheckPermission('core_normal','feed_comment') && in_array('comment',$feed['check']['weibo_premission']) ? 1: 0;</php>
+                    {:W('Comment',array('tpl'=>'detail','app_row_id'=>$feed['feedInfo']['app_row_id'],'app_uid'=>$feed['feedInfo']['uid'],'row_id'=>$feed['feedInfo']['feed_id'],'pageHtml'=>1,'limit'=>'20','order'=>'DESC','cancomment'=>$cancomment,'cancomment_old'=>0,'app_name'=>$feed['feedInfo']['app']))}                                   
+                  </div>
+							</dd>
+						</dl>
+					</div>
+                    </div>
+                 </div>
+            <php>}else{</php>
+                   <p class="extend"> -_-。sorry！根据对方隐私设置，您无权查看TA的微博</p>
+            <php>}</php>
+        </div>
+    </div>
+</div>
+<include file="__THEME__/public_footer" />
+<script src="__THEME__/js/module.weibo.js"></script>

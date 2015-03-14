@@ -1,0 +1,140 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__APP__/Js/common.js"></script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<script>
+	function manage(uid,op) {
+		v_prompt = "";
+		if(op == 'admin') {
+			v_prompt = '你确定设置该用户成为管理员';
+		}else if(op == 'normal'){
+			v_prompt = '你确定设置该用户成为普通会员';
+		}else if(op == 'out'){
+			v_prompt = '你确定要踢出该用户';
+		}else if(op == 'allow'){
+			v_prompt = '你确定设置该用户成为该群组成员'
+		}
+		if(v_prompt.length){
+			if (!confirm(v_prompt))
+			{
+				return;
+			}
+		}
+		document.actionform.uid.value = uid;
+		document.actionform.op.value = op;
+		document.actionform.submit();
+	}
+	
+	function manageBatch(op) {
+		var uidJson = new Array();
+		$('input[rel="member"]').each(function() {
+			if($(this).attr('checked') == 'checked' && $(this).val() != 0) {
+				uidJson.push($(this).val());
+			}
+		});
+		if(uidJson.length == 0) {
+			alert('请选择用户');
+			return;
+		}
+		var v_prompt = "";
+		if(op == "admin") {
+			v_prompt = '你确定设置该用户成为管理员';
+		} else if(op == "out") {
+			v_prompt = '你确定要踢出该用户';
+		}
+		if(v_prompt.length != 0) {
+			if(!confirm(v_prompt)) {
+				return;
+			}
+		}
+		document.actionform.uid.value = uidJson;
+		document.actionform.op.value = op;
+		document.actionform.submit();
+	}
+	
+	function checkAll(o){
+        if( o.checked == true ){
+            $('input[name="checkbox"]').attr('checked','checked');
+        }else{
+            $('input[name="checkbox"]').removeAttr('checked');
+        }
+    }
+</script>
+</head>
+<body>
+<div class="content_holder">
+<div class="content no_bg boxShadow"> 
+<include file="../Public/_mainNav" />
+  <!-- 内容 begin  -->
+  <div class="main no_l"> 
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_appC mainC_pad" style="margin-right:0"> <include file="../Public/manage_group_top" />
+        <div class="mod-feed-tab">
+           <ul class="inner-feed-nav">
+              <li class="current"><a href="#">所有成员</a></li>
+              <li><a href="{:U('group/Manage/membermanage',array('gid'=>$groupinfo['id'],'type'=>'apply'))}">申请加入的人</a></li>
+          </ul>
+        </div>
+        <form method="post" name="actionform" action="{:U('group/Manage/memberaction')}">
+          <input type="hidden" name="gid" value="{$gid}">
+          <input type="hidden" name="op" value="">
+          <input type="hidden" name="uid" value="">
+        </form>
+        <div class="groupBox">
+          <div style="width:100%;">
+            <dl class="memberlist">
+              <dt class="cGray2">
+              <div class="left mr10"><input name="checkbox" type="checkbox" value="0" class="ck" style="margin-top:3px" onclick="checkAll(this)"></div>
+                <div class="c1">名字</div>
+                <div class="c2">身份</div>
+                <div class="c3">操作</div>
+                <div class="c"></div>
+              </dt>
+              <volist name="memberlist['data']" id="member">
+                <dd>
+                <div class="left mr10"><input name="checkbox" type="checkbox" rel="member" value="{$member['uid']}"  class="mt10 ck"></div>
+                  <div class="c1"><span class="pic30 mr5 alM"><space uid="member['uid']" target="_blank">{uavatar=s}</space></span><space uid="member.uid" class="fn" target="_blank">{uname}</space></div>
+                  <div class="c2">
+                    <eq name="member['level']" value="1">创建者</eq>
+                    <eq name="member['level']" value="2">管理者</eq>
+                    <eq name="member['level']" value="3">普通成员</eq>
+                  </div>                  
+                  <!-- 如果是成员 start -->                  
+                  <div class="c3">
+                    <php>if ($mid != $member['uid']) {</php>
+                    <php>if($iscreater) {</php>
+                    <eq name="member['level']" value="3"><a href="javascript:manage({$member['uid']},'admin');">升为管理员</a></eq>
+                    <eq name="member['level']" value="2"><a href="javascript:manage({$member['uid']},'normal');">降为普通成员</a> </eq>
+                    <a href="javascript:manage({$member['uid']},'out');">踢出本群</a>
+                    <php>} else if ($iscreater || ($isadmin && $member['level'] > 2)) {</php>
+                    <a href="javascript:manage({$member['uid']},'out');">踢出本群</a>
+                    <php>}</php>
+                    <php>}</php>
+                  </div>
+                  <div class="c"></div>
+                  <!-- 如果是成员 end -->
+                </dd>
+              </volist>
+              <dd class="cGray2">
+                <input name="checkbox" type="checkbox" value="0" class="ck" onclick="checkAll(this)" />
+                <label><a href="javascript:void(0)" onclick="manageBatch('admin')">升为管理员</a>&nbsp;|&nbsp;<a href="javascript:void(0)" onclick="manageBatch('out')">踢出本群</a></label>
+                <div class="c"></div>
+              </dd>
+            </dl>
+            <p class="sum mt10">共{$memberlist['count']}名成员</p>
+            <div class="page">{$memberlist['html']}</div>
+            <div class="c"></div>
+          </div>
+          <!-- end  --> 
+        </div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  --> 
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/public_footer" />
+</body>
+</html>

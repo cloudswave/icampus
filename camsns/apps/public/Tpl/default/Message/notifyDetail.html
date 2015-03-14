@@ -1,0 +1,83 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/message.css?v2012040501" rel="stylesheet" type="text/css" />
+<div id="page-wrap">
+    <div id="main-wrap">
+      <div id="col" class="content-bg clearfix boxShadow">
+          <div id="col4" class="main-left">
+              <div id="aside" class="pad">
+                  <dl class="nav-left mt10 border-no">
+                      <dd><a href="{:U('public/Mention')}">@提到我的</a></dd>
+                      <dd><a href="{:U('public/Comment/index',array('app_name'=>t($_GET['app_name']),'type'=>'receive'))}">收到的评论</a></dd>
+                      <dd><a href="{:U('public/Comment/index',array('app_name'=>t($_GET['app_name']),'type'=>'send'))}">发出的评论</a></dd>
+                      <dd><a href="{:U('public/Message')}">我的私信</a></dd>
+                      <dd class="current"><a href="{:U('public/Message/notify')}">系统消息</a></dd>
+                  </dl>
+              </div>
+          </div>
+          <div id="col7" class="main-right">
+            <div class="extend minh person-set">
+                <div class="feed-nav">
+                    <div class="set-hd"><h3>系统消息</h3></div>
+                </div>
+                <!--消息列表-->
+                <div class="private-lists">
+                    <if condition="empty($data)">{:L('PUBLIC_NO_MORE_INFO')}</if>
+                    
+                        <dl class="private-list system-list" id='notify_{$notify.id}' >
+                           <a class="ico-close hover right" href="javascript:void(0);" onclick="ui.confirm(this,'{:L('PUBLIC_MESSAGE_DELETE_CONFIRM')}')" callback="delnotify({$notify.id})"></a>
+                          <dd class="face">
+                            <eq name='appname' value='public'>
+                            <a href="{:U('public/Index/index')}" class="face"><img src="__THEME__/image/middle_1352347100.jpg" width="30px" height="30px"></a>
+                            <p class="name"><a href="{:U('public/Index/index')}">{:L('PUBLIC_WEIBO')}</a></p>
+                            <else />
+                            <a href="{$appinfo['app_entry']}" class="face"><img src="{$appinfo['icon_url']}" width="30px" height="30px"></a>
+                            <p class="name"><a href="{$appinfo['app_entry']}">{$appinfo['app_alias']}</a></p> 
+                            </eq>
+                          </dd>
+                          
+                          <dd class="info clearfix">                          
+                            <div class="private-news-first">
+                              <p class="hd">
+                              第一条消息
+                              </p>
+                              <p class="date">1秒前</p>
+                            </div>
+                            
+                            <div class="private-news-list">
+                               <volist name='data' id='notify'>
+                              <ul>
+                                <li>
+                                  <p class="hd">
+                                  {$notify['body']}
+                                  </p>
+                                  <p class="date">{$notify['ctime']|friendlyDate} </p></li>
+                             </ul>
+                              </volist>
+                            </div>
+                            <a href="{:U('public/Message/notify')}" class="right">收起全部</a>
+                        </dd>
+                       
+                        </dl>
+                    
+                </div>
+                <!--消息列表/end-->
+                <!--页码-->
+                <div id="page" class="page">{$html}</div>
+                <!--页码/Fend-->
+              </div>
+            </div>
+      </div>
+    </div>
+</div>
+<script type="text/javascript">
+  function delnotify(id){
+    $.post(U('public/Message/delnotify'),{id:id},function(){
+          $('#notify_'+id).fadeOut('8000',function(){
+            $(this).remove();
+          });
+    });
+    
+  }
+</script>
+
+<include file="__THEME__/public_footer" /> 

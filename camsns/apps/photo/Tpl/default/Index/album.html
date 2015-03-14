@@ -1,0 +1,72 @@
+<include file="__THEME__/header" />
+<link href="__APP__/css/photo.css" rel="stylesheet" type="text/css" />
+
+<div class="content_holder">
+  <div class="content no_bg boxShadow">
+    <include file="../Public/_mainNav" />
+    <div class="main no_l">
+      <div class="mainbox extend">
+        <div class="my-photo-info">
+         <dl class="clearfix">
+          <dt class="userPic"><span class="headpic50"><a href="{:U('public/Profile/index',array(uid=>$uid))}"><img src="{$uid|getUserFace}" /></a></span></dt>
+          <dd>
+            <h2><a href="{:U('photo/Index/albums', array('uid'=>$uid))}">{$userName}的{$ts['app']['app_alias']}</a>&nbsp;&#62;&nbsp;<span>{$album.name}</span></h2>
+            <p><span class="cGray2">共{$photos.count|default=0}张照片，最后更新于{:date('Y-m-d',$album['mTime'])}</span></p>
+          </dd>
+         </dl>
+        </div>
+        <php>if($album['userId'] == $mid):</php>
+        <div class="lh30 alR my-photo-title clearfix">
+          <a href="{:U('/Upload/flash',array(albumId=>$album[id]))}" class="mr10">添加新图片</a>
+          <span id="more_operation">
+            <a href="{:U('/Manage/album_edit',array(id=>$album[id]))}" class="mr10">编辑该{$ts['app']['app_alias']}</a>
+            <a href="javascript:;" class="mr10" onclick="delAlbum({$album['id']}, this)">删除该{$ts['app']['app_alias']}</a>
+            <a href="{:U('/Manage/album_order',array(id=>$album[id]))}" class="mr10">图片排序</a>
+          </span>
+        </div>
+        <php>endif;</php>
+        <php>if(empty($photos['data'])):</php>
+        <div style="padding:20px">该{$ts['app']['app_alias']}还没有图片<eq name="mid" value="$album['userId']">，<a href="{:U('/Upload/flash',array(albumId=>$album[id]))}">开始添加新图片</a></eq></div>
+        <php>else:</php>
+        <include file="../Public/_photoList" />       
+        <php>endif;</php>        
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<php>if($_SESSION['publish_weibo']):</php>
+{:W('ShareToFeed',array(
+  'title'=>'',
+  'initHTML'=>urlencode($_SESSION['publish_weibo']['initHTML']),
+  'url'=>$_SESSION['publish_weibo']['source_url'],
+  //'attachId'=>$_SESSION['publish_weibo']['attachId'],
+  'from'=>'photo',
+  'isLoad'=>1))
+}
+<php>unset($_SESSION['publish_weibo']);</php>
+<php>endif;</php>
+
+<script src="__APP__/js/preview.js" type="text/javascript"></script>
+<script type="text/javascript">
+/**
+ * 删除相册
+ * @param integer albumId 相册ID
+ * @parma object obj 点击对象
+ * @return void
+ */
+var delAlbum = function (albumId, obj) {
+  // 删除相册链接
+  var doDelAlbum = function () {
+    $.post(U('photo/Manage/delete_album'), {id:albumId}, function () {
+      ui.success('删除成功');
+      setTimeout(function () {
+        location.href = U('photo/Index/albums');
+      }, 1000);
+    });
+  };
+  ui.confirmBox('提示', '删除该{$ts['app']['app_alias']}的同时，将删除其所有图片，确定删除？', doDelAlbum)
+};
+</script>
+<include file="__THEME__/public_footer" />

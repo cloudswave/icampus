@@ -1,0 +1,57 @@
+<include file="__THEME__/header" />
+<link href="__APP__/css/photo.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">var APP_NAME = "{$ts['app']['app_alias']}";</script>
+
+<div class="content_holder">
+  <div class="content no_bg boxShadow">
+    <include file="../Public/_mainNav" />
+    <div class="main no_l">
+      <div class="mainbox extend">
+        <div class="my-photo-info clearfix">
+          <eq name="mid" value="$userInfo['uid']">
+          <a href="javascript:create_album_tab({$userInfo['uid']}, 1);" class="btn-cancel right"><span>新建相册</span></a>
+          </eq>
+          <dl>
+            <dt><a href="{:U('public/Profile/index',array(uid=>$uid))}"><img src="{$uid|getUserFace}" /></a></dt>
+            <dd>
+              <span>{$userInfo.uname}的相册</span>
+              <p class="f9">共{$count|default=0}张照片，最后更新于{$lastUpdateTime|date='Y-m-d', ###}</p></dd>
+          </dl>
+        </div>
+        <div class="my-photo-list">         
+          <form>
+            <fieldset><legend>微博配图</legend><a href="{:U('photo/Index/weiboalbum',array('uid'=>$userInfo['uid']))}" class="right"><span>更多>></span></a></fieldset>
+          </form>
+          <ul>
+            <volist name="feedImages" id="vo">
+            <li <eq name="i" value="5">class="no-margin"</eq>><a href="{:U('photo/Index/weibophoto',array('id'=>$vo['feed_id'], 'uid'=>$userInfo['uid']))}"><img src="{$vo.savepath|get_photo_url}" width="168" height="168"/></a></li>
+            </volist>
+          </ul>
+        </div>
+
+        <div class="my-photo-list clearfix my-photo-list-b">
+          <form>
+            <php>$who = ($uid === $mid) ? '我' : getUserName($uid);</php>
+            <fieldset><legend>{$who}的相册</legend></fieldset>
+          </form>
+          <ul>
+            <volist name="data.data" id="vo">
+            <li>
+              <div class="pic">
+                <a href="{:U('photo/Index/album', array('id'=>$vo['id'], 'uid'=>$vo['userId']))}">
+                  <img src="{$vo.id|get_album_cover=###,$li,66,66}" width="152" height="152"/><span class="bg">{$vo.photoCount|default=0}张</span>
+                </a>
+              </div>
+              <div class="pic-date"><p><a href="{:U('photo/Index/album', array('id'=>$vo['id'], 'uid'=>$vo['userId']))}">{$vo.name|getShort=12}</a></p><p>{$vo.mTime|date='m月d日 H:i', ###}&nbsp;更新</p></div>
+            </li>
+            </volist>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="c"></div>
+  </div>
+</div>
+
+<script src="__APP__/js/album.js" type="text/javascript"></script>
+<include file="__THEME__/public_footer" />

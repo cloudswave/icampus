@@ -1,0 +1,29 @@
+<include file="__THEME__/header" />
+
+<script type="text/javascript" src="__PUBLIC__/js/facebox/facebox.js"></script>
+ <link rel="stylesheet" href="__APP__/blog.css" type="text/css" media="screen" charset="utf-8" />
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+  <include file="__THEME__/apps" />
+  <div class="main"><!-- 画布 begin  -->
+    <div class=page_title> <!-- page_title begin -->
+      <h2><img src="__APP__/images/ico_app01.gif" />{%blog}</h2>
+    <div class="c"></div>
+</div><!-- page_title end -->
+    <div class="tab-menu"><!-- 切换标签 begin  -->
+      <ul>
+        <li><a href="__URL__/index"  ><span>{%friends}</span></a></li>
+        <li><a href="__URL__/my" ><span>{%my}</span></a></li>
+        <eq name="all" value="true"><li><a href="__URL__/all" class="on"><span>{%all}</span></a></li></eq>
+        <li><a href="__URL__/addBlog"><span><div class="ico_add">&nbsp;</div>{%insertNew}</span></a></li>
+      </ul>
+    </div><!-- 切换标签 end  -->
+
+
+
+  </div><!-- 画布 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />

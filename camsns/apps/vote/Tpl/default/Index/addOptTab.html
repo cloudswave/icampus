@@ -1,0 +1,59 @@
+<!--编辑投票时间弹窗-->
+    <dl class="pop_vote_edit">
+        <dt>请输入新的选项名：</dt>
+        <dd><input type='text' id='newOpt' onfocus='this.select()' class="text"/></dd>
+        <dd><input type="button" onclick="addOpt()" class="btn_b" value="确定"></dd>
+    </dl>
+<!--End 编辑投票时间弹窗-->
+<script>
+$(document).ready(function(){
+    document.getElementById("newOpt").focus();
+});
+	function addOpt(){
+        var name = $( '#newOpt' ).val();
+        var id       = {$id};
+        if(!name || getLength(name.replace(/\s+/g,"")) == 0){
+            alert("请输入选项内容！");
+		    $("#newOpt").focus();
+		    return false;
+        }else if(getLength($("#newOpt").val()) > 50){
+            alert("选项名不得大于100个字符");
+		    $("#newOpt").focus();
+		    return false;
+        }
+        
+        $.post( U('vote/Index/addOpt'),{name:name,id:id},function( res ){
+            switch ( res ){
+                case '0':
+                    ui.error( '添加失败' );
+                    break;
+                case '-1':
+                    ui.error( '非合法添加，无法得知{$ts['app']['app_alias']}ID!' );
+                    break;
+                case '-2':
+                    ui.error( '非合法添加，这一个{$ts['app']['app_alias']}不存在!' );
+                    break;
+                case '-3':
+                    ui.box.close();
+                    ui.error( '不允许添加重名的选项' );
+                    break;
+                case '1':
+                    optList(id);
+                    ui.box.close();
+                    ui.success('添加选项成功');
+                    //location.reload();
+                    break;
+                default:
+                    ui.error('添加选项失败');
+                }
+        });
+    }
+	//添加成功后重新获取选项列表
+	function optList(id){
+			$.post(U('vote/Index/optList'),{id:id},function(html){
+				if( html ){
+					$('#optList').html(html);
+				}				
+			})
+	}
+</script>

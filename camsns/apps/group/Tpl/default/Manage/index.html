@@ -1,0 +1,94 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__APP__/Js/common.js"></script>
+<script type="text/javascript" src="__APP__/Js/json2select.js" ></script>
+<script type="text/javascript" src="__APP__/Js/group.info.form.js" ></script>
+<link  href="__APP__/group.css" rel="stylesheet" type="text/css"/>
+<script>
+$(document).ready(function(){
+	group_info.init();
+	group_info.$input_tags.change(function(){
+		group_info.tag_num();
+	});
+});
+</script>
+<div class="content_holder">
+<div class="content no_bg boxShadow"><!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l"> 
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_C mainC_pad" style="margin-right:0"> <include file="../Public/manage_group_top" />
+        <div class="groupBox">
+          <div class="boxL" style="width:100%;">
+            <form name="editform" action="{:U('group/Manage/index', array('gid'=>$gid))}" method="post" onsubmit="javascript:return group_info.check_form(this);" enctype="multipart/form-data">
+              <ul class="add_group">
+                <li>
+                  <div class="c1"><font color="red">*</font>群名称：</div>
+                  <div class="c2">
+                    <input name="name" value="{$groupinfo['name']}" class="text" style="width: 50%;" onBlur="this.className='text';group_info.text_length(this,30);" onFocus="this.className='text2'" type="text" />
+                    <span id="group_name_tips" class="cRed pr5"></span>
+                  </div>
+                </li>
+                <li>
+                  <div class="c1"><font color="red">*</font>群分类：</div>
+            	  <div class="c2" id="pid"></div>
+                </li>
+                <li>
+                  <div class="c1">群头像：</div>
+                  <div class="c2" style=" height:45px"><span class="left mr10"><img src="{$groupinfo['logourl']}" width="50" height="50" /></span>
+                  <span class="left lh25">
+                  	换用其它图标：<br />
+                    <input class="text" type="file" name="logo" value="浏览" />
+                  </span>
+                  </div>
+                </li>
+                <li>
+                  <div class="c1">群介绍：</div>
+                  <div class="c2">
+                    <textarea name="intro" rows="6"  style="width:400px;height:100px;overflow:auto" class="text"  onBlur="this.className='text';group_info.text_length(this,200);" onFocus="this.className='text2'">{$groupinfo['intro']}</textarea><br /><span id="group_intro_tips" class="cRed pr5"></span>
+                  </div>
+                </li>
+<!--                 <li>
+		          	<div class="c1"><font color="red">*</font>群标签：</div>
+		            <div class="c2">
+						<div><input name="tags" type="text" value="{$group_tags}" class="text" style="width:250px" /> <span id="tags_change" class="cRed pr5"></span><br />
+						<if condition="$reTags">热门标签：<volist name="reTags" id="tag"><a href="javascript:;" onclick="group_info.add_tag(this)" title="添加标签">{$tag}</a>&nbsp;&nbsp;</volist></if></div>
+		                <div class="cGray2">最多设置5个，多个标签之间用英文逗号做间隔。设置标签可以让你的微群更容易被其他用户找到</div>
+		            </div>
+                </li> -->
+                <li>
+                  <div class="c1">群人数：</div>
+                  <div class="c2">{$groupinfo['membercount']}人 </div>
+                </li>
+                <li>
+                  <div class="c1">&nbsp;</div>
+                  <div class="c2">
+                    <input type="hidden" name="gid" value="{$gid}">
+                    <input type="hidden" name="editsubmit" value="1" >
+                    <input type="hidden" name="verify" value="1" />
+                    <input name="button" type="submit" class="btn_b mt5" id="button" value="保存" />
+                  </div>
+                </li>
+              </ul>
+            </form>
+          </div>
+          <!-- end  --> 
+        </div>
+        <div class="c"></div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  --> 
+</div>
+</div>
+<!-- 内容 end --> 
+<script type="text/javascript">
+ $(document).ready(function(){
+	 var category_json = {:getCategorySelect(0)};
+	 $("#pid").json2select(category_json,[{$groupinfo['cid0']},{$groupinfo['cid1']}],'cid');
+ });
+</script> 
+<include file="__THEME__/public_footer" />
+</body>
+</html>

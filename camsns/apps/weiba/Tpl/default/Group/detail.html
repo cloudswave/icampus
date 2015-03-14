@@ -1,0 +1,259 @@
+<include file="__THEME__/public_header" />
+
+<link href="__APP__/group.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+    
+<div id="page-wrap">
+	   <div id="main-wrap">
+         <div class="boxShadow"> 
+	   	   	 <include file="_weiba_header" />
+
+	   	   	   <div class="mb10 clearfix content-bg">
+                 <div id="col3" class="st-index-right">
+                    <div class="right-wrap">
+                       <div class="group-info mb20 clearfix border-b">
+                           <dl class="group-l clearfix">
+                              <dt><img src="{$weiba_detail['logo']}" width="100" height="100" /></dt>
+                              <dd>
+                                <span>
+                                  {$weiba_detail['weiba_name']}&nbsp;<php>if(in_array($mid,$weiba_admin_uids) || CheckPermission('core_admin','admin_login')){</php>[<a href="{:U('weiba/Manage/index',array('weiba_id'=>$weiba_detail['weiba_id']))}">管理</a>]<php>}</php>
+                                </span>
+                                <p>创建者：<a href="">南执</a></p>
+                                <p>创建时间：2011-06-10</p>
+                                <p>群分类：兴趣爱好-稀奇古怪</p>
+                                <p>群状态：公开</p>
+                              </dd>
+                           </dl>
+                           <div class="mb20 content"><p><span>群介绍：</span>{$weiba_detail['intro']}</p></div>
+                       </div>
+                          <div class="hot-topic mb20 border-b">
+                             <h3>群内热议话题</h3>
+                             <ul>
+                                   <li>
+                                     <p><a href="{:U('public/Topic/index',array('k'=>urlencode($vo['topic_name'])))}">请在这里输入自定义话题(6)</a></p>
+                                   </li>
+                                   <li>
+                                     <p><a href="{:U('public/Topic/index',array('k'=>urlencode($vo['topic_name'])))}">2.5bug(5)</a></p>
+                                   </li>
+                                   <li>
+                                     <p><a href="{:U('public/Topic/index',array('k'=>urlencode($vo['topic_name'])))}">音乐分享(5)</a></p>
+                                   </li>
+                             </ul>
+                          </div>
+                          <div class="right-box clearfix join-user">
+                              <h3>最新加入</h3>
+                              <dl>
+                                 <dt><a href=""><img src="{$weiba_detail['logo']}" width="50" height="50"/></a></dt>
+                                 <dd><a href="">安防微博</a><p>2013-02-20 10:10:25</p></dd>
+                              </dl>
+                              <dl>
+                                 <dt><a href=""><img src="{$weiba_detail['logo']}" width="50" height="50"/></a></dt>
+                                 <dd><a href="">安防微博</a><p>2013-02-20 10:10:25</p></dd>
+                              </dl>
+                              <dl>
+                                 <dt><a href=""><img src="{$weiba_detail['logo']}" width="50" height="50"/></a></dt>
+                                 <dd><a href="">安防微博</a><p>2013-02-20 10:10:25</p></dd>
+                              </dl>
+                              <dl>
+                                 <dt><a href=""><img src="{$weiba_detail['logo']}" width="50" height="50"/></a></dt>
+                                 <dd><a href="">安防微博</a><p>2013-02-20 10:10:25</p></dd>
+                              </dl>
+                          </div>
+                       
+                    </div>
+                 </div>
+                 <div id="col5" class="st-index-main">
+                    <div class="extend-foot">
+                        <div class="tab-menu">
+                            <div class="right"><a href="">分享群组</a><i class="vline">|</i><a href="" class="btn-att-green">加入该群</a></div>
+                            <ul>
+                                <li <php>if($type=='all'){</php>class="current"<php>}</php>><span><a href="{:U('weiba/Index/detail',array('weiba_id'=>$weiba_detail['weiba_id']))}">群聊</a></span></li>
+                                <li <php>if($type=='digest'){</php>class="current"<php>}</php>><span><a href="{:U('weiba/Index/detail',array('weiba_id'=>$weiba_detail['weiba_id'],'type'=>'digest'))}">帖子</a></span></li>
+                                <li <php>if($type=='digest'){</php>class="current"<php>}</php>><span><a href="{:U('weiba/Index/detail',array('weiba_id'=>$weiba_detail['weiba_id'],'type'=>'digest'))}">文档</a></span></li>
+                                <li <php>if($type=='digest'){</php>class="current"<php>}</php>><span><a href="{:U('weiba/Index/detail',array('weiba_id'=>$weiba_detail['weiba_id'],'type'=>'digest'))}">成员</a></span></li>
+                            </ul>
+                        </div>
+                        <!--发布框-->
+                         {:W('SendWeibo',array('title'=>$title, 'topicHtml'=>$initHtml))}
+                         <div class="mod-feed-tab" id="mod-feed-tab">
+                             <ul class="inner-feed-nav">
+                                <li <eq name='feed_type' value=''>class="current"</eq>>
+                                <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>''))}">{:L('PUBLIC_ALL_STREAM')}</a></li>
+                                <li <eq name='feed_type' value='post'>class="current"</eq>>
+                                <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'post'))}">{:L('PUBLIC_ORIGINAL_STREAM')}</a></li>
+                                <li <eq name='feed_type' value='postimage'>class="current"</eq>>
+                                <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postimage'))}">{:L('PUBLIC_IMAGE_STREAM')}</a></li>
+                                <li <eq name='feed_type' value='repost'>class="current"</eq>>
+                                <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'repost'))}">视频</a></li>
+                                <li <eq name='feed_type' value='postfile'>class="current"</eq>>
+                                <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postfile'))}">音乐</a></li>
+                            </ul>
+                       </div>
+                       <div class="mod-feed-tab" id="mod-feed-tab">
+                             <ul class="inner-feed-nav">
+                                <li <eq name='feed_type' value=''>class="current"</eq>>
+                                <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>''))}">{:L('PUBLIC_ALL_STREAM')}</a></li>
+                                <li <eq name='feed_type' value='post'>class="current"</eq>>
+                                <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'post'))}">我的帖子</a></li>
+                                <li <eq name='feed_type' value='postimage'>class="current"</eq>>
+                                <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postimage'))}">精华帖子</a></li>
+                                <li <eq name='feed_type' value='repost'>class="current"</eq>>
+                                <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'repost'))}">官方公告</a></li>
+                                <li <eq name='feed_type' value='postfile'>class="current"</eq>>
+                                <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postfile'))}">小道消息</a></li>
+                                <li <eq name='feed_type' value='postfile'>class="current"</eq>>
+                                <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postfile'))}">产品建议</a></li>
+                            </ul>
+                       </div>
+                       <div class="mod-feed-tab" id="mod-feed-tab">
+                             <ul class="inner-feed-nav">
+                                <li <eq name='feed_type' value=''>class="current"</eq>>
+                                <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>''))}">所有成员</a></li>
+                                <li <eq name='feed_type' value='post'>class="current"</eq>>
+                                <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'post'))}">最新加入成员</a></li>
+                                <li <eq name='feed_type' value='postimage'>class="current"</eq>>
+                                <a href="{:U('public/Index/index',array('type'=>$type,'feed_type'=>'postimage'))}">最近来访成员</a></li>
+                            </ul>
+                       </div>
+                         <!--feed list-->
+                         {:W('FeedList',array('type'=>$type,'feed_type'=>$feed_type,'feed_key'=>$feed_key,'fgid'=>$_GET['fgid']))}
+                        <div class="weiba-sort f9 clearfix">
+                            <php>if($GLOBALS['ts']['mid']){</php>
+                            <a href="javascript:void(0)" onclick="check_post({$weiba_detail['weiba_id']},{$weiba_detail['who_can_post']})" class="btn-cancel right"><span>发新帖子</span></a>
+                            <php>}</php><span class="h">共有{$post_count|default=0}个帖子</span>
+                        </div>
+                        <div class="my-weiba-list">
+                           <ul>
+                             <volist name="list.data" id="vo">
+                               <li>
+                                <div class="name">
+                                  <span class="right num"><i class="arrow-weiba"></i>{$vo.reply_count}</span>
+                                  <a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}">{$vo.title}<php>if(strstr($vo['content'],'<img')){</php><i class="ico-img"></i><php>}</php></a>
+                                </div>
+                                <div class="f9">
+                                  <span class="right"><php>if($vo['last_reply_time']!=$vo['post_time']){</php>{$user_info[$vo['last_reply_uid']]['space_link']} {$vo.last_reply_time|friendlyDate}<php>}</php></span><span><php>if($vo['top']==2){</php><i class="ico-bar-top mr5">置顶</i><php>}</php><php>if($vo['top']==1){</php><i class="ico-bar-top0 mr5">置顶</i><php>}</php><php>if($vo['digest']==1){</php><i class="ico-bar-fine mr5">精华</i><php>}</php>{$user_info[$vo['post_uid']]['space_link']} {$vo.post_time|friendlyDate} 发布</span>
+                                </div>
+                              </li>
+                            </volist>
+                            
+                          </ul>
+
+                          <div id="page" class="page" style="">{$list.html}</div>
+                        </div>
+                        <div class="my-weiba-list">
+                           <ul>
+                               <li>
+                                <div class="right f9">{$user_info[$vo['post_uid']]['space_link']} {$vo.post_time|friendlyDate} 发布</div>
+                                <div>
+                                  <a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}"><i class="ico-jpg-small"></i>{$vo.title}</a>
+                                </div>
+                               </li>
+                               <li>
+                                <div class="right f9">{$user_info[$vo['post_uid']]['space_link']} {$vo.post_time|friendlyDate} 发布</div>
+                                <div>
+                                  <a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}"><i class="ico-zip-small"></i>{$vo.title}</a>
+                                </div>
+                               </li>
+                               <li>
+                                <div class="right f9">{$user_info[$vo['post_uid']]['space_link']} {$vo.post_time|friendlyDate} 发布</div>
+                                <div>
+                                  <a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}"><i class="ico-pdf-small"></i>{$vo.title}</a>
+                                </div>
+                               </li>
+                               <li>
+                                <div class="right f9">{$user_info[$vo['post_uid']]['space_link']} {$vo.post_time|friendlyDate} 发布</div>
+                                <div>
+                                  <a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}"><i class="ico-jpg-small"></i>{$vo.title}</a>
+                                </div>
+                               </li>
+                               <li>
+                                <div class="right f9">{$user_info[$vo['post_uid']]['space_link']} {$vo.post_time|friendlyDate} 发布</div>
+                                <div>
+                                  <a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}"><i class="ico-zip-small"></i>{$vo.title}</a>
+                                </div>
+                               </li>
+                               <li>
+                                <div class="right f9">{$user_info[$vo['post_uid']]['space_link']} {$vo.post_time|friendlyDate} 发布</div>
+                                <div>
+                                  <a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}"><i class="ico-pdf-small"></i>{$vo.title}</a>
+                                </div>
+                               </li>
+                          </ul>
+
+                          <div id="page" class="page" style="">{$list.html}</div>
+                        </div>
+　　　　　　　　　　　　<div class="sperson-feedlist">
+                            <dl class="feed_list">
+                                <dt class="face"><a href=""><img src="{$weiba_detail['logo']}" width="50" height="50" /></a></dt>
+                                <dd class="person-info">
+                                    <div class="info-right right">
+                                        <span class="right"><a href="" class="btn-att-white"><span><b class="ico-already"></b>已关注</span></a></span>
+                                    </div>
+                                    <div class="info-left">
+                                       <p class="hd"><a href="">aoao</a></p>
+                                       <p class="area f9">最近微博：<a href="">先聊聊#网页跳出率#，你有什么想法，可以分享下！</a></p>
+                                       <p class="action f9">最近访问：2012-07-04 11:18</p>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <dl class="feed_list">
+                                <dt class="face"><a href=""><img src="{$weiba_detail['logo']}" width="50" height="50" /></a></dt>
+                                <dd class="person-info">
+                                    <div class="info-right right">
+                                        <span class="right"><a href="" class="btn-att-white"><span><b class="ico-connect"></b>相互关注</span></a></span>
+                                    </div>
+                                    <div class="info-left">
+                                       <p class="hd"><a href="">aoao</a></p>
+                                       <p class="area f9">最近微博：<a href="">先聊聊#网页跳出率#，你有什么想法，可以分享下！</a></p>
+                                       <p class="action f9">最近访问：2012-07-04 11:18</p>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <dl class="feed_list">
+                                <dt class="face"><a href=""><img src="{$weiba_detail['logo']}" width="50" height="50" /></a></dt>
+                                <dd class="person-info">
+                                    <div class="info-right right">
+                                        <span class="right"><a href="" class="btn-att-white"><span><b class="ico-already"></b>已关注</span></a></span>
+                                    </div>
+                                    <div class="info-left">
+                                       <p class="hd"><a href="">aoao</a></p>
+                                       <p class="area f9">最近微博：<a href="">先聊聊#网页跳出率#，你有什么想法，可以分享下！</a></p>
+                                       <p class="action f9">最近访问：2012-07-04 11:18</p>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <dl class="feed_list">
+                                <dt class="face"><a href=""><img src="{$weiba_detail['logo']}" width="50" height="50" /></a></dt>
+                                <dd class="person-info">
+                                    <div class="info-right right">
+                                        <span class="right"><a href="" class="btn-att-white"><span><b class="ico-connect"></b>相互关注</span></a></span>
+                                    </div>
+                                    <div class="info-left">
+                                       <p class="hd"><a href="">aoao</a></p>
+                                       <p class="area f9">最近微博：<a href="">先聊聊#网页跳出率#，你有什么想法，可以分享下！</a></p>
+                                       <p class="action f9">最近访问：2012-07-04 11:18</p>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <dl class="feed_list">
+                                <dt class="face"><a href=""><img src="{$weiba_detail['logo']}" width="50" height="50" /></a></dt>
+                                <dd class="person-info">
+                                    <div class="info-right right">
+                                        <span class="right"><a href="" class="btn-att-white"><span><b class="ico-connect"></b>相互关注</span></a></span>
+                                    </div>
+                                    <div class="info-left">
+                                       <p class="hd"><a href="">aoao</a></p>
+                                       <p class="area f9">最近微博：<a href="">先聊聊#网页跳出率#，你有什么想法，可以分享下！</a></p>
+                                       <p class="action f9">最近访问：2012-07-04 11:18</p>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </div>
+                     </div>
+                 </div>
+           	 </div>
+         </div>    
+	   </div>
+</div>
+
+<include file="__THEME__/public_footer" />

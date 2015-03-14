@@ -1,0 +1,30 @@
+<form name="addBlog" action="__URL__&act=doAddBlog" target="doPostBlogData" method="post" onsubmit="return check();">
+	<div class="layer_send_blog">
+		<ul class="edit">
+			<li>
+			<label>标题: </label>
+			<div class="c1">
+				<select name="category" id="select" onchange="javascript:changeCategory($(this))" class="text mr5" style="width:130px">
+					<php>foreach( $category as $value ){</php>
+					<option value="{$value['id']}">{$value['name']}</option>
+					<php>}</php>
+				</select>
+				<input id="title" name="title" type="text" class="text" style="width:190px;" onBlur="this.className='text'" onFocus="this.className='text2'" maxlength="25" />
+			</div>
+			</li>
+			<li>
+			<label>内容:</label>
+			<div class="c1"><textarea id="weibo_type_content" name="content" style="height:350px;"></textarea></div>
+			</li>
+			<li>
+			<label>&nbsp;</label>
+			<div class="c1"><input type="submit" class="btn_b" value="发表" /></div>
+			</li>
+		</ul>
+	</div>
+	<input type="hidden" name="ajax" value="true" />
+</form>
+<script>
+loadEditor('weibo_type_content');
+</script>
+<iframe name="doPostBlogData" id="doPostBlogData" style="display:none;" onload="weibo.plugin.blog.onload('doPostBlogData');">

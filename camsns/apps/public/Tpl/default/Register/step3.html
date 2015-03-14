@@ -1,0 +1,44 @@
+<include file="__THEME__/public_header" />
+
+<div id="page-wrap">
+	<div class="reg-wrap">
+		<!--<div class="title">完善职业信息</div>-->
+		<div class="reg-main">
+			<!--注册步骤-->
+			<div class="article article-avatar boxShadow clearfix">
+				<div class="item item-step3">
+					<div class="step">
+						<span class="step1"></span><span class="step2  step2-current"></span><span class="step3"></span>
+					</div>
+					<div class="form-row">
+                		{:W('Tag', array('width'=>'400px', 'row_id'=>$mid, 'tpl'=>'tags', 'tag_num'=>$tag_num))}
+                	</div>
+                	<div class="clear"></div>                	
+					<a class="btn-green-big" event-node='submit_btn_step3' href="javascript:;"><span>确定</span></a>
+			</div>
+			</div>
+			<!--//注册步骤-->
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+M.addEventFns({
+	submit_btn_step3: {
+		click: function() {
+			 var user_tags = $('#ts_tag_search_value').val();
+			 var user_id = $('#user_id').val();
+			 var step3 = "<php>echo U('public/Register/doStep3');</php>";
+			 var interester_open = '{$interester_open}';
+			 $.post(step3, {user_tags:user_tags,user_row_id:user_id}, function(msg) {
+				if(interester_open==0){
+    				location.href = "<php>echo U('public/Register/doStep4')</php>";
+				}else{
+					location.href = "<php>echo U('public/Register/step4');</php>";
+				}
+			});
+		}
+	}
+});
+</script>
+<include file="__THEME__/public_footer" />

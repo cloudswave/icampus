@@ -1,0 +1,134 @@
+<include file="_header" />
+  <div id="container" class="so_main">
+    <include file="_tab" />
+	<form action ="{:U('/Admin/do_change_config')}" method="POST" >
+      <div class="form2 no_line">
+        <dl class="lineD">
+<!--           <dt>
+            每页显示{$ts['app']['app_alias']}数：
+          </dt>
+          <dd>          	
+            <input name="album_raws" class="txt" value ="{$album_raws}" />
+            <p>设置{$ts['app']['app_alias']}列表页每页显示数。默认为6条记录。</p>
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>
+          	每页显示图片：
+          </dt>
+          <dd>          	
+            <input name="photo_raws" class="txt" value ="{$photo_raws}" />
+            <p>设置图片列表页每页显示条数。默认为8条记录。</p>
+          </dd>
+        </dl> -->
+        <dl class="lineD">
+          <dt>
+          	开启图片列表下预览功能：
+          </dt>
+          <dd>   
+          	<label><input class="radio" type="radio" name="photo_preview" value="1"  <eq name="photo_preview" value="1">checked</eq> />开启</label>
+            <label><input class="radio" type="radio" name="photo_preview" value="0"  <eq name="photo_preview" value="0">checked</eq> />关闭</label>
+            <p>开启后，鼠标滑过列表下的小图可弹出较大的预览图。</p>
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>
+          	图片文件大小限制：
+          </dt>
+          <dd>          	
+          	<input name="photo_max_size" class="txt" value ="{$photo_max_size}" />MB
+            <p>受php配置中对上传文件最小的限制影响，以最小的为标准，0为跟随php限制。</p>
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>
+          	图片上传的格式限制：
+          </dt>
+          <dd>          	
+          	<input name="photo_file_ext" class="txt" value ="{$photo_file_ext}" />
+            <p>不填，则默认允许格式为jpeg,gif,jpg,png。(多个格式之间请用英文逗号“,”隔开)(为了便于分享微博,只支持该四种格式^.^)</p>
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>
+          	批量上传一次最多上传图片数：
+          </dt>
+          <dd>
+          	<input name="max_flash_upload_num" class="txt" value ="{$max_flash_upload_num}" />
+            <p>必须是大于0的整数，如果数值不正确，默认为10张。</p>
+          </dd>
+        </dl>
+        <!--<dl class="lineD">
+          <dt>
+          	每用户上传空间限制：
+          </dt>
+          <dd>
+          	<input name="max_storage_size" class="txt" value ="{$max_storage_size}" />
+            <p>0为不限制。</p>
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>
+            开启路径保护：
+          </dt>
+          <dd>
+            <input class="radio" type="radio" name="open_safemode" value="1"  <eq name="open_safemode" value="1">checked</eq> />开启
+            <input class="radio" type="radio" name="open_safemode" value="0"  <eq name="open_safemode" value="0">checked</eq> />关闭
+            <p>开启图片路径保护，将会隐藏真实的图片路径。只有登录用户才能查看图片。这项设置将消耗更多内存。</p></p>
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>
+          	每用户最多创建{$ts['app']['app_alias']}数：
+          </dt>
+          <dd>
+          	<input name="max_album_num" class="txt" value ="{$max_album_num}" />
+            <p>0为不限制。</p>
+              
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>
+          	每用户最多上传图片数：
+          </dt>
+          <dd>
+          	<input name="max_photo_num" class="txt" value ="{$max_photo_num}" />
+            <p>0为不限制。</p>
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>
+          	开启摄像头拍照：
+          </dt>
+          <dd>
+          	<input class="radio" type="radio" name="open_camera" value="1"  <eq name="open_camera" value="1">checked</eq> />开启
+            <input class="radio" type="radio" name="open_camera" value="0"  <eq name="open_camera" value="0">checked</eq> />关闭
+            <p>开启后，用户可以使用摄像头照相。</p>              
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>
+          	开启图片水印：
+          </dt>
+          <dd>
+          	<input class="radio" type="radio" name="open_watermark" value="1"  <eq name="open_watermark" value="1">checked</eq> />开启
+            <input class="radio" type="radio" name="open_watermark" value="0"  <eq name="open_watermark" value="0">checked</eq> />关闭
+            <p>开启后，可以给用户图片大图增加水印。</p>
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>
+          	水印图片：
+          </dt>
+          <dd>
+          	<input name="watermark_file" class="txt" value ="{$watermark_file}" />
+            <p>0为不限制。(默认为public/images/watermark.png，请将水印图片自行传到可访问的目录下)</p>
+          </dd>
+        </dl>-->
+        <div class="page_btm">
+          <input type="submit" class="btn_b" value="确定" />
+        </div>
+      </div>
+    </form>
+  </div>
+<include file="_footer" />

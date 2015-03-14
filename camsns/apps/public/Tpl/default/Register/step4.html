@@ -1,0 +1,106 @@
+<include file="__THEME__/public_header" />
+
+<div id="page-wrap">
+	<div class="reg-wrap">
+		<!--<div class="title">{:L('PUBLIC_FOLLOW_THE_PEOPLE_INTERESTED')}</div>-->
+		<div class="reg-main">
+			<!--注册步骤-->
+			<div class="article article-avatar boxShadow">
+				<div class="item-step4">
+					<div class="step">
+						<span class="step1"></span><span class="step2"></span><span class="step3 step3-current"></span>
+					</div>
+				<!-- 推荐关注用户 -->
+				<php>if($related_recommend_user){</php>
+				<div class="tab-menu">
+					<php>if(count($related_recommend_user)==8){</php>
+                		<a event-node="change_related_user" keywords="recommend" type="5" href="{:U('public/Register/getRelatedUser')}" class="right mt5">{:L('PUBLIC_CHANGE_USERS')}</a>	
+                	<php>}</php>				
+					<ul>
+						<li class="current"><a href="javascript:;">推荐关注用户</a></li>
+					</ul>
+				</div>
+				<div class="face_name_list">
+					<ul id="recommend"  model-node="related_user_list">
+					<volist name="related_recommend_user" id="v1">	
+						<li><div style="position:relative;width:80px;height:80px">
+								<div class="selected"><i class="ico-empty"></i></div>
+						  		<a event-node="bulkDoFollowData" value="{$v1.userInfo.uid}" class="face_part_recommend face_part" href="javascript:void(0);">
+						  			<img src="{$v1.userInfo.avatar_big}" />
+						  		</a>
+					  		</div>
+					  		<span class="name">{$v1.userInfo.uname}</span>
+						</li>
+					</volist>
+					</ul>
+					<p class="face_att"><label for="select_all_follow"><input id="select_recommend_follow" event-node="selectAllFollow" keyword="recommend" type="checkbox" class="s-ck" />{:L('PUBLIC_SELECT_ALL')}</label></p>
+				</div>
+				<php>}</php>
+
+				<!-- TA们跟你拥有相同的标签 -->
+				<php>if($related_tag_user){</php>
+				<div class="tab-menu">
+					<php>if(count($related_tag_user)==8){</php>
+                		<a event-node="change_related_user" keywords="tag" type="4" href="{:U('public/Register/getRelatedUser')}" class="right">{:L('PUBLIC_CHANGE_USERS')}</a>	
+                	<php>}</php>					
+					<ul>
+						<li class="current"><a href="javascript:;">TA们跟你拥有相同的标签</a></li>
+					</ul>
+				</div>
+				<div class="face_name_list">
+					<ul id="tag" model-node="related_user_list">
+					<volist name="related_tag_user" id="v2">	
+						<li><div style="position:relative;width:80px;height:80px">
+								<div class="selected"><i class="ico-empty"></i></div>
+						  		<a event-node="bulkDoFollowData" value="{$v2.userInfo.uid}" class="face_part_tag face_part" href="javascript:void(0);">
+						  			<img src="{$v2.userInfo.avatar_big}" />
+						  		</a>
+					  		</div>
+					  		<span class="name">{$v2.userInfo.uname}</span>
+						</li>
+					</volist>
+					</ul>
+					<p class="face_att"><label for="select_all_follow"><input id="select_tag_follow" event-node="selectAllFollow" keyword="tag" type="checkbox" class="s-ck" />{:L('PUBLIC_SELECT_ALL')}</label></p>
+				</div>
+				<php>}</php>
+
+				<!-- TA们跟你在同一个地区 -->
+				<php>if($related_city_user){</php>
+				<div class="tab-menu">
+					<php>if(count($related_city_user)==8){</php>
+                		<a event-node="change_related_user" keywords="city" type="3" href="{:U('public/Register/getRelatedUser')}" class="right">{:L('PUBLIC_CHANGE_USERS')}</a>	
+                	<php>}</php>					
+					<ul>
+						<li class="current"><a href="javascript:;">TA们跟你在同一个地区：{$location}</a></li>
+					</ul>
+				</div>
+				<div class="face_name_list">
+					<ul id="city" model-node="related_user_list">
+					<volist name="related_city_user" id="v3">	
+						<li><div style="position:relative;width:80px;height:80px">
+								<div class="selected"><i class="ico-empty"></i></div>
+						  		<a event-node="bulkDoFollowData" value="{$v3.userInfo.uid}" class="face_part_city face_part" href="javascript:void(0);">
+						  			<img src="{$v3.userInfo.avatar_big}" />
+						  		</a>
+					  		</div>
+					  		<span class="name">{$v3.userInfo.uname}</span>
+						</li>
+					</volist>
+					</ul>
+					<p class="face_att"><label for="select_all_follow"><input id="select_city_follow" event-node="selectAllFollow" keyword="city" type="checkbox" class="s-ck" />{:L('PUBLIC_SELECT_ALL')}</label></p>
+				</div>
+				<php>}</php>
+				
+				<div class="actionBtn mt15 clearfix">
+					<a class="btn-register left mr15" event-node="saveFollow" href="{:U('public/Register/bulkDoFollow')}">{:L('PUBLIC_SAVE')}</a>
+					<a href="{:U('public/Register/doStep4')}" class="left mt15"><span>{:L('PUBLIC_BACKUP')}&raquo;</span></a>
+				</div>
+				</div>
+			</div>
+			<!--//注册步骤-->
+		</div>
+	</div>
+</div>
+
+<script src="__THEME__/js/account/module.register.js"></script>
+<include file="__THEME__/public_footer" />

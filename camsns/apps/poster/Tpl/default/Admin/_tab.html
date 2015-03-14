@@ -1,0 +1,9 @@
+<div class="page_tit">{$ts['app']['app_alias']}</div>
+<div class="tit_tab">
+<ul>
+        <li><a <if condition="(ACTION_NAME) eq 'index' && $_GET['action'] neq 'smallType'">class="on"</if> href="__URL__&act=index">{$ts['app']['app_alias']}大分类</a></li>
+        <li><a <if condition="(ACTION_NAME) eq 'index' && $_GET['action'] eq 'smallType'">class="on"</if> href="__URL__&act=index&action=smallType">二级分类集合</a></li>
+    <li><a <eq name="ACTION_NAME" value="adminPoster">class="on"</eq> href="__URL__&act=adminPoster">招贴管理</a></li>
+    <li><a <eq name="ACTION_NAME" value="add">class="on"</eq> href="__URL__&act=add">增加招贴分类</a></li>
+</ul>
+</div>

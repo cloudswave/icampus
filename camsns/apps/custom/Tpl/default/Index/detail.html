@@ -1,0 +1,67 @@
+<include file="__THEME__/public_header" />
+
+<link href="__APP__/news.css" rel="stylesheet" type="text/css" />
+    
+
+<div id="page-wrap">
+	   <div id="main-wrap">
+        <div class="boxShadow"> 
+	   	   	 <include file="_news_header" />
+
+	   	   	   <div class="clearfix content-bg">
+                 <include file="_detail_silde" />
+                 <div id="col5" class="st-index-main">
+                    <div class="extend-foot Posts-content">
+                        <div class="content">
+                            <p class="pb15 font-f-s"><a href="{:U('news/Index/index')}">
+                            {$app['app_alias']}</a>
+                            <php>if($type):</php>
+                            &nbsp;&gt;&nbsp;<a href="{:U('news/Index/index',array('t'=>$type['id']));}">{$type.title}</a>
+                            <php>endif;</php>
+                            &nbsp;&gt;&nbsp;详情</p>
+                            <dl class="pb10 mb20 weiba-post-title">
+                                <dd>
+                                  <h3><span style="vertical-align:-1px;">{$news['news_title']}</span></h3>
+                                  <p class="lh25">
+                                    <span class="right">
+                                     	{:W('ShareToFeed',array('title'=>L('PUBLIC_SHARE_STREAM'),'attachId' => $news['attachId'],'sid'=>$news['id'],'stable'=>'news','appname'=>'news','initHTML'=>' -- '.$news['news_title'],'url' => $current_url))}
+                                    </span>
+                                    <!--<a href="#" target="_blank" uid="" event-node="face_card">XX</a>
+                                    <span class="pl5 pr5 f9">/</span>
+                                    -->
+                                    <span class="f9">
+                                    	{$news['created']|friendlyDate}发布&nbsp;&nbsp;&nbsp;
+                                    	{$news['hits']}&nbsp;次浏览&nbsp;&nbsp;&nbsp;
+                                    	<php>if(isset($userinfo['space_link'])):</php>
+                                    	发布者：{$userinfo['space_link']}
+                                    	<php>endif;</php>
+                                    </span>
+                                                                        
+                                  </p>
+                                </dd>
+                            </dl>
+                            <div class="pb15 weiba-article">
+                            	{$news['news_content']}	
+                            </div>
+                            
+                        </div>
+                        <div class="reply">
+                          <div style="position:relative;z-index:99" class="pb15 pt15">
+                                  	<div class="layer-list" style="position:absolute;right:0;top:35px;display:none;_right:20px;" id="post_manage">
+                                   <ul>
+                                   </ul>
+                                </div>
+                            </div>
+                            <div style="float:right;">
+                            {:W('ShareToFeed',array('title'=>L('PUBLIC_SHARE_STREAM'),'attachId' => $news['attachId'],'sid'=>$news['id'],'stable'=>'news','appname'=>'news','initHTML'=>' -- '.$news['news_title'],'url' => $current_url))}
+                            
+                            </div>
+                            {:W('Comment',array('table'=>'news','tpl'=>'detail','row_id'=>$news['news_id'],'order'=>'DESC','cancomment'=>1,'cancomment_old'=>0,'showlist'=>1,'canrepost'=>1,'app_name'=>'news'))}
+                        </div> 
+                     </div>
+                 </div>
+           	 </div>
+          </div>
+	   </div>
+</div>
+<include file="__THEME__/public_footer" />

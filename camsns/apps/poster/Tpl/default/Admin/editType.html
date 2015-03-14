@@ -1,0 +1,181 @@
+<include file="_header" />
+
+    <script type="text/javascript">
+    var widgetField = new Array();
+    <php>foreach($fields as $key=>$value){</php>
+    widgetField['{$key}'] = new Array();
+    <php>foreach($value as $sokey=>$sovalue){</php>
+    widgetField['{$key}'][{$sokey}] = new Array();
+    widgetField['{$key}'][{$sokey}]['id'] = {$sovalue['id']};
+    widgetField['{$key}'][{$sokey}]['label'] = '{$sovalue['label']}'; 
+    <php>}</php>
+    <php>}</php>
+
+    var selected_widget = {$poster.extraField|sizeOf};
+    var array = new Array();
+    <php>foreach($widget as $key=>$value){</php>
+        array[{$value['id']}] = '{$value['field']}';
+    <php>}</php>
+    $(function(){
+        if(selected_widget == {$fields|sizeOf}){
+            $('#addWidget').attr('disabled','disabled');
+        }
+    })
+    function addWidget(_this){
+        var val = $('#widget').val();
+        if(val == 0){
+            return;
+        }
+        var label = $('select option[value='+val+']').text();
+        var field = array[val];
+        var option = "";
+        for(var i=0;i<widgetField[field].length;i++){
+            var field_id = widgetField[field][i]['id'];
+            var field_label = widgetField[field][i]['label'];
+            if(field_id != val){
+            	var del_option = '<option value="'+field_id+'">'+field_label+'</option>';
+            }else{
+            	var del_option = '<option value="'+field_id+'" selected>'+field_label+'</option>';
+            }
+            
+        	option += del_option;
+            $('select option[value='+field_id+']').remove();
+        }
+        
+      
+        var div = '<div id="widget'+val+'">\
+        <select name="widget[]">'+option+'</select>\
+        <a href="javascript:void(0)" rel="'+field+'" onclick="deleteWidget('+val+',this)">删除</a>\
+            </div>\
+            ';
+
+        if(selected_widget == 0){
+            $('#poster_widget').text("");
+        }
+        selected_widget ++;
+            $('#poster_widget').append(div);
+       if(selected_widget == {$fields|sizeOf}){
+   	       $(this).attr('disabled','disabled');
+       }
+    }
+    function deleteWidget(id,_this){
+        var field = $(_this).attr('rel');
+        for(var i=0;i<widgetField[field].length;i++){
+            var option = '<option value="'+widgetField[field][i]['id']+'">'+widgetField[field][i]['label']+'</option>'
+            $('#widget').append(option);
+        }
+        $('#widget'+id).remove();
+        selected_widget --;
+       if(selected_widget == 0){
+    	   $('#poster_widget').text("未启用任何额外字段");
+       }
+       if(selected_widget != {$fields|sizeOf}){
+    	   $('#addWidget').removeAttr('disabled');
+       }
+    }
+    </script>
+    <script>
+    function checkType(){
+      var name = $("#name").val();
+      var explain = $("#explain").val();
+      if (!name || getLength(name.replace(/\s+/g,"")) == 0) {
+        ui.error("分类名称不能为空");
+        $("#name").focus();
+        return false;
+      }else if (getLength($("#name").val()) > 20){
+        ui.error("分类名称不得大于20个字");
+        $("#name").focus();
+        return false;
+      }else if(!explain || getLength(explain.replace(/\s+/g,"")) == 0){
+        ui.error("描述不能为空");
+        $("#explain").focus();
+        return false;
+      }
+    }
+    </script>
+
+  <div id="container" class="so_main">
+    <include file="_tab" />
+
+      <div class="Toolbar_inbox">
+        <span>{$ts['app']['app_alias']}大分类编辑</span>
+      </div>
+      <form action="__URL__&act=doEditType" method="post" onsubmit="return checkType();">
+        <div class="form2 no_line">
+          <dl class="lineD">
+            <dt>分类名：</dt>
+            <dd>
+              <input name="name" class="txt" value="{$poster.name}" id="name"/>
+              <p>填写在前台显示的{$ts['app']['app_alias']}大分类：如招聘，物品交换。</p>
+            </dd>
+          </dl>
+          <dl class="lineD">
+            <dt>子分类：</dt>
+            <dd>              
+              <select name="type">
+                <option value="0">未启用小分类</option>
+                  <volist name="smallType" id="vo">
+                  <option value="{$vo.label}" <php>if($vo['label'] == $poster['type']) echo "selected";</php>>{$vo.label}</option>
+                </volist>
+              </select>
+              <p>此大分类下的小分类集合。</p>
+            </dd>
+          </dl>
+          <dl class="lineD">
+            <dt>图标：</dt>
+            <dd>
+              <div style="width:420px;">
+              <volist name="ico" id="vo">
+                <input type="radio" name="ico" value="{$vo}" style="margin-bottom:15px;" <php>if($vo === $poster['ico']) echo "checked";</php> /><img src="__APP__/images/ico/{$vo}" />
+              </volist>
+              </div>
+              <p>分类所使用的图标。存放在应用的images/ico下。注意图片不要太大。</p>
+            </dd>
+          </dl>
+          <dl class="lineD">
+            <dt>额外字段：</dt>
+            <dd>
+              <div id="poster_widget">
+              <volist name="poster.extraField" id="vo" empty="未启用任何额外字段">
+                <div id="widget{$vo.id}">
+                   <select name="widget[]">
+                   <php>foreach($fields[$vo['field']] as $so){</php>
+                   <option value="{$so.id}"<php>if($so['id']==$vo['id']) echo "selected";</php>>{$so.label}</option>
+                   <php>}</php>
+                   </select>
+                   <a href="javascript:void(0)" rel ="{$vo.field}" onclick="deleteWidget({$vo.id},this)">删除</a>
+                </div>
+              </volist>
+              </div>
+            </dd>
+          </dl>
+          <dl>
+            <dt>描述：</dt>
+            <dd>              
+              <textarea name="explain" class="txt" cols="44" rows="8" id="explain">{$poster.explain}</textarea>
+              <p>填写对这个分类的描述。会在前台显示。</p>
+            </dd>
+          </dl>
+          <div class="page_btm">
+            <input type="hidden" name="id" value="{$poster.id}" />
+            <input type="submit" class="btn_b" value="确定" />
+          </div>
+        </div>
+      </form>
+        <div class="form2 no_line">
+          <dl class="lineD">
+            <dt>添加额外项：</dt>
+            <dd>
+              <select id="widget">
+                <option value="0">无额外项</option>
+                <volist name="liveField" id="vo">
+                  <option value="{$vo.id}">{$vo.label}</option>
+                </volist>
+              </select>
+              <a href="javascript:void(0);" class="btn_a" onclick="addWidget();">添加</a>
+            </dd>
+          </dl>
+         </div>
+  </div>
+<include file="_footer" />
+

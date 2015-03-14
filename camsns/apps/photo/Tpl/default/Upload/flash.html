@@ -1,0 +1,145 @@
+<include file="__THEME__/header" />
+<link href="__APP__/css/photo.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">var APP_NAME = "{$ts['app']['app_alias']}";</script>
+
+<div class="content_holder">
+	<div class="content no_bg">
+		<include file="../Public/_mainNav" />
+  		<div class="main no_l">
+    		<div class="mainbox"> 
+      		<include file="../Public/_isHotList" />
+      		<div class="mainbox_appC">
+
+						<div class="tab-menu">
+							<ul>
+								<li><a href="{:U('/Upload/index')}"><span>普通上传</span></a></li>
+								<li  class="current"><a href="{:U('/Upload/flash')}"><span>批量上传</span></a></li>
+								<if condition="$setting['open_camera'] eq 1"><li><a href="{:U('/Upload/camera')}"><span>在线拍照</span></a></li></if>
+								<li><a href="{:U('/Index/photos')}"><span>返回我的图片</span></a></li>
+							</ul>
+						</div>
+		
+						<div class="photoBox">
+							<div class="upload">
+								<ul style="width:60%;">
+            			<form method="post" action="{:U('/Upload/muti_edit_photos')}" enctype="application/x-www-form-urlencoded" name="muti_edit_photos" id="muti_edit_photos">
+        					<li>
+        						<div class="c1">选择图片{$ts['app']['app_alias']}：</div>
+										<div class="c2">
+                			{:W('AlbumSelect', array('uid'=>$mid, 'form_name'=>'albumId', 'selected'=>intval($_GET['albumId'])))}
+                			<a href="javascript:create_album_tab({$mid});">[创建{$ts['app']['app_alias']}]</a>
+										</div>
+        					</li>     
+            			<li>
+										<div class="c1"><input type="hidden" name="upnum" id="up_num" value="0" /><span id="flash_upload_select_picture"></span></div>
+              			<div class="c2"><div class="rank" id="flash_upload_progress" style="border:solid 1px #CCC;height:220px; overflow: scroll;"></div></div>
+        					</li>
+            			<li>
+            				<div class="c1">&nbsp;</div>
+                		<div class="c2"><input type="button" class="btn_b" value="开始上传" id="btnUpload" onClick='start_upload()' readonly="true" /></div>
+        					</li>
+								</form>
+							</ul>
+							<div class="clue">
+								<p>·可以同时选择多张图片进行批量上传 (注:一次最多同时上传{$max_flash_upload_num}张图片)    </p>
+								<p>·单张图最大为{$photo_max_size/1024/1024}M，支持{$photo_file_ext}格式，如果上传失败，请尝试小一点的图片。</p>
+								<p>·切换到缩略图模式预览文件夹， 可直观挑选图片(仅在windows环境下)： <img src="__APP__/images/uploadEx.gif" width="136" height="27" /></p>
+								<span class="clue_btm"></span>
+							</div>
+							<div id="uploaded_photos" style="clear:both;"></div>
+						</div>
+					</div>  
+					<div class="clear"></div> 
+				</div>
+			</div> 
+		</div>
+	</div>
+</div>
+
+<script src="__APP__/js/album.js" type="text/javascript"></script>
+<link href="__APP__/js/swfupload/default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/js/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="__APP__/js/swfupload/swfupload.queue.js"></script>
+<script type="text/javascript" src="__APP__/js/swfupload/fileprogress.js"></script>
+<script type="text/javascript" src="__APP__/js/swfupload/handlers.js"></script>
+<script type="text/javascript">
+var swfu;
+window.onload = function() {
+	var settings = {
+		// Backend Settings
+		upload_url: "{:U('/Upload/upload_single_pic')}",	// Relative to the SWF file (or you can use absolute paths)
+		post_params: {"PHPSESSID" : "<?php echo session_id(); ?>"},
+
+		// File Upload Settings
+		file_size_limit : "{$photo_max_limit}",	// 2MB
+		file_types : "<php> echo "*.".implode(";*.",explode(",",$photo_file_ext));</php>",
+		file_types_description : "All Files",
+		file_upload_limit	:	"{$max_flash_upload_num}",	//最多上传30张
+		file_queue_limit	:	"{$max_flash_upload_num}",	//最多选择30张
+
+		// Event Handler Settings (all my handlers are in the Handler.js file)
+		file_dialog_start_handler :		fileDialogStart,
+		file_queued_handler :			fileQueued,
+		file_queue_error_handler :		fileQueueError,
+		file_dialog_complete_handler :	fileDialogComplete,
+		upload_start_handler :			uploadStart,
+		upload_progress_handler :		uploadProgress,
+		upload_error_handler :			uploadError,
+		upload_success_handler :		uploadSuccess,
+		upload_complete_handler :		uploadComplete,
+		queue_complete_handler :		queueComplete,
+
+		// Button Settings
+		button_image_url : "__APP__/js/swfupload/add_photo.png",	// Relative to the SWF file
+		button_placeholder_id : "flash_upload_select_picture",
+		button_width:	74,
+		button_height:	25,
+
+		// Flash Settings
+		flash_url : "__APP__/js/swfupload/swfupload.swf",
+
+		custom_settings : {
+			progressTarget : "flash_upload_progress",
+			cancelButtonId : "btnCancel1"
+		},
+		debug: false
+	};
+
+	swfu = new SWFUpload(settings);
+};
+// 开始上传
+function start_upload () {
+	var albumId = $('#albumlist').val();
+	if (albumId > 0) {
+		var uploadStatus = $('#btnUpload').attr('readonly');
+		if(uploadStatus != true && swfu.getFile() !== null) {
+			swfu.addPostParam('albumId', albumId);
+			swfu.startUpload();
+			$('#btnUpload').attr('readonly', false).removeClass('btn5').val("上传中...");
+		}
+	} else {
+		ui.error('图片{$ts['app']['app_alias']}未选择，请添加新{$ts['app']['app_alias']}或者刷新页面重试！');
+	}
+};
+// 单图上传回调函数,返回上传完成文件的信息
+function ts_upload_success (serverData) {
+	var data = eval('('+serverData+')');
+	if(data.status==true){
+		return true;
+	}else{
+		alert(data.info);
+        return false;
+	}
+};
+//当文件队列有文件时
+function enableUploadButton(file){
+	$('#btnUpload').attr('readonly', false).addClass('btn5').val("开始上传");
+};
+//全部上传完成
+function queueComplete(numFilesUploaded) {
+	$("#up_num").val(numFilesUploaded);
+	( numFilesUploaded > 0 ) && $("#muti_edit_photos").submit();
+};
+</script>
+
+<include file="__THEME__/public_footer" />

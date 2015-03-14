@@ -1,0 +1,33 @@
+<volist name="vote_opts" id="vo" key="k">
+  <li style="border:0;">
+    <div class="left alR" style="width: 35%;padding:0;word-wrap:break-word">{$vo.name}:</div>
+    <div class="left" style="width: 204px;">
+      <div class="poll">
+        <php>$kk = $k%10;</php>
+        <div class="vbg v<php>echo $kk?$kk:( $kk+1 );</php> vote-per-{$k-1}" id="bg<php>echo $kk?$kk:( $kk+1 );</php>" style="width:0px;"> <span></span> </div>
+      </div>
+    </div>
+    <div class="left" style="width: 81px;">{$vo.num}({$vote_pers[$k-1]}%)</div>
+    <div class="left" style="width: 20px;" id='vote'>
+      <php>if( $has_vote == true || $vote['deadline'] <= time() ){
+      	$css = "disabled";
+      }</php>
+      <php>if( $vote['type'] == 0){</php>
+      <input name="vote_opt" type="radio" value="{$vo.name}" id="{$vo.id}" {$css}/>
+      <php>}else{</php>
+      <input name="vote_opt" type="checkbox" value="{$vo.name}" id="{$vo.id}" {$css}/>
+      <php>}</php>
+    </div>
+    <div class="c"></div>
+  </li>
+</volist>
+<script>
+$(function(){
+<php>
+foreach($vote_pers as $k=>$v){
+//if($v == 100) $v=97;
+echo '$(".vote-per-'.$k.'").animate( { width: "'.$v.'%"}, 2000);';
+}
+</php>
+});
+</script>

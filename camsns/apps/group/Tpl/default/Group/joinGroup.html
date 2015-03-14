@@ -1,0 +1,98 @@
+<script>
+	function addsubmit(accept) {
+		var accept = accept == 0 ? 0 : 1;
+		$.ajax({
+ 			type: "POST",
+ 			url: U('group/Group/joinGroup'),
+ 			data:   "addsubmit=1&gid={$gid}&accept=" + accept + "&reason=" + $('#reason').val(),
+ 			success: function(msg){
+ 				if (1 == accept) {
+	 				$('#pop1').hide();
+	 				$('#pop2').show();
+ 				} else {
+ 					ui.box.close();
+ 				}
+ 			}
+		});
+	}
+</script>
+
+<php>if ($groupinfo['need_invite'] == 2 && !$is_invited) {</php>
+<dl class="pop_group">该群需要邀请才能加入</dl>
+<php>} else if ($config['joinMaxGroup'] && $joinCount >= $config['joinMaxGroup']) {</php>
+    <!--加入群组弹窗-->
+    <dl class="pop_group">
+        <dt>你加入的群太多了！！不可以再加入了！！</dt>
+        <dd><a class="btn-green-small" onclick="ui.box.close()">确 定</a></dd>
+    </dl>
+<php>} else if (is_numeric($isjoin)) { </php>
+	<dl class="pop_group">
+    <dt>
+    	<php>if ($isjoin > 0) {</php>
+		你已经加入过！！！
+		<php>} else if ($isjoin == 0) { </php>
+		请等待审核！！！
+		<php>}</php>
+    </dt>
+    <dd><a class="btn-green-small" onclick="ui.box.close()">确 定</a></dd>
+    </dl>
+<php>} else {</php>
+    <!--End 加入群组弹窗-->
+
+    <!--加入群组弹窗-->
+    <dl class="pop_group" id="pop1">
+    <if condition="$groupinfo['need_invite'] eq 1 && !$is_invited">
+            <dt>需通过该群管理员的审核才能加</dt>
+            <dd>申请加入理由：</dd>
+            <dd><textarea name="textarea" class="Text" cols="" name="reason" id="reason" rows="" style="width:350px; height:50px;"></textarea></dd>
+            <dd>
+                <a class="btn-green-small mr5" onclick="addsubmit(1)">确 定</a>
+                <a class="btn-cancel" onclick="ui.box.close()"><span>取 消</span></a>
+            </dd>
+    <else />
+	    <if condition="$is_invited">
+			<dt>
+	    	确定接受"{$groupinfo.name}"管理员的邀请吗？
+		    </dt>
+            <dd>
+                <a class="btn-green-small mr5" onclick="addsubmit(1)">接 受</a>
+                <a class="btn-cancel" onclick="addsubmit(0)"><span>拒 绝</span></a>
+            </dd>
+		<else />
+			<dt>
+				确定要加入"{$groupinfo.name}"吗？
+		    </dt>
+            <dd>
+                <a class="btn-green-small mr5" onclick="addsubmit(1)">确 定</a>
+                <a class="btn-cancel" onclick="ui.box.close()"><span>取 消</span></a>
+            </dd>
+	    </if>
+	</if>
+    </dl>
+    <!--End 加入群组弹窗-->
+<php>} </php>
+    <!--加入群组弹窗-->
+    <dl class="pop_group" id="pop2" style="display:none">
+        <dt>
+            <eq name="groupinfo['need_invite']" value="1">申请加入"{$groupinfo.name}"成功，请等待审核
+            <else />
+            你已经加入"{$groupinfo.name}"成功 
+            </eq>
+        </dt>
+        <dd>
+         <a class="btn-green-small" href="javascript:void(0)" onclick="javascript:location.reload();">确 定</a>
+        </dd>
+    </dl>
+    <!--End 加入群组弹窗-->
+
+<script type="text/javascript">
+// 对输入框进行字数控制显示
+$(function() {
+    $('#reason').keydown(function(event) {
+        if(this.value.length > 25 && event.which != '8' && event.which != '46') {
+            event.preventDefault();
+            return;
+        }
+    });
+});
+</script>

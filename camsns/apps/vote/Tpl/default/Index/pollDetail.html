@@ -1,0 +1,202 @@
+<include file="__THEME__/header" />
+
+<link rel="stylesheet" href="__APP__/poll.css" type="text/css" media="screen" charset="utf-8" />
+
+<!-- <php>if($MyNewVote == 1){</php> -->
+<!-- 自动弹出分享 -->
+<script>
+// $(document).ready(function(){
+// 	_widget_weibo_start('', '{$tpl_data}', '{$param_data}');
+// });
+</script>
+<!-- <php>}</php> -->
+
+<script>
+// 删除投票
+function deleteVote(id) {
+    if(confirm("是否确定删除这条{$ts['app']['app_alias']}?")) {
+    	$.post(U('vote/Index/deleteVote'), {id:id}, function(txt) {
+  			if(txt) {
+  				if(-1 != txt) {
+            ui.success('删除成功');
+            location.href = U('vote/Index/my');
+          } else {
+  					ui.error( "删除{$ts['app']['app_alias']}失败" );
+          }
+  			}
+  		});
+    }
+};
+// 添加新的选项
+function addOptTab() {
+    var len = $('#optList').find('li').length;
+      if(len >= 10) {
+          ui.error('最多只能添加10个选项');
+      } else {
+          ui.box.load(U('vote/Index/addOptTab')+'&id='+"{$vote['id']}",'增加候选项');
+      }
+};
+// 修改结束时间
+function editDateTab() {
+	ui.box.load(U('vote/Index/editDateTab')+'&id='+"{$vote['id']}",'修改结束时间');
+};
+// 发布投票
+function post_vote(type) {
+    // 获取最多能选择的项目
+    var most_vote_num = $("#most_vote_num").text();
+    if(type == 0) {
+        var opts = $('input[name=vote_opt]').filter('[checked]').val();
+        var opts_ids = $('input[name=vote_opt]').filter('[checked]').attr("id");
+    } else {
+        var opts = '';
+        var opts_ids = '';
+        var num = 0;
+        $('#optList').find('input[type="checkbox"]').filter('[checked]').each(function(i) {
+            opts = opts + $(this).val()+",";
+            opts_ids = opts_ids + $(this).attr("id")+",";
+            num = num+1;
+        });
+
+        if(num > most_vote_num){
+            ui.error("这个{$ts['app']['app_alias']}最多可投"+most_vote_num+"项");
+            return false;
+        }
+    }
+
+    if(!opts){
+        ui.error("请选择选项呀！");
+        return false;
+    }
+
+    var vote_id = "{$vote.id}";
+    $.post(U('vote/Index/vote'),{vote_id:vote_id,opts:opts,opts_ids:opts_ids},function(txt){
+      if(txt){
+          if( -3 == txt ){
+            ui.error("这个{$ts['app']['app_alias']}已经结束");
+          }else if( -1 == txt ){
+            ui.error( "你已经投过一次了!" );
+          }else{
+            location.reload();
+          }
+      }
+    });
+};
+//投票情况(带翻页)
+function voteUsers(p) {
+	var id = {$vote.id};
+	var page = "<php>echo C('VAR_PAGE');</php>";
+	$('#vote_user_more').html('加载中...');
+	$.post(U('vote/Index/voteUsers')+'&'+page+'='+p,{id:id},function(html){
+		if( html ){
+			$('.loading').html('');
+			$('.moreFoot').remove();
+			$('.vote_opts').append(html);
+		}
+	});
+};
+</script>
+<div class="content_holder">
+<div class="content no_bg boxShadow">
+  <!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l">
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_appR">
+        <div class="right_box box_create mb20"><a href="{:U('vote/Index/addPoll')}" class="btn-create">发起投票</a></div>
+		    <include file="../Public/_isHotList" />	
+      </div>
+      <div class="mainbox_appC">
+        <div class="person_info">
+          <!-- person_info begin -->
+          <div class="userPic"><span><space uid="vote['uid']">{uavatar}</space></span></div>
+          <div style="padding-left:60px">
+          <div class="num">
+			<div>
+			<strong>{$vote.vote_num}</strong>
+			参与人数
+			</div>
+			</div>
+			<h2>
+	            {$vote.user_info.space_link} 的{$ts['app']['app_alias']}
+	        </h2>
+	        <p><em>有效期：{$vote['cTime']|friendlyDate} - <span id="deadline"><php>echo date('Y-m-d H:i:s',$vote['deadline'])</php></span></em></p>
+	      <php>$isOwner = $mid == $vote['uid'] ? '1' : '0';</php>
+	      <eq name="isOwner" value="1">
+	        <p><a href="{:U('vote/Index/my')}" >我的全部{$ts['app']['app_alias']}</a></p>
+	      <else/>
+	        <p><a href="{:U('vote/Index/personal', array('uid'=>$vote['uid']))}" >{$vote['uid']|getUserName}的全部{$ts['app']['app_alias']}</a></p>
+	      </eq>
+          </div>
+        </div>
+        <!-- person_info end -->
+        <div class="pollBox">
+          <div class="cGray2 topline">
+            <div class="lh25 alR cGray2" style="padding:10px 0">
+               {:W('ShareToFeed',array('title'=>'分享投票','initHTML'=>urlencode('我分享了一个投票“'.$vote['title'].'”'),'url'=>U('vote/Index/pollDetail',array('id'=>$vote['id'])),'attachId'=>'','from'=>'vote'))}
+           	  <!-- <input type="button" value="分享" class="BtnShare" onclick="_widget_weibo_start('', '{$tpl_data}');" id="BtnShare_{$vote.id}"/> &nbsp;&nbsp; -->
+              <php>if( $mid == $vote['uid'] ){</php>
+              <php>if ( $vote['deadline'] > time() ){</php>
+              <a href="javascript:addOptTab()">增加候选项</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+              <php>}</php>
+              <a href="javascript:editDateTab()">修改结束时间</a>&nbsp;&nbsp;|&nbsp;&nbsp; 
+              <a href="javascript:deleteVote({$vote.id})">删除{$ts['app']['app_alias']}</a>
+              <php>}</php>
+            </div>
+          </div>
+          <div style="width:80%; margin:0 auto;">
+            <h1 class="alC lh35 f14px"><span class="f14px fB cBlue">{$vote.title}</span><span class="cGray2" >(可选<span id="most_vote_num">
+              <php>echo intval( $vote['type'])+1;</php>
+              </span>个)</span></h1>
+            <p class="cGray2">{$vote.explain}</p>
+          </div>
+          <div class="LogList" style="margin:0 auto; ">
+            <form method="post" action="">
+			  <ul style="width:85%;" class="left" id="optList">
+                <include file="./optList" />			  
+			  </ul>
+              <php>if( $vote['deadline'] <= time() ){</php>
+              <span class="cRed">已结束</span>
+              <php>}elseif( $has_vote ){</php>
+              <span class="cRed">您已经投过票</span>
+              <php>}else{</php>
+              <div class="left mt10" >
+                <input name="" type="button" style="cursor:pointer" onclick='post_vote({$vote.type});' class="btn_b" value="{$ts['app']['app_alias']}" {$css}/>
+              </div>
+              <php>}</php>
+            </form>
+            <div class="clear"></div>
+          </div>
+          <!-- LogList end  -->
+          <div class="circs mLR15" style="padding-bottom:20px;">
+            <php>if( $empty_friend ){</php>
+                还没有人参与投票
+            <php>}else{</php>
+              <h3>大家的投票情况：</h3>
+              <div class ="vote_opts">
+			    <span class="loading">loading...</span>
+              </div>
+			<php>}</php>
+            <div class="c"></div>
+          </div>
+          <div class="feed_list">
+            <div class="repeat">
+            {:W('Comment',array('tpl'=>'detail', 'table'=>'vote', 'row_id'=>$vote['id'], 'canrepost'=>'0', 'cancomment'=>1, 'cancomment_old'=>0, 'showlist'=>1, 'limit'=>'20', 'order'=>'DESC'))}
+            </div>
+          </div>
+        </div>
+        <div class="c"></div>
+      </div>
+      <div class="c"></div>
+    </div>    
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<script src="__THEME__/js/module.weibo.js"></script>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" />
+<script>
+voteUsers(1);//加载投票情况
+</script>

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta name="viewport" content="width=320; user-scalable=no" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>error</title>
+
+
+
+
+      <script src="cordova.js"></script>
+	  <script src="jquery-1.7.2.min"></script>
+	  <script src="jquery.mobile-1.1.0.min.js"></script>
+    <link rel="stylesheet" href="jquery.mobile-1.1.0.min.css">
+    
+	  <script type="text/javascript" charset="utf-8">
+      $(document).ready(function(){
+            
+            document.addEventListener("deviceready", onDeviceReady, true);
+      });
+
+
+
+        function onDeviceReady() {
+          checkConnection();
+          document.addEventListener("backbutton", eventBackButton, false); //返回键
+         }
+     
+        function checkConnection() {
+        
+        var networkState = navigator.network.connection.type;
+        $("#tips").html("I am Sorry!服务器可能正在维护，请稍后再试！");
+        if( networkState == Connection.NONE ) {
+          $("#tips").html("0.0 貌似网络有问题啦。。。");
+          navigator.notification.confirm('请确认网络连接已经开启', showAlert , '提示', '确定');
+          return false;
+        } 
+      }
+        function showAlert(button) {
+          if( button==1 ) {
+            navigator.app.exitApp();
+          }
+          return false;
+        }
+        function eventBackButton(){
+
+           navigator.notification.confirm('确认退出？', showConfirm, '退出软件', '确定,取消'); 
+
+        }
+        function showConfirm(button) {
+
+          if( button==1 ) {
+            document.removeEventListener("backbutton", eventBackButton, false); //注销返回键
+            navigator.app.exitApp();
+        }
+      }
+
+
+</script>  
+
+  </head>
+  <body id="stage" class="theme">
+    <p id='tips' style="text-align:center;">0.0 貌似服务器抽风了。。。退出程序，重新打开试一试吧。。。</p>
+  </body>
+</html>

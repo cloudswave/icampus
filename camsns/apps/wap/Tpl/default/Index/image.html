@@ -1,0 +1,13 @@
+<include file="../Public/header" />
+<div class="userinfo">
+  <p> <a href="{:U('wap/Index/detail',array('weibo_id'=>$weibo_id))}">返回微博详情</a></p>
+</div>
+<div class="list">
+    <img src="{$image['thumburl']}" />
+    <p>
+        <a href="{$image['thumburl']}">小图</a>
+        <a href="{$image['thumbmiddleurl']}">中图</a>
+        <a href="{$image['picurl']}">大图</a>
+    </p>
+</div>
+<include file="../Public/footer" />

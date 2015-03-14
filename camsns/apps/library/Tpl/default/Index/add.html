@@ -1,0 +1,31 @@
+<include file="__THEME__/public_header" />
+
+<link href="__APP__/news.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+    
+<div id="page-wrap">
+	   <div id="main-wrap">
+	   	   <div class="boxShadow"> 	 
+           
+	   	   	   <div class="mb10 clearfix">
+
+
+                 <div id="col5" class="st-index-main">
+                    <div class="extend-foot">
+<php>foreach($apps as $tid):</php>
+                                <li>{$tid.app_id} &nbsp;&nbsp;&nbsp;{$tid.app_name}</li>
+                                <php>endforeach ;</php>
+    <volist name="apps" id="vo">
+                             <li>
+                                
+                                    <span class="pl5 pr5">浏览数:{$vo.app_id}&nbsp;&nbsp;&nbsp;回复数:{$vo.app_name}</span>
+                              </li>   
+                           </volist>
+                    </div>
+                    </div>
+
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+<include file="__THEME__/public_footer" />

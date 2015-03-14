@@ -1,0 +1,102 @@
+<div class="person-info clearfix border-b mb20">
+	<dl class="person-info-t clearfix">
+		<dt><a href="{$userInfo.space_url}"><img src="{$userInfo.avatar_big}" /></a><a href="{:U('public/Account/avatar')}" class="face">更换头像</a></dt>
+		<dd>
+			<div class="name">
+				<strong><a href="{$userInfo.space_url}">{$userInfo.uname}</a></strong>
+				<span class="person-icon"><volist name="userGroupData" id="vo">
+					<img style="width:auto;height:auto;display:inline;cursor:pointer;vertical-align:-3px;" src="{$vo['user_group_icon_url']}" title="{$vo['user_group_name']}" />&nbsp;
+				</volist>
+				<a href="{:U('public/Index/scoredetail')}"><img style="width:33px;height:9px;display:inline;cursor:pointer;vertical-align:0;" src="{$userCredit.level.src}" event-node='ico_level_right' /></a></span>
+				
+			</div>
+			
+			<div class="user-grade">
+			<volist name='userCredit.credit' id='vo'>
+			<div class="grade f9" style="color:#666">{$vo.alias}：<span>{:intval($vo['value'])}点</span></div>
+			</volist>
+			
+			<php>if($isReturn) {</php></div>
+			<div class="home"><i class="ico-home"></i><a href="{:U('public/Index/index')}" class="f3">返回我的首页</a></div>
+			<php>}</php>
+		</dd>
+	</dl>
+
+	<ul class="person-info-b clearfix mb10">
+		<li><a href="{:U('public/Index/myFeed')}" <eq name="current" value="myfeed">class="current"</eq>><span>微博</span><strong event-node="weibo_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.weibo_count|default=0}</strong></a></li>
+		<li><a href="{:U('public/Index/following')}" <eq name="current" value="following">class="current"</eq>><span>关注</span><strong event-node="following_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.following_count|default=0}</strong></a></li>
+		<li><a href="{:U('public/Index/follower')}" <eq name="current" value="follower">class="current"</eq>><span>粉丝</span><strong event-node="follower_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.follower_count|default=0}</strong></a></li>
+		<li class="no-border "><a href="{:U('public/Collection/index')}" <eq name='current' value='collection'>class="current"</eq>><span>收藏</span><strong event-node="favorite_count" event-args="uid={$GLOBALS['ts']['mid']}">{$userData.favorite_count|default=0}</strong></a></li>
+	</ul>
+	{:W('MedalList')}
+</div>
+
+
+<script type="text/javascript">
+// 事件监听
+M.addEventFns({
+	ico_level_right: {
+		load: function() {
+			var offset = $(this).offset();
+			var top = offset.top + 23;
+			var left = offset.left -10;
+			var html = '<div id="layer_level_right" class="layer-open experience" style="display:none;position:absolute;z-index:9;top:'+top+'px;left:'+left+'px;">\
+						<dl>\
+						<dd>{:L('PUBLIC_USER_LEVEL')}：{$userCredit.level.name}</dd>\
+						<dd>{:L('PUBLIC_USER_POINTS_CALCULATION',array('num'=>$userCredit['credit']['experience']['value'],'experience'=>$userCredit['creditType'][$userCredit['level']['level_type']]))}</dd>\
+						<dd class="textb">{:L('PUBLI_USER_UPGRADE_TIPS',array('num'=>$userCredit['level']['nextNeed'],'experience'=>$userCredit['creditType'][$userCredit['level']['level_type']]))}</dd>\
+						</dl>\
+						</div>';
+			$("body").append(html);
+
+			this._model = document.getElementById("layer_level_right");
+		},
+		mouseenter: function() {
+			var offset = $(this).offset();
+			var width = $(window).width();
+			if ($(window).width() > $(this._model).width() + offset.left) {
+				$(this._model).css('left', offset.left);
+			} else {
+				$(this._model).css('left', offset.left - $(this._model).width() + $(this).width());
+			}
+			$(this._model).css('display', 'block');
+		},
+		mouseleave: function() {
+			$(this._model).css('display', 'none');
+		}
+	},
+	ico_wallet_right: {
+		load: function() {
+			var offset = $(this).offset();
+			var top = offset.top + 23;
+			var left = offset.left - 20;
+			var html = '<div id="layer_wallet_right" class="layer-open scale" style="display:none;position:absolute;top:'+top+'px;left:'+left+'px;">\
+						<dl>\
+						<dt></dt>\
+						<dd>{:L('PUBLIC_USER_POINTS_CALCULATION',array('num'=>intval($userCredit['credit']['score']['value']),'experience'=>$userCredit['creditType']['score']))}</dd>\
+						</dl>\
+						</div>';
+			$("body").append(html);
+			this._model = document.getElementById("layer_wallet_right");
+		},
+		mouseenter: function() {
+			$(this._model).css('display', 'block');
+		},
+		mouseleave: function() {
+			$(this._model).css('display', 'none');
+		}
+	},
+	show_medal:{
+		click:function (){
+			var status = $(this).children().attr('class');
+			if ( status == 'arrow-next-page'){
+				$(this).children().attr('class','arrow-previous-page');
+				$("li[status='hide']").show();
+			} else {
+				$(this).children().attr('class','arrow-next-page');
+				$("li[status='hide']").hide();
+			}
+		}
+	}
+}); 
+</script>

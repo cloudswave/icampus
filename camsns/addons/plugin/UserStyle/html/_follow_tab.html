@@ -1,0 +1,19 @@
+<div class="tab-menu">
+	<!--<div class="arrange">
+		<php>
+			$listclass = !empty($_GET['show']) ? 'ico-list-gray' : 'ico-list';
+			$arrayclass = !empty($_GET['show']) ? 'ico-array' : 'ico-array-gray';
+		</php>
+		<php>if(ACTION_NAME == 'following'){</php>
+		<a href="{:U('public/Profile/following', array('uid'=>$uid))}" class="{$listclass}"></a>
+		<a href="{:U('public/Profile/following', array('uid'=>$uid,'show'=>'big'))}" class="{$arrayclass}"></a>
+		<php>}else{</php>
+		<a href="{:U('public/Profile/follower', array('uid'=>$uid))}" class="{$listclass}"></a>
+		<a href="{:U('public/Profile/follower', array('uid'=>$uid,'show'=>'big'))}" class="{$arrayclass}"></a>
+		<php>}</php>
+		</div>-->
+	<ul>
+		<li <if condition="'following' eq ACTION_NAME">class="current"</if>><span><a href="{:U('public/Profile/following', array('uid'=>$uid))}"><php>if($mid == $uid){</php>我的<php>}else{</php>好友<php>}</php>{:L('PUBLIC_FOLLOWING')}</a></span></li>
+		<li <if condition="'follower' eq ACTION_NAME">class="current"</if>><span><a href="{:U('public/Profile/follower', array('uid'=>$uid))}"><php>if($mid == $uid){</php>我的<php>}else{</php>好友<php>}</php>{:L('PUBLIC_FOLLOWERS')}</a></span></li>
+	</ul>
+</div>

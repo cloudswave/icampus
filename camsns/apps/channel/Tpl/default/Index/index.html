@@ -1,0 +1,57 @@
+<include file="__THEME__/public_header" />
+
+<div id="page-wrap">
+  <div id="main-wrap">
+    <div class="mb20 boxShadow clearfix channel-box">
+    <div class="find-type">
+      <div class="app-title clearfix">
+        <div class="right">
+          <a href="{:U('channel/Index/index', array('cid'=>$cid, 'tpl'=>'load'))}" class="mr10 <neq name='tpl' value='list'>current</neq>"><i class="ico-feed mr5"></i>瀑布流</a>
+          <a href="{:U('channel/Index/index', array('cid'=>$cid, 'tpl'=>'list'))}" <eq name="tpl" value="list">class="current"</eq>><i class="ico-list mr5"></i>列表</a>
+        </div>
+        <h4><img src="{$ts['app']['small_icon_url']}" />&nbsp;&nbsp;频道</h4>
+      </div>
+    </div>
+      {:W('TopMenu', array('cid'=>$cid, 'title'=>$_title, 'channelCategory'=>$channelCategory))}
+    </div>
+    <!-- 内容渲染 -->
+    <php>if($tpl == 'load'):</php>
+    {:W('Content', array('tpl'=>$tpl,'cid'=>$cid,'channelCategory'=>$channelCategory))}
+    <php>elseif($tpl == 'list'):</php>
+    <div id="col8" class="st-section boxShadow mb10">
+      <div id="col3" class="st-index-right">
+        <div class="right-wrap">
+          <div class="box channel-tab-menu clearfix border-b">
+            <dl>
+              <dt>
+                <volist name="channelCategory" id="vo">
+                <a class="btn-cancel <eq name='cid' value='$vo.channel_category_id'>current</eq>" href="{:U('channel/Index/index', array('cid'=>$vo['channel_category_id']))}" ><span>{$vo.title}</span></a>
+                </volist>
+              </dt>
+            </dl>
+          </div>
+          {:W('TopList', array('cid'=>$cid))}
+        </div>
+      </div>
+      <div id="col5" class="st-index-main">
+        {:W('Content', array('tpl'=>$tpl,'cid'=>$cid))}
+      </div>
+    </div>
+    <php>endif;</php>
+  </div>
+</div>
+<script type="text/javascript" src="__THEME__/js/module.weibo.js"></script>
+<script type="text/javascript">
+/**
+ * 初始化频道Js
+ * @return void
+ */
+$(function() {
+  // 浮动菜单
+  channel.setDropBox('channel_selector', 'channel_category_btn');
+  // Fix导航
+  channel.setNavigation('channel_nav');
+});
+</script>
+
+<include file="__THEME__/public_footer" />

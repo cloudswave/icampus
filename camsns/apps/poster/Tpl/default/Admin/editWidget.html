@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{&SITE_TITLE}</title>
+  <link href="__PUBLIC__/admin/css/layout.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="__PUBLIC__/js/jquery.js" ></script>
+
+    <script type="text/javascript">
+    var array = new Array();
+    <php>foreach($widget as $key=>$value){</php>
+        array[{$key}] = '{$value['explain']}';
+    <php>}</php>
+    var widgetField = new Array();
+    <php>foreach($fields as $key=>$value){</php>
+    widgetField['{$key}'] = new Array();
+    <php>foreach($value as $sokey=>$sovalue){</php>
+    widgetField['{$key}'][{$sokey}] = '{$sovalue}';
+    <php>}</php>
+    <php>}</php>
+    var oldField = new Array();
+    var temp_text = "";
+    $(function(){
+        temp_text = $('#explain').text();
+        $('#explain').text($('#explain').text()+":"+array[0]);
+    })
+    function change(key){
+        $('#explain').text(temp_text+":"+array[key]);
+    }
+    function changeWidget(selectedId,id){
+        var field = $('select option[value='+selectedId+']').attr('rel');
+        
+
+        	$("select[id!="+id+"][name*='extra']").each(function(){
+      		 for(var i=0;i<widgetField[field].length;i++){
+          		 $('#'+this.id+' option[value='+widgetField[field][i]+']').remove("");
+       		 }
+        	});
+         
+    }
+        
+    </script>
+        </head>
+    <body>
+        <div id="container">
+      <form action = "__URL__/doAddType/" method="post">
+                <table class="tableborder" width="100%">
+                <tbody>
+                    <tr class="top">
+                        <td class="border" colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <th class="header" colspan="2">招贴板分类添加</th>
+                    </tr>
+                    <tr class="label">
+                        <th>说明</th>
+                        <th>设置</th>
+                    </tr>
+                    <tr class="cell">
+                        <td class="altbg1">
+                            <b>分类名</b>
+                            <br/>
+                            <span class="smalltxt">填写在前台显示的招贴板大分类：如招聘，物品交换</span>
+                        </td>
+                            <td class="altbg2"><input name="name" class="txt"/></td>
+                    </tr>
+                    <tr class="cell">
+                        <td class="altbg1">
+                            <b>图标</b>
+                            <br/>
+                            <span class="smalltxt">分类所使用的图标。在应用的images/ico下。注意图片不要太大</span>
+                        </td>
+                            <td class="altbg2">
+                            <select name="ico">
+                                <volist name="ico" id="vo">
+                                    <option value="{$vo}">{$vo}</option>
+                                </volist>
+                            </select>
+                            </td>
+                    </tr>
+                    
+                    <tr class="cell">
+                        <td class="altbg1">
+                            <b>描述</b>
+                            <br/>
+                            <span class="smalltxt">填写对这个分类的描述。会在前台显示</span>
+                        </td>
+                            <td class="altbg2"><textarea name="explain" class="txt" cols="30" rows="10"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="footer" colspan="2">
+                            <input type="submit" class="submit" value="确定" />
+                        </td>
+                    </tr>
+                    </tbody>
+            </table>
+      </form>
+
+      <form action = "__URL__/doAddWidget/" method="post">
+                <table class="tableborder" width="100%">
+                <tbody>
+                    <tr class="top">
+                        <td class="border" colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <th class="header" colspan="2">招贴板额外属性添加</th>
+                    </tr>
+                    <tr class="label">
+                        <th>说明</th>
+                        <th>设置</th>
+                    </tr>
+                    <tr class="cell">
+                        <td class="altbg1">
+                            <b>属性名</b>
+                            <br/>
+                            <span class="smalltxt">额外属性名</span>
+                        </td>
+                            <td class="altbg2"><input name="name" class="txt"/></td>
+                    </tr>
+                    <tr class="cell">
+                        <td class="altbg1">
+                            <b>选择渲染器</b>
+                            <br/>
+                            <span class="smalltxt">渲染器是每一个属性输入的渲染工具文件。html文件将直接写在这些文件里面.文件在应用的Lib/Widget/下</span>
+                        </td>
+                            <td class="altbg2">
+                            <select name="widget">
+                                <volist name="widget" k="key" id="vo">
+                                    <option value="{$vo['value']}" onclick="change({$key})">{$vo['name']}</option>
+                                </volist>
+                            </select>
+                            </td>
+                    </tr>
+                    <tr class="cell">
+                        <td class="altbg1">
+                            <b>渲染器数据</b>
+                            <br/>
+                            <span class="smalltxt" id="explain">对以上渲染器的数据进行填写</span>
+                        </td>
+                            <td class="altbg2"><textarea name="data" class="txt" cols="30" rows="10"></textarea></td>
+                    </tr>
+                    <tr class="cell">
+                        <td class="altbg1">
+                            <b>数据库字段选择</b>
+                            <br/>
+                            <span class="smalltxt">数据存储的数据库存储字段。注意：当每个应用启用的数据库额外字段不能重复</span>
+                        </td>
+                            <td class="altbg2">
+                            <select name="field">
+                            <php>for($i=1;$i<6;$i++){</php>
+                                    <option value="extra{$i}">额外字段{$i}</option>
+                            <php>}</php>
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td class="footer" colspan="2">
+                            <input type="submit" class="submit" value="确定" />
+                        </td>
+                    </tr>
+                    </tbody>
+            </table>
+      </form>
+
+
+      <form action = "__URL__/doAddSmallType" method="post">
+                <table class="tableborder" width="100%">
+                <tbody>
+                    <tr class="top">
+                        <td class="border" colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <th class="header" colspan="2">增加招贴板小分类</th>
+                    </tr>
+                    <tr class="label">
+                        <th>说明</th>
+                        <th>设置</th>
+                    </tr>
+                    <tr class="cell">
+                        <td class="altbg1">
+                            <b>分类名</b>
+                        </td>
+                            <td class="altbg2"><input name="name" class="txt"/></td>
+                    </tr>
+                    <tr class="cell">
+                        <td class="altbg1">
+                            <b>分类数据</b>
+                            <span class="smalltxt" id="explain">小分类选项(每一行是一个分类)</span>
+                        </td>
+                            <td class="altbg2"><textarea name="data" class="txt" cols="30" rows="10"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="footer" colspan="2">
+                            <input type="submit" class="submit" value="确定" />
+                        </td>
+                    </tr>
+                    </tbody>
+            </table>
+      </form>
+
+      <form action="__URL__/doFeedDelList"  method="post">
+            <table class="tableborder" width="100%">
+                <tr>
+                    <td class="header" colspan="4">浏览全部动态</td>
+                </tr>
+
+                <tr class="cell altbg2">
+                    <th width="5%" align="left">操作</th>
+                    <th width="20%" align="left">招贴板大分类</th>
+                    <th width="45%" align="left">启用额外项</th>
+                    <th width="20%" align="left">管理</th>
+                </tr>
+  
+                <volist name="poster_type" id="vo">
+                    <tr class="cell altbg1">
+                        <td>
+                            <input name="id[]" type="checkbox" class="feed_id" id="checkbox" value="{$vo.id}"/>
+                            </td>
+                            <td>
+                            {$vo.name}
+                        </td>
+                        <td><a href="__URL__/editType/id/{$vo.id}">编辑</a> | <a href="__URL__/doTypeDel/id/{$vo.id}">删除</a></td>
+                    </tr>
+
+                </volist>
+
+                <tr class="cell altbg2">
+                    <td colspan="4"><input name="checkbox5" type="checkbox" class="checkbox" id="checkAll" />
+                        全选
+                        <input name="button" type="submit" class="button" id="button" value="删除所选项"/>
+                    </td>
+                </tr>
+              
+            </table>
+         </form>
+        </div>
+    </body>
+</html>

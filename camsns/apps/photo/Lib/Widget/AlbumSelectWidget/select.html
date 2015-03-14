@@ -1,0 +1,5 @@
+<select name="{$form_name}" id="{$form_id}">
+	<volist name="data" id="vo">
+	<option value="{$vo.id}" <eq name="vo.id" value="$selected">selected="selected"</eq>>{:getShort($vo['name'], 13)}</option>
+	</volist>
+</select>

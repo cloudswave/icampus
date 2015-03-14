@@ -1,0 +1,42 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="../Public/group.css" type="text/css" media="screen" charset="utf-8" />
+<div class="content_holder">
+<!-- 头部 end -->
+<div class="content"><!-- 内容 begin  -->
+  <div class="main"> <!-- 右侧内容 begin  --> 
+    <include file="../Public/manage_group_top" />
+    <div class="MenuSub"> <a href="__URL__/index/gid/{$gid}" 
+      <eq name="on" value="index"> class="on" </eq>
+      >全部</a> <a href="__URL__/topic/gid/{$gid}" 
+      <eq name="on" value="topic"> class="on" </eq>
+      >小组话题管理</a> <a href="__URL__/member/gid/{$gid}" 
+      <eq name="on" value="member"> class="on" </eq>
+      >成员管理</a> <a href="__URL__/setting/gid/{$gid}" 
+      <eq name="on" value="setting"> class="on" </eq>
+      >小组设置</a> </div>
+    <div class="groupBox">
+      <div class="boxL" style="width:650px;">
+        <ul class="log">
+          <li>
+            <div class="c1"><span class="headpic50"><img src="../images/userimg.jpg" /></span></div>
+            <div class="c2"> <a title="小娟娟(13503116)" href="#" rev="#29974287/addr/detail/u/13503116" rel="internal">小娟</a>将用户<a href="#">fagoo</a>提升为管理员 </div>
+            <div class="c3">2009-7-24 17:00:53</div>
+          </li>
+          <li>
+            <div class="c1"><span class="headpic50"><img src="../images/userimg.jpg" /></span></div>
+            <div class="c2"> <a title="小娟娟(13503116)" href="#" rev="#29974287/addr/detail/u/13503116" rel="internal">小娟娟</a> 将用户 <a href="#">fagoo</a> 永久封禁<br />
+              附注：广告的不要 </div>
+            <div class="c3">2009-7-24 17:00:53</div>
+          </li>
+        </ul>
+      </div>
+      <!-- end  --> 
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end --> 
+
+<include file="__THEME__/public_footer" /> 

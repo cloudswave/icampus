@@ -1,0 +1,48 @@
+<include file="__THEME__/public_header" />
+
+<link href="__APP__/weiba.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+    
+<div id="page-wrap">
+	   <div id="main-wrap">
+           <div class="boxShadow"> 
+	   	   	<include file="_weiba_header" /> 
+
+	   	   	   <div class="mb10 clearfix">
+                <div id="col3" class="st-index-right">
+                    <div class="right-wrap">
+                        {:W('FollowWeibaList',array('follower_uid'=>$mid))}
+                    </div>
+                </div>
+                 <div id="col5" class="st-index-main">
+                    <div class="extend-foot">
+                        <div class="tab-menu">
+                            <ul>
+                                <li <eq name="type" value="myFollowing">class="current"</eq>><span><a href="{:U('weiba/Index/myWeiba',array('type'=>'myFollowing'))}">我关注的微吧帖子</a></span></li>
+                                <li <eq name="type" value="myPost">class="current"</eq>><span><a href="{:U('weiba/Index/myWeiba',array('type'=>'myPost'))}">我发表的帖子</a></span></li>
+                                <li <eq name="type" value="myReply">class="current"</eq>><span><a href="{:U('weiba/Index/myWeiba',array('type'=>'myReply'))}">我回复的帖子</a></span></li>
+                                <li <eq name="type" value="myFavorite">class="current"</eq>><span><a href="{:U('weiba/Index/myWeiba',array('type'=>'myFavorite'))}">我收藏的帖子</a></span></li>
+                            </ul>
+                        </div>
+                        <div class="weiba_postlist">
+                          <php>if($postList['data']){</php>
+                           <ul>
+                            <volist name="postList.data" id="vo">
+                             <li>
+                                <div class="name"><span class="right num"><i class="arrow-weiba"></i>{$vo.reply_count}</span><a target="_blank" href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}"><span style="vertical-align:-2px;">{$vo.title}</span><php>if(strstr($vo['content'],'<img')){</php><i class="ico-img"></i><php>}</php><php>if($vo['top']==2){</php><i class="ico-bar-top ml5">置顶</i><php>}</php><php>if($vo['top']==1){</php><i class="ico-bar-top0 ml5">置顶</i><php>}</php><php>if($vo['digest']==1){</php><i class="ico-bar-fine ml5">精华</i><php>}</php></a></div>
+                                <div class="f9"><php>if($vo['last_reply_time'] && $vo['last_reply_uid']){</php><span class="right">{$user_info[$vo['last_reply_uid']]['space_link']}<span class="pl5 pr5">/</span>{$vo.last_reply_time|friendlyDate}</span><php>}</php><span>【{$vo.weiba}】{$user_info[$vo['post_uid']]['space_link']}<span class="pl5 pr5">/</span>{$vo.post_time|friendlyDate}发布</span></div></li>
+                            </volist>
+                           </ul>
+                           <div id="page" class="page" style="">{$postList.html}</div>
+                           <php>}else{</php>
+                              <div class="note">暂时没有相关帖子</div>
+                           <php>}</php>
+                        </div>
+                     </div>
+                 </div>
+           	 </div>
+          </div> 
+	   </div>
+</div>
+
+<include file="__THEME__/public_footer" />

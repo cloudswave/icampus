@@ -1,0 +1,30 @@
+<include file="_header" />
+  <div id="container" class="so_main">
+    <include file="_tab" />
+    <form action ="__URL__&act=doEditConfig" method="POST" >
+      <div class="form2 no_line">
+        <dl class="lineD">
+          <dt>
+            {$ts['app']['app_alias']}消费单位：
+          </dt>
+          <dd>          	
+            <label>
+              <select name="credit" id="credit">
+				  <php>foreach($types as $ct){
+				       if($credit==$ct['name']) { </php>
+					   <option value="{$ct['name']}" selected="selected">{$ct['alias']}</option>
+				  <php> } else { </php>	
+						<option value="{$ct['name']}">{$ct['alias']}</option>
+				  <php> }} </php>					
+              </select>
+            </label>
+            <p>默认为积分。</p>
+          </dd>
+        </dl>
+        <div class="page_btm">
+          <input type="submit" class="btn_b" value="确定" />
+        </div>
+      </div>
+    </form>
+  </div>
+<include file="_footer" />

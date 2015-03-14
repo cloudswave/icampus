@@ -1,0 +1,65 @@
+<include file="../Public/header" />
+<!-- 主体内容 -->
+<div id="content" msgpage="notify" interface="list">
+<include file="../Public/message_header" />
+<php>if(empty($list)) {</php>暂无更多信息<php>}</php>
+	<volist name="list" id="feed">
+		<div class="c_notify">
+			<!-- 消息 -->
+			<div class="c_content">
+				<!-- 替换网页版的链接地址 -->
+				<php>
+					 echo $feed['body'];
+				</php>
+			</div>
+		</div>
+	</volist>
+	
+	<!-- 分页 -->
+	<div id="pager_box">
+		<php>$_GET['page']!=0?$get=$_GET['page']:$get=1;if(empty($_GET['page']) || $_GET['page']==1){</php>
+			<a href="javascript:;" link="" id="prev" class="pager_child pager_p_n_none ">上一页</a>
+		<php>}else{</php>
+			<a href="javascript:;" link="{:U('w3g/Message/notify',array('page'=>$get-1))}" id="prev" class="pager_child pager_p_n ">上一页</a>
+		<php>}</php>
+		<select id="page_sel" class="pager_child">
+			<php>
+				$_count = ceil($count/10)!=0 ? ceil($count/10) : 1;
+				if($get<6){
+					for($i=0;$i<($_count);$i++){
+						$get==$i+1?$selected='selected="selected"':$selected='';
+						if($i>9){
+							break;
+						}
+			</php>
+			<option value="{:U('w3g/Message/notify')}&page={$i+1}" <php>echo $selected;</php>>第{$i+1}页</option>
+			<php>	}
+				}elseif($get>=6){
+					for($i=($get-5);$i<$get;$i++){
+						$get==$i+1?$selected='selected="selected"':$selected='';
+			</php>
+			<option value="{:U('w3g/Message/notify')}&page={$i+1}" <php>echo $selected;</php>>第{$i+1}页</option>
+			<php>	}</php>
+			<php>	for($i=$get;$i<($get+5);$i++){
+						$get==$i+1?$selected='selected="selected"':$selected='';
+						if($i>$_count-1){
+							break;
+						}
+			</php>
+			<option value="{:U('w3g/Message/notify')}&page={$i+1}" <php>echo $selected;</php>>第{$i+1}页</option>
+			<php>	}</php>
+			<php>}</php>
+			
+		</select>
+		<php>if($get == ($_count)) {</php>
+			<a href="javascript:;" link="" id="next" class="pager_child pager_p_n_none">下一页</a>
+		<php>}else{</php>
+			<a href="javascript:;" link="{:U('w3g/Message/notify',array('page'=>$get+1))}" id="next" class="pager_child pager_p_n">下一页</a>
+		<php>}</php>
+	</div>
+</div>
+<script type="text/javascript">
+LazyLoad.js(["js/z.notify.js"], function(){});
+</script>
+	<!-- 列表结束################################################################################################ -->
+<include file="../Public/footer" />

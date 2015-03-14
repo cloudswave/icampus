@@ -1,0 +1,27 @@
+<div style="padding:20px;width:400px;">
+<form method="post" id="basic_setting" name="form" action="{:U('group/Admin/editCategory')}">
+<table cellpadding=3 cellspacing=3>
+	<tr>
+		<td align="right">分类名称：</td>
+		<td align="left"><input type="text" class="large bLeftRequire"
+			name="title" value="{$category.title}" maxlength="25"></td>
+	</tr>
+	<tr>
+		<td align="right">上级分类：</td>
+		<td align="left"><span id="_pid">&nbsp;</span></td>
+	</tr>
+	<tr>
+		<td align="right">&nbsp;</td>
+		<td align="left">
+		<input name="id" value="{$category.id}" type="hidden" />
+		<input name="editSubmit" value="1" type="hidden" />
+		<input type="submit" class="btn_b" value="确定" /></td>
+	</tr>
+</table>
+</form>
+</div>
+
+<script type="text/javascript">
+var category_json =	{:getCategorySelect(0)};
+$("#_pid").json2select(category_json,[{:getCategoryTree($category['id'], true)}], 'cid');
+</script>

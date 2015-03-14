@@ -1,0 +1,60 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/account.css" rel="stylesheet" type="text/css" />
+<div id="page-wrap">
+  <div id="main-wrap">
+    <div id="col" class="st-grid content-bg boxShadow">
+      <div id="col4" class="main-left">
+        <!--tab菜单-->
+        <include file="_tabs" />
+      </div>
+      <div id="col7" class="main-right">
+        <div class="extend minh person-set">
+          <div class="set-hd"><h3>{$tabName}</h3></div>
+          <div class="set-item-title f9"><p>密码由字母，数字，符号组成，6-15个字符，区分大小写</p></div>
+          <!--信息设置项---帐号安全-->
+          <div class="set-item-info">
+            <form action="{:U('public/Account/doModifyPassword')}" method="post">
+              <dl class="form-set form-contact">
+                <dd>
+                  <div class="form-tt">
+                    <font color="red">*</font>
+                    {:L('PUBLIC_ORIGINAL_PASSWORD')}：
+                  </div>
+                  <div class="form-row">
+                    <input event-node="password" name="oldpassword" type="password" class="s-txt" autocomplete = 'off'/>
+                  </div>
+                </dd>
+                <dd>
+                  <div class="form-tt">
+                    <font color="red">*</font>
+                    {:L('PUBLIC_NEW_PASSWORD')}：
+                  </div>
+                  <div class="form-row">
+                    <input event-node="password" name="password" type="password" class="s-txt" />
+                  </div>
+                </dd>
+                <dd>
+                  <div class="form-tt">
+                    <font color="red">*</font>
+                    {:L('PUBLIC_CONFIRM_PASSWORD')}：
+                  </div>
+                  <div class="form-row">
+                    <input event-node="password" name="repassword" type="password" class="s-txt" />
+                  </div>
+                </dd>
+                <dd>
+                  <div class="form-tt"></div>
+                  <div class="form-row">
+                    <a event-node="submit_btn" href="#" class="btn-green-big">{:L('PUBLIC_SAVE')}</a>
+                  </div>
+                </dd>
+              </dl>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="__THEME__/js/module.form.js"></script>
+<include file="__THEME__/public_footer" />

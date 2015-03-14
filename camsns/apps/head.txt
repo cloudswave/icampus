@@ -1,0 +1,2 @@
+<script src="//yandex.st/dojo/1.9.1/dojo/dojo.js"
+        data-dojo-config="async:true, parseOnLoad:true,isDebug:true"></script>

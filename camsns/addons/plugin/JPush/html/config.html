@@ -1,0 +1,39 @@
+<include file="../Public/_header" />
+
+<div class="so_main">
+    <div class="page_tit">极光推送配置</div>
+    <div style="heigh:50px; background-color:#FFC; border: 1px #CCC solid; padding:30px; color:#F00;">注意: jpush/config.php须设置为可写<br><br>极光推送插件通过极光推送api实现。使用前请前往【<a href="https://www.jpush.cn/" target="_blank"><strong>https://www.jpush.cn/</strong></a>】注册应用免费获取在线AppKey。</div>
+    <div class="form2">
+        <form method="post" action="{:Addons::adminUrl('saveConfig')}">
+			
+
+            <dl class="lineD">
+                <dt>应用标识(AppKey)：</dt>
+                <dd>
+                    <input class="text" type="text" id="appkeys" value="{$IMC.appkeys}" name="appkeys">
+                    <p>输入注册后免费提供的AppKey</p>
+                </dd>
+            </dl>
+
+            <dl class="lineD">
+                <dt>注册masterSecret：</dt>
+                <dd>
+                    <input class="text" type="text" id="masterSecret" value="{$IMC.masterSecret}" name="masterSecret">
+                </dd>
+            </dl>
+            <dl class="lineD">
+                <dt>平台: </dt>
+                <dd>
+                    <input class="text" type="text" id="platform" value="{$IMC.platform}" name="platform" >
+                    <p>要推送到平台默认android不需要修改,稍后推出ios</p>
+                </dd>
+            </dl>
+
+            <div class="page_btm">
+                <input type="submit" class="btn_b" value="确定" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<include file="../Public/_footer" />

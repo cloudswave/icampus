@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<title>Untitled</title>
+<?php require_once "apps/head.txt";?>
+<script type="text/javascript">
+require([
+  "dijit/dijit",
+  "dojo/parser",
+  "dojox/mobile",
+  "dojox/mobile/deviceTheme",
+  "dojo/hash",
+  "shapes/Text",
+  "dojox/mobile/TextBox",
+  "dojox/mobile/ScrollableView",
+  "dojox/mobile/TextArea",
+  "dijit/form/DataList",
+  "dojox/mobile/ComboBox",
+  "dojox/mobile/Button"
+]);
+</script>
+<style>@import "themes/claro/claro.css";@import "app.css";
+</style>
+<script type="text/javascript" src="app.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"></meta>
+</head>
+<body data-maq-device="android_480x800" data-maq-flow-layout="false" data-maq-comptype="mobile" class="claro" data-maq-ws="collapse" id="myapp" data-maq-appstates="{}">
+ <h1 label="图书荐购" data-dojo-type="dojox/mobile/Heading"></h1>
+ <div id="ScrollableView_0" data-dojo-type="dojox/mobile/ScrollableView"></div>
+ <div>
+</div>
+ <div id="ScrollableView_1" data-dojo-type="dojox/mobile/ScrollableView" selected="true">
+  <input type="text" data-dojo-type="dojox/mobile/TextBox" style="position: absolute; z-index: 900; width: 70%; left: 83px; top: 13px;" value="货币战争5：山雨欲来"></input>
+  <span data-dojo-type="shapes/Text" style="font-size: 14px; position: absolute; z-index: 900; left: 18px; top: 18px;">图书名称</span>
+<input type="text" data-dojo-type="dojox/mobile/TextBox" style="position: absolute; z-index: 900; left: 83px; top: 56px; width: 70%;" value="长江文艺出版社"></input>
+<span data-dojo-type="shapes/Text" style="font-size: 14px; position: absolute; z-index: 900; left: 24px; top: 61px;">出版社</span>
+<input type="text" data-dojo-type="dojox/mobile/TextBox" style="position: absolute; z-index: 900; width: 70%; left: 83px; top: 103px;" value="宋鸿兵"></input>
+<span data-dojo-type="shapes/Text" style="font-size: 14px; position: absolute; z-index: 900; left: 25px; top: 108px;">作者</span>
+<input type="text" data-dojo-type="dojox/mobile/TextBox" style="position: absolute; z-index: 900; width: 70%; left: 83px; top: 151px;" value="9787535471376"></input>
+<span data-dojo-type="shapes/Text" style="font-size: 14px; position: absolute; z-index: 900; left: 24px; top: 156px;">ISBN</span>
+<textarea data-dojo-type="dojox/mobile/TextArea" style="position: absolute; z-index: 900; height: 110px; width: 70%; left: 83px; top: 243.5px;" value="2008年金融危机结束五年之后，对未来世界经济走势的观点仍然是众说纷纭。美国的量化宽松究竟有无效果？全球的货币超发到底是福是祸？金融市场是渐趋安全，还是越发危险？经济复苏是稳步向前，还是昙花一现？"></textarea>
+<span data-dojo-type="shapes/Text" style="font-size: 14px; position: absolute; z-index: 900; width: auto; left: 11px; top: 287.5px;">推荐理由</span><span data-dojo-type="shapes/Text" style="font-size: 14px; position: absolute; z-index: 900; left: 11px; top: 204px;">图书类别</span>
+<input type="text" data-dojo-type="dojox/mobile/TextBox" style="position: absolute; z-index: 900; width: 70%; left: 83px; top: 199px;" value="中文图书"></input>
+<button data-dojo-type="dojox/mobile/Button" style="height: 48px; width: 83px; font-size: 20px; position: absolute; z-index: 900; left: 141px; top: 403px;">
+  
+荐购</button>
+</div>
+</body>
+</html>

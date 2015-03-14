@@ -1,0 +1,90 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<title>{$title}</title>
+
+	<link href="dojox/mobile/themes/common/domButtons/DomButtonRedBadge.css" rel="stylesheet"/>
+	<script type="text/javascript" src="dojox/mobile/deviceTheme.js" data-dojo-config="mblThemeFiles: ['base','IconContainer','TabBar','SimpleDialog','Button']"></script>
+    <script type="text/javascript" src="dojo/dojo.js" data-dojo-config="async: true, parseOnLoad: true"></script>
+
+	<script type="text/javascript">
+		require([
+			"dojo/_base/window",
+			"dojo/_base/connect",
+			"dojo/dom-construct",
+			"dojo/ready",
+			"dijit/registry",
+			"dojo/request",
+			"dojox/mobile/ProgressIndicator",
+			"dojox/mobile/ListItem",
+			"dojox/mobile/parser",
+			"dojo/json",
+			"dojo/_base/array",
+			"dojox/mobile/ViewController",
+			"dojox/mobile",
+			"dojox/mobile/compat",
+			"dojox/mobile/ScrollableView",
+			"dojox/mobile/RoundRectDataList",
+			"dojox/mobile/IconContainer"
+		], function(win,connect, domConstruct, ready, registry, request, ProgressIndicator, ListItem, 
+			parser,JSON,arrayUtil,ViewController){
+			
+			onBtn2Clicked = function(e){
+				var ul = registry.byId("list");
+				var param= "";
+				//alert(ul.getChildren().length);
+				for(var i =0;i<ul.getChildren().length;i++)
+				{
+					//alert(ul.getChildren()[i].get("id"));
+				}
+				request.get("index.php?app=library&mod=Index&act=renewOperate", {
+	                handleAs: "json"
+		            }).then(function(data){
+		            	alert(data);
+						
+		            	
+		                    }
+	                );
+		            	
+			}
+
+		});
+	</script>
+	<style type="text/css">
+	#item1, #item2, #item3 {
+		font-weight: normal;
+		font-size: 12px;
+	}
+	.subject {
+		font: bold 16px Helvetica;
+	}
+	.textBox {
+		overflow: hidden;
+	}
+	</style>
+</head>
+<body style="visibility:hidden;">
+	<div id="mashups" data-dojo-type="dojox.mobile.ScrollableView">
+		<h1 data-dojo-type="dojox.mobile.Heading">您当前已借阅书籍</h1>
+		<ul id="list" data-dojo-type="dojox.mobile.RoundRectList" data-dojo-props='append:true,variableHeight:true'>
+			 <volist name="books" id="item">
+					<li data-dojo-type="dojox.mobile.ListItem" data-dojo-props='href:"http://210.42.38.33/bookinfo.aspx?{$item[5]}",id:"{$item[6]}",icon:"images/icon-1.png"'>
+			
+					<div class='textBox'><div class='subject'>{$item[0]}</div>{$item[4]}&nbsp;&nbsp;&nbsp;&nbsp;{$item[2]}<span style='color:red'>&nbsp;&nbsp;&nbsp;&nbsp;到期：{$item[1]}</span></div>
+				
+					</li>
+			</volist>
+		</ul>
+		<div data-dojo-type="dojox.mobile.RoundRect" data-dojo-props='shadow:true'>
+			<button id="btn2"  OnClick="onBtn2Clicked()">一键续借所有</button>
+		</div>
+		
+	</div>
+</body>
+</html>

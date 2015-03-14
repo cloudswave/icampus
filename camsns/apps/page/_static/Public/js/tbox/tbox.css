@@ -1,0 +1,19 @@
+#tbox{POSITION:absolute;TOP:0;LEFT:0;TEXT-ALIGN:left;Z-INDEX:9999;WIDTH:100%;}
+.tb_background{FLOAT:LEFT;Z-INDEX:1000;POSITION:ABSOLUTE;TOP:0PX;LEFT:0PX;WIDTH:100%;HEIGHT:100%;FILTER:ALPHA(OPACITY=80);_MOZ-OPACITY:0.8;OPACITY:0.8;BACKGROUND-COLOR:#999;}
+#tbox .tb_popup{BACKGROUND:URL(b.png);MARGIN:0 AUTO;}
+#tbox .tb_loading{PADDING:5PX 20PX;TEXT-ALIGN:CENTER;BACKGROUND:URL(BIGLOADING.GIF) NO REPEAT;}
+#tbox .tb_body{POSITION:RELATIVE;BACKGROUND:#FFF;BORDER:1PX SOLID #666;MARGIN:8px;min-height:178px;/*高度最小值设置为：178px*/ height:auto !important;/*兼容FF,IE7也支持 !important标签*/ height:178px;/*兼容ie6*/ overflow:visible;padding-bottom:15px;}
+#tbox .tb_header{padding:0 5px;LINE-HEIGHT:30px;HEIGHT:30px;background-color:#f6f6f6;background-image:url(pop_tit.gif);margin-bottom:10px;background-repeat:repeat-x;background-position:0px 0px;overflow:hidden;}
+#tbox .tb_title{FONT-WEIGHT:bold;FONT-SIZE:14px;CURSOR:move;COLOR:#333 }
+#tbox .tb_content{BACKGROUND:#FFF;PADDING:0PX;WIDTH:100%;}
+#tbox .tab{margin:0 20px;}
+#tbox .tb_alert_info{text-align:center;padding:35px 0;font-size:14px;color:#333;width:400px;}
+#tbox .reward_box{width:360px;padding:20px;color:#666;}
+#tbox .tb_alert_info img{padding-right:10px;}
+#tbox .tb_button_list{text-align:center;padding-top:15px;clear:both; margin-left:10px;}
+#tbox .tb_button_list #tb_button_ok{line-height:28px;height:28px;border:1px solid #999;white-space:nowrap;vertical-align:middle;cursor:pointer;font-size:12px;padding:0 10px;*padding:0 5px;_height:26px;_line-height:26px;font-weight:bold;background-position:0px -193px;_margin-bottom:3px;}
+#tbox .tb_button_list #tb_button_no, #best_only, #best_more{line-height:28px;height:28px;border:1px solid #999;white-space:nowrap;vertical-align:middle;cursor:pointer;font-size:12px;padding:0 10px;*padding:0 5px;background-position:0px -193px;_height:26px;_line-height:26px;_margin-bottom:3px;}
+#tbox .tb_close{PADDING:8px 5px 0 0;FLOAT:right;LINE-HEIGHT:30px;}
+#tbox .tb_close A{DISPLAY:block;BACKGROUND:url(close.gif);OVERFLOW:hidden;WIDTH:16px;TEXT-INDENT:-999em;HEIGHT:16px }
+#tbox .tb_close A:hover{}
+#tbox textarea{height:100px;}

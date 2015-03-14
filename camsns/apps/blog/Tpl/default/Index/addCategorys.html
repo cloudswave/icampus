@@ -1,0 +1,110 @@
+<script type="text/javascript" src="__APP__/Js/addBlog.js"></script>
+<style type="text/css">
+   
+    .pop {
+        text-align: left;
+        width: 250px;
+        font-size: 12px;
+    }
+    .left { float: left; }
+    .pop .tit {
+        background-image: url(__APP__/images/pop_tit.jpg);
+        background-repeat: repeat-x;
+        line-height: 27px;
+        border: 1px solid #3a84c3;
+        margin: 1px;
+        font-weight: bold;
+        color: #FFFFFF;
+        padding-left: 5px;
+    }
+    .pop .con{
+        padding: 5px;
+        margin-bottom: 5px;
+        font-size: 12px;
+    }
+    .pop .con .msg {
+        background-color: #fffff5;
+        border: 1px solid #ffe361;
+        color: #FF0000;
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+    .pop .btm{
+        text-align: right;
+        padding: 5px;
+        clear: both;
+        border-top-width: 1px;
+        border-top-style: solid;
+        border-top-color: #CCCCCC;
+    }
+    .gd {
+        overflow: auto;
+        border: 1px solid #C6DDEE;
+        height: 140px;
+        line-height: 25px;
+        padding: 5px;
+        width: 95%;
+    }
+
+    .btn2{
+	background-color:#4291C3;
+	border-top-width:0px;
+	border-right-width:0px;
+	border-bottom-width:0px;
+	border-left-width:0px;
+	border-top-style:none;
+	border-right-style:none;
+	border-bottom-style:none;
+	border-left-style:none;
+	background-image:url(__APP__/images/btn_3.gif);
+	background-repeat:no-repeat;
+	background-position:0px 0px;
+	height:22px;
+	width:56px;
+	font-size:12px;
+	margin-right:5px;
+	color: #FFFFFF;
+    }
+    .btn3{
+        background-color:#4291C3;
+        border-top-width:0px;
+        border-right-width:0px;
+        border-bottom-width:0px;
+        border-left-width:0px;
+        border-top-style:none;
+        border-right-style:none;
+        border-bottom-style:none;
+        border-left-style:none;
+        background-image:url(__APP__/images/btn_33.gif);
+        background-repeat:no-repeat;
+        background-position:0px 0px;
+        height:22px;
+        width:56px;
+        font-size:12px;
+        color: #000000;
+    }
+
+
+   
+</style>
+
+<script type="text/javascript">
+    <!--
+    //指定当前组模块URL地址
+    var	URL		=	'__URL__';
+    var	APP		=	'__APP__';
+    var	PUBLIC	=	'__PUBLIC__';
+    var	ROOT	=	'__ROOT__';
+    //-->
+</script>
+<body onunload= "addBlog.CloseOpen() ">
+<!--添加微博分类弹窗-->
+    <dl class="pop_add_blogclass">
+        <dt><label>分类名:</label><input id="newCategory" name="category" class="text" /></dt>
+        <dd id="f_button">
+            <input name="input" type="button" class="btn_b" value="确 定"  onclick="addCategory('ok')"/>
+            <input name="input2" type="button" class="btn_w" value="取 消" onclick="addCategory('no')" />
+        </dd>
+    </dl>
+<!--End 添加微博分类弹窗-->
+</body>

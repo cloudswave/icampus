@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script language="javascript" src="editor.js"></script>
+<title>编辑器</title>
+<style type="text/css">
+a {font-size:12px;}
+img {border:0;}
+td.icon {width:24px;height:24px;text-align:center;vertical-align:middle;}
+td.sp {width:8px;height:24px;text-align:center;vertical-align:middle;}
+td.xz {width:47px;height:24px;text-align:center;vertical-align:middle;}
+td.bq {width:49px;height:24px;text-align:center;vertical-align:middle;}
+div a.n {height:16px; line-height:16px; display:block; padding:2px; color:#000000; text-decoration:none;}
+div a.n:hover {background:#E5E5E5;}
+.ico {	height: 24px;	width: 24px; vertical-align:middle; text-align:center;}
+.ico2 {	height: 24px;	width: 27px; vertical-align:middle; text-align:center;}
+.ico3 {	height: 24px;	width: 25px; vertical-align:middle; text-align:center;}
+.ico4 {	height: 24px;	width: 8px; vertical-align:middle; text-align:center;}
+body {margin-left: 0px;margin-top: 0px;margin-right: 0px;margin-bottom: 0px;}
+.icons{ width:20px; height:20px; background-image:url('images/mtoolallbg.gif'); background-repeat:no-repeat; margin-top:2px}
+.icoCut{ background-position:0 0}.icoCpy{ background-position:-28px 0}.icoPse{ background-position:-56px 0}.icoFfm{ background-position:-82px 0}.icoFsz{ background-position:-110px 0}.icoWgt{ background-position:-140px 0}.icoIta{ background-position:-168px 0}.icoUln{ background-position:-196px 0}.icoAgn{ background-position:-224px 0}.icoLst{ background-position:-252px 0}.icoLst{ background-position:-252px 0}.icoOdt{ background-position:-280px 0}.icoIdt{ background-position:-308px 0}.icoFcl{ background-position:-335px 0}.icoBcl{ background-position:-362px 0}.icoUrl{ background-position:-392px 0}.icoImg{ background-position:-420px 0}.icoMfc{ background-position:-447px 0}
+</style>
+<script language="JavaScript">
+	function fontname(obj){
+		format('fontname',obj.innerHTML);
+		obj.parentNode.style.display='none';
+	}
+	function fontsize(size,obj){
+		format('fontsize',size);
+		obj.parentNode.style.display='none';
+	}
+</script>
+</head>
+
+<body>
+<table width="100%"  border="0" cellpadding="0" cellspacing="0" background="images/bg.gif" style="border:1px solid #c5c5c5; ">
+  <tr>
+    <td height="31" style="padding-left:5px; "><table border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="ico">
+		<div class="icons icoCut" ><img border="0" width="100%" height="100%" src="images/place.gif" onclick="format('Cut')" title="剪切"
+		onmousedown=fSetBorderMouseDown(this)  
+            onmouseover=fSetBorderMouseOver(this) 
+            onmouseout=fSetBorderMouseOut(this)></div>
+		</td>
+        <td class="ico">
+		<div class="icons icoCpy" ><img border="0" width="100%" height="100%" src="images/place.gif" onmousedown=fSetBorderMouseDown(this) onclick="format('Copy')" title="复制"
+            onmouseover=fSetBorderMouseOver(this) 
+            onmouseout=fSetBorderMouseOut(this)></div>
+		</td>
+        <td class="ico">
+		<div class="icons icoPse" ><img border="0" width="100%" height="100%" src="images/place.gif" onmousedown=fSetBorderMouseDown(this) onclick="format('Paste')" title="粘贴"
+            onmouseover=fSetBorderMouseOver(this) 
+            onmouseout=fSetBorderMouseOut(this)></div>
+		</td>
+        <td class="ico" style="width:12px"><img src="images/line.gif" width="4" height="20" style="margin-left:2px "  /></td>
+        <td class="ico2">
+		<div class="icons icoFfm" style="width:25px"  ><img border="0" width="100%" height="100%" src="images/place.gif" onmousedown=fSetBorderMouseDown(this)  id="imgFontface" title="字体" onClick="fGetEv(event);fDisplayElement('fontface','')"  
+            onmouseover=fSetBorderMouseOver(this) 
+            onmouseout=fSetBorderMouseOut(this)></div>
+		</td>
+        <td class="ico2">
+		<div class="icons icoFsz" style="width:25px" ><img border="0" width="100%" height="100%" src="images/place.gif" onmousedown=fSetBorderMouseDown(this) id="imgFontsize" title="字号" onClick="fGetEv(event);fDisplayElement('fontsize','')"
+            onmouseover=fSetBorderMouseOver(this) 
+            onmouseout=fSetBorderMouseOut(this)></div>
+		</td>
+        <td class="ico">
+		<div class="icons icoWgt" ><img border="0" width="100%" height="100%" src="images/place.gif" onmousedown=fSetBorderMouseDown(this) onclick="format('Bold');" title="加粗"
+            onmouseover=fSetBorderMouseOver(this) 
+            onmouseout=fSetBorderMouseOut(this)></div>
+		</td>
+        <td class="ico">
+		<div class="icons icoIta" ><img border="0" width="100%" height="100%" src="images/place.gif" onmousedown=fSetBorderMouseDown(this) onclick="format('Italic');" title="斜体"
+            onmouseover=fSetBorderMouseOver(this) 
+            onmouseout=fSetBorderMouseOut(this)></div>
+		</td>
+        <td class="ico">
+		<div class="icons icoUln" ><img border="0" width="100%" height="100%" src="images/place.gif" onmousedown=fSetBorderMouseDown(this) onclick="format('Underline')" title="下划线"
+            onmouseover=fSetBorderMouseOver(this) 
+            onmouseout=fSetBorderMouseOut(this) ></div>
+		</td>
+		
+        <td class="ico3">
+		<div class="icons icoFcl"  ><img border="0" width="100%" height="100%" src="images/place.gif" onmousedown=fSetBorderMouseDown(this) title="字体颜色"
+            onmouseover=fSetBorderMouseOver(this)  onclick="foreColor(event)" id="imgFontColor"
+            onmouseout=fSetBorderMouseOut(this)></div>
+		</td>
+        <td class="ico2">
+		<div class="icons icoBcl"  ><img border="0" width="100%" height="100%" src="images/place.gif" onmousedown=fSetBorderMouseDown(this) title="背景颜色"
+            onmouseover=fSetBorderMouseOver(this)  onclick="backColor(event)" id="imgBackColor"
+            onmouseout=fSetBorderMouseOut(this)></div>
+		</td>		
+        <td class="ico">
+		<div class="icons icoAgn"><img border="0" width="100%" height="100%"  onmousedown=fSetBorderMouseDown(this) id="imgAlign" onClick="fGetEv(event);fDisplayElement('divAlign','')" title="对齐"
+            onmouseover=fSetBorderMouseOver(this) 
+            onmouseout=fSetBorderMouseOut(this) src="images/place.gif"></div>
+		</td>
+        <td class="ico">
+		<div class="icons icoLst" ><img border="0" width="100%" height="100%" src="images/place.gif" onmousedown=fSetBorderMouseDown(this) id="imgList" onClick="fGetEv(event);fDisplayElement('divList','')"title="编号"
+            onmouseover=fSetBorderMouseOver(this) 
+            onmouseout=fSetBorderMouseOut(this)></div>
+		</td>
+        <td class="ico">
+		<div class="icons icoOdt" ><img border="0" width="100%" height="100%" src="images/place.gif" onmousedown=fSetBorderMouseDown(this) onclick="format('Outdent')" title="减少缩进"
+            onmouseover=fSetBorderMouseOver(this) 
+            onmouseout=fSetBorderMouseOut(this)></div>
+		</td>
+        <td class="ico">
+		<div class="icons icoIdt" ><img border="0" width="100%" height="100%" src="images/place.gif" onmousedown=fSetBorderMouseDown(this) onclick="format('Indent')" title="增加缩进"
+            onmouseover=fSetBorderMouseOver(this) 
+            onmouseout=fSetBorderMouseOut(this)></div>
+		</td>
+        <td class="ico" style="width:12px"><img src="images/line.gif" width="4" height="20" style="margin-left:2px "  /></td>
+
+        <td class="ico">
+		<div class="icons icoUrl"><img border="0" width="100%" height="100%" src="images/place.gif" onmousedown=fSetBorderMouseDown(this) onclick="createLink()" title="超链接"
+            onmouseover=fSetBorderMouseOver(this) 
+            onmouseout=fSetBorderMouseOut(this)></div>
+		</td>
+		<td class="ico">
+		<div class="icons icoImg" ><img border="0" width="100%" height="100%" src="images/place.gif" onmousedown=fSetBorderMouseDown(this) id="imgMedia" onClick="fGetEv(event);fDisplayElement('divMedia','')"title="多媒体"
+            onmouseover=fSetBorderMouseOver(this) 
+            onmouseout=fSetBorderMouseOut(this)></div>
+		</td>
+		<td class="ico4"><img src="images/line.gif" width="4" height="20" style="margin-left:5px "  /></td>
+		<TD style="FONT-SIZE: 12px"><INPUT language=javascript onmouseover=fSetModeTip(this) onclick=setMode(this.checked) onmouseout=fHideTip() type=checkbox name=switchMode></TD>
+
+		<script language="JavaScript">
+		if (sShowHtml) {
+			document.write('<td style="font-size:12px"> <input type=checkbox name="switchMode" language="javascript" onclick="setMode(this.checked)" onmouseout="fHideTip()" onmouseover="fSetModeTip(this)"></td>');
+		}
+		</script>
+        </tr>
+    </table></td>
+  </tr>
+</table>
+<div style="width:100px;height:100px;position:absolute;display:none;top:-500px;left:-500px" ID="dvForeColor">
+<TABLE CELLPADDING=0 CELLSPACING=0 style="border:0px" width="0" height="0" style="display:none;"></TABLE>
+</div>
+<div id="fontface" style="z-index:99; padding:1px; display:none; position:absolute; top:35px; left:2px; background:#FFFFFF; border:1px solid #838383; width:110px; height:270px;"><a href="javascript:void(0)" onClick="fontname(this)" class="n" style="font:normal 12px '宋体';">宋体</a><a href="javascript:void(0)" onClick="fontname(this)" class="n" style="font:normal 12px '黑体';">黑体</a><a href="###" onClick="fontname(this)" class="n" style="font:normal 12px Arial;">Arial</a><a href="###" onClick="fontname(this)" class="n" style="font:normal 12px 'Arial Narrow';">Arial Narrow</a><a href="###" onClick="fontname(this)" class="n" style="font:normal 12px 'Arial Black';">Arial Black</a><a href="###" onClick="fontname(this)" class="n" style="font:normal 12px Courier;">Courier</a><a href="###" onClick="fontname(this)" class="n" style="font:normal 12px System;">System</a></div>
+<div id="fontsize" style="padding:1px; display:none; position:absolute; top:35px; left:26px; background:#FFFFFF; border:1px solid #838383; width:115px; height:160px;"><a href="javascript:void(0)" onClick="fontsize(1,this)" class="n" style="font-size:xx-small;line-height:120%;">极小</a><a href="javascript:void(0)" onClick="fontsize(2,this)" class="n" style="font-size:x-small;line-height:120%;">特小</a><a href="javascript:void(0)" onClick="fontsize(3,this)" class="n" style="font-size:small;line-height:120%;">小</a><a href="#" onClick="fontsize(4,this)" class="n" style="font-size:medium;line-height:120%;">中</a><a href="javascript:void(0)" onClick="fontsize(5,this)" class="n" style="font-size:large;line-height:120%;">大</a><a href="javascript:void(0)" onClick="fontsize(6,this)" class="n" style="font-size:x-large;line-height:120%;">特大</a><a href="javascript:void(0)" onClick="fontsize(7,this)" class="n" style="font-size:xx-large;line-height:140%;">极大</a></div>
+<div id="divList" style="padding:1px; display:none; position:absolute; top:35px; left:26px; background:#FFFFFF; border:1px solid #838383; width:60px; height:40px;"><a href="javascript:void(0)" onClick="format('Insertorderedlist');fHide(this.parentNode)" class="n">数字列表</a><a href="javascript:void(0)" onClick="format('Insertunorderedlist');fHide(this.parentNode)" class="n">符号列表</a></div>	
+<div id="divAlign" style="padding:1px; display:none; position:absolute; top:35px; left:26px; background:#FFFFFF; border:1px solid #838383; width:60px; height:60px;"><a href="javascript:void(0)" onClick="format('Justifyleft');fHide(this.parentNode)" class="n">左对齐</a><a href="javascript:void(0)" onClick="format('Justifycenter');fHide(this.parentNode)" class="n">居中对齐</a><a href="javascript:void(0)" onClick="format('Justifyright');fHide(this.parentNode)" class="n">右对齐</a></div>	
+<div id="divMedia" style="padding:1px; display:none; position:absolute; top:35px; left:26px; background:#FFFFFF; border:1px solid #838383; width:60px; height:60px;"><a href="javascript:void(0)" onClick="createImg();fHide(this.parentNode)" class="n">插入图片</a><a href="javascript:void(0)" onClick="createAudio();fHide(this.parentNode)" class="n">插入音频</a><a href="javascript:void(0)" onClick="createVedio();fHide(this.parentNode)" class="n">插入视频</a></div>	
+<div id="divEditor">
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+if(document.all){
+	document.write('<table width="100%" height:' + (sEditorHeight - 33) +'px border="0" cellspacing="0" cellpadding="0" ><tr><td style="border:1px solid #C5C5C5; border-top:0;"><iframe class="HtmlEditor" ID="HtmlEditor" name="HtmlEditor" style=" height:' + (sEditorHeight - 34) +'px;width:100%" frameBorder="0" marginHeight=0 marginWidth=0 src="page.html" charset="utf-8"></iframe></td></tr></table>');
+}else{
+	document.write('<table width="100%" height:' + (sEditorHeight - 32) +'px border="0" cellspacing="0" cellpadding="0" ><tr><td style="border:1px solid #C5C5C5; border-top:0;background-color:#ffffff"><iframe class="HtmlEditor" ID="HtmlEditor" name="HtmlEditor" style=" height:' + (sEditorHeight - 37) +'px;width:100%;margin-left:1px;margin-bottom:1px;" frameBorder="0" marginHeight=0 marginWidth=0 src="page.html"  charset="utf-8"></iframe></td></tr></table>');
+}
+//-->
+</SCRIPT>
+</div>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+if(document.all){
+	document.write('<textarea ID="sourceEditor" style="height:' + (sEditorHeight - 40) +'px;width:100%;display:none">');
+}else{
+	document.write('<textarea ID="sourceEditor" style="height:' + (sEditorHeight - 38) +'px;width:100%;display:none">');
+}
+//-->
+</SCRIPT>
+</body>
+</html>

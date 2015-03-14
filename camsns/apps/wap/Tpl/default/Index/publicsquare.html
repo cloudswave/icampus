@@ -1,0 +1,21 @@
+<include file="../Public/header" />
+<include file="../Public/weibolist" />
+<div>
+    <php>
+        $has_pre   = $page > 1;
+        $has_after = count($weibolist) >= $item_count;
+    </php>
+    <php>if($has_pre) {</php>
+    <a href="{:U('wap/Index/publicsquare',array('page'=>$page-1))}">上一页</a>
+    <php>}</php> 
+    <php>if($has_after) {</php>
+    <a href="{:U('wap/Index/publicsquare',array('page'=>$page+1))}">下一页</a>
+    <php>}</php>
+    <php>if($has_pre || $has_after) {</php>
+    <form action="{:U('wap/Index/publicsquare')}" method="post">
+    <input type="text" name="page" size="2" />
+    <input type="submit" value="跳页" /> 第{$page}页
+    </form>
+    <php>}</php>
+</div>
+<include file="../Public/footer" />

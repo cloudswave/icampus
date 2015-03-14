@@ -1,0 +1,9 @@
+<div class="right_box">
+<h2>{$title}</h2>
+<ul class="lh25">
+  <li <?php if( empty( $_GET['date'] )) echo "class='on'"; ?>><a href="{:U('blog/Index/my')}">{$alldate}</a></li>
+  <volist name="date" id="vo">
+    <li <?php if( $_GET['date'] == $key ) echo "class='on' ";?>><a  href="{:U('blog/Index/my', array('date'=>$key))}">{$vo['content']} {$vo['count']} </a></li>
+  </volist>
+</ul>
+</div>

@@ -1,0 +1,156 @@
+<include file="_header" />
+<script type="text/javascript">
+    function checkon(o){
+        if( o.checked == true ){
+            $(o).parents('tr').addClass('bg_on') ;
+        }else{
+            $(o).parents('tr').removeClass('bg_on') ;
+        }
+    }
+    function getChecked() {
+  	    var ids = new Array();
+  	    $.each($('table input:checked'), function(i, n){
+  	        ids.push( $(n).val() );
+  	    });
+  	    return ids;
+  	}
+    
+    function checkAll(o,formname){
+        if( o.checked == true ){
+            $('form[name="'+formname+'"] input[name="id[]"]').attr('checked','true');
+            $('tr[overstyle="on"]').addClass("bg_on");
+        }else{
+            $('form[name="'+formname+'"] input[name="id[]"]').removeAttr('checked');
+            $('tr[overstyle="on"]').removeClass("bg_on");
+        }
+    }
+
+    function submitForm(form){
+    	$('form[name='+form+']').submit();
+    }
+
+    var ctrl = function(){
+    }
+    ctrl.prototype = {
+      del:function(id){
+          var id = id ? id : getChecked();
+          id = id.toString();
+          if(id=='' || id==0) {
+              ui.error("请选择要删除的大分类");
+              return false;
+          }
+          if( confirm("确定删除？") ){
+            $.post( '__URL__&act=doTypeDel',{id:id},function(text ){
+                if( text == 1 ){
+                    ui.success( "删除大分类成功" );
+                    var id_list = id.split( ',' );   
+                    for (var j=0 ; j< id_list.length ; j++   ){
+                        $('#list_'+id_list[j]).remove(); 
+                    }
+                }else if( text == 2 ){
+                    ui.success( "删除成功" );
+                    $('#list_'+id).remove();
+                }else if( text == 0 ){
+                    ui.error( "删除失败" );
+                }
+            });
+          }
+      },
+    delSmall:function(id){
+          var id = id ? id : getChecked();
+          id = id.toString();
+          if(id=='' || id==0) {
+              ui.error("请选择要删除的二级分类");
+              return false;
+          }
+          if( confirm("确定删除？") ){
+            $.post( '__URL__&act=doDeleteSmallType',{id:id},function(text ){
+                if( text == 1 ){
+                    ui.success( "删除二级分类成功" );
+                    var id_list = id.split( ',' );   
+                    for (var j=0 ; j< id_list.length ; j++   ){
+                        $('#list_'+id_list[j]).remove(); 
+                    }
+                }else if( text == 0 ){
+                    ui.error( "删除失败" );
+                }
+            });
+          }
+      }
+      
+  }
+  var c = null;
+</script>
+
+<div id="container" class="so_main">
+  <include file="_tab" />
+    <if condition="$_GET['action'] eq 'smallType'">
+    <div class="list">
+      <form name="smalltype" action="__URL__&act=doDeleteSmallType" method="post">  
+        <div class="Toolbar_inbox">
+            <a href="#" class="btn_a" onclick="c.delSmall()"><span>删除所选项</span></a>
+            <a href="__URL__&act=add&action=smallType" class="btn_a" ><span>增加二级分类</span></a>
+        </div>
+        <table id="smalltype_list"  width="100%" border="0" cellspacing="0" cellpedit_tabing="0">
+          <tr>
+            <th style="width:30px;">
+                <input type="checkbox" id="checkbox_handle" onclick="checkAll(this,'smalltype')" value="0">
+                <label for="checkbox"></label>
+            </th>
+            <th class="line_l">{$ts['app']['app_alias']}小分类</th>
+            <th class="line_l">管理</th>
+          </tr>
+          <volist name="smallType" k="key" id="vo">
+          <tr id="list_{$vo.label}">
+            <td><input type="checkbox" name="id[]" id="checkbox2" onclick="checkon(this)" value="{$vo.label}"></td>
+            <td>{$vo.label}</td>
+            <td>
+            	<a href="__URL__&act=editSmallType&id={$vo.label}">编辑</a> | 
+            	<a href="javascript:void(0);" class="btn_a" onclick="c.delSmall('{$vo.label}')"><span>删除</span></a>
+            </td>
+          </tr>
+          </volist>       
+        </table>  
+        <div class="Toolbar_inbox">
+            <!-- <a href="#" class="btn_a" onclick="if(confirm('确定删除所选小分类？'))submitForm('smalltype');" id="delSmall"><span>删除所选项</span></a> -->
+            <a href="javascript:void(0);" class="btn_a" onclick="c.delSmall()"><span>删除所选项</span></a>
+            <a href="__URL__&act=add&action=smallType" class="btn_a" ><span>增加二级分类</span></a>
+        </div>
+      </form>
+    </div>
+    <else />
+    <div class="list">
+      <form name="type" action="__URL__&act=doTypeDel" method="post">
+        <div class="Toolbar_inbox">
+            <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除所选项</span></a>
+            <a href="__URL__&act=add" class="btn_a" ><span>增加大分类</span></a>
+        </div>
+        <table id="type_list"  width="100%" border="0" cellspacing="0" cellpedit_tabing="0">
+          <tr>
+            <th style="width:30px;">
+                <input type="checkbox" id="checkbox_handle" onclick="checkAll(this,'type')" value="0">
+                <label for="checkbox"></label>
+            </th>
+            <th class="line_l">{$ts['app']['app_alias']}大分类</th>
+            <th class="line_l">管理</th>
+          </tr>
+          <volist name="poster_type" id="vo">
+          <tr id="list_{$vo.id}">
+            <td><input type="checkbox" name="id[]" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+            <td>{$vo.name}</td>
+            <td><a href="__URL__&act=editType&id={$vo.id}">编辑</a> | <a href="javascript:c.del({$vo['id']})">删除</a></td>
+          </tr>
+          </volist>       
+        </table>
+        <div class="Toolbar_inbox">
+            <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除所选项</span></a> 
+            <a href="__URL__&act=add" class="btn_a" ><span>增加大分类</span></a>        
+        </div>
+      </form>
+    </div>
+    </if>
+</div>
+<include file="_footer" />
+<script type="text/javascript">
+c = new ctrl();
+</script>

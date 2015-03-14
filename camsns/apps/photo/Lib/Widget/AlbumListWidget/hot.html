@@ -1,0 +1,13 @@
+<h2>{$title}{$ts['app']['app_alias']}</h2>
+<div class="mod-recalbums">
+  <ul class="photo-recom">
+    <volist name="list" id="li"> 
+    <li class="album_key">
+      <a href="{:U('photo/Index/album',array('uid'=>$li['userId'],'id'=>$li['id']))}" class="pic"><img src="{$li.id|get_album_cover=###,$li,66,66}" width="200" height="200" />
+        <div class="face"><span>{$li.name|getShort=###, 7}</span></div>
+      </a>
+      <p>{$li.info}</p>
+    </li>
+    </volist>
+  </ul>
+</div>

@@ -1,0 +1,54 @@
+<include file="__THEME__/public_header_auto" />
+
+<!-- <link href="__THEME__/css/mobile.css" rel="stylesheet" type="text/css" /> -->
+<style type="text/css">
+   #body_page{
+   	  line-height: 1.428571429;
+   	  background: white;
+   }
+	.about {
+		  background-color: white;
+		}
+</style>
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Hello, 微校园!</h1>
+        <p>校园达人是为高校学生量身制作的在线校园社交平台，通过手机App、微信公众平台和Web站点为学生提供学习、生活、社交等信息化服务。</p>
+        <p><a class="btn btn-primary btn-lg" role="button" href="{:SITE_URL}">开始使用 &raquo;</a>&nbsp;&nbsp;<a class="btn btn-primary btn-lg" role="button" href="{:SITE_URL}/android" target="_blank">手机客户端下载 &raquo;</a></p>
+      </div>
+    </div>
+
+    <div class="container about">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-4">
+          <h2>失误招领</h2>
+          <p>提供失物招领和寻物启事的平台，提供学校范围的失物招领和寻物启事服务。失主在平台上提交寻物启事（寻物启事可由用户自行取消或删除），其中包括一些列描述性信息或图片；拾到失物的用户在另一版块中提交拾到的物品的相关信息，然后由系统将自动给可能的失主推送消息（若失主已经撤销寻物启事，则系统不会给该失主推送相关失物招领信息），由失主自行与拾到失物的用户线下完成“完璧归赵”过程。 </p>
+          <p><a class="btn btn-default" href="{:SITE_URL}/index.php?app=poster&mod=Index&act=index&pid=7" role="button">传送 &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+          <h2>图书馆助手</h2>
+          <p>提供图书馆馆藏信息移动查询功能，用户可随时随地查询图书馆内的书籍借阅、新书动态，同时还可在借阅书籍超期之前的一段时间内将还书提醒发送到用户移动端，有效避免因疏忽遗忘造成的超期现象。
+	后期预计添加图书馆自习座位空闲状态的查看，并推出预测功能，即覆盖全天时段的人数预测曲线，为学生寻找自习座位提供便利. </p>
+          <p><a class="btn btn-default" href="{:U('library/Index/index')}" role="button">传送 &raquo;</a></p>
+       </div>
+        <div class="col-md-4">
+          <h2>买卖</h2>
+          <p>主要为学生校内学生提供一个买卖信息的平台，通过发布信息和浏览，结合线下交易，完成校内各类资源交换。并可以关注订阅实时收到相关推送信息。</p>
+          <p><a class="btn btn-default" href="{:U('poster/index/index')}" role="button">传送 &raquo;</a></p>
+        </div>
+      </div>
+
+      <hr>
+
+      </div>
+
+    
+
+
+
+
+    </div><!-- /.container -->
+<include file="__THEME__/public_footer" />

@@ -1,0 +1,31 @@
+<include file="__THEME__/header" />
+<link href="__APP__/css/photo.css" rel="stylesheet" type="text/css" />
+
+<div class="content_holder">
+  <div class="content no_bg boxShadow">
+    <include file="../Public/_mainNav" />
+    <div class="main no_l">
+      <div class="mainbox extend">
+        <div class="my-photo-info">
+          <dl class="clearfix">
+            <dt class="userPic"><span class="headpic50"><a href="{:U('public/Profile/index',array(uid=>$uid))}"><img src="{$uid|getUserFace}" /></a></span></dt>
+            <dd>
+              <h2><a href="{:U('photo/Index/albums',array(uid=>$uid))}">{$userName}的{$ts['app']['app_alias']}</a>&nbsp;&#62;&nbsp;<span>{$album.name}</span></h2>
+              <p><span class="cGray2">共{$photos.count|default=0}张照片，最后更新于{:date('Y-m-d',$album['cTime'])}</span></p>
+            </dd>
+          </dl>
+        </div>
+        <div class="lh30 alR my-photo-title clearfix"></div>
+        <php>if(empty($photos['data'])):</php>
+        <div style="padding:20px">刚刚启用的微博相册，还没有配图。</div>
+        <php>else:</php>
+        <include file="../Public/_weiboPhotoList" /> 
+        <php>endif;</php>        
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="__APP__/js/preview.js" type="text/javascript"></script>
+<include file="__THEME__/public_footer" />

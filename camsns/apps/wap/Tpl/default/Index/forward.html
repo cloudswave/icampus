@@ -1,0 +1,55 @@
+<include file="../Public/header" />
+<!-- 微吧贴字 -->
+<eq name="weiba_post" value="1">
+    <a href="{:U('wap/Index/weibo',array('uid'=>$weibo['uid']))}">{$weibo['uname']}</a>: 
+        转发
+    <eq name="weiba['is_del']" value="1">
+        内容已被删除
+    <else/>
+         <a href="{:U('wap/Index/weibo',array('uid'=>$weiba['uid']))}">@{$weiba['uname']}</a> 的微博:{$weiba['content']|getShort=###,140,'...'}
+    </eq>
+    <br />
+    TA的转发理由: {$weibo['feed_content']}<br />
+<else/>
+<!-- 非微吧帖子 -->
+    <php>if ($weibo['is_repost'] == 0) {</php>
+    <!-- 原创 -->
+        <a href="{:U('wap/Index/weibo',array('uid'=>$weibo['uid']))}">{$weibo['uname']}</a>: 
+        {$weibo['source_body']}<br/>
+
+    <php>}else {</php>
+    <!-- 转发 -->
+        <php>$forward = $weibo['transpond_data'];</php>
+        <a href="{:U('wap/Index/weibo',array('uid'=>$weibo['uid']))}">{$weibo['uname']}</a>: 
+        转发
+        <eq name="weiba_post" value="1">
+            <eq name="weiba['is_del']" value="1">
+                内容已被删除
+            <else/>
+                {$weiba['content']}
+            </eq>
+        <else/>
+            <eq name="forward['is_del']" value="0">
+                <a href="{:U('wap/Index/weibo',array('uid'=>$forward['uid']))}">@{$forward['uname']}</a> 的微博:{$forward['source_body']}<br />
+
+                <a href="{:U('wap/Index/forward',array('weibo_id'=>$forward['feed_id']))}">原文转发[{$forward['repost_count']}]</a> 
+                <a href="{:U('wap/Index/detail',array('weibo_id'=>$forward['feed_id']))}">原文评论[{$forward['comment_count']}]</a>
+            <else/>
+                内容已被删除
+            </eq>
+        </eq>
+         <br />
+        TA的转发理由: {$weibo['feed_content']}<br />
+    <php>}</php>
+</eq>
+<div class="addtbox">
+您的转发理由（只取前{$weibo_nums}字）：
+    <form action="{:U('wap/Index/doForward')}" method="post">
+    <input type="hidden" name="comment_touid" value="{$weibo['uid']}" />
+    <input type="hidden" name="weibo_id" value="{$weibo['weibo_id']}" />
+    <textarea cols="" rows="2" style="width:99%" name="content">{$source_body}</textarea>
+    <label><input type="checkbox" name="comment" value="1"/>同时作为评论</label>
+    <input type="submit" value="发布" />
+    </form>
+</div>
+<include file="../Public/footer" />

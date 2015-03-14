@@ -1,0 +1,13 @@
+<script type="text/javascript">var photo_preview = '{$photo_preview}';</script>
+<div class="my-photo-list">
+  <ul>
+    <volist name="photos.data" id="li">
+      <li>
+        <a href="{:U('photo/Index/weibophoto',array(id=>$li['feed_id'],uid=>$uid))}<neq name="type" value="">&type={$type}</neq>#show_pic" rel="{:getImageUrl($li['savepath'], 550)}" title="{$li.name}" class="preview" ><img src="{$li.savepath|get_photo_url}" width="168" height="168"/></a>
+        <p class="t">{$li.name|getShort='10'}</p>
+        <if condition="(ACTION_NAME) eq 'all_photos'"><p class="t">发图者：<space uid="li['userId']" class="fn" target="_blank">{uname}</space></p></if>
+      </li>
+    </volist>
+  </ul>
+</div>
+<div class="page">{$photos['html']}</div>

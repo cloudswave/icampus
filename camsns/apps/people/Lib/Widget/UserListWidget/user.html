@@ -1,0 +1,23 @@
+<div class="mod-user clearfix">
+	<php>if(empty($userList['data'])):</php>
+	<p>暂时没有相关用户</p>
+	<php>else:</php>
+	<volist name="userList.data" id="vo">	
+	<dl <php>if(is_integer(($key + 1) / 3)):</php>class="no-margin"<php>endif;</php>>
+		<dt><a href="{$vo.space_url}"><img event-node="face_card" uid="{$vo.uid}" src="{$vo.avatar_middle}" width="80" height="80" /></a>
+		</dt>
+		<dd>
+			<p class="name"><a href="{$vo.space_url}" event-node="face_card" uid="{$vo.uid}">{$vo.uname}</a>
+			<volist name="vo.user_group" id="v">
+            <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v['user_group_icon_url']}" title="{$v['user_group_name']}" />&nbsp;
+            </volist></p>
+			<p class="mb5 f9" title="{$vo.info}">{$vo.info}</p>
+			<php>if($GLOBALS['ts']['mid'] != $vo['uid']):</php>
+			{:W('FollowBtn', array('fid'=>$vo['uid'], 'uname'=>$vo['uname'], 'follow_state'=>$vo['follow_state']))}
+			<php>endif;</php>
+		</dd>
+	</dl>
+	</volist>
+	<php>endif;</php>
+</div>
+<div class="page">{$userList.html}</div>

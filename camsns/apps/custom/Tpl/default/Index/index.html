@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>微校园-我的应用</title>
+    <?php require_once "apps/head.txt";?>
+    <script type="text/javascript">
+        require([
+            "dojo/_base/connect",
+            "dojo/dom",
+            "dojo/ready",
+            "dijit/registry",
+            "dojox/mobile/IconItem",
+            "dojo/request",
+            "dojo/_base/array",
+            "dojo/json",
+            "dojo/_base/declare",
+            "dojox/mobile/parser",
+            "dojox/mobile",
+            "dojox/mobile/compat",
+            "dojox/mobile/IconContainer",
+            "dojox/mobile/SimpleDialog",
+            "dojox/mobile/_EditableIconMixin",
+            "dojox/mobile/Button",
+            "dojox/mobile/TabBar",
+            "dojox/mobile/ScrollableView"
+        ], function(connect, dom, ready, registry,IconItem,request,arrayUtil,JSON,declare){
+      var wid = null;
+            showDialog = function(widget,info){
+              dom.byId("dlg_title").innerHTML = "应用"+info+"确认";
+                dom.byId("dlg_txt").innerHTML = "您确定要"+info+"<font color='red'>"+widget.label+"</font>" + "应用吗?";
+                wid = widget;
+                registry.byId("dlg_confirm").show();
+
+                registry.byId("addContainer").addChild();
+
+
+            }
+            hideDialog = function(){
+                registry.byId("dlg_confirm").hide();
+            }
+function empty(v){ 
+switch (typeof v){ 
+case 'undefined' : return true; 
+case 'string' : if(trim(v).length == 0) return true; break; 
+case 'boolean' : if(!v) return true; break; 
+case 'number' : if(0 === v) return true; break; 
+case 'object' : 
+if(null === v) return true; 
+if(undefined !== v.length && v.length==0) return true; 
+for(var k in v){return false;} return true; 
+break; 
+} 
+return false; 
+}
+
+
+            request.get("index.php?app=custom&mod=Index&act=haslist", {
+                // Parse data from JSON to a JavaScript object
+                handleAs: "json"
+            }).then(function(data){
+                JSON.stringify(data);
+                if(empty(data)){}
+                else
+                    arrayUtil.forEach(data, function(item,i){
+                            addIcon("iconContainer",item,"load");
+                        });
+                    });
+            request.get("index.php?app=custom&mod=Index&act=addList", {
+                // Parse data from JSON to a JavaScript object
+                handleAs: "json"
+            }).then(function(data){
+                JSON.stringify(data);
+                arrayUtil.forEach(data, function(item,i){
+                            addIcon("addContainer",item,"add");
+                        });
+                    });
+
+            addIcon = function(iconContainer,item,operate)
+            {
+                var url = item.app_entry;
+                
+                if(operate=="add")
+                {
+                    url="javascript:void(0)";
+                }
+
+                var itemWidget = new IconItem({
+                            icon: "apps/"+item.app_name+"/Appinfo/icon_app_large.png",
+                            label: item.app_alias,
+                            lazy: true,
+                            id:item.app_id,
+                            href:"index.php"
+                        });
+                if(operate=="add")
+                {
+                    itemWidget.on("click",function()
+                        {
+                            showDialog(itemWidget,"添加");
+                        });
+                }
+                registry.byId(iconContainer).addChild(itemWidget);
+            }
+
+
+
+            ready(function(){
+                var ic = registry.byId("iconContainer");
+                connect.connect(registry.byId("dlg_btn1"), "onClick", null, function(e){
+
+                    var title = dom.byId("dlg_title").innerHTML;
+                    if(title.indexOf("删除")>-1)
+                    {
+                      registry.byId("iconContainer").deleteCurrentIcon();
+                      registry.byId("iconContainer").endEdit();
+                    }
+                    else if(title.indexOf("添加")>-1)
+                    {
+            request.get("index.php?app=custom&mod=Index&act=add&appID="+wid.id).then(function(data){
+                        });
+                        registry.byId("iconContainer").addChild(wid);
+
+                    }
+                    hideDialog();
+
+                });
+              connect.connect(registry.byId("dlg_btn2"), "onClick", null, function(e){
+                  hideDialog();
+              });
+                connect.connect(ic, "onMoveItem", null, function(widget, from, to){
+                    if(from!=to)
+                    {
+
+                      registry.byId("iconContainer").endEdit();
+                    }
+
+                });
+            });
+            dojox.mobile.EditableIconContainer = declare(
+                "dojox.mobile.EditableIconContainer",
+                [dojox.mobile.IconContainer, dojox.mobile._EditableIconMixin],
+            {
+                _currentIcon: null,
+                deleteIconClicked: function(e){
+                    var item = this._currentIcon = registry.getEnclosingWidget(e.target);
+                    showDialog(item,"删除");
+                    return false;
+                },
+                deleteCurrentIcon: function(){
+                    if(this._currentIcon){
+                        this.deleteItem(this._currentIcon);
+                        request.get("index.php?app=custom&mod=Index&act=deleteByID&appID="+this._currentIcon.id).then(function(data){
+                        });
+                        this._currentIcon = null;
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body style="visibility:hidden;">
+    <div id="view1" data-dojo-type="dojox.mobile.ScrollableView">
+        <h1 data-dojo-type="dojox.mobile.Heading" data-dojo-props='label:"微校园-我的应用"'>
+        <span data-dojo-type="dojox.mobile.ToolBarButton" data-dojo-props='arrow:"right",moveTo:"about"'  style="float:right;">添加</span>
+        </h1>
+        <ul id="iconContainer" data-dojo-type="dojox.mobile.EditableIconContainer" data-dojo-props='editable:true'>
+
+        </ul>
+    </div>
+    <div id="dlg_confirm" data-dojo-type="dojox.mobile.SimpleDialog">
+        <div id="dlg_title" class="mblSimpleDialogTitle">应用删除确认</div>
+        <div id="dlg_txt" class="mblSimpleDialogText">Are you sure you want to delete this app?</div>
+        <button id="dlg_btn1" data-dojo-type="dojox.mobile.Button" class="mblBlueButton" style="width:60px;">确定</button>
+        <button id="dlg_btn2" data-dojo-type="dojox.mobile.Button" class="mblBlueButton" style="width:60px;">取消</button>
+    </div>
+    <div id="about" data-dojo-type="dojox.mobile.View">
+      <h1 data-dojo-type="dojox.mobile.Heading" data-dojo-props='label:"微校园-应用添加"'>
+        <span data-dojo-type="dojox.mobile.ToolBarButton" data-dojo-props='arrow:"left",moveTo:"view1",transition:"fade"'  style="float:right;">我的应用</span>
+        </h1>
+
+        <ul id="addContainer" data-dojo-type="dojox.mobile.IconContainer" data-dojo-props='editable:false'>
+
+        </ul>
+    </div>
+</body>
+</html>

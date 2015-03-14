@@ -1,0 +1,56 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/medal.css" rel="stylesheet" type="text/css" />
+<script>
+function showdetail(id,type){
+	ui.box.load("{:U('public/Medal/showdetail')}",'勋章详情',null,{id:id,type:type});
+}
+</script>
+<div id="page-wrap">
+	   <div id="main-wrap">
+          <div class="boxShadow">
+            <div class="find-type">
+	   	   	   <div class="app-title clearfix">
+                       <a href="{:U('public/Task/index')}" class="right">去做任务</a>
+                       <h4 class="left"><img src="__APP__/image/ico-app-medal.png" />&nbsp;&nbsp;勋章馆</h4>                       
+                       <div class="app-tab-menu clearfix" style="margin:0 0 0 130px;">
+                           
+                           <ul>
+                             <li><a href="{:U('public/Medal/index' , array('type'=>2,'uid'=>$uid))}" <php>if($type==2){</php>class="current"<php>}</php>>全部勋章<eq name="type" value="2"><span class="triangle"></span></eq></a><i class="line"></i></li>
+                             <li><a href="{:U('public/Medal/index' , array('type'=>1,'uid'=>$uid))}" <php>if($type==1){</php>class="current"<php>}</php>><php>if($isme){</php>我<php>}else{</php>TA<php>}</php>的勋章<eq name="type" value="1"><span class="triangle"></span></eq></a></li>
+                           </ul>
+                       </div>
+            </div>
+            </div>
+	   	   	<div id="col" class="extend clearfix">
+                <php>if($type==1){</php>
+                <div class="medal-user clearfix">
+                    <dl>
+                        <dt><a href="{$spaceurl}"><img src="{$face}" width="50" height="50"/></a></dt>
+                        <dd><p class="name"><a href="{$spaceurl}">{$uname}</a>的勋章</p><p><php>if($isme){</php>我<php>}else{</php>TA<php>}</php>已获得{$count}枚勋章</p></dd>
+                    </dl>
+                </div>
+                <php>}</php>
+                 <div class="medal-content">
+                    <div class="medal-title clearfix">
+                        <h3>全部勋章<span class="f9">（共{$count}枚）</span></h3>
+                    </div>
+                    <div class="medal-list clearfix">
+                        <ul>
+                        <volist name="data" id="v">
+                          <li><a href="javascript:showdetail({$v.id},{$type});" class="pic"><img src="{$v.src}" width="100" height="100"></a><a href="javascript:;" class="name">{$v.name}</a></li>
+                        </volist>
+                        </ul>
+                        <a href="<php>if($showlast){ </php>{:U('public/Medal/index','uid='.$uid.'&type='.$type.'&p='.$lpage)}<php>}else{</php>#<php>}</php>"><i class="<php>if($showlast){</php>arrow-medal-l<php>}else{</php>arrow-l-no<php>}</php>"></i></a>
+                        <a href="<php>if($shownext){ </php>{:U('public/Medal/index','uid='.$uid.'&type='.$type.'&p='.$npage)}<php>}else{</php>#<php>}</php>"><i class="<php>if($shownext){</php>arrow-medal-r<php>}else{</php>arrow-r-no<php>}</php>"></i></a>
+                    </div>
+                    <div class="page">
+                       {$html}
+                    </div>
+                 </div>
+           	 </div>
+          </div>
+	   </div>
+</div>
+
+
+<include file="__THEME__/public_footer" />

@@ -1,0 +1,94 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="__APP__/gift.css" type="text/css" media="screen" charset="utf-8" />
+<link href="__PUBLIC__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+<div class="content_holder">
+<div class="content no_bg boxShadow">
+<include file="../Public/_mainNav" />
+  <!-- 内容 begin  -->
+  <div class="main no_l">
+    <!-- 画布 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_C" style="margin-right:0">
+        <div class="page_title">
+          <!-- Begin 个人资料 -->
+          <div class="left" style="width:66px;;"><span class="headpic50"><space uid="uid">{uavatar=m}</space></span></div>
+          <div class="left">
+            <h2>{$uid|getUserName}的礼品</h2>
+            <p class="clear"><space uid="uid" class="fn">{uname}的个人空间</space>&nbsp;&nbsp;
+              <php>if($uid!=$mid){ </php>
+              <a href="{:U('gift/Index/index', array('uid'=>$uid))}"><span>给{$uid|getUserName}送礼物</span></a>
+              <php>}</php>
+            </p>
+          </div>
+          <!-- #End 个人资料 -->
+          <div style="clear:left;"></div>
+        </div>
+        <div class="tab-menu">
+          <!-- 切换标签 begin  -->
+          <ul>
+            <li class="{$on1}"><a  href="{:U('gift/Index/personal', array('uid'=>$uid,'box'=>'receive'))}"><span>收到的礼物</span></a></li>
+            <li class="{$on2}"><a  href="{:U('gift/Index/personal', array('uid'=>$uid,'box'=>'send'))}"><span>送出的礼物</span></a></li>
+          </ul>
+        </div>
+        <!-- 切换标签 end  -->
+        <div style="margin:20px;" class="gift_list">
+          <volist name="gifts['data']" id='gift'>
+          <div class="gift_box">
+          <div style=" overflow:hidden; width:100%;">
+            <div class="left" style="width:90px;"><img src="{$gift.giftImg|realityImageURL}" /></div>
+            <div class="left" style="width:560px;">
+              <php>if($gift['sendWay']==3) { </php>
+              <div class="lh20">神秘人物 	在 {$gift.cTime|friendlyDate} 花费了 {$gift.giftPrice}个{$config.creditName} 赠送给<a href="{:U('public/Profile/index')}&uid={$uid}">{$uid|getUserName}</a>的礼物。 </div>
+              <php>if($gift['toUserId']==$mid) { </php>
+              <div class="cGray2 lh30">
+                <php>echo getUserWo($gift['fromUserId'],$mid);</php>
+                还给<a href="{:U('public/Profile/index')}&uid={$uid}">{$uid|getUserName}</a>留言说：</div>
+              <div class="quote" style="margin:0;">
+                <p>{$gift.sendInfo}<span class="quoteR">&nbsp;</span></p>
+              </div>
+              <php> } </php>
+              <php> }elseif($gift['sendWay']==2) { </php>
+              <div class="lh20">
+                <php>if($gift['toUserId']==$mid) { </php>
+                <a href="{:U('public/Profile/index')}&uid={$gift.fromUserId}">{$gift.fromUserId|getUserName}</a>
+                <php> }else{ </php>
+                神秘人物
+                <php> } </php>
+                在 {$gift.cTime|friendlyDate} 花费了 {$gift.giftPrice}个{$config.creditName} 赠送给<a href="{:U('public/Profile/index')}&uid={$uid}">{$uid|getUserName}</a>的礼物。<br />
+                <php>if($gift['toUserId']==$mid) { </php>
+              </div>
+              <div class="cGray2 lh30">
+                <php>echo getUserWo($gift['fromUserId'],$mid);</php>
+                还给<a href="{:U('public/Profile/index')}&uid={$uid}">{$uid|getUserName}</a>留言说：</div>
+              <div class="quote" style="margin:0;">
+                <p>{$gift.sendInfo}<span class="quoteR">&nbsp;</span></p>
+              </div>
+              <php> }else{ </php>
+            </div>
+            <php> } </php>
+            <php>} else {</php>
+            <div class="lh20"><a href="{:U('public/Profile/index')}&uid={$gift.fromUserId}">{$gift.fromUserId|getUserName}</a> 在 {$gift.cTime|friendlyDate} 花费了 {$gift.giftPrice}个{$config.creditName} 赠送给<a href="{:U('public/Profile/index')}&uid={$uid}">{$uid|getUserName}</a>的礼物。<br />
+            </div>
+            <div class="cGray2 lh30">
+              <php>echo getUserWo($gift['fromUserId'],$mid);</php>
+              还给<a href="{:U('public/Profile/index')}&uid={$uid}">{$uid|getUserName}</a>留言说：</div>
+            <div class="quote" style="margin:0;">
+              <p>{$gift.sendInfo}<span class="quoteR">&nbsp;</span></p>
+            </div>
+            <php> } </php>
+          </div>
+          </div>
+          <div class="c"></div>
+        </div>
+        </volist>
+        <div id="Pagination" class="page">{$gifts.html}</div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- 画布 end  -->
+<div class="c"></div>
+</div>
+<include file="__THEME__/footer" /> 

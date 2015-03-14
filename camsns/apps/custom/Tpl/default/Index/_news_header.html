@@ -1,0 +1,76 @@
+<div class="find-type" style="height:26px;_overflow:hidden">
+      <div class="app-title">
+          <div class="search-input" style="z-index:99;">
+            <div id="mod-search" model-node="drop_weiba_search">
+                <form name="search_weiba" id="search_weiba" method="post" action="{:U('news/Index/search')}" onsubmit="return doNewsSearch();">
+                    <!-- <input name="app" value="public" type="hidden"/>
+                    <input name="mod" value="Search" type="hidden"/>
+                    <input type="hidden" name="t" value="2"/>
+                    <input type="hidden" name="a" value="public"/> -->
+                    <input type="hidden" name="type" value="2"/>
+                    <dl>
+                    <dt class="clearfix"><!--<i class="ico-search"></i>--><input autocomplete="off" id="searchweiba_input" class="s-txt left"  type="text" value="<php>if(!empty($k)){</php>{$k}<php>}else{</php>搜{$app['app_alias']}<php>}</php>" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜{$app['app_alias']}';" event-node="searchKey" name='k'><a href="javascript:void(0)" class="btn-search" onclick="doNewsSearch();"><span>搜索</span></a></dt>
+                    </dl>
+                </form>
+            </div>
+          </div>
+          <h4 class="left"><a href="{:U('news/Index/index')}"><img src="{$app['icon_url']}" /></a>{$app['app_alias']}</h4>
+          <php>if($news_type):</php>
+          <div class="app-tab-menu clearfix" style="margin:0 0 0 130px;_position:fixed">
+            <ul>
+              <li>
+              	<php>
+            				$on = false ;
+            				if(!$nav && $k=='' && !$t)
+            				{
+            					$on = true ;
+            				}
+            	</php>
+              	<a href="{:U('news/Index/index')}" <php>if( $on ){</php> class="current"<php>}</php>>首页
+              	<php>if( $on ):</php>
+              		<span class="triangle"></span>
+              	<php>endif ;</php>
+              	</a><i class="line"></i>
+              	</li>
+              	<volist name="news_type" id='vo'>
+              		<li> 
+              			<php>
+              				$on = false ;
+              				if($t && $t== $vo['id'])
+              				{
+              					$on = true ;
+              				}
+              			</php>
+		              	<a href="{:U('news/Index/index',array('t' => $vo['id']) )}" <php>if($on){</php> class="current"<php>}</php>>{$vo['title']}
+		              	<php>if($on):</php>
+		              		<span class="triangle"></span>
+		              	<php>endif ;</php>
+		              	</a>
+		              	<i class="line"></i>
+	              	</li>
+              	</volist>
+            </ul>
+          </div>
+          <php>endif ;</php>
+      </div>      
+</div>
+<script type="text/javascript">
+function doNewsSearch()
+{
+	if(getLength($('#searchweiba_input').val()) && $('#searchweiba_input').val()!=='搜{$app['app_alias']}')
+	{ 
+		var url = "{:U('news/Index/index')}";
+		var k = encodeURIComponent($('#searchweiba_input').val());
+		if(url.indexOf('?'))
+		{
+			url += '&k='+ k
+		}else
+		{
+			url += '?k='+ k;
+		}
+		location.href =  url ;
+		return false;
+	}
+	return false ;
+}
+</script>

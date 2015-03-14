@@ -1,0 +1,4 @@
+<ul>
+	<li <if condition="in_array(ACTION_NAME, array('index', 'detail'))">class="current"</if>><span><a href="{:U('public/Message/index')}">{:L('PUBLIC_PRIVATE_MESSAGE')}</a></span></li>
+	<li <if condition="in_array(ACTION_NAME, array('notify','notifyDetail'))">class="current"</if>><span><a href="{:U('public/Message/notify')}">{:L('PUBLIC_SYSTEM_MESSAGE')}</a></span></li>
+</ul>

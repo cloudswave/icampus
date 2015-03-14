@@ -1,0 +1,77 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="__APP__/event.css" type="text/css" media="screen" charset="utf-8" />
+<script type="text/javascript" src="__APP__/js/event.js"></script>
+<link href="__APP__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+<div class="content_holder">
+<div class="content no_bg boxShadow">
+  <!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l">
+    <!-- 画布 begin  -->
+    <div class="mainbox clearfix"> <include file="../Public/_isHotList" />
+      <div class="mainbox_appC">
+        <div class="page_title">
+          <!-- page_title begin -->
+          <h2>{$title}</h2>
+        </div>
+        <!-- page_title end -->
+        <div class="tab-menu">
+          <!-- 切换标签 begin  -->
+          <ul>
+            <li><a href="{:U('/Index/eventDetail',array('id'=>$id,'uid'=>$uid))}"><span>活动</span></a></li>
+            <li class="current"><a href="{:U('//member',array('id'=>$id))}"><span>成员</span></a></li>
+            <!-- <li><a href="__URL__/photos/id/{$id}/uid/{$uid}"><span>照片</span></a></li> -->
+          </ul>
+        </div>
+        <!-- 切换标签 end  -->
+        <div class="MenuSub"> <a href="{:U('//member',array('id'=>$id))}" 
+          <php> if (!in_array($_GET['action'],array('join','att','verify'))) {echo "class='fB'";}else{echo "class='cGray'";}</php>
+          >全部成员</a>┊ <a href="{:U('//member',array('id'=>$id,'action'=>'join'))}" 
+          <php> if (isset( $_GET['action'] ) && 'join' == $_GET['action']) {echo "class='fB'";}else{echo "class='cGray'";}</php>
+          >（{$joinCount}）人参加</a>┊ <a href="{:U('//member',array('id'=>$id,'action'=>'att'))}" 
+          <php> if (isset( $_GET['action'] ) && 'att' == $_GET['action']) {echo "class='fB'";}else{echo "class='cGray'";}</php>
+          >（{$attentionCount}）人关注</a>
+          <?php if( $uid == $mid ){ ?>
+          ┊ <a href="{:U('//member',array('id'=>$id,'action'=>'verify'))}" 
+          <php> if (isset( $_GET['action'] ) && 'verify' == $_GET['action']) {echo "class='fB'";}else{echo "class='cGray'";}</php>
+          >（{$verifyCount}）人待审核</a>
+          <?php }?>
+        </div>
+        <div class="flist" style="overflow:hidden;">
+          <ul>
+            <volist name="data" id="vo">
+              <li class="event_user_{$vo['id']} lineD_btm" style="overflow:hidden;_zoom:1" >
+                <div class="left" style="width: 60px;"><span class="headpic50"><space uid="vo.uid" class="fn">{uavatar}</space></span></div>
+                <div style=" margin-left:60px; height:50px;">
+                  <h3>
+                    <div class="right fn f12px">
+                      <?php if( 'admin' != $vo['action'] && $uid == $mid  ){ ?>
+                      <a href="javascript:adminDelAction( {$id},{$vo['uid']},'{$vo['action']}',{$optsId});">删除成员</a><br />
+                      <?php } ?>
+                      <?php if( isset( $verifyCount ) && $vo['status'] == 0 ){ ?>
+                      <a href="javascript:agree( {$vo['id']},{$id},{$uid},{$vo['uid']});">同意申请</a>
+                      <?php }?>
+                    </div>
+                    <space uid="vo.uid">{uname}</space><span class="f12px fn cRed">（{$vo['role']}）</span></h3>
+                  <?php if( $uid == $mid || $vo['uid'] == $mid ){ ?>
+                  <p><span class="cGray2">联系方式：</span><?php echo $vo['contact']['email']; ?></p>
+                  <?php } ?>
+                </div>
+              </li>
+            </volist>
+            <div class="c"></div>
+          </ul>
+          <!-- fphotolist end  -->
+          <div style="height:10px;"></div>
+          <div id="Pagination" class="page">{$html}</div>
+        </div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" /> 

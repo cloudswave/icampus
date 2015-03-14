@@ -1,0 +1,41 @@
+<div  style="width:250px;padding:20px;text-align:center;">
+<div class="mb10" style="overflow:hidden;*zoom:1;">
+            <label style="line-height:24px;height:24px;padding:0;margin:0;float:left;text-align:right;width:90px;">类型：</label><select name="transfer" style="text-align:left;float:left;">
+                <option value="0">-选择类型-</option>
+            <volist name="type_list" k="key" id="v">
+                <option value="{$key}">{$v}</option>
+            </volist>  
+          </select>
+    <input type="hidden" id="id" class="txt" value ="{$id}" />
+</div>
+<div >
+    <input type="button" class="btn_b" onclick="doTransferEvent()" value="确定" />
+</div>
+</div>
+<script>
+function doTransferEvent(){
+	var id   = $('#id').val();
+    var type = $("select[name='transfer']").val();
+    if(type==0){
+    	ui.error( "请选择分类" );
+    }else if( confirm("确定转移{$ts['app']['app_alias']}？") ){
+        ui.box.close();
+        $.post( '__URL__&act=doTransferEvent',{id:id,type:type},function(text ){
+            if( text == 1 ){
+                ui.success( "转移多个{$ts['app']['app_alias']}成功" );
+                location.reload();
+                /*var id_list = id.split( ',' );   
+                for (var j=0 ; j< id_list.length ; j++   ){
+                    $('.type_'+id_list[j]).html(); 
+                }*/
+            }else if( text == 2 ){
+                ui.success( "转移成功" );
+                location.reload();
+                //$('.type_'+id).html();
+            }else{
+                ui.error( "转移失败" );
+            }
+        });
+     }
+}
+</script>

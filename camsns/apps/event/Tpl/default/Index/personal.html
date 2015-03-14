@@ -1,0 +1,37 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="__APP__/event.css" type="text/css" media="screen" charset="utf-8" />
+<script type="text/javascript" src="__APP__/js/event.js"></script>
+<div class="content_holder">
+<div class="content no_bg boxShadow">
+  <!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l">
+    <div class="mainbox clearfix">
+      <!-- 画布 begin  -->
+      <include file="../Public/_isHotList" />
+      <div class="mainbox_appC">
+        <div class="tab-menu">
+          <!-- 切换标签 begin  -->
+          <ul>
+            <li <php>if(!in_array($_GET['action'],array('join','att'))){echo 'class="current"';}</php>><a href="{:U('//personal', array('action'=>'launch'))}" ><span>{$name}发起的活动</span></a></li>
+            <li <if condition="$_GET['action'] eq 'join'"> class="current"</if>><a href="{:U('//personal', array('action'=>'join'))}" ><span>{$name}参与的活动</span></a></li>
+            <li <if condition="$_GET['action'] eq 'att'"> class="current"</if>><a href="{:U('//personal', array('action'=>'att'))}" ><span>{$name}关注的活动</span></a></li>
+          </ul>
+        </div>
+        <!-- 切换标签 end  -->
+        <div class="groupBox">
+          <!-- 活动 begin  -->
+          <div class="boxL">
+            <include file="../Public/_eventList" />
+          </div>
+          <!-- 活动 end  -->
+        </div>
+      </div>
+      <!-- 右侧内容 end  -->
+      <div class="c"></div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" /> 

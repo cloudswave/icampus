@@ -1,0 +1,36 @@
+<div class="find-type">
+<div class="app-title clearfix">
+         <!--  <div class="search-input">
+              <div id="mod-search" event-node="drop_weiba_search">
+               <form name="search_weiba" id="search_weiba" method="get" action="{:U('weiba/Index/search')}">
+                <a href=""><i class="ico-search"></i></a><input type="text" id="search_input" value="搜微吧 / 帖子" onfocus="this.value=''" event-node="searchKey"><a href="" class="btn-search"><span>搜索</span></a>
+               </form>
+              </div>
+          </div> -->
+          <div class="search-input">
+            <div id="mod-search" model-node="drop_weiba_search">
+                <form name="search_weiba" id="search_weiba" method="post" action="{:U('weiba/Index/search')}">
+                    <!-- <input name="app" value="public" type="hidden"/>
+                    <input name="mod" value="Search" type="hidden"/>
+                    <input type="hidden" name="t" value="2"/>
+                    <input type="hidden" name="a" value="public"/> -->
+                    <input type="hidden" name="type" value="2"/>
+                    <dl>
+                    <dt class="clearfix"><!--<i class="ico-search"></i>--><input id="searchweiba_input" class="s-txt left"  type="text" value="<php>if(!empty($searchkey)){</php>{$searchkey}<php>}else{</php>搜微吧 / 帖子<php>}</php>" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜微吧 / 帖子';" event-node="searchKey" name='k'><a href="javascript:void(0)" class="btn-search" onclick="if(getLength($('#searchweiba_input').val()) && $('#searchweiba_input').val()!=='搜微吧 / 帖子'){ $('#search_weiba').submit(); return false;}"><span>搜索</span></a></dt>
+                    </dl>
+                </form>
+            </div>
+          </div>
+          <h4 class="left"><img src="__APP__/images/ico-weib.gif" />&nbsp;&nbsp;群组</h4>
+          <div class="app-tab-menu clearfix" style="margin:0 0 0 130px;">
+            
+            <ul>
+              <li><a href="{:U('weiba/Index/index')}" <php>if(!$nav){</php> class="current"<php>}</php>>首页<eq name="nav" value=""><span class="triangle"></span></eq></a><i class="line"></i></li>
+              <li><a href="{:U('weiba/Index/weibaList')}" <php>if($nav=="weibalist"){</php>class="current"<php>}</php>>群组<eq name="nav" value="weibalist"><span class="triangle"></span></eq></a><php>if($GLOBALS['ts']['mid']){</php><i class="line"></i><php>}</php></li>
+              <php>if($GLOBALS['ts']['mid']){</php>
+              <li><a href="{:U('weiba/Index/myWeiba',array('type'=>'myFollowing'))}" <php>if($nav=="myweiba"){</php>class="current"<php>}</php>>我的群组<eq name="nav" value="myweiba"><span class="triangle"></span></eq></a></li>
+              <php>}</php>
+            </ul>
+          </div>
+</div>
+</div>      

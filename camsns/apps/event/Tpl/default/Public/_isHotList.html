@@ -1,0 +1,60 @@
+<div class="mainbox_appR">
+  <div class="right_box box_create mb20"><a href="{:U('/Index/addEvent')}" class="btn-create">发起活动</a></div>
+ <!--发起者&关注者-->
+    <php>if(ACTION_NAME == 'eventDetail') {</php>
+    <div class="right_box">
+            <div>
+              <h2>发起者</h2>
+              <ul class="ListBox">
+                <li><span class="headpic50"><space uid="uid" class="fn">{uavatar}</space></span><span class="user-grade"><space uid="uid" class="fn">{uname}</space></span></li>
+              </ul>
+              <div class="btm"></div>
+            </div>
+            <div>
+              <h2>关注者</h2>
+              <ul class="ListBox">
+                <volist name="attention" id ="vo">
+                  <li><span class="headpic50"><space uid="vo.uid">{avatar}</space></span><span class="user-grade"><space uid="vo.uid">{uname}</space></span></li>
+                </volist>
+                <div class="c"></div>
+              </ul>
+              <p class="alR"><a href="{:U('//member',array('id'=>$id,'action'=>'att'))}">所有的人>></a></p>
+              <div class="btm"></div>
+            </div>
+          </div>
+          <php>}</php>
+    <!--发起者&关注者END--> 
+  
+<!--搜索活动&分类浏览-->
+  <div class="right-list">
+      <h3>活动分类</h3>
+      <ul>
+        <li><i class="ico-piece"></i><div class="info"><a <php>if( !isset( $_GET['cid'] ) ){echo "class = 'current'";}</php>href="{:U('//')}" >全部</a></div></li>
+        <php> foreach($category as $k=>$cate){ </php>
+        <li><i class="ico-piece"></i><div class="info"><a <eq name="k" value="$_GET['cid']"> class="current" </eq> href="{:U('//', array('cid'=>$k))}">{$cate}</a></div></li>
+        <php> } </php>
+      </ul>
+  </div>
+<!--搜索活动&分类浏览END-->   
+           
+ <!--推荐活动--> 
+  <div class="right_box">
+    <h2>推荐{$ts['app']['app_alias']}</h2>
+    <ul class="Recommended">
+      <volist name="is_hot_list" id="li"> 
+   	    <li>
+          <div class="c1"><a href="{:U('//eventDetail',array(uid=>$li['uid'],id=>$li['id']))}"><img src="{$li['coverId']}" /></a></div>
+          <div class="c2">
+            <dl>
+              <dt><strong><a href="{:U('//eventDetail',array(uid=>$li['uid'],id=>$li['id']))}" class="OverH" title="{$li.title}" >{$li.title|getShort=###,7,'...'}</a></strong></dt> 
+              <dd>类型：{$li.type}</dd>
+              <dd>地点：{$li.address}</dd>
+            </dl>
+          </div>
+        </li>
+	  </volist>
+    </ul>
+  </div>
+  <!--推荐活动END-->
+  
+</div>

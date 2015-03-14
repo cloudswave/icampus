@@ -1,0 +1,32 @@
+<include file="../Public/header" />
+<div>
+<form action="{:U('wap/Index/doSearch')}" method="post">
+输入关键字：<br/>
+<input type="text" name="key" value="{$keyword}"/><br/>
+<input type="submit" name="user" value="搜人"/>
+<input type="submit" name="weibo" value="搜微博"/>
+</form>
+</div>
+<div class="userinfo">
+  包含关键字“{$keyword}”的话题: 
+</div>
+<include file="../Public/weibolist" />
+<div>
+    <php>
+        $has_pre   = $page > 1;
+        $has_after = count($weibolist) >= $item_count;
+    </php>
+    <php>if($has_pre) {</php>
+    <a href="{:U('wap/Index/doSearch',array('key'=>$keyword,'page'=>$page-1))}">上一页</a> 
+    <php>}</php> 
+    <php>if($has_after) {</php>
+    <a href="{:U('wap/Index/doSearch',array('key'=>$keyword,'page'=>$page+1))}">下一页</a>
+    <php>}</php>
+    <php>if($has_pre || $has_after) {</php>
+    <form action="{:U('wap/Index/doSearch',array('key'=>$keyword))}" method="post">
+    <input type="text" name="page" size="2" />
+    <input type="submit" value="跳页" /> 第{$page}页
+    </form>
+    <php>}</php>
+</div>
+<include file="../Public/footer" />

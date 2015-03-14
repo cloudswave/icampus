@@ -1,0 +1,110 @@
+<include file="__THEME__/public_header" />
+
+<link href="__APP__/weiba.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+    
+<div id="page-wrap">
+	   <div id="main-wrap">
+         <div class="boxShadow">
+	   	   	 <include file="../Index/_weiba_header" />
+
+	   	   	   <div class="mb10 clearfix extend">
+
+                 <include file="_tab" />
+                 <div class="mod-feed-tab">
+                    <ul class="inner-feed-nav">
+                        <li <eq name="on" value="all">class="current"</eq>><a href="{:U('weiba/Manage/member',array('weiba_id'=>$weiba_id))}">全部</a></li>
+                        <php>if($mid==$weiba_super_admin || CheckPermission('core_admin','admin_login')){</php>
+                          <li <eq name="on" value="apply">class="current"</eq>><a href="{:U('weiba/Manage/member',array('weiba_id'=>$weiba_id,'type'=>'apply'))}">待审核</a></li>
+                        <php>}</php>
+                    </ul>
+                 </div>
+                 <div class="weiba-manage">     
+                  <php>if($on=='apply'){</php>
+                    <form>
+                       <dl class="member-list" id="list">
+                          <dt class="f9">
+                            <!-- <input id="checkbox_handle" type="checkbox" value="0" onclick="checkAll(this)"> --><!--<a href="javascript:void(0)" class="btn-cancel right" onclick="moveOut({$weiba_id})"><span>移出微吧</span></a>-->
+                            <!-- <div class="c1">头像</div> -->
+                            <div class="c">昵称</div>
+                            <div class="c">申请类型</div>
+                            <div class="c">申请原因</div>
+                            <div class="c">操作</div>
+                          </dt>
+                          <volist name="weiba_member.data" id="vo">
+                              <dd>
+                                <!-- <div class="c1 c0"><input type="checkbox" name="checkbox" value="{$vo['follower_uid']}"></div> -->
+                                <div class="c1">
+                                    <img src="{$user_info[$vo['follower_uid']]['avatar_tiny']}" width="30" height="30"/>&nbsp;
+                                    {$user_info[$vo['follower_uid']]['space_link']}
+                                    <volist name="vo.userGroupData" id="v1">
+                                      <img style="width:auto;height:auto;display:inline;cursor:pointer;" src="{$v1['user_group_icon_url']}" title="{$v1['user_group_name']}" />&nbsp;
+                                    </volist>
+                                </div>
+                                <div class="c2"><php>if($vo['type']==3){</php>吧主<php>}else{</php>小吧<php>}</php></div>
+                                <div class="c2">{$vo.reason}</div>
+                                <div class="c3">
+                                    <a href="javascript:void(0)" onclick="verify({$vo.weiba_id},{$vo.follower_uid},{$vo['type']})">通过</a>
+                                    <i class="vline">|</i>
+                                    <a href="javascript:void(0)" onclick="verify({$vo.weiba_id},{$vo.follower_uid},-1)">拒绝</a>
+                                </div>
+                              </dd>
+                          </volist>
+                       </dl>
+                    </form>   
+                  <php>}else{</php>
+                    <form>
+                       <dl class="member-list" id="list">
+                          <dt class="f9">
+                            <!-- <input id="checkbox_handle" type="checkbox" value="0" onclick="checkAll(this)"> --><!--<a href="javascript:void(0)" class="btn-cancel right" onclick="moveOut({$weiba_id})"><span>移出微吧</span></a>-->
+                            <!-- <div class="c1">头像</div> -->
+                            <div class="c">昵称</div>
+                            <div class="c">身份</div>
+                            <div class="c">操作</div>
+                          </dt>
+                          <volist name="weiba_member.data" id="vo">
+                              <dd>
+                                <!-- <div class="c1 c0"><input type="checkbox" name="checkbox" value="{$vo['follower_uid']}"></div> -->
+                                <!-- <div class="c1"><img src="{$user_info[$vo['follower_uid']]['avatar_tiny']}" /></div> -->
+                                <div class="c1">
+                                    <img src="{$user_info[$vo['follower_uid']]['avatar_tiny']}" width="30" height="30"/>&nbsp;
+                                    {$user_info[$vo['follower_uid']]['space_link']}
+                                    <volist name="vo.userGroupData" id="v1">
+                                      <img style="width:auto;height:auto;display:inline;" src="{$v1['user_group_icon_url']}" title="{$v1['user_group_name']}" />&nbsp;
+                                    </volist>
+                                </div>
+                                <div class="c2"><php>if($vo['level']==3){</php>吧主<php>}else if($vo['level']==2){</php>小吧<php>}else{</php>普通成员<php>}</php></div>
+                                <div class="c3">
+                                  <php>if($mid!=$vo['follower_uid']){</php>
+                                    <php>if(CheckPermission('core_admin','admin_login')){</php>
+                                      <php>if($vo['level']==3){</php>
+                                        <a href="javascript:void(0)" onclick="editLevel({$vo.weiba_id},{$vo.follower_uid},1)">取消吧主</a>
+                                        <php>}else{</php>
+                                        <a href="javascript:void(0)" onclick="editLevel({$vo.weiba_id},{$vo.follower_uid},3)">设为吧主</a>
+                                      <php>}</php>
+                                      <i class="vline">|</i>
+                                    <php>}</php>
+                                    <php>if($mid==$weiba_super_admin || CheckPermission('core_admin','admin_login')){</php>
+                                      <php>if($vo['level']==2){</php>
+                                        <a href="javascript:void(0)" onclick="editLevel({$vo.weiba_id},{$vo.follower_uid},1)">取消小吧</a>
+                                        <php>}else{</php>
+                                        <a href="javascript:void(0)" onclick="editLevel({$vo.weiba_id},{$vo.follower_uid},2)">设为小吧</a>
+                                        <php>}</php>
+                                        <i class="vline">|</i>
+                                    <php>}</php>
+                                    <php>if(CheckPermission('core_admin','admin_login') || $mid==$weiba_super_admin || in_array($mid,$weiba_admin) && !in_array($vo['follower_uid'],$weiba_admin)){</php><a href="javascript:void(0)" onclick="moveOut({$vo.weiba_id},{$vo.follower_uid})">移出微吧</a><php>}</php>
+                                  <php>}</php>
+                                </div>
+                              </dd>
+                          </volist>
+                       </dl>
+                    </form>   
+                  <php>}</php>
+                  <div id="page" class="page" style="">{$weiba_member.html}</div>
+                 </div>
+           	 </div>
+          </div>
+	   </div>
+</div>
+
+<include file="__THEME__/public_footer" />

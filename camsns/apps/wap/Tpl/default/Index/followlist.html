@@ -1,0 +1,27 @@
+<include file="../Public/header" />
+<div class="userinfo">
+  <php>echo ($uid==$ts['user']['uid'] || $_GET['uid']==0)?'我的':($profile['sex']=='男'?'TA':'TA').'的';</php>
+  <php>echo $type=='user_following'?'关注':'粉丝';</php><br />
+  <include file="../Public/statistics" />
+</div>
+<include file="../Public/userlist" />
+<div>
+    <php>$url = $type=='user_following'?'wap/Index/following':'wap/Index/followers'</php>
+    <php>
+        $has_pre   = $page > 1;
+        $has_after = count($userlist) >= $item_count;
+    </php>
+    <php>if($has_pre) {</php>
+    <a href="{:U($url,array('uid'=>$_GET['uid'],'page'=>$page-1))}">上一页</a> 
+    <php>}</php> 
+    <php>if($has_after) {</php>
+    <a href="{:U($url,array('uid'=>$_GET['uid'],'page'=>$page+1))}">下一页</a>
+    <php>}</php>
+    <php>if($has_pre || $has_after) {</php>
+    <form action="{:U($url,array('uid'=>$_GET['uid']))}" method="post">
+    <input type="text" name="page" size="2" />
+    <input type="submit" value="跳页" /> 第{$page}页
+    </form>
+    <php>}</php>
+</div>
+<include file="../Public/footer" />

@@ -1,0 +1,36 @@
+<include file="../Public/header" />
+<div class="userinfo">
+  <table border="0" cellpadding="0" cellspacing="2">
+    <tr>
+    <td valign="top"><img src="{$profile['avatar_tiny']}" alt="头像" class="por" /></td>
+    <td valign="top">
+        {$ts['user']['uname']} /
+        <php>echo $ts['user']['sex']==1?'男':'女';</php> /
+        <php>echo empty($ts['user']['location'])?'未知':$ts['user']['location'];</php>
+        <br/>
+        <!-- <a href="#">详细资料</a>&nbsp;<a href="#">邀请朋友</a>&nbsp;</td> -->
+  </tr>
+</table>
+<include file="../Public/statistics" />
+</div>
+<include file="../Public/post" />
+<include file="../Public/weibolist" />
+<div>
+    <php>
+        $has_pre   = $page > 1;
+        $has_after = count($weibolist) >= $item_count;
+    </php>
+    <php>if($has_pre) {</php>
+    <a href="{:U('wap/Index/index',array('page'=>$page-1))}">上一页</a>
+    <php>}</php> 
+    <php>if($has_after) {</php>
+    <a href="{:U('wap/Index/index',array('page'=>$page+1))}">下一页</a>
+    <php>}</php>
+    <php>if($has_pre || $has_after) {</php>
+    <form action="{:U('wap/Index/index')}" method="post">
+    <input type="text" name="page" size="2" />
+    <input type="submit" value="跳页" /> 第{$page}页
+    </form>
+    <php>}</php>
+</div>
+<include file="../Public/footer" />

@@ -1,0 +1,184 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="__APP__/event.css" type="text/css" media="screen" charset="utf-8" />
+<script type="text/javascript" src="__APP__/js/rcalendar.js" ></script>
+<script type="text/javascript" src="__APP__/js/event.js"></script>
+<div class="content_holder">
+<div class="content no_bg boxShadow">
+  <!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l">
+    <!-- 画布 begin  -->
+    <div class="mainbox clearfix"> 
+    	<include file="../Public/_isHotList" />
+     	<div class="mainbox_appC">
+        <div class="page_title">
+          <!-- page_title begin -->
+          <h2>{$title}</h2>
+        </div>
+        <!-- page_title end -->
+        <div class="tab-menu">
+          <!-- 切换标签 begin  -->
+          <div class="right">
+
+          </div>
+          <ul>
+            <li class="current"><a href="{:U('//eventDetail',array('id'=>$id,'uid'=>$uid))}"><span>活动</span></a></li>
+            <li><a href="{:U('//member',array('id'=>$id))}"><span>成员</span></a></li>
+          </ul>
+        </div>
+        <!-- 切换标签 end  -->
+        <div class="groupBox hide">
+          <div class="boxL">
+            <div class="box1">
+              <div class="info">
+                <div class="img"> <img src="{$cover}" /> </div>
+                <div class="list">
+                  <ul>
+                    <li>
+                      <div class="c1">发起者：</div>
+                      <div class="c2">{$user_info[$uid]['space_link']}</div>
+                    </li>
+                    <li>
+                      <div class="c1"> 活动分类：</div>
+                      <div class="c2"> {$type} </div>
+                    </li>
+                    <li>
+                      <div class="c1"> 活动经费：</div>
+                      <div class="c2">
+                      	<php>
+	                      	if($cost == '0'){
+	                      		echo '免费';
+	                      	}elseif($cost == '1'){
+	                      		echo 'AA制';
+	                      	}elseif($cost == '2'){
+	                      		echo '50元以下';
+	                      	}elseif($cost == '3'){
+	                      		echo '50-200元';}
+	                      	elseif($cost == '4'){
+	                      		echo '200-500元';}
+	                      	elseif($cost == '5'){
+	                      		echo '500-1000元';}
+	                      	elseif($cost == '6'){
+	                      		echo '1000元以上';}
+                      	</php>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="c1"> 资费说明：</div>
+                      <div class="c2"> {$costExplain} </div>
+                    </li>
+                    <li>
+                      <div class="c1"> 活动城市：</div>
+                      <div class="c2"> {$city} </div>
+                    </li>
+                    <li>
+                      <div class="c1"> 活动地点：</div>
+                      <div class="c2"> {$address} </div>
+                    </li>
+                    <li>
+                      <div class="c1"> 活动时间：</div>
+                      <div class="c2"> {$time} </div>
+                    </li>
+                    <li>
+                      <div class="c1"> 截止报名：</div>
+                      <div class="c2"> {$dl} </div>
+                    </li>
+                    <li>
+                      <div class="c1"> 剩余名额：</div>
+                      <div class="c2"> {$lc} </div>
+                    </li>
+                    <li>
+                      <div class="c1"> 联系方式：</div>
+                      <div class="c2"> {$contact} </div>
+                    </li>
+                    <li>
+                      <div class="c1"> 需要审核：</div>
+                      <div class="c2">
+                        <?php if( $opts['allow'] ) {echo'是';}else{echo'否';}?>
+                      </div>
+                    </li>
+                    <li>参加人数（<a href="{:U('//member', array('id'=>$id,'action'=>'join'))}">{$joinCount}</a>） 关注人数（<a href="{:U('//member', array('id'=>$id,'action'=>'att'))}">{$attentionCount}</a>）<if condition="$verifyCount">待审人数（<a href="{:U('//member', array('id'=>$id,'action'=>'verify'))}">{$verifyCount}</a>）</if></li>
+                    <?php if( $eTime>time()){ ?>
+                    <li> <span class="cGreen lh35" id="event_satus">此活动正在进行中……</span> </li>
+                    <li>
+                      <?php if( $admin ){ ?>
+                      <span id="event_edit_button">
+                      <button class="btn_b" style="margin-right:5px;" onclick="javascript:endEvent( '{$id}' )">提前结束</button>
+                      <button class="btn_b" style="margin-right:5px;" onclick="javascript:location.href='{:U('/Index/edit',array('id'=>$id))}';">编辑活动</button>
+     				  <button class="btn_b" style="margin-right:5px;" onclick="javascript:delEvent( '{$id}' ,true)">删除活动</button>
+                      </span>
+                      <?php } ?>
+                      <span class="detail_joinIn_{$id}">
+                      <?php if( $follow ){ ?>
+                      <?php if( $canJoin ){ ?>
+                      <?php if( $limitCount>0 ) { ?>
+                      <button class="btn_b" style="margin-right:5px;"  onclick="javascript:EventAction( {$id},{$opts['allow']},'joinIn')">我要参加</button>
+                      <?php }else{ ?>
+                      <span class="cGreen lh35">名额已满</span>
+                      <?php } ?>
+                      <?php }else if( false == $admin ){ ?>
+                      <?php if( $opts['allow'] == 1 && $hasMember != 1){ ?>
+                      <span class="cGreen lh35">已提交申请,等待审核中,<button class="btn_w" style="margin-right:5px;" onclick="javascript:EventDelAction({$id},{$opts['allow']},'joinIn')">取消申请</button></span>
+                      <?php }else{ ?>
+                      <button class="btn_w" style="margin-right:5px;"  onclick="javascript:EventDelAction( {$id},{$opts['allow']},'joinIn')">取消参加</button>
+                      <?php } ?>
+                      <?php } ?>
+                      <?php } ?>
+                      <?php if( $canAtt ){ ?>
+                            <span class="detail_attention_{$id}">
+                            <button class="btn_b"  style="margin-right:5px;"  onclick="javascript:EventAction( {$id},null,'attention')">我要关注</button>
+                            </span>
+                      <?php }else if( false == $admin && true == $canJoin){ ?>
+                            <span class="detail_attention_{$id}">
+                            <button class="btn_w"  style="margin-right:5px;"  onclick="javascript:EventDelAction( {$id},null,'attention')">取消关注</button>
+                            </span>
+                      <?php } ?>
+                        
+                      </span>
+                      <span id="share_button">
+                      {:W('ShareToFeed',array('title'=>'分享活动','initHTML'=>urlencode('我分享了一个活动“'.$title.'”'),'url'=>U('event/Index/eventDetail',array('id'=>$id,'uid'=>$uid)),'attachId'=>$coverId,'from'=>'event'))}
+                      </span>
+                    </li>
+                    <?php }else { ?>
+                    <li>
+                      <span class="cGreen lh35">此活动已经结束</span>
+                    </li>
+                    <?php } ?>
+                  </ul>
+                </div>
+                <div class="c"></div>
+              </div>
+            </div>
+            <div class="box1">
+              <h3><strong>活动介绍</strong></h3>
+              <div class="lh180" style="word-wrap:break-word;">{$explain}</div>
+            </div>
+            <div class="box1">
+              <h3><span class="right f12px"><a href="{:U('//member', array('id'=>$id,'action'=>'join'))}">查看全部>></a></span><strong>活动成员</strong>(共{$joinCount}人)</h3>
+              <ul class="pic50box">
+                <volist name="member" id="vo" offset= "0" length= '8' >
+                  <li><span class="headpic50"><space uid="vo.uid">{avatar}</space></span><span class="user-grade"><space uid="vo.uid">{uname}</space></span></li>
+                </volist>
+                <div class="c"></div>
+              </ul>
+            </div>
+            <div class="feed_list">
+                <div class="repeat">
+                   {:W('Comment',array('tpl'=>'detail', 'table'=>'event', 'row_id'=>$id, 'canrepost'=>'0', 'cancomment'=>1, 'cancomment_old'=>0, 'showlist'=>1, 'limit'=>'20', 'order'=>'DESC'))}
+                </div>
+            </div>
+            </div>
+            <div class="c"></div>
+          <!-- end  -->
+        </div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 画布 end  -->
+  <script  type="text/javascript" src="../Public/js/preview.js" ></script>
+</div>
+</div>
+<script src="__THEME__/js/module.weibo.js"></script>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" /> 

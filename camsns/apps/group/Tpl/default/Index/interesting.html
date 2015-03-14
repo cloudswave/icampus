@@ -1,0 +1,61 @@
+<if condition="$_GET['display'] eq 'main'">
+<if condition="$group_list">
+        <div class="tab-menu">
+        <php>if ($next_page != $now_page) {</php>
+        <span class="right fn">
+            <a href="javascript:;" onclick="change_interesting_group({$next_page}, 'main')" class="f12px">换一换</a>
+        </span>
+        <php>}</php>
+        	<ul>
+            <li><a href="#" class="feed_item on"><span>可能感兴趣的群</span></a></li>
+            </ul>
+        </div>
+<ul class="glist">
+<volist name="group_list" id="group">  
+			<li <if condition="$i%2 eq 1">class="marRt10"</if>>
+              <div class="group_pic">
+                <a href="{:U('group/Group/index', array('gid'=>$group['id']))}">
+                  <img alt="群头像" title="{$group['name']}" src="__ROOT__/thumb.php?w=60&h=60&t=f&url={$group['logo']|group_get_photo_url}" />
+                </a>
+              </div>
+              <div class="g_info">
+                <p><span class="right alR"></span>
+                <a class="fB" href="{:U('group/Group/index', array('gid'=>$group['id']))}" target="_blank">{$group['name']}</a></p>
+                <p class="gray6">成员：{$group['membercount']}</p>
+                <p class="gray9" style="height:30px">
+                <a class="btn_shenqing right" href="javascript:;" onclick="join_interesting_group('{$group['id']}', this, '{$now_page}')"><span class="addnew"></span>加入该群</a>
+                <if condition="$group['reason']">{$group['reason']}<else />与你有共同标签</if>
+                </p>
+              </div>              
+            </li>
+</volist>
+</ul>
+</if>
+<elseif condition="$_GET['display'] eq 'right'" />
+<if condition="$group_list">
+<h2>
+	<php>if ($next_page != $now_page) {</php>
+	<span class="right fn 12px">
+		<a href="javascript:;" onclick="change_interesting_group({$next_page}, 'right')" class="f12px">换一换</a>
+	</span>
+	<php>}</php>
+	可能感兴趣的群
+</h2>
+<ul class="list_interest">
+    <volist name="group_list" id="group">  
+    <li>
+        <div class="userPic">
+            <a href="{:U('group/Group/index', array('gid'=>$group['id']))}">
+            <img alt="群头像" title="{$group['name']}" src="__ROOT__/thumb.php?w=50&h=50&t=f&url={$group['logo']|group_get_photo_url}" />
+            </a>
+        </div>
+        <div class="userinfo">
+            <h3><a href="{:U('group/Group/index', array('gid'=>$group['id']))}" target="_blank">{$group['name']}</a></h3>
+            <p>成员：{$group['membercount']}</p>
+            <p class="cGray2">{$group['ctime']|friendlyDate}</p>
+        </div>
+    </li>
+    </volist>
+</ul>
+</if>
+</if>

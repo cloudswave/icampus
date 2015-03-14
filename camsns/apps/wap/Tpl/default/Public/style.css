@@ -1,0 +1,25 @@
+body{background:#fff;padding:2px;margin:1px;font-size:12px; line-height:140%}
+ul,li{list-style:none;}
+p{ clear:both; padding:0; margin:0}
+.top{ background:#307EA2; height:24px; line-height:24px; color:#fff;font-size:14px;font-weight:bold; padding:0px 5px;}
+a.top_a{ float:right; margin-right:5px; color:#fff}
+.nav{ background-color:#E4E9EA; line-height:25px}
+.userinfo{line-height:20px; background-color:#FAFAFA; border:1px solid #CBD6DA; padding:5px 0 5px 5px;}
+.addtbox{ padding:5px 0;}
+.list{ padding-bottom:5px; margin-top:5px; border-bottom:1px dashed #C1CFD3}
+.por {border: 1px solid #CCCCCC; height:50px; width:50px; }
+.G{ color:#63676A}
+em{ color:#63676A}
+
+.comment .arrline,.comment .downline{display:none;}
+
+/*视频播放按钮*/
+.feed_img {
+    position: relative;
+}
+.feed_img .video_play {
+    left: 65px;
+    margin: -15px 0 0 -15px;
+    opacity: 0.5;
+    position: absolute;
+    top: 53px;

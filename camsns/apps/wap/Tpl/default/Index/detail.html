@@ -1,0 +1,88 @@
+<include file="../Public/header" />
+<php>
+if ($weibo['is_repost'] == 0) {</php>
+<!-- 原创 -->
+    <a href="{:U('wap/Index/weibo',array('uid'=>$weibo['uid']))}">{$weibo['uname']}</a>: 
+    {$weibo['source_body']}<br/>
+
+<php>}else {</php>
+<!-- 转发 -->
+    <php>$forward = $weibo['transpond_data'];</php>
+    <a href="{:U('wap/Index/weibo',array('uid'=>$weibo['uid']))}">{$weibo['uname']}</a>: 
+    转发 
+    <eq name="weiba_post" value="1">
+        <eq name="weiba['is_del']" value="1">
+            内容已被删除
+        <else/>
+            {$weiba['content']}
+        </eq>
+    <else/>
+        <eq name="forward['is_del']" value="0">
+            <a href="{:U('wap/Index/weibo',array('uid'=>$forward['uid']))}">@{$forward['uname']}</a> 的微博:{$forward['source_body']}<br />
+
+            <a href="{:U('wap/Index/forward',array('weibo_id'=>$forward['feed_id']))}">原文转发[{$forward['repost_count']}]</a> 
+            <a href="{:U('wap/Index/detail',array('weibo_id'=>$forward['feed_id']))}">原文评论[{$forward['comment_count']}]</a>
+        <else/>
+            内容已被删除
+        </eq>
+    </eq>
+    
+    <br />
+        转发理由: {$weibo['feed_content']}
+
+<php>}</php>
+<p>
+    <neq name="weiba_post" value="1">
+        <a href="{:U('wap/Index/forward',array('weibo_id'=>$weibo['weibo_id'],'type'=>$weibo['app']))}">转发[{$weibo['repost_count']}]</a> 
+    </neq>
+    <a href="{:U('wap/Index/detail',array('weibo_id'=>$weibo['weibo_id'],'type'=>$weibo['app']))}">评论[{$weibo['comment_count']}]</a>
+    <php>if($weibo['iscoll']['colled']==1) {</php>
+    <a href="{:U('wap/Index/doUnFavorite',array('weibo_id'=>$weibo['weibo_id'],'from'=>ACTION_NAME,'key'=>$keyword,'page'=>$page))}">取消收藏</a> 
+    <php>}else {</php>
+    <a href="{:U('wap/Index/doFavorite',array('weibo_id'=>$weibo['weibo_id'],'from'=>ACTION_NAME,'key'=>$keyword,'page'=>$page))}">收藏</a>
+    <php>}</php>
+    <php>if($weibo['uid'] == $ts['user']['uid']) {</php>
+    <a href="{:U('wap/Index/doDelete',array('weibo_id'=>$weibo['weibo_id'],'from'=>ACTION_NAME,'key'=>$keyword,'page'=>$page))}">删除</a>
+    <php>}</php> 
+    <em>{$weibo['ctime']} 来自{$from_type[$weibo['from']]}</em>
+</p>
+<div class="addtbox">
+发表评论（只取前{$weibo_nums}字）：
+<form action="{:U('wap/Index/doComment')}" method="post">
+	<input type="hidden" name="weibo_id" value="{$weibo['weibo_id']}" />
+	<input type="hidden" name="comment_id" value="0"/>
+	<input type="hidden" name="to_uid" value="{$weibo['uid']}"/>
+    <input type="hidden" name="weibo_nums" value="{$weibo_nums}"/>
+	<textarea cols="" rows="2" style="width:99%" name="content">{$source_body}</textarea>
+	<label><input type="checkbox" name="ifShareFeed" value="1"/>同时转发到我的微博</label>
+	<input type="submit" value="发布" />
+</form>
+</div>
+
+<php>if(empty($comment)) {</php>暂无更多评论<php>}</php>
+<volist name="comment" id="vo">
+<div class="list">
+    <a href="{:U('wap/Index/weibo',array('uid'=>$vo['user_info']['uid']))}">{$vo['user_info']['uname']}</a>: {$vo['content']} 
+    <a href="{:U('wap/Index/comment',array('weibo_id'=>$weibo['weibo_id'],'comment_id'=>$vo['comment_id'],'uid'=>$vo['uid']))}">回复</a> 
+    {$vo['ctime']}
+</div>
+</volist>
+<div>
+    <php>
+        $has_pre   = $page > 1;
+        $has_after = count($comment) >= $item_count;
+    </php>
+    <php>if($has_pre) {</php>
+    <a href="{:U('wap/Index/detail',array('weibo_id'=>$weibo['weibo_id'],'page'=>$page-1))}">上一页</a>
+    <php>}</php> 
+    <php>if($has_after) {</php>
+    <a href="{:U('wap/Index/detail',array('weibo_id'=>$weibo['weibo_id'],'page'=>$page+1))}">下一页</a>
+    <php>}</php>
+    <php>if($has_pre || $has_after) {</php>
+    <form action="{:U('wap/Index/detail',array('weibo_id'=>$weibo['weibo_id']))}" method="post">
+    <input type="text" name="page" size="2" />
+    <input type="submit" value="跳页" /> 第{$page}页
+    </form>
+    <php>}</php>
+</div>
+<include file="../Public/footer" />

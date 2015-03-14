@@ -1,0 +1,32 @@
+<script>
+	function addsubmit() {
+		$.ajax({
+ 			type: "POST",
+ 			url: U('group/Group/quitGroup'),
+ 			data:   "gid={$gid}",
+ 			success: function(msg){
+ 				if(msg =='1'){
+ 					$('#pop1').hide();
+ 					$('#pop2').show();
+ 				}else{
+ 					ui.error('退出失败');
+ 				}
+ 			} 
+		}); 
+	}
+</script>
+    <!--退出群组弹窗-->
+    <dl class="pop_group" id="pop1">
+        <dt>确定脱离"{$groupinfo.name}"群组吗？</dt>
+        <dd>
+            <a class="btn-green-small mr5" onclick="addsubmit();">确 定</a>
+            <a class="btn-cancel" onclick="javascript:ui.box.close();"><span>取 消</span></a>
+        </dd>
+    </dl>
+    <dl class="pop_group" id="pop2" style="display:none">
+        <dt>脱离"{$groupinfo.name}"群组成功</dt>
+        <dd>
+            <a class="btn-green-small" onclick="javascript:location.reload();">确 定</a>
+        </dd>
+    </dl>
+    <!--End 退出群组弹窗-->

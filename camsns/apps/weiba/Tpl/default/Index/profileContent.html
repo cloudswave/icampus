@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="__ROOT__/apps/weiba/_static/weiba.css" type="text/css" media="screen" charset="utf-8" />
+<div class="weiba_postlist">
+	<ul>
+		<volist name="data" id="vo">
+		<li>
+			<div class="name">
+				<span class="right num"><i class="arrow-weiba"></i>{$vo.reply_count|default=0}</span>
+				<a href="{:U('weiba/Index/postDetail', array('post_id'=>$vo['post_id']))}"><span>{$vo.title}</span></a>
+			</div>
+			<div class="f9">
+				<php>if ($vo['last_reply_uid'] != 0):</php>
+				<span class="right"><a href="{:U('public/Profile/index', array('uid'=>$vo['last_reply_uid']))}">{$vo.last_reply_uid|getUserName}</a><span class="pl5 pr5">/</span>{$vo.last_reply_time|friendlyDate}</span>
+				<php>endif;</php>
+				<span>【{$vo.weiba}】<a href="{:U('public/Profile/index', array('uid'=>$vo['post_uid']))}">{$vo.post_uid|getUserName}</a><span class="pl5 pr5">/</span>{$vo.post_time|friendlyDate}发布</span>
+			</div>
+		</li>
+		</volist>
+		<div class="page">{$html}</div>
+	</ul>
+</div>

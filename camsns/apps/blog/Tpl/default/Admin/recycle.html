@@ -1,0 +1,227 @@
+<include file="_header" />
+
+<script>
+//鼠标移动表格效果
+$(document).ready(function(){
+    $("tr[overstyle='on']").hover(
+      function () {
+        $(this).addClass("bg_hover");
+      },
+      function () {
+        $(this).removeClass("bg_hover");
+      }
+    );
+});
+
+$(function(){
+    $( "select[name='sorder']" ).val("{$sorder}");
+    $( "select[name='eorder']" ).val("{$eorder}");
+    $( "select[name='limit']" ).val("{$limit}");
+});
+
+function getChecked() {
+    var ids = new Array();
+    $.each($('table input:checked'), function(i, n){
+        ids.push( $(n).val() );
+    });
+    return ids;
+}
+
+function checkon(o){
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function checkAll(o){
+    if( o.checked == true ){
+        $('input[name="checkbox"]').attr('checked','true');
+        $('tr[overstyle="on"]').addClass("bg_on");
+    }else{
+        $('input[name="checkbox"]').removeAttr('checked');
+        $('tr[overstyle="on"]').removeClass("bg_on");
+    }
+}
+
+//搜索日志
+var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+function searchBlog() {
+    if(isSearchHidden == 1) {
+        $("#searchBlog_div").slideDown("fast");
+        $(".searchBlog_action").html("搜索完毕");
+        isSearchHidden = 0;
+    }else {
+        $("#searchBlog_div").slideUp("fast");
+        $(".searchBlog_action").html("搜索日志");
+        isSearchHidden = 1;
+    }
+}
+
+var ctrl = function(name){
+  this.elements = document.getElementsByName('id[]');
+  this.length = this.elements.length;
+}
+ctrl.prototype = {
+reverse:function(){
+          for(i=0;i<this.length;i++){
+            this.elements[i].checked= !this.elements[i].checked;
+          }
+        },
+all:function(){
+      for(i=0;i<this.length;i++){
+        this.elements[i].checked = true;
+      }
+    },
+unAll:function(){
+        for(i=0;i<this.length;i++){
+          this.elements[i].checked = false;
+        }
+      },
+toggle:function(obj){
+         this[obj.checked ? 'all' : 'unAll']();
+       },
+del:function(id){
+	var id = id ? id : getChecked();
+    id = id.toString();
+    if(id=='' || id==0){
+    	ui.error('请选择要删除的日志！');return false;
+    }
+      if( confirm( "是否彻底删除日志") ){
+        var act = "delete"; 
+        $.post( '__URL__&act=recycleMan',{id:id,type:act},function(text ){
+            if( text == 1 ){
+              ui.success( "删除成功" );
+            var id_list = id.split( ',' );   
+            for (var j=0 ; j< id_list.length ; j++   ){
+            $( '#blog_'+id_list[j] ).remove(); 
+            }
+            }else if( text == 2 ){
+                ui.success( "删除成功" );
+                $( '#blog_'+id ).remove(); 
+            }else{
+            	ui.error( "删除失败" );
+            }
+            });
+      }
+    },
+edit:function(id){
+	var id = id ? id : getChecked();
+    id = id.toString();
+    if(id=='' || id==0){
+    	ui.error('请选择要恢复的日志！');return false;
+    }
+       if( confirm( '是否恢复选中的日志' ) ){
+         var act="resume";
+         $.post( '__URL__&act=recycleMan',{id:id,type:act},function( text ){
+            if( text == 1 ){
+            	ui.success( "恢复成功" );
+            var id_list = id.split( ',' );   
+            for (var j=0 ; j< id_list.length ; j++){
+            $( '#blog_'+id_list[j] ).remove();
+            }
+            }else if( text == 2 ){
+                ui.success( "恢复成功" );
+            $( '#blog_'+id ).remove(); 
+            }else{
+             ui.error( "恢复失败" );
+            }
+            });
+     }
+}
+}
+var c = null;
+</script>
+
+<div class="so_main">
+    <div class="page_tit">{$ts['app']['app_alias']}</div>
+    <include file="_tab" />
+    
+    <div id="searchBlog_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+    <div class="page_tit">搜索{$ts['app']['app_alias']} [ <a href="javascript:void(0);" onclick="searchBlog();">隐藏</a> ]</div>
+    
+    <div class="form2">
+    <form action="__URL__&act=recycle" method="post">
+    <input type="hidden" name="isSearch" value="1"/>
+        <php>if($isSearch != '1') $uid = '';</php>
+        <dl class="lineD">
+          <dt>用户ID：</dt>
+          <dd>
+            <input name="uid" type="text" value="{$uid}">
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>标题：</dt>
+          <dd>
+            <input name="title" type="text" value="{$title}">
+          </dd>
+        </dl>
+        <dl class="lineD">
+          <dt>内容：</dt>
+          <dd>
+            <input name="content" type="text" value="{$content}">
+          </dd>
+        </dl>
+        <div class="page_btm">
+          <input type="submit" class="btn_b" value="确定" />
+        </div>
+    </form>
+    </div>
+    </div>
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchBlog();">
+            <span class="searchBlog_action"><neq name="isSearch" value="1">搜索{$ts['app']['app_alias']}<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.edit()"><span>恢复{$ts['app']['app_alias']}</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除{$ts['app']['app_alias']}</span></a>
+    </div>
+  
+    <div class="list">
+        <table id="blog_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <th style="width:30px;">
+                <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+                <label for="checkbox"></label>
+            </th>
+            <th class="line_l">ID</th>
+            <th class="line_l">用户</th>
+            <th class="line_l">标题</th>
+            <th class="line_l">内容</th>
+            <th class="line_l">发布时间</th>
+            <th class="line_l">更新时间</th>
+            <th class="line_l">操作</th>
+        </tr>
+        <volist id="vo" name="data">
+        <tr overstyle='on' id="blog_{$vo.id}">
+          <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+          <td>{$vo.id}</td>
+          <td><space uid="vo.uid" >{uname}</space> <!-- 用户所属组图片 --></td>
+          <td><div style="float:left" id="blog_name_{$vo.id}">{$vo.title}</div></td>
+          <td><div style="float:left" id="blog_name_{$vo.id}">{$vo.content|strip_tags|getShort=16}</div></td>
+          <td>{$vo.cTime|date="Y-m-d H:i:s",###}</td>
+          <td>{$vo.mTime|date="Y-m-d H:i:s",###}</td>
+          <td>
+              <a href="javascript:void(0);" onclick="c.edit({$vo['id']})">恢复</a>
+              <a href="javascript:void(0);" onclick="c.del({$vo['id']})">删除</a>
+          </td>
+        </tr>
+        </volist>
+        </table>
+    </div>
+    
+    <div class="Toolbar_inbox">
+        <div class="page right">{$html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchBlog();">
+            <span class="searchBlog_action"><neq name="isSearch" value="1">搜索{$ts['app']['app_alias']}<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.edit()"><span>恢复{$ts['app']['app_alias']}</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除{$ts['app']['app_alias']}</span></a>
+    </div>
+</div>
+<script>
+c = new ctrl('id[]');
+</script>
+<include file="_footer" />

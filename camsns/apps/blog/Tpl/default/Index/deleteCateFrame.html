@@ -1,0 +1,37 @@
+<script type="text/javascript" charset="utf-8">
+	var	APP		=	'__APP__';
+function deleteAll( formCate ){
+  switch ( true ){
+    case $( '#radio1' ).get(0).checked:
+      parent.deleteCategoryBlog( $( '#select' ).val(),formCate )
+      break;
+      case $( '#radio2' ).get(0).checked:
+      $( '#select' ).attr( 'disabled',true );
+      parent.deleteCategoryBlog( "",formCate );
+      break;
+  }
+}
+</script>
+
+<dl class="pop_del_Blogclass">
+    <dt>
+    <div class="cRed">该分类下有{$_GET['count']}篇日志，是否同时删除？</div>
+      <div class="mt10">
+        <input type="radio" name="radio" id="radio1" value="radio" checked />
+        将这些日志转移到 <select name="select" id="select">
+          <volist name="category" id="vo"> <option value="{$vo['id']}" 
+            <eq name="vo.name" value="默认分类">selected</eq>
+            >{$vo['name']}
+            </option>
+          </volist>
+        </select>
+        <br /><input type="radio" name="radio" id="radio2" value="radio" />
+        删除全部日志 
+        
+      </div>
+    </dt>
+  <dd>
+    <input name="input" type="button" class="btn_b" onclick="deleteAll('{$_GET['id']}')" value="确 定" />
+    <input name="input2" type="button" class="btn_w" onclick="ui.box.close()" value="取 消" />
+  </dd>
+</dl>
